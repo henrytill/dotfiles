@@ -34,22 +34,22 @@
 (add-hook 'lisp-mode-hook 'paredit-mode)
 
 ;;; SLIME
-(let ((slime-loc (expand-directory-name "slime" my-site-lisp-path)))
+(let ((slime-loc (expand-directory-name "slime" my-site-lisp-path))
+      (ccl-loc (executable-find "ccl"))
+      (sbcl-loc (executable-find "sbcl")))
   (when (file-directory-p slime-loc)
-    (let ((ccl-loc (executable-find "ccl")))
-      (when ccl-loc
+    (when ccl-loc
         (if (boundp 'slime-lisp-implementations)
             (setq slime-lisp-implementations
                   (cons `(ccl (,ccl-loc)) slime-lisp-implementations))
           (setq slime-lisp-implementations `((ccl (,ccl-loc))))
-          (setq slime-default-lisp 'ccl))))
-    (let ((sbcl-loc (executable-find "sbcl")))
-      (when sbcl-loc
+          (setq slime-default-lisp 'ccl)))
+    (when sbcl-loc
         (if (boundp 'slime-lisp-implementations)
             (setq slime-lisp-implementations
                   (cons `(sbcl (,sbcl-loc)) slime-lisp-implementations))
           (setq slime-lisp-implementations `((sbcl (,sbcl-loc)))))
-        (setq slime-default-lisp 'sbcl)))
+        (setq slime-default-lisp 'sbcl))
     (when (boundp 'slime-lisp-implementations)
       (add-to-list 'load-path slime-loc)
       (require 'slime-autoloads)
