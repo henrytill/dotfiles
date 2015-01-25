@@ -1,0 +1,9 @@
+[user]
+	name = Henry Till
+	email = henrytill@gmail.com
+
+[push]
+	default = simple
+
+[alias]
+        bpush = !git push origin "$@" && git push backup "$@"

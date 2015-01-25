@@ -1,0 +1,14 @@
+XTerm*font: 9x15
+XTerm*boldFont: 9x15bold
+XTerm*foreground: white
+XTerm*background: black
+
+XTerm*eightBitInput: false
+XTerm*eightBitOutput: true
+XTerm*saveLines: 8192
+XTerm*termName: xterm-256color
+XTerm*utf8: 1
+
+Emacs*font: 9x15
+Emacs*foreground: white
+Emacs*background: black

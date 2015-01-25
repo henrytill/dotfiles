@@ -1,0 +1,4 @@
+(setq standard-indent 2)
+(setq make-backup-files nil)
+(setq tab-always-indent t)
+(setq indent-tabs-mode nil)
