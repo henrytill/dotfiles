@@ -1,3 +1,6 @@
 [submodule "emacs/.emacs.d/site-lisp/geiser"]
 	path = emacs/.emacs.d/site-lisp/geiser
 	url = https://github.com/jaor/geiser.git
+[submodule "emacs/.emacs.d/site-lisp/cider"]
+	path = emacs/.emacs.d/site-lisp/cider
+	url = https://github.com/clojure-emacs/cider.git
