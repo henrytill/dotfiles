@@ -4,3 +4,6 @@
 [submodule "emacs/.emacs.d/site-lisp/cider"]
 	path = emacs/.emacs.d/site-lisp/cider
 	url = https://github.com/clojure-emacs/cider.git
+[submodule "emacs/.emacs.d/site-lisp/slime"]
+	path = emacs/.emacs.d/site-lisp/slime
+	url = https://github.com/slime/slime.git
