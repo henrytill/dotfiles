@@ -88,6 +88,7 @@
                          ("vicare" . "vicare")))
 
 (cond  ((executable-find "petite") (setq scheme-program-name "petite"))
+       ((executable-find "vicare") (setq scheme-program-name "vicare"))
        ((executable-find "csi") (setq scheme-program-name "csi -:c"))
        ((executable-find "gsi") (setq scheme-program-name "gsi -:d-"))
        ((executable-find "plt-r5rs") (setq scheme-program-name "plt-r5rs"))
