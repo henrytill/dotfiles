@@ -34,22 +34,22 @@
 (add-hook 'lisp-mode-hook 'paredit-mode)
 
 ;;; SLIME
-(let ((slime-loc (expand-directory-name "slime" my-site-lisp-path))
-      (ccl-loc (executable-find "ccl"))
-      (sbcl-loc (executable-find "sbcl")))
+(let ((ccl-loc (executable-find "ccl"))
+      (sbcl-loc (executable-find "sbcl"))
+      (slime-loc (expand-directory-name "slime" my-site-lisp-path)))
   (when (file-directory-p slime-loc)
     (when ccl-loc
-        (if (boundp 'slime-lisp-implementations)
-            (setq slime-lisp-implementations
-                  (cons `(ccl (,ccl-loc)) slime-lisp-implementations))
-          (setq slime-lisp-implementations `((ccl (,ccl-loc))))
-          (setq slime-default-lisp 'ccl)))
+      (if (boundp 'slime-lisp-implementations)
+          (setq slime-lisp-implementations
+                (cons `(ccl (,ccl-loc)) slime-lisp-implementations))
+        (setq slime-lisp-implementations `((ccl (,ccl-loc))))
+        (setq slime-default-lisp 'ccl)))
     (when sbcl-loc
-        (if (boundp 'slime-lisp-implementations)
-            (setq slime-lisp-implementations
-                  (cons `(sbcl (,sbcl-loc)) slime-lisp-implementations))
-          (setq slime-lisp-implementations `((sbcl (,sbcl-loc)))))
-        (setq slime-default-lisp 'sbcl))
+      (if (boundp 'slime-lisp-implementations)
+          (setq slime-lisp-implementations
+                (cons `(sbcl (,sbcl-loc)) slime-lisp-implementations))
+        (setq slime-lisp-implementations `((sbcl (,sbcl-loc)))))
+      (setq slime-default-lisp 'sbcl))
     (when (boundp 'slime-lisp-implementations)
       (add-to-list 'load-path slime-loc)
       (require 'slime-autoloads)
@@ -72,9 +72,9 @@
                                                    (getenv "OCAML_TOPLEVEL_PATH")))))
 
 (when (and (executable-find "utop") (locate-file "utop.el" load-path))
-    (autoload 'utop "utop" "Toplevel for OCaml" t)
-    (autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
-    (add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer))
+  (autoload 'utop "utop" "Toplevel for OCaml" t)
+  (autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
+  (add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer))
 
 ;;; Scheme
 (defvar my-schemes-alist nil)
@@ -96,7 +96,7 @@
 (defun which-scheme (name)
   (interactive
    (let ((installed (delq nil (mapcar (lambda (element) (and (shell-command-p (cdr element))
-                                                        (car element)))
+                                                             (car element)))
                                       my-schemes-alist))))
      (list (completing-read "Which Scheme interpreter to run? " installed))))
   (if (assoc name my-schemes-alist)
@@ -121,7 +121,7 @@
                  (select-window (display-buffer (get-buffer scheme-buffer) t))
                  (goto-char (point-max))))))
          (define-key scheme-mode-map "\C-cd"
-             (lambda () (interactive) (chicken-doc 'sexp-at-point))))
+           (lambda () (interactive) (chicken-doc 'sexp-at-point))))
         (t (fmakunbound 'chicken-doc)
            (define-key scheme-mode-map "\C-cd" nil)))
   (autoload 'scheme-get-current-symbol-info
@@ -143,7 +143,7 @@
 (add-hook 'inferior-scheme-mode-hook 'my-scheme-complete)
 (add-hook 'inferior-scheme-mode-hook 'my-scheme-doc)
 
-;;; Racket
+;;; Geiser
 (when (file-directory-p (expand-directory-name "geiser" my-site-lisp-path))
   (defun load-geiser ()
     (interactive)
