@@ -46,4 +46,6 @@
 (add-hook 'gnus-server-mode-hook 'select-line-mode)
 (add-hook 'package-menu-mode-hook 'select-line-mode)
 
-(fringe-mode 1)
+(when (or (is-linux-p)
+          (and (is-darwin-p) (window-system)))
+  (fringe-mode 1))
