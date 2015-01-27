@@ -31,11 +31,6 @@ if [ "$(uname -s)" = "Darwin" ]; then
     else
         alias ls="ls -G"
     fi
-    
-    # OPAM configuration
-    if [ -d "$HOME/.opam" -a -n "$(type -P opam)" ]; then
-        . "$HOME/.opam/opam-init/init.sh" > /dev/null 2> /dev/null || true
-    fi
 
     # Display Nix profile
     if [ -e "$HOME/.nix-profile" -a -n "$(type -P nix-env)" ]; then
