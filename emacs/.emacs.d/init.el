@@ -9,8 +9,7 @@
       epa-armor t
       gnutls-min-prime-bits 1024
       ring-bell-function 'ignore
-      inhibit-startup-message t
-      split-width-threshold 240)
+      inhibit-startup-message t)
 
 (load custom-file t)
 
