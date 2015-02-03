@@ -14,6 +14,7 @@
 (load custom-file t)
 
 (setq-default indent-tabs-mode nil      ; also set by better-defaults
+              ispell-program-name "aspell"
               truncate-lines t)
 
 (require 'package)
