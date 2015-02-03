@@ -1,0 +1,28 @@
+-- -*-Haskell-*-
+
+Config { font         = "7x13"
+       , bgColor      = "black"
+       , fgColor      = "white"
+       , border       = FullB
+       , borderColor  = "#222222"
+       , lowerOnStart = True
+       , persistent   = True
+       , position     = Static { xpos = 0, ypos = 878, width = 1439, height = 20 }
+       , commands     = [ Run BatteryP ["BAT0"]
+                                       ["-t", "<acstatus>: <left>% / <timeleft>"]
+                                       600
+                        , Run CoreTemp ["-w", "3", "-t", "<core0>° <core1>°"] 50
+                        , Run Date "%a %b %_d %Y %H:%M:%S" "theDate" 10
+                        , Run DynNetwork ["-t", "<dev>"] 150
+                        -- , Run DynNetwork ["-w", "5", "-t", "<dev> <rx> KB (RX) <tx> KB (TX)"] 19
+                        , Run DiskU [("/", "<free> / <size>")]
+                                    ["-w", "4"]
+                                    300
+                        , Run MultiCpu ["-w", "3", "-t", "<total0>% <total1>%"] 20
+                        , Run Uptime [ ] 600
+                        , Run StdinReader
+                        ]
+       , sepChar      = "%"
+       , alignSep     = "}{"
+       , template     = " %theDate%  %uptime%  %battery%} %StdinReader% { %dynnetwork%    %disku%   %coretemp%  %multicpu%  "
+       }

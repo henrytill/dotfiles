@@ -24,3 +24,8 @@
 /emacs/.emacs.d/url
 
 /keysnail/plugins/option-as-meta.ks.js
+
+/xmonad/.xmonad/xmonad.errors
+/xmonad/.xmonad/xmonad.hi
+/xmonad/.xmonad/xmonad.o
+/xmonad/.xmonad/xmonad-x86_64-linux
