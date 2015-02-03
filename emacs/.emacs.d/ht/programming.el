@@ -1,5 +1,25 @@
 ;;;; Programming Modes
 
+;;; Flycheck
+(global-flycheck-mode 0)
+
+(flycheck-define-checker racket-alt
+  "A Racket syntax checker using the Racket compiler.
+
+See URL `http://racket-lang.org/'."
+  :command ("racket" "-f" source-inplace)
+  :error-patterns
+  ((error line-start (file-name) ":" line ":" column ":" (message) line-end))
+  :modes scheme-mode
+  :predicate (lambda ()
+               (and (buffer-file-name)
+                    (string-equal (file-name-extension (buffer-file-name))
+                                  "rkt"))))
+
+(add-to-list 'flycheck-checkers 'racket-alt)
+
+(setq flycheck-completion-system 'ido)
+
 ;;; C
 (setq c-default-style '((java-mode . "java")
                         (awk-mode . "awk")
@@ -20,6 +40,7 @@
 
 ;;; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'flycheck-mode)
 
 ;;; Lisp Modes
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
@@ -138,8 +159,7 @@
   (scheme-mode))
 
 (add-hook 'scheme-mode-hook 'paredit-mode)
-(add-hook 'scheme-mode-hook 'my-scheme-complete)
-(add-hook 'scheme-mode-hook 'my-scheme-doc)
+(add-hook 'scheme-mode-hook 'flycheck-mode)
 
 (add-hook 'inferior-scheme-mode-hook 'my-scheme-complete)
 (add-hook 'inferior-scheme-mode-hook 'my-scheme-doc)

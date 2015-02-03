@@ -29,6 +29,7 @@
                           company
                           dash
                           diminish
+                          flycheck
                           haskell-mode
                           magit
                           paredit
