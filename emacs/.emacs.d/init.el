@@ -1,4 +1,4 @@
-;;;; My Emacs 24 init.el file 
+;;;; init.el
 
 (require 'cl)
 
@@ -19,7 +19,7 @@
 
 (require 'package)
 (add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
 (when (null package-archive-contents)
@@ -86,11 +86,13 @@
   (require 'tramp)
   (add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
 
-(let ((my-site-lisp (expand-directory-name "site-lisp" user-emacs-directory)))
+(let ((my-site-lisp
+       (expand-directory-name "site-lisp" user-emacs-directory)))
   (when (file-directory-p my-site-lisp)
     (defconst my-site-lisp-path my-site-lisp)))
 
-(let ((nix-site-lisp (expand-directory-name "~/.nix-profile/share/emacs/site-lisp/")))
+(let ((nix-site-lisp
+       (expand-directory-name "~/.nix-profile/share/emacs/site-lisp/")))
   (when (file-directory-p nix-site-lisp)
     (add-to-list 'load-path nix-site-lisp)))
 
@@ -98,11 +100,14 @@
              (concat user-emacs-directory user-login-name)
              t "^[^#].*el$"))
 
+;;; Smex
 (setq smex-save-file (concat user-emacs-directory ".smex-items"))
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 
+;;; Undo-Tree
 (global-undo-tree-mode 1)
 
+;;; Company
 (global-company-mode 1)
 (setq company-global-modes '(not eshell-mode))
