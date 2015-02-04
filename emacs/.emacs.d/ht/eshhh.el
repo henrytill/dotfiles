@@ -37,10 +37,4 @@
   (interactive)
   (call-interactively 'run-scheme))
 
-(when (file-exists-p "~/bin/rc-shell")
-  (defun eshell/rc ()
-    (interactive)
-    (term "~/bin/rc-shell")
-    (rename-buffer "*rc*")))
-
 (defalias 'eshell/view 'view-file)
