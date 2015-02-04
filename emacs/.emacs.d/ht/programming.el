@@ -1,7 +1,7 @@
 ;;;; Programming Modes
 
 ;;; Flycheck
-(global-flycheck-mode 0)
+(require 'flycheck)
 
 (flycheck-define-checker racket-alt
   "A Racket syntax checker using the Racket compiler.
@@ -82,20 +82,23 @@ See URL `http://racket-lang.org/'."
       (slime-setup '(slime-fancy slime-banner)))))
 
 ;;; Nix
-(autoload 'nix-mode (expand-file-name "nix-mode.el" my-site-lisp-path) "Major mode for editing Nix expressions." t)
+(autoload 'nix-mode (expand-file-name "nix-mode.el" my-site-lisp-path)
+  "Major mode for editing Nix expressions." t)
 (push '("\\.nix\\'" . nix-mode) auto-mode-alist)
 (push '("\\.nix.in\\'" . nix-mode) auto-mode-alist)
 
 ;;; OCaml
 (when (and (file-directory-p "~/.opam") (executable-find "opam"))
-  (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
+  (dolist (var (car (read-from-string
+                     (shell-command-to-string "opam config env --sexp"))))
     (setenv (car var) (cadr var)))
   (setq exec-path (append (parse-colon-path (getenv "PATH"))
                           (list exec-directory)))
-  (when (file-directory-p (expand-directory-name "../../share/emacs/site-lisp"
-                                                 (getenv "OCAML_TOPLEVEL_PATH")))
-    (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp"
-                                                   (getenv "OCAML_TOPLEVEL_PATH")))))
+  (let ((ocaml-toplevel-path
+         (expand-directory-name "../../share/emacs/site-lisp"
+                                (getenv "OCAML_TOPLEVEL_PATH"))))
+    (when (file-directory-p ocaml-toplevel-path)
+      (add-to-list 'load-path ocaml-toplevel-path))))
 
 (when (and (executable-find "utop") (locate-file "utop.el" load-path))
   (autoload 'utop "utop" "Toplevel for OCaml" t)
