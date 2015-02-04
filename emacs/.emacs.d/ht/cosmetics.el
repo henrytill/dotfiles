@@ -53,4 +53,3 @@
 ;;; Whitespace Handling
 (setq whitespace-style '(face tabs lines-tail trailing empty))
 (setq whitespace-line-column 80)
-(global-whitespace-mode t)

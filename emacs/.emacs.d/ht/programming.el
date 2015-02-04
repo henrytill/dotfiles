@@ -1,5 +1,7 @@
 ;;;; Programming Modes
 
+(add-hook 'prog-mode-hook 'whitespace-mode)
+
 ;;; Flycheck
 (require 'flycheck)
 
