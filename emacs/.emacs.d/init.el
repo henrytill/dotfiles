@@ -88,7 +88,7 @@
 
 (let ((my-site-lisp (expand-directory-name "site-lisp" user-emacs-directory)))
   (when (file-directory-p my-site-lisp)
-    (defvar my-site-lisp-path my-site-lisp)))
+    (defconst my-site-lisp-path my-site-lisp)))
 
 (let ((nix-site-lisp (expand-directory-name "~/.nix-profile/share/emacs/site-lisp/")))
   (when (file-directory-p nix-site-lisp)
