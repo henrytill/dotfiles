@@ -39,8 +39,13 @@ See URL `http://racket-lang.org/'."
     (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)))
 
 ;;; Haskell
+(let ((hstyle (expand-file-name "haskell-style.el" my-site-lisp-path)))
+  (when (file-readable-p hstyle)
+    (load-file hstyle)))
+
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-hook 'haskell-mode-hook 'flycheck-mode)
+(add-hook 'haskell-mode-hook 'haskell-style)
 
 ;;; Lisp Modes
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
