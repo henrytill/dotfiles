@@ -11,11 +11,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
 
     PROMPT_COLOR="1;32m"
 
-    if [ -n "$NIX_MYENV_NAME" -a "$color_prompt" = yes ]; then
-        PS1='\n\[\033[$PROMPT_COLOR\]$NIX_MYENV_NAME:[\u@\h:\w]\$ \[\033[0m\]'
-    elif [ -n "$NIX_MYENV_NAME" ]; then
-        PS1='\n$NIX_MYENV_NAME:[\u@\h:\w]\$ '
-    elif [ "$color_prompt" = yes ]; then
+    if [ "$color_prompt" = yes ]; then
         PS1='\n\[\033[$PROMPT_COLOR\][\u@\h:\w]\$ \[\033[0m\]'
     else
         PS1='\n[\u@\h:\w]\$ '
@@ -26,11 +22,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
         . "$HOME/.bash_aliases"
     fi
 
-    if [ "$(type -P ls)" = "$HOME/.nix-profile/bin/ls" ]; then
-        alias ls="ls --color=tty"
-    else
-        alias ls="ls -G"
-    fi
+    alias ls="ls -G"
 
     # Display Nix profile
     if [ -e "$HOME/.nix-profile" -a -n "$(type -P nix-env)" ]; then
