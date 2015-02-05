@@ -105,9 +105,6 @@
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 
-;;; Undo-Tree
-(global-undo-tree-mode 1)
-
 ;;; Company
 (global-company-mode 1)
 (setq company-global-modes '(not eshell-mode))

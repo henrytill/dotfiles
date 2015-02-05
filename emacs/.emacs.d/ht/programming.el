@@ -1,5 +1,6 @@
 ;;;; Programming Modes
 
+(add-hook 'prog-mode-hook 'undo-tree-mode)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
 ;;; Flycheck
