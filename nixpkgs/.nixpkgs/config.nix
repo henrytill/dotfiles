@@ -1,44 +1,51 @@
 {
   allowUnfree = true;
 
-  packageOverrides = super:
-    let
-      self = super.pkgs;
-      inherit (self.stdenv) isDarwin isLinux;
-      inherit (self.stdenv.lib) optionals;
-    in
-    {
-      baseEnv = self.buildEnv {
+  packageOverrides = super: let self = super.pkgs; in {
+
+    emacs = if self.stdenv.isDarwin
+      then super.emacs24Macport
+      else super.emacs;
+
+    baseEnv =
+      let
+        inherit (self.stdenv) isDarwin isLinux;
+        inherit (self.stdenv.lib) optionals;
+        isNixOS = (isLinux && builtins.pathExists /etc/nixos);
+
+        haskellEnv = self.haskellngPackages.ghcWithPackages (p: with p; [
+          cabal-install
+          cabal2nix
+          hlint
+        ]);
+
+      in self.buildEnv {
         name = "my-base-environment";
         paths = with self;
-          # Common Packages
-          [ guile ]
-          # Darwin-specific Packages
-          ++ optionals isDarwin
-          [ coreutils
-            emacs24-nox
+          [ guile
+            nix-repl
+          ] ++ optionals (!isNixOS)
+          [ haskellEnv
+            emacs
             (gitAndTools.gitFull.override { guiSupport = false; })
             gnumake
             gnupg1compat
-            mosh
             mr
             offlineimap
             (pinentry.override { useGtk = false; })
-            stow
             rsync
+            stow
             tmux
             tree
             wget
             xz
-            youtube-dl
-          ]
-          # Linux-specific Packages
-          ++ optionals isLinux
+          ] ++ optionals isLinux
           [ leiningen
             pandoc
           ];
       };
 
-      vicare = self.callPackage ./pkgs/vicare { };
-    };
+    vicare = self.callPackage ./pkgs/vicare { };
+
+  };
 }
