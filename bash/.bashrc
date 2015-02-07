@@ -24,6 +24,10 @@ if [ "$(uname -s)" = "Darwin" ]; then
 
     alias ls="ls -G"
 
+    if [ -d "$HOME/.nix-profile/Applications/Emacs.app/" ]; then
+        alias Emacs.app="$HOME/.nix-profile/Applications/Emacs.app/Contents/MacOS/Emacs"
+    fi
+
     # Display Nix profile
     if [ -e "$HOME/.nix-profile" -a -n "$(type -P nix-env)" ]; then
         p() {
