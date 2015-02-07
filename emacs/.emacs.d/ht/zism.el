@@ -7,4 +7,5 @@
   (invert-face 'default)
   (set-frame-position (selected-frame) 0 0)
   (set-frame-size (selected-frame) 100 48)
+  (setq explicit-shell-file-name (expand-file-name "ansi-term" user-emacs-directory))
   (server-mode 1))

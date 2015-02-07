@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+cd $HOME; exec /bin/bash --login
