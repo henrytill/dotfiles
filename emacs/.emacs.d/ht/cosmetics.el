@@ -10,8 +10,10 @@
 (set-face-attribute 'mode-line-inactive nil :box nil)
 (set-face-attribute 'header-line nil :box nil)
 
+;;; Column Numbers
 (column-number-mode 1)
 
+;;; Diminish
 (eval-after-load 'company '(diminish 'company-mode))
 (eval-after-load 'eldoc '(diminish 'eldoc-mode))
 (eval-after-load 'paredit '(diminish 'paredit-mode))
@@ -35,6 +37,7 @@
 (setq-default cursor-type 'box)
 (blink-cursor-mode 0)
 
+;;; hl-line
 (defun select-line-mode ()
   (hl-line-mode 1)
   (setq cursor-type 'nil))

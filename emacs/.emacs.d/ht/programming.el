@@ -92,14 +92,12 @@ See URL `http://racket-lang.org/'."
 
 ;;; OCaml
 (when (and (file-directory-p "~/.opam") (executable-find "opam"))
-  (dolist (var (car (read-from-string
-                     (shell-command-to-string "opam config env --sexp"))))
+  (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
     (setenv (car var) (cadr var)))
   (setq exec-path (append (parse-colon-path (getenv "PATH"))
                           (list exec-directory)))
-  (let ((ocaml-toplevel-path
-         (expand-directory-name "../../share/emacs/site-lisp"
-                                (getenv "OCAML_TOPLEVEL_PATH"))))
+  (let ((ocaml-toplevel-path (expand-directory-name "../../share/emacs/site-lisp"
+                                                    (getenv "OCAML_TOPLEVEL_PATH"))))
     (when (file-directory-p ocaml-toplevel-path)
       (add-to-list 'load-path ocaml-toplevel-path))))
 

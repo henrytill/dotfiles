@@ -86,13 +86,11 @@
   (require 'tramp)
   (add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
 
-(let ((my-site-lisp
-       (expand-directory-name "site-lisp" user-emacs-directory)))
+(let ((my-site-lisp (expand-directory-name "site-lisp" user-emacs-directory)))
   (when (file-directory-p my-site-lisp)
     (defconst my-site-lisp-path my-site-lisp)))
 
-(let ((nix-site-lisp
-       (expand-directory-name "~/.nix-profile/share/emacs/site-lisp/")))
+(let ((nix-site-lisp (expand-directory-name "~/.nix-profile/share/emacs/site-lisp/")))
   (when (file-directory-p nix-site-lisp)
     (add-to-list 'load-path nix-site-lisp)))
 
