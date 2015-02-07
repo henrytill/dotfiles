@@ -49,10 +49,6 @@
 (add-hook 'gnus-server-mode-hook 'select-line-mode)
 (add-hook 'package-menu-mode-hook 'select-line-mode)
 
-(when (or (is-linux-p)
-          (and (is-darwin-p) (window-system)))
-  (fringe-mode 1))
-
 ;;; Whitespace Handling
 (setq whitespace-style '(face tabs lines-tail trailing empty))
 (setq whitespace-line-column 80)
