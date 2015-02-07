@@ -47,7 +47,6 @@ See URL `http://racket-lang.org/'."
     (load-file hstyle)))
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(add-hook 'haskell-mode-hook 'flycheck-mode)
 (add-hook 'haskell-mode-hook 'haskell-style)
 
 ;;; Lisp Modes
@@ -108,7 +107,6 @@ See URL `http://racket-lang.org/'."
 
 ;;; Scheme (Racket/Guile)
 (add-hook 'scheme-mode-hook 'paredit-mode)
-(add-hook 'scheme-mode-hook 'flycheck-mode)
 
 (when (file-directory-p (expand-directory-name "geiser" my-site-lisp-path))
   (load-file (expand-file-name "geiser/elisp/geiser.el" my-site-lisp-path)))
