@@ -24,6 +24,7 @@
         paths = with self;
           [ guile
             nix-repl
+            pandoc
           ] ++ optionals (!isNixOS)
           [ haskellEnv
             emacs
@@ -39,10 +40,9 @@
             tree
             wget
             xz
+            youtube-dl
           ] ++ optionals isLinux
-          [ leiningen
-            pandoc
-          ];
+          [ leiningen ];
       };
 
     vicare = self.callPackage ./pkgs/vicare { };
