@@ -2,6 +2,8 @@
 
 ;;; Darwin machines
 (when (and (is-darwin-p) (window-system))
+  (setq mac-command-modifier 'super
+        mac-option-modifier 'meta)
   (when (file-exists-p (expand-file-name "SourceCodePro-Light.ttf" "~/Library/Fonts"))
     (set-default-font "Source Code Pro Light 13"))
   (invert-face 'default)

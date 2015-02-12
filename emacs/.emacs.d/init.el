@@ -71,11 +71,6 @@
 (install-my-packages common-packages)
 
 (when (is-darwin-p)
-  (when (window-system)
-    (setq mac-command-modifier 'super
-          mac-option-modifier 'meta))
-  (setq use-dialog-box nil
-        save-interprogram-paste-before-kill nil)
   (install-my-packages darwin-packages)
   (exec-path-from-shell-initialize))
 
