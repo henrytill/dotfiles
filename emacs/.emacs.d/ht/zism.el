@@ -11,3 +11,8 @@
   (set-frame-size (selected-frame) 100 48)
   (setq explicit-shell-file-name (expand-file-name "ansi-term" user-emacs-directory))
   (server-mode 1))
+
+;;; NixOS machines
+(when (and (is-linux-p) (file-directory-p "/etc/nixos"))
+  (require 'tramp)
+  (add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
