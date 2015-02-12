@@ -1,7 +1,5 @@
 ;;;; init.el
 
-(require 'cl)
-
 (setq custom-file (expand-file-name "~/.emacs.d/custom.el")
       browse-url-browser-function 'browse-url-default-browser
       ido-use-virtual-buffers t
@@ -11,12 +9,13 @@
       ring-bell-function 'ignore
       inhibit-startup-message t)
 
-(load custom-file t)
-
 (setq-default indent-tabs-mode nil      ; also set by better-defaults
               ispell-program-name "aspell"
               truncate-lines t)
 
+(load custom-file t)
+
+;;; packages
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -44,19 +43,20 @@
 
 (defvar linux-packages '())
 
+;;; helper functions
 (defun is-darwin-p ()
   (string-equal system-type "darwin"))
 
 (defun is-linux-p ()
   (string-equal system-type "gnu/linux"))
 
-(defun el-command-v (cmd)
+(defun el-which (cmd)
   (replace-regexp-in-string "\\\n" ""
                             (shell-command-to-string
-                             (concat "command -v " cmd))))
+                             (concat "type -p " cmd))))
 
 (defun shell-command-p (cmd)
-  (let ((result (el-command-v cmd)))
+  (let ((result (el-which cmd)))
     (> (length result) 0)))
 
 (defun expand-directory-name (subdir &optional dir)
@@ -68,6 +68,7 @@
       (when (not (package-installed-p p))
         (package-install p)))))
 
+;;; install packages
 (install-my-packages common-packages)
 
 (when (is-darwin-p)
@@ -77,14 +78,17 @@
 (when (is-linux-p)
   (install-my-packages linux-packages))
 
+;; my-site-lisp
 (let ((my-site-lisp (expand-directory-name "site-lisp" user-emacs-directory)))
   (when (file-directory-p my-site-lisp)
     (defconst my-site-lisp-path my-site-lisp)))
 
+;;; add site-lisp from ~/.nix-profile
 (let ((nix-site-lisp (expand-directory-name "~/.nix-profile/share/emacs/site-lisp/")))
   (when (file-directory-p nix-site-lisp)
     (add-to-list 'load-path nix-site-lisp)))
 
+;;; load files from $HOME/.emacs.d/$USER
 (mapc 'load (directory-files
              (concat user-emacs-directory user-login-name)
              t "^[^#].*el$"))
