@@ -56,3 +56,6 @@
 ;;; Whitespace Handling
 (setq whitespace-style '(face tabs lines-tail trailing empty))
 (setq whitespace-line-column 80)
+
+;;; Hide vertical-border
+(set-face-attribute 'vertical-border nil :foreground "grey10")
