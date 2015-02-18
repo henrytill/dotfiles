@@ -2,9 +2,9 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
+import XMonad.Layout.LayoutHints
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
-import XMonad.Layout.NoFrillsDecoration
 import XMonad.Layout.Spacing
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Run
@@ -25,7 +25,9 @@ manageWorkspaces = composeAll . concat $
     browsers       = [ "Firefox" ]
 
 myKeys =
-    [ ("<XF86AudioMute>"       , spawn "amixer -q sset Master toggle")
+    [ ("M-p"                   , spawn "dmenu_run -fn 'M+ 1mn:pixelsize=14'")
+    , ("M-S-b"                 , spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi")
+    , ("<XF86AudioMute>"       , spawn "amixer -q sset Master toggle")
     , ("<XF86AudioRaiseVolume>", spawn "amixer -q sset Master 3+ unmute")
     , ("<XF86AudioLowerVolume>", spawn "amixer -q sset Master 3- unmute")
     , ("<XF86ScreenSaver>"     , spawn "i3lock")
@@ -34,18 +36,16 @@ myKeys =
 
 myLayout = laeiouts
   where
-    withTitles l = avoidStruts $ noFrillsDeco shrinkText myTheme $ spacing 1 l
-    laeiouts     = tiled ||| mirrored ||| fulled
-    tiled        = named "Tall"
-                   (withTitles (Tall nmaster delta ratio))
-    mirrored     = named "Mirrored"
-                   (withTitles (Mirror (Tall nmaster delta ratio)))
-    fulled       = named "Full" $ noBorders Full
     nmaster      = 1
     ratio        = 1/2
     delta        = 3/100
+    spaced l     = avoidStruts $ spacing 10 $ layoutHintsWithPlacement (0.5, 0.5) l
+    laeiouts     = tiled ||| mirrored ||| fulled
+    tiled        = named "Tall"     $ spaced (Tall nmaster delta ratio)
+    mirrored     = named "Mirrored" $ spaced (Mirror (Tall nmaster delta ratio))
+    fulled       = named "Full"     $ noBorders Full
 
-myLogHook h = dynamicLogWithPP $ xmobarPP
+myLogHook h = dynamicLogWithPP $ defaultPP
     { ppOutput = hPutStrLn h
     , ppSort   = getSortByXineramaRule
     }
@@ -56,32 +56,20 @@ myManageHook = composeAll
     , manageWorkspaces
     ]
 
-myTheme = defaultTheme
-    { activeColor         = blue
-    , inactiveColor       = grey
-    , activeBorderColor   = blue
-    , inactiveBorderColor = grey
-    , activeTextColor     = "white"
-    , inactiveTextColor   = lightGrey
-    , decoHeight          = 14
-    }
-  where
-    -- i3 colors
-    blue      = "#285577"
-    grey      = "#222222"
-    -- medGrey   = "#5f676a"
-    lightGrey = "#888888"
-
 main = do
   xmproc <- spawnPipe "xmobar $HOME/.xmobarrc"
   xmonad $ defaultConfig
     { modMask            = mod4Mask
+    , terminal           = "urxvt"
     , focusFollowsMouse  = False
     , layoutHook         = myLayout
     , logHook            = myLogHook xmproc
     , manageHook         = myManageHook
-    , borderWidth        = 1
-    , normalBorderColor  = inactiveBorderColor myTheme
-    , focusedBorderColor = activeBorderColor myTheme
+    , borderWidth        = 2
+    , normalBorderColor  = darkGrey
+    , focusedBorderColor = grey
     }
     `additionalKeysP` myKeys
+  where
+    grey      = "#222222"
+    darkGrey  = "#111111"
