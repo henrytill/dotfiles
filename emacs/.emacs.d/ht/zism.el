@@ -9,8 +9,7 @@
   (invert-face 'default)
   (set-frame-position (selected-frame) 0 0)
   (set-frame-size (selected-frame) 100 40)
-  (setq explicit-shell-file-name (expand-file-name "ansi-term" user-emacs-directory))
-  (server-mode 1))
+  (setq explicit-shell-file-name (expand-file-name "ansi-term" user-emacs-directory)))
 
 ;;; NixOS machines
 (when (and (is-linux-p) (file-directory-p "/etc/nixos"))
