@@ -1,14 +1,22 @@
-XTerm*font: 9x15
-XTerm*boldFont: 9x15bold
-XTerm*foreground: white
-XTerm*background: black
+URxvt*font: xft:M+ 1mn regular:pixelsize=14
+Urxvt*boldFont: xft:M+ 1mn bold:pixelsize=14
 
-XTerm*eightBitInput: false
-XTerm*eightBitOutput: true
-XTerm*saveLines: 8192
-XTerm*termName: xterm-256color
-XTerm*utf8: 1
+URxvt*depth: 32
+URxvt*foreground: white
+URxvt*background: black
 
-Emacs*font: 9x15
+URxvt*termName: xterm-256color
+URxvt*scrollBar: false
+URxvt*scrollTtyKeypress: true
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer: true
+
+URxvt.perl-ext: default,url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /run/current-system/sw/bin/xdg-open
+URxvt.url-select.underline: true
+
+Emacs*font: M+ 1mn regular:pixelsize=14
+Emacs*fontBackend: xft
 Emacs*foreground: white
 Emacs*background: black
