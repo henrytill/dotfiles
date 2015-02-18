@@ -15,7 +15,7 @@ if [[ $(uname) == Darwin ]]; then
         export PATH=$HOME/bin:$PATH
     fi
 
-    export EDITOR=emacsclient
+    export EDITOR='emacsclient -t --alternate-editor='
     export LANG=en_US.UTF-8
 
 fi
