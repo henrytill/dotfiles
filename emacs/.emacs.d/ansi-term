@@ -1,3 +1,5 @@
-#!/usr/bin/env sh
+#! /usr/bin/env sh
 
-cd $HOME; exec /bin/bash --login
+cd $HOME
+unset PATH
+exec $SHELL --login
