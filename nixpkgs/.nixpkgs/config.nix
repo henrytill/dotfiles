@@ -26,8 +26,8 @@
             nix-repl
             pandoc
           ] ++ optionals (!isNixOS)
-          [ haskellEnv
-            emacs
+          [ emacs
+            haskellEnv
             (gitAndTools.gitFull.override { guiSupport = false; })
             gnumake
             gnupg1compat
@@ -39,8 +39,11 @@
             tmux
             tree
             wget
+            xquartz
+            xterm
             xz
             youtube-dl
+            zsh
           ] ++ optionals isLinux
           [ leiningen ];
       };
