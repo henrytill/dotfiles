@@ -44,6 +44,10 @@ alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
 
+if [[ -e $(which htop) ]]; then
+    alias htop="TERM=xterm htop"
+fi
+
 if [[ -e $HOME/.nix-profile && -n $(type -p nix-env) ]]; then
     p() {
         clear
