@@ -1,8 +1,10 @@
 #! /usr/bin/env sh
 
-xsetroot -solid "black" -cursor_name left_ptr
+xsetroot -cursor_name left_ptr
 
 xset b off
+
+compton -bc
 
 unclutter -idle 1 &
 
