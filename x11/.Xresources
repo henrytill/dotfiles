@@ -1,5 +1,5 @@
 URxvt*font: xft:M+ 1mn regular:pixelsize=14
-Urxvt*boldFont: xft:M+ 1mn bold:pixelsize=14
+URxvt*boldFont: xft:M+ 1mn bold:pixelsize=14
 
 URxvt*depth: 32
 URxvt*foreground: white
