@@ -66,3 +66,12 @@ if [[ $(uname) == Darwin ]]; then
 
     export GPG_TTY=$(tty)
 fi
+
+# Gentoo-specific config
+if [[ -f /etc/gentoo-release ]]; then
+    alias ls="ls --color=tty"
+
+    if [[ $(tty) == /dev/tty1 ]]; then
+        exec startx
+    fi
+fi
