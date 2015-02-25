@@ -34,6 +34,7 @@
 (add-hook 'ido-setup-hook 'jf-ido-define-keys)
 
 ;;; Cursor
+(setq visible-cursor nil)
 (setq-default cursor-type 'box)
 (blink-cursor-mode 0)
 
