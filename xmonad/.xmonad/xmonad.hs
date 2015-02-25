@@ -9,6 +9,7 @@ import XMonad.Layout.Spacing
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Run
 import XMonad.Util.WorkspaceCompare (getSortByXineramaRule)
+import System.Exit
 
 manageWorkspaces = composeAll . concat $
     [ [ className =? c --> doFloat       | c <- myFloats ]
@@ -32,6 +33,7 @@ myKeys =
     , ("<XF86AudioLowerVolume>", spawn "amixer -q sset Master 3- unmute")
     , ("<XF86ScreenSaver>"     , spawn "i3lock")
     , ("<Print>"               , spawn "scrot ~/tmp/%Y%m%d%k%M%S-screenshot.png")
+    , ("C-M-<Backspace>"       , io (exitWith ExitSuccess))
     ]
 
 myLayout = laeiouts
