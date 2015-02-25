@@ -22,6 +22,8 @@ fi
 
 if [[ -f /etc/gentoo-release ]]; then
 
+    eval `ssh-agent`
+
     if [[ -d $HOME/.cabal/bin/ ]]; then
         export PATH=$HOME/.cabal/bin:$PATH
     fi
