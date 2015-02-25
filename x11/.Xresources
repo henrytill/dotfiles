@@ -22,7 +22,7 @@ URxvt*scrollWithBuffer: true
 
 URxvt.perl-ext: default,url-select
 URxvt.keysym.M-u: perl:url-select:select_next
-URxvt.url-select.launcher: /run/current-system/sw/bin/xdg-open
+URxvt.url-select.launcher: xdg-open
 URxvt.url-select.underline: true
 
 Emacs*font: M+ 1mn regular:pixelsize=14
