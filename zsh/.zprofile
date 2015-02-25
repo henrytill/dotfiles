@@ -22,6 +22,10 @@ fi
 
 if [[ -f /etc/gentoo-release ]]; then
 
+    if [[ -d $HOME/.cabal/bin/ ]]; then
+        export PATH=$HOME/.cabal/bin:$PATH
+    fi
+
     if [[ -d $HOME/bin ]]; then
         export PATH=$HOME/bin:$PATH
     fi
