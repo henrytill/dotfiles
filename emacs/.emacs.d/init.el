@@ -10,8 +10,7 @@
       inhibit-startup-message t)
 
 (setq-default indent-tabs-mode nil      ; also set by better-defaults
-              ispell-program-name "aspell"
-              truncate-lines t)
+              ispell-program-name "aspell")
 
 (load custom-file t)
 
