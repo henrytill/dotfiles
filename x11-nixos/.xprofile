@@ -1,5 +1,7 @@
 #! /usr/bin/env sh
 
+[[ -f $HOME/.zprofile ]] && source $HOME/.zprofile
+
 xsetroot -cursor_name left_ptr
 
 xset b off
