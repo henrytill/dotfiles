@@ -49,7 +49,7 @@ alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
 
-if [[ -e $(which htop) ]]; then
+if [[ -n $(command -v htop) ]]; then
     alias htop="TERM=xterm htop"
 fi
 
