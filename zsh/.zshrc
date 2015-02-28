@@ -53,6 +53,10 @@ if [[ -e $(which htop) ]]; then
     alias htop="TERM=xterm htop"
 fi
 
+if [[ -n $(command -v nix-shell) ]]; then
+    alias nix-shell="nix-shell --command zsh"
+fi
+
 if [[ -e $HOME/.nix-profile && -n $(type -p nix-env) ]]; then
     p() {
         clear
