@@ -57,7 +57,7 @@ if [[ -n $(command -v nix-shell) ]]; then
     alias nix-shell="nix-shell --command zsh"
 fi
 
-if [[ -e $HOME/.nix-profile && -n $(type -p nix-env) ]]; then
+if [[ -e $HOME/.nix-profile && -n $(command -v nix-env) ]]; then
     p() {
         clear
         echo 'Current Profile: ' && readlink $HOME/.nix-profile
