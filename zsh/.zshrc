@@ -3,7 +3,12 @@
 autoload -U promptinit
 promptinit
 prompt walters
-PROMPT=$'\n'$PROMPT
+
+if [[ -n $IN_NIX_SHELL ]]; then
+    PROMPT=$'\n%F{4}%B[nix-shell]%f%b '$PROMPT
+else
+    PROMPT=$'\n'$PROMPT
+fi
 
 setopt autocd
 setopt beep
