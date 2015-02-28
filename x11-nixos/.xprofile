@@ -6,6 +6,8 @@ xset b off
 
 compton -bc
 
+hsetroot -solid "#333344"
+
 unclutter -idle 1 &
 
 emacs --daemon
