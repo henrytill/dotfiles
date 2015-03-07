@@ -15,7 +15,6 @@ manageWorkspaces = composeAll . concat $
     [ [ className =? c --> doFloat       | c <- myFloats ]
     , [ className =? c --> doCenterFloat | c <- myCenterFloats ]
     , [ title     =? t --> doFloat       | t <- myTitleFloats ]
-    , [ className =? c --> doShift "9"   | c <- browsers ]
     ]
   where
     myFloats       = []
@@ -23,7 +22,6 @@ manageWorkspaces = composeAll . concat $
                      , "Xmessage"
                      ]
     myTitleFloats  = []
-    browsers       = [ "Firefox" ]
 
 myKeys =
     [ ("M-p"                   , spawn "dmenu_run -fn 'M+ 1mn:pixelsize=14'")
