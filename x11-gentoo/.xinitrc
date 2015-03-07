@@ -16,7 +16,7 @@ compton -bc
 
 hsetroot -solid "#333344"
 
-VBoxClient-all
+[[ $(hostname) == "thalassa" && -e /usr/bin/VBoxClient-all ]] && VBoxClient-all
 
 emacs --daemon
 
