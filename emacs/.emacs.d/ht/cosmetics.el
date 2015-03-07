@@ -52,11 +52,15 @@
 
 (when (or (is-linux-p)
           (and (is-darwin-p) (window-system)))
-  (fringe-mode 1))
+  (fringe-mode 2))
 
 ;;; Whitespace Handling
 (setq whitespace-style '(face tabs lines-tail trailing empty))
 (setq whitespace-line-column 80)
 
-;;; Hide vertical-border
+;;; Colors
+(when (and (is-darwin-p) (window-system))
+  (invert-face 'default))
+
+(set-face-attribute 'fringe nil :background "black")
 (set-face-attribute 'vertical-border nil :foreground "grey10")
