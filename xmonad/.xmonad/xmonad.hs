@@ -10,6 +10,7 @@ import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Run
 import XMonad.Util.WorkspaceCompare (getSortByXineramaRule)
 import System.Exit
+import System.Posix.Unistd
 
 manageWorkspaces = composeAll . concat $
     [ [ className =? c --> doFloat       | c <- myFloats ]
@@ -56,8 +57,12 @@ myManageHook = composeAll
     , manageWorkspaces
     ]
 
+myStatusBar :: String -> String
+myStatusBar host = "xmobar $HOME/etc/xmobar/xmobarrc-" ++ host
+
 main = do
-  xmproc <- spawnPipe "xmobar $HOME/.xmobarrc"
+  host <- fmap nodeName getSystemID
+  xmproc <- spawnPipe $ myStatusBar host
   xmonad $ defaultConfig
     { modMask            = mod4Mask
     , terminal           = "urxvt"
