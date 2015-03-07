@@ -4,6 +4,8 @@ exec > ~/.xsession-errors 2>&1
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
+[[ $(hostname) == "thaumas" ]] && xmodmap ~/etc/x11-gentoo/xmodmaprc-thaumas
+
 xsetroot -cursor_name left_ptr
 
 xset b off
