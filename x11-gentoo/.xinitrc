@@ -18,6 +18,8 @@ hsetroot -solid "#333344"
 
 [[ $(hostname) == "thalassa" && -e /usr/bin/VBoxClient-all ]] && VBoxClient-all
 
+eval `ssh-agent`
+
 emacs --daemon
 
 exec dbus-launch --sh-syntax --exit-with-session xmonad
