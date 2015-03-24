@@ -6,7 +6,6 @@
         mac-option-modifier 'meta)
   (when (file-exists-p (expand-file-name "mplus-1mn-regular.ttf" "~/Library/Fonts"))
     (set-face-attribute 'default t :font "M+ 1mn 14"))
-  (set-frame-position (selected-frame) 0 0)
   (set-frame-size (selected-frame) 100 40)
   (setq explicit-shell-file-name (expand-file-name "ansi-term" user-emacs-directory)))
 
