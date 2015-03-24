@@ -38,6 +38,7 @@
             stow
             tmux
             tree
+            weechat-minimal
             wget
             xz
             youtube-dl
@@ -49,6 +50,8 @@
             xterm
           ];
       };
+
+    weechat-minimal = self.callPackage ./pkgs/weechat/weechat-minimal.nix { };
 
     vicare = self.callPackage ./pkgs/vicare { };
 
