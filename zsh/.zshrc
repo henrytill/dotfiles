@@ -54,7 +54,7 @@ if [[ -n $(command -v htop) ]]; then
 fi
 
 if [[ -n $(command -v nix-shell) ]]; then
-    alias nix-shell="nix-shell --command zsh"
+    alias nix-zshell="nix-shell --command zsh"
 fi
 
 if [[ -e $HOME/.nix-profile && -n $(command -v nix-env) ]]; then
