@@ -35,6 +35,7 @@
                           pkg-info
                           rainbow-delimiters
                           smex
+                          sml-mode
                           tuareg
                           undo-tree))
 
