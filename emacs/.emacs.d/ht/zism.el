@@ -6,7 +6,8 @@
         mac-option-modifier 'meta)
   (when (file-exists-p (expand-file-name "mplus-1mn-regular.ttf" "~/Library/Fonts"))
     (set-face-attribute 'default t :font "M+ 1mn 14"))
-  (set-frame-size (selected-frame) 100 40)
+  (add-to-list 'default-frame-alist '(height . 40))
+  (add-to-list 'default-frame-alist '(width . 100))
   (setq explicit-shell-file-name (expand-file-name "ansi-term" user-emacs-directory)))
 
 ;;; NixOS machines
