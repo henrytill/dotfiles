@@ -120,6 +120,19 @@ See URL `http://racket-lang.org/'."
   (setq scheme-program-name "plt-r5rs")
   (setq geiser-mode-autodoc-p nil))
 
+(eval-after-load 'geiser-mode
+  '(progn (defun geiser-run-tests ()
+            (interactive)
+            (cond ((string-equal geiser-impl--implementation "racket")
+                   (progn (when (string-equal major-mode "scheme-mode")
+                            (geiser-mode-switch-to-repl-and-enter))
+                          (insert ",enter #f ")
+                          (geiser-repl--maybe-send)
+                          (insert "(require test-engine/racket-tests)\n")
+                          (insert "(test)")
+                          (geiser-repl--maybe-send)))
+                  (t nil)))))
+
 ;;; Supercollider
 (when (and (is-darwin-p)
            (executable-find "sclang")
