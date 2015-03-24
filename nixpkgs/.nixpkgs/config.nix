@@ -39,13 +39,15 @@
             tmux
             tree
             wget
-            xquartz
-            xterm
             xz
             youtube-dl
             zsh
           ] ++ optionals isLinux
-          [ leiningen ];
+          [ leiningen
+          ] ++ optionals isDarwin
+          [ xquartz
+            xterm
+          ];
       };
 
     vicare = self.callPackage ./pkgs/vicare { };
