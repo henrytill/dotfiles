@@ -23,7 +23,7 @@
 /emacs/.emacs.d/tramp
 /emacs/.emacs.d/url
 
-/keysnail/plugins/option-as-meta.ks.js
+/keysnail/plugins/*.ks.js
 
 /xmonad/.xmonad/xmonad.errors
 /xmonad/.xmonad/xmonad.hi
