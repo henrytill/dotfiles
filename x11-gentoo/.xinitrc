@@ -14,7 +14,7 @@ unclutter -idle 1 &
 
 compton -bc
 
-hsetroot -solid "#333344"
+hsetroot -solid "#5f5f5f"
 
 [[ $(hostname) == "thalassa" && -e /usr/bin/VBoxClient-all ]] && VBoxClient-all
 
