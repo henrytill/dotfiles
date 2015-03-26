@@ -71,10 +71,7 @@ main = do
     , logHook            = myLogHook xmproc
     , manageHook         = myManageHook
     , borderWidth        = 2
-    , normalBorderColor  = darkGrey
-    , focusedBorderColor = grey
+    , normalBorderColor  = "grey90"
+    , focusedBorderColor = "grey75"
     }
     `additionalKeysP` myKeys
-  where
-    grey      = "#222222"
-    darkGrey  = "#111111"
