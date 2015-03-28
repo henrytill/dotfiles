@@ -3,10 +3,6 @@
 
   packageOverrides = super: let self = super.pkgs; in {
 
-    emacs = if self.stdenv.isDarwin
-      then super.emacs24Macport
-      else super.emacs;
-
     baseEnv =
       let
         inherit (self.stdenv) isDarwin isLinux;
@@ -33,7 +29,6 @@
             gnupg1compat
             mr
             offlineimap
-            (pinentry.override { useGtk = false; })
             rsync
             stow
             tmux
@@ -51,9 +46,20 @@
           ];
       };
 
-    weechat-minimal = self.callPackage ./pkgs/weechat/weechat-minimal.nix { };
+    emacs = if self.stdenv.isDarwin
+      then super.emacs24Macport
+      else super.emacs;
+
+    pinentry = super.pinentry.override { gtk2 = null; };
 
     vicare = self.callPackage ./pkgs/vicare { };
+
+    weechat-minimal = self.callPackage ./pkgs/weechat/weechat-minimal.nix { };
+
+    youtube-dl = self.stdenv.lib.overrideDerivation super.youtube-dl (attrs: {
+      ffmpeg = null;
+      postInstall = "";
+    });
 
   };
 }
