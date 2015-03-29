@@ -2,12 +2,4 @@
 
 **$HOME/etc**
 
-Managed by [GNU Stow](http://www.gnu.org/software/stow/)
-
-To install:
-
-```bash
-$ git clone --recursive https://github.com/henrytill/dotfiles.git ~/etc
-$ cd ~/etc
-$ stow -v <package>
-```
+Managed by GNU [Make](https://www.gnu.org/software/make/) and [Stow](https://www.gnu.org/software/stow/)
