@@ -52,8 +52,6 @@
 
     pinentry = super.pinentry.override { gtk2 = null; };
 
-    vicare = self.callPackage ./pkgs/vicare { };
-
     weechat-minimal = self.callPackage ./pkgs/weechat/weechat-minimal.nix { };
 
     youtube-dl = self.stdenv.lib.overrideDerivation super.youtube-dl (attrs: {
