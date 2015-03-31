@@ -18,8 +18,7 @@
       in self.buildEnv {
         name = "my-base-environment";
         paths = with self;
-          [ guile
-            nix-repl
+          [ nix-repl
             pandoc
           ] ++ optionals (!isNixOS)
           [ emacs
@@ -53,11 +52,6 @@
     pinentry = super.pinentry.override { gtk2 = null; };
 
     weechat-minimal = self.callPackage ./pkgs/weechat/weechat-minimal.nix { };
-
-    youtube-dl = self.stdenv.lib.overrideDerivation super.youtube-dl (attrs: {
-      ffmpeg = null;
-      postInstall = "";
-    });
 
   };
 }
