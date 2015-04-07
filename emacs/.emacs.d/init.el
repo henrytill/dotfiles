@@ -33,6 +33,7 @@
                           magit
                           paredit
                           pkg-info
+                          queue
                           rainbow-delimiters
                           smex
                           sml-mode
