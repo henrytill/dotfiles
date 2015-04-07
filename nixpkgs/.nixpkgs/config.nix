@@ -40,7 +40,9 @@
           ] ++ optionals isLinux
           [ leiningen
           ] ++ optionals isDarwin
-          [ xquartz
+          [ aspell
+            aspellDicts.en
+            xquartz
             xterm
           ];
       };
