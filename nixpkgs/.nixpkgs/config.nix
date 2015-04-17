@@ -51,7 +51,9 @@
       then super.emacs24Macport
       else super.emacs;
 
-    pinentry = super.pinentry.override { gtk2 = null; };
+    pinentry = if self.stdenv.isDarwin
+      then super.pinentry.override { gtk2 = null; }
+      else super.pinentry;
 
     weechat-minimal = self.callPackage ./pkgs/weechat/weechat-minimal.nix { };
 
