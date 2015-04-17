@@ -1,7 +1,5 @@
 ;;;; Programming Modes
 
-(global-prettify-symbols-mode)
-
 (add-hook 'prog-mode-hook 'undo-tree-mode)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
@@ -109,9 +107,6 @@ See URL `http://racket-lang.org/'."
 
 ;;; Scheme (Racket/Guile)
 (add-hook 'scheme-mode-hook 'paredit-mode)
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (push '("lambda" . "\u03bb") prettify-symbols-alist)))
 
 (when (file-directory-p (expand-directory-name "geiser" my-site-lisp-path))
   (load-file (expand-file-name "geiser/elisp/geiser.el" my-site-lisp-path)))

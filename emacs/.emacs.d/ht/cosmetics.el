@@ -53,3 +53,11 @@
 ;;; Whitespace Handling
 (setq whitespace-style '(face tabs lines-tail trailing empty))
 (setq whitespace-line-column 80)
+
+;;; Prettify Symbols
+(when (and (>= emacs-major-version 24)
+           (>= emacs-minor-version 4))
+  (global-prettify-symbols-mode)
+  (defun scheme-prettify-symbols ()
+    (push '("lambda" . "\u03bb") prettify-symbols-alist))
+  (add-hook 'scheme-mode-hook 'scheme-prettify-symbols))
