@@ -32,7 +32,6 @@
             stow
             tmux
             tree
-            weechat-minimal
             wget
             xz
             youtube-dl
@@ -54,8 +53,6 @@
     pinentry = if self.stdenv.isDarwin
       then super.pinentry.override { gtk2 = null; }
       else super.pinentry;
-
-    weechat-minimal = self.callPackage ./pkgs/weechat/weechat-minimal.nix { };
 
   };
 }
