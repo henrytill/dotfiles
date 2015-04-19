@@ -76,9 +76,13 @@ if [[ $(uname) == Darwin ]]; then
     export GPG_TTY=$(tty)
 fi
 
+# Linux-specific config
+if [[ $(uname) == Linux ]]; then
+    alias ls="ls --color=tty"
+fi
+
 # Gentoo-specific config
 if [[ -f /etc/gentoo-release ]]; then
-    alias ls="ls --color=tty"
     alias sx="xtrlock &; sudo pm-suspend"
 
     if [[ $(tty) == /dev/tty1 ]]; then

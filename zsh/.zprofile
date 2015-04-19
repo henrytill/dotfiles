@@ -44,7 +44,7 @@ if [[ -d /etc/nixos ]]; then
 
 fi
 
-if [[ -f /etc/gentoo-release ]]; then
+if [[ $(uname) == Linux && ! -d /etc/nixos ]]; then
 
     if [[ -d $HOME/.cabal/bin/ ]]; then
         export PATH=$HOME/.cabal/bin:$PATH
