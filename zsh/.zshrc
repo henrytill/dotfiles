@@ -49,6 +49,10 @@ alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
 
+if [[ -n $(command -v gpg2) ]]; then
+    alias gpg="gpg2"
+fi
+
 if [[ -n $(command -v htop) ]]; then
     alias htop="TERM=xterm htop"
 fi
