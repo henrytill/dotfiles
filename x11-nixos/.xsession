@@ -13,3 +13,5 @@ hsetroot -solid "#5f5f5f"
 unclutter -idle 1 &
 
 emacs --daemon
+
+exec xmonad
