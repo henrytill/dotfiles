@@ -14,4 +14,4 @@ unclutter -idle 1 &
 
 emacs --daemon
 
-exec xmonad
+exec dbus-launch --sh-syntax --exit-with-session xmonad
