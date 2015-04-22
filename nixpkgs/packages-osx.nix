@@ -9,6 +9,7 @@ let
 in [
   aspell
   aspellDicts.en
+  cacert
   emacs24Macport
   (gitAndTools.gitFull.override { guiSupport = false; })
   gnumake
@@ -16,6 +17,8 @@ in [
   haskellEnv
   mr
   nix-repl
+  nixUnstable
+  nixops
   offlineimap
   rsync
   stow
