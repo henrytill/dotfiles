@@ -1,2 +1,2 @@
-(when (file-directory-p "~/Dropbox/doc/org/")
-  (set-register ?n '(file . "~/Dropbox/doc/org/notes.org")))
+(when (file-directory-p org-directory)
+  (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory))))

@@ -1,16 +1,22 @@
+;;;; Org
+
 (setq org-completion-use-ido t
-      org-src-fontify-natively t
-      org-confirm-babel-evaluate nil)
+      org-confirm-babel-evaluate nil
+      org-src-fontify-natively t)
 
-(org-babel-do-load-languages 'org-babel-load-languages  '((scheme . t)))
+(when (file-directory-p org-directory)
+  (let* ((notes-file
+          (expand-file-name "notes.org" org-directory))
+         (notes-template
+          `("n" "Notes" entry (file ,notes-file) "* %?\n  %i\n  %a"))
+         (todo-file
+          (expand-file-name "todo.org" org-directory))
+         (todo-template
+          `("t" "Todo" entry (file+headline ,todo-file "Tasks") "* TODO %?\n  %i\n  %a")))
+    (setq org-agenda-files (list org-directory)
+          org-capture-templates (list notes-template
+                                      todo-template)
+          org-default-notes-file notes-file)))
 
-(when (file-directory-p "~/Dropbox/doc/org/")
-  (setq org-directory "~/Dropbox/doc/org/"
-        org-default-notes-file (concat org-directory "notes.org")
-        org-agenda-files (concat org-directory "todo.org")
-        org-capture-templates '(("t" "Todo" entry (file+headline
-                                                   (concat org-directory "todo.org")
-                                                   "Tasks")
-                                 "* TODO %?\n  %i\n  %a")
-                                ("n" "Notes" entry (file org-default-notes-file)
-                                 "* %?\n  %i\n  %a"))))
+(org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
+                                                         (scheme . t)))

@@ -6,6 +6,7 @@
       ido-handle-duplicate-virtual-buffers 2
       epa-armor t
       gnutls-min-prime-bits 1024
+      org-directory "~/org"
       ring-bell-function 'ignore
       inhibit-startup-message t)
 
