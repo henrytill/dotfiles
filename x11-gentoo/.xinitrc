@@ -2,9 +2,21 @@
 
 exec > ~/.xsession-errors 2>&1
 
-[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+    eval `dbus-launch --sh-syntax --exit-with-session`
+fi
 
-[[ $(hostname) == "thaumas" ]] && xmodmap ~/etc/x11-gentoo/xmodmaprc-thaumas
+if test -x /usr/bin/VBoxClient-all; then
+    VBoxClient-all
+fi
+
+if test -f "$HOME/.Xresources"; then
+    xrdb -merge $HOME/.Xresources
+fi
+
+if test `hostname` = "thaumas"; then
+    xmodmap ~/etc/x11-gentoo/xmodmaprc-thaumas
+fi
 
 xsetroot -cursor_name left_ptr
 
@@ -16,10 +28,10 @@ compton -bc
 
 hsetroot -solid "#5f5f5f"
 
-[[ $(hostname) == "thalassa" && -e /usr/bin/VBoxClient-all ]] && VBoxClient-all
+eval `ssh-agent -s`
 
-eval `ssh-agent`
+if test ! `pgrep -u "$USER" -f "emacs --daemon"`; then
+    emacs --daemon
+fi
 
-emacs --daemon
-
-exec dbus-launch --sh-syntax --exit-with-session xmonad
+exec xmonad
