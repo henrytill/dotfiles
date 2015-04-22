@@ -1,6 +1,12 @@
 #! /usr/bin/env sh
 
-[[ -f $HOME/.zprofile ]] && source $HOME/.zprofile
+if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+    eval `dbus-launch --sh-syntax --exit-with-session`
+fi
+
+if test -f "$HOME/.zprofile"; then
+    source $HOME/.zprofile
+fi
 
 xsetroot -cursor_name left_ptr
 
@@ -12,6 +18,8 @@ hsetroot -solid "#5f5f5f"
 
 unclutter -idle 1 &
 
-emacs --daemon
+if test ! `pgrep -u $USER -f "emacs --daemon"`; then
+    emacs --daemon
+fi
 
-exec dbus-launch --sh-syntax --exit-with-session xmonad
+exec xmonad
