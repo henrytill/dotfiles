@@ -1,7 +1,7 @@
-;;;; ERC Config
+;;;; ERC
 
 (setq erc-fill-function 'erc-fill-static
-      erc-fill-static-center 14
+      erc-fill-static-center 19
       erc-hide-list '("JOIN" "PART" "QUIT")
       erc-prompt ">"
       erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
@@ -13,7 +13,5 @@
        (package-install 'erc-hl-nicks))
      (require 'erc-hl-nicks)
      (require 'erc-spelling)
-     (require 'erc-truncate)
      (add-to-list 'erc-modules 'hl-nicks)
-     (add-to-list 'erc-modules 'spelling)
-     (add-to-list 'erc-modules 'truncate)))
+     (add-to-list 'erc-modules 'spelling)))
