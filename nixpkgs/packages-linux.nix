@@ -29,6 +29,7 @@ in [
   iftop
   inkscape
   iotop
+  leiningen
   libnotify
   lsof
   mosh
@@ -39,7 +40,6 @@ in [
   rxvt_unicode_with-plugins
   scrot
   sshfsFuse
-  stow
   tigervnc
   tmux
   tree
