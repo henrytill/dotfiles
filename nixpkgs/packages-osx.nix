@@ -13,7 +13,6 @@ in [
   emacs24Macport
   (gitAndTools.gitFull.override { guiSupport = false; })
   gnumake
-  (gnupg.override { pinentry = pinentry.override { gtk2 = null; }; })
   haskellEnv
   mr
   nix-repl
