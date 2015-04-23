@@ -61,8 +61,8 @@
   (let ((result (el-which cmd)))
     (> (length result) 0)))
 
-(defun expand-directory-name (subdir &optional dir)
-  (file-name-as-directory (expand-file-name subdir dir)))
+(defun expand-directory-name (dir &optional parent-dir)
+  (file-name-as-directory (expand-file-name dir parent-dir)))
 
 (defun install-my-packages (pkgs)
   (unless (not pkgs)
