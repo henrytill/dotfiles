@@ -1,23 +1,13 @@
-with import <nixpkgs> {};
-
-let
-  haskellEnv = haskellngPackages.ghcWithPackages (p: with p; [
-    cabal-install
-    cabal2nix
-    hlint
-  ]);
-in [
+with import <nixpkgs> {}; [
   aspell
   aspellDicts.en
   cacert
   emacs24Macport
   (gitAndTools.gitFull.override { guiSupport = false; })
   gnumake
-  haskellEnv
   mr
   nix-repl
   nixUnstable
-  nixops
   offlineimap
   rsync
   stow
