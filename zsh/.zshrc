@@ -76,8 +76,6 @@ if [[ $(uname) == Darwin ]]; then
     if [[  -d $HOME/.nix-profile/Applications/Emacs.app/ ]]; then
         alias Emacs.app=$HOME/.nix-profile/Applications/Emacs.app/Contents/MacOS/Emacs
     fi
-
-    export GPG_TTY=$(tty)
 fi
 
 # Linux-specific config
