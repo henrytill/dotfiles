@@ -61,8 +61,15 @@ See URL `http://racket-lang.org/'."
 
 (add-hook 'lisp-mode-hook 'paredit-mode)
 
+;;; Quicklisp-related
+(let* ((quicklisp-loc (expand-directory-name "~/quicklisp"))
+       (clhs-use-local (expand-file-name "clhs-use-local.el" quicklisp-loc)))
+  ;; Local HyperSpec
+  (when (file-exists-p clhs-use-local)
+    (load-file clhs-use-local)))
+
 ;;; SLIME
-(let ((ccl-loc (executable-find "ccl"))
+(let ((ccl-loc (executable-find "ccl64"))
       (sbcl-loc (executable-find "sbcl"))
       (slime-loc (expand-directory-name "slime" my-site-lisp-path)))
   (when (file-directory-p slime-loc)
