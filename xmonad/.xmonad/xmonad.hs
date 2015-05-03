@@ -6,6 +6,9 @@ import XMonad.Layout.LayoutHints
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
+import XMonad.Prompt
+import XMonad.Prompt.Shell
+import XMonad.Prompt.Window
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Run
 import XMonad.Util.WorkspaceCompare (getSortByXineramaRule)
@@ -27,8 +30,11 @@ myConfig logproc = defaultConfig
 
 myKeys :: [(String, X ())]
 myKeys =
-    [ ("M-p"                   , spawn "dmenu_run -fn 'M+ 1mn:pixelsize=14'")
-    , ("M-S-b"                 , spawn myRestart)
+    [ ("M-S-b"                 , spawn myRestart)
+    , ("M-S-e"                 , spawn "emacsclient -c")
+    , ("M-b"                   , windowPromptBring myXPConfig)
+    , ("M-g"                   , windowPromptGoto  myXPConfig)
+    , ("M-p"                   , shellPrompt       myXPConfig { position = Top })
     , ("<XF86AudioMute>"       , spawn "amixer -q sset Master toggle")
     , ("<XF86AudioRaiseVolume>", spawn "amixer -q sset Master 3+ unmute")
     , ("<XF86AudioLowerVolume>", spawn "amixer -q sset Master 3- unmute")
@@ -37,11 +43,22 @@ myKeys =
     , ("C-M-<Backspace>"       , io exitSuccess)
     ]
   where
-    myRestart = unwords [ "if type xmonad;"
-                        , "then xmonad --recompile && xmonad --restart;"
-                        , "else xmessage xmonad not in \\$PATH: \"$PATH\";"
-                        , "fi"
-                        ]
+    myRestart = unwords
+        [ "if type xmonad;"
+        , "then xmonad --recompile && xmonad --restart;"
+        , "else xmessage xmonad not in \\$PATH: \"$PATH\";"
+        , "fi"
+        ]
+    myXPConfig = defaultXPConfig
+        { bgColor           = "#2a2a2a"
+        , bgHLight          = "darkseagreen2"
+        , fgColor           = "#dcdcdc"
+        , fgHLight          = "#2a2a2a"
+        , font              = "xft:M+ 1mn:pixelsize=14"
+        , height            = 24
+        , promptBorderWidth = 0
+        , promptKeymap      = emacsLikeXPKeymap
+        }
 
 myLayout = tiled ||| mirrored ||| fulled
   where
@@ -63,8 +80,8 @@ myLayout = tiled ||| mirrored ||| fulled
              . noBorders
              $ Full
 
-myLogHook h = dynamicLogWithPP defaultPP
-    { ppOutput = hPutStrLn h
+myLogHook logproc = dynamicLogWithPP defaultPP
+    { ppOutput = hPutStrLn logproc
     , ppSort   = getSortByXineramaRule
     }
 
@@ -78,7 +95,7 @@ myManageHook = composeAll
 
 main :: IO ()
 main = do
-    host <- fmap nodeName getSystemID
+    host   <- fmap nodeName getSystemID
     xmproc <- spawnPipe (myStatusBar host)
     xmonad (myConfig xmproc)
   where

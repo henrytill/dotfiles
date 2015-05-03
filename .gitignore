@@ -25,6 +25,7 @@
 
 /keysnail/plugins/*.ks.js
 
+/xmonad/.xmonad/history
 /xmonad/.xmonad/xmonad.errors
 /xmonad/.xmonad/xmonad.hi
 /xmonad/.xmonad/xmonad.o
