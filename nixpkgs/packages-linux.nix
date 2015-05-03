@@ -19,6 +19,7 @@ in [
   emacs
   file
   firefoxWrapper
+  ghostscript
   gimp
   gmrun
   gnupg
