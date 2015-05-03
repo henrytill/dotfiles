@@ -3,6 +3,7 @@ with import <nixpkgs> {}; [
   aspellDicts.en
   cacert
   emacs24Macport
+  ghostscript
   (gitAndTools.gitFull.override { guiSupport = false; })
   gnumake
   mr
