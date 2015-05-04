@@ -1,3 +1,4 @@
 packages-linux.nix
 packages-osx.nix
+packages-xmonad.nix
 pkgs
