@@ -7,9 +7,9 @@ nereus    = asdf emacs git keysnail leiningen nixpkgs sbcl tmux x11-osx zsh
 proteus   = dunst emacs git keysnail leiningen nixpkgs tmux x11-nixos xdg \
             xmonad zile zsh
 tethys    = dunst emacs git keysnail leiningen nixpkgs tmux x11-nixos xdg \
-            xmonad zile zsh
-thalassa  = emacs git keysnail leiningen tmux x11-gentoo xdg xmonad zile zsh
-thaumas   = emacs git keysnail leiningen tmux x11-gentoo xdg xmonad zile zsh
+            zile zsh
+thalassa  = emacs git keysnail leiningen tmux x11-gentoo xdg zile zsh
+thaumas   = emacs git keysnail leiningen tmux x11-gentoo xdg zile zsh
 
 # Base package set for undefined hosts
 BASE_PKGS = emacs git tmux zile zsh
