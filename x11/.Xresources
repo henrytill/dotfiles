@@ -6,19 +6,21 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 Xft.rgba: rgb
 
-URxvt*font: xft:M+ 1mn regular:pixelsize=14
-URxvt*boldFont: xft:M+ 1mn bold:pixelsize=14
+URxvt.font: xft:M+ 1mn regular:pixelsize=14
+URxvt.boldFont: xft:M+ 1mn bold:pixelsize=14
 
-URxvt*termName: xterm-256color
-URxvt*scrollBar: false
-URxvt*scrollTtyKeypress: true
-URxvt*scrollTtyOutput: false
-URxvt*scrollWithBuffer: true
+URxvt.internalBorder: 14
+
+URxvt.termName: xterm-256color
+URxvt.scrollBar: false
+URxvt.scrollTtyKeypress: true
+URxvt.scrollTtyOutput: false
+URxvt.scrollWithBuffer: true
 
 URxvt.perl-ext: default,url-select
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.url-select.launcher: xdg-open
 URxvt.url-select.underline: true
 
-Emacs*font: M+ 1mn regular:pixelsize=14
-Emacs*fontBackend: xft
+Emacs.font: M+ 1mn regular:pixelsize=14
+Emacs.fontBackend: xft
