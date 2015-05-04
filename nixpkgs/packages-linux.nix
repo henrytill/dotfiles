@@ -1,19 +1,7 @@
-with import <nixpkgs> {};
-
-let
-  compton-git = callPackage ./pkgs/compton/git.nix {};
-  haskellEnv  = haskellngPackages.ghcWithPackages (p: with p; [
-    cabal-install
-    cabal2nix
-    hlint
-    xmobar
-    xmonad
-    xmonad-contrib
-  ]);
-in [
+with import <nixpkgs> {}; [
   aspell
   aspellDicts.en
-  compton-git
+  conky
   (dmenu.override { enableXft = true; })
   dunst
   emacs
@@ -21,10 +9,7 @@ in [
   firefoxWrapper
   ghostscript
   gimp
-  gmrun
   gnupg
-  haskellEnv
-  hsetroot
   htop
   i3lock
   iftop
@@ -49,7 +34,6 @@ in [
   vlc
   wget
   xclip
-  xlibs.xmessage
   xz
   youtube-dl
 ]
