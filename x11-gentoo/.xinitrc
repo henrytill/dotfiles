@@ -15,18 +15,13 @@ if test -f "$HOME/.Xresources"; then
 fi
 
 if test `hostname` = "thaumas"; then
-    xmodmap ~/etc/x11-gentoo/xmodmaprc-thaumas
+    conkyrc="$HOME/etc/conky/conkyrc-thaumas"
+    xmodmap "$HOME/etc/x11-gentoo/xmodmaprc-thaumas"
 fi
 
-xsetroot -cursor_name left_ptr
+xsetroot -solid "#5f5f5f"
 
 xset b off
-
-unclutter -idle 1 &
-
-compton -bc
-
-hsetroot -solid "#5f5f5f"
 
 eval `ssh-agent -s`
 
@@ -34,4 +29,6 @@ if test ! `pgrep -u "$USER" -f "emacs --daemon"`; then
     emacs --daemon
 fi
 
-exec xmonad
+conky -c "${conkyrc:-$HOME/etc/conky/conkyrc-basic}" | while read LINE; do xsetroot -name "$LINE"; done &
+
+exec dwm
