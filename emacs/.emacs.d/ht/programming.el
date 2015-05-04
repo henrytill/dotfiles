@@ -119,8 +119,7 @@ See URL `http://racket-lang.org/'."
   (load-file (expand-file-name "geiser/elisp/geiser.el" my-site-lisp-path)))
 
 (when (executable-find "plt-r5rs")
-  (setq scheme-program-name "plt-r5rs")
-  (setq geiser-mode-autodoc-p nil))
+  (setq scheme-program-name "plt-r5rs"))
 
 (eval-after-load 'geiser-mode
   '(progn (defun geiser-run-tests ()
