@@ -1,14 +1,15 @@
 ;;;; init.el
 
-(setq custom-file (expand-file-name "~/.emacs.d/custom.el")
-      browse-url-browser-function 'browse-url-default-browser
-      ido-use-virtual-buffers t
-      ido-handle-duplicate-virtual-buffers 2
+(setq browse-url-browser-function 'browse-url-default-browser
+      custom-file (expand-file-name "custom.el" user-emacs-directory)
+      doc-view-resolution 300
       epa-armor t
       gnutls-min-prime-bits 1024
+      ido-handle-duplicate-virtual-buffers 2
+      ido-use-virtual-buffers t
+      inhibit-startup-message t
       org-directory "~/org"
-      ring-bell-function 'ignore
-      inhibit-startup-message t)
+      ring-bell-function 'ignore)
 
 (setq-default indent-tabs-mode nil      ; also set by better-defaults
               ispell-program-name "aspell")
