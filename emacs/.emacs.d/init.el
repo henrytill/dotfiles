@@ -20,6 +20,8 @@
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (package-initialize)
 
 (when (null package-archive-contents)
@@ -32,11 +34,11 @@
                           diminish
                           flycheck
                           haskell-mode
+                          idle-highlight-mode
                           magit
                           paredit
                           pkg-info
                           queue
-                          rainbow-delimiters
                           smex
                           sml-mode
                           tuareg
@@ -92,9 +94,8 @@
     (add-to-list 'load-path nix-site-lisp)))
 
 ;;; load files from $HOME/.emacs.d/$USER
-(mapc 'load (directory-files
-             (concat user-emacs-directory user-login-name)
-             t "^[^#].*el$"))
+(mapc 'load (directory-files (concat user-emacs-directory user-login-name)
+                             t "^[^#].*el$"))
 
 ;;; Smex
 (setq smex-save-file (concat user-emacs-directory ".smex-items"))
