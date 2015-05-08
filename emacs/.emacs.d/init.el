@@ -37,6 +37,7 @@
                           idle-highlight-mode
                           magit
                           paredit
+                          paren-face
                           pkg-info
                           queue
                           smex

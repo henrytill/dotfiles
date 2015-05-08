@@ -61,3 +61,7 @@
   (defun scheme-prettify-symbols ()
     (push '("lambda" . "\u03bb") prettify-symbols-alist))
   (add-hook 'scheme-mode-hook 'scheme-prettify-symbols))
+
+;;; paren-face
+(setq paren-face-regexp "[][(){}]")
+(global-paren-face-mode)
