@@ -9,7 +9,8 @@
       ido-use-virtual-buffers t
       inhibit-startup-message t
       org-directory "~/org"
-      ring-bell-function 'ignore)
+      ring-bell-function 'ignore
+      scroll-conservatively 1)
 
 (setq-default indent-tabs-mode nil      ; also set by better-defaults
               ispell-program-name "aspell")
