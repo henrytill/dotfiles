@@ -37,6 +37,7 @@
                           haskell-mode
                           idle-highlight-mode
                           magit
+                          page-break-lines
                           paredit
                           paren-face
                           pkg-info

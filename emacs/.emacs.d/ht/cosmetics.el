@@ -16,6 +16,7 @@
 ;;; Diminish
 (eval-after-load 'company '(diminish 'company-mode))
 (eval-after-load 'eldoc '(diminish 'eldoc-mode))
+(eval-after-load 'page-break-lines '(diminish 'page-break-lines-mode))
 (eval-after-load 'paredit '(diminish 'paredit-mode))
 
 ;;; Display ido results vertically, rather than horizontally

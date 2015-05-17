@@ -1,12 +1,16 @@
 ;;;; Programming Modes
 
 (add-hook 'prog-mode-hook 'ht-add-watchwords)
+(add-hook 'prog-mode-hook 'page-break-lines-mode)
 (add-hook 'prog-mode-hook 'undo-tree-mode)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
 ;;; Warning Keywords
 (defun ht-add-watchwords ()
   (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
+
+;;; page-break-lines
+(setq page-break-lines-char ?-)
 
 ;;; Flycheck
 (require 'flycheck)
