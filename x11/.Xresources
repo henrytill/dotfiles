@@ -17,8 +17,10 @@ URxvt.scrollTtyKeypress: true
 URxvt.scrollTtyOutput: false
 URxvt.scrollWithBuffer: true
 
-URxvt.perl-ext: default,url-select
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
 URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.perl-ext: default,keyboard-select,url-select
 URxvt.url-select.launcher: xdg-open
 URxvt.url-select.underline: true
 
