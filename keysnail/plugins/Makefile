@@ -9,20 +9,26 @@ URL_option-as-meta = https://dl.dropboxusercontent.com/u/313738/keysnail/option-
 
 FETCH = curl -O
 
-all: plugins
-
 ifeq ($(shell uname),Darwin)
-plugins: $(COMMON_PLUGINS:=.ks.js) $(DARWIN_PLUGINS:=.ks.js)
+  PLUGINS = $(COMMON_PLUGINS:=.ks.js) $(DARWIN_PLUGINS:=.ks.js)
 else
-plugins: $(COMMON_PLUGINS:=.ks.js)
+  PLUGINS = $(COMMON_PLUGINS:=.ks.js)
 endif
 
+all: $(PLUGINS)
+
 option-as-meta.ks.js:
-	$(FETCH) $(URL_option-as-meta)
-	sed -i '' 's/KeySnail.Key/key/g' $@
+	@echo fetching $@
+	@$(FETCH) $(URL_option-as-meta)
+	@echo patching $@
+	@sed -i '' 's/KeySnail.Key/key/g' $@
 
 %.ks.js:
-	$(FETCH) $(URL_$*)
+	@echo fetching $@
+	@$(FETCH) $(URL_$*)
 
 clean:
-	rm *.ks.js
+	@echo cleaning
+	@rm $(PLUGINS)
+
+.PHONY: all clean
