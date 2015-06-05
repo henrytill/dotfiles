@@ -45,10 +45,14 @@ See URL `http://racket-lang.org/'."
 (let ((cider-loc (expand-directory-name "cider" my-site-lisp-path)))
   (when (file-directory-p cider-loc)
     (add-to-list 'load-path cider-loc)
-    (autoload 'cider-connect "cider.el" nil t)
-    (autoload 'cider-jack-in "cider.el" nil t)
+    (require 'cider)
+    (require 'cider-apropos)
+    (require 'cider-grimoire)
+    (require 'cider-inspector)
+    (require 'cider-macroexpansion)
     (add-hook 'clojure-mode-hook 'paredit-mode)
-    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)))
+    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+    (setq cider-show-error-buffer 'except-in-repl)))
 
 ;;; Haskell
 (let ((hstyle (expand-file-name "haskell-style.el" my-site-lisp-path)))
