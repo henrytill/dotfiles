@@ -23,6 +23,8 @@ xsetroot -solid "#5f5f5f"
 
 xset b off
 
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 eval `ssh-agent -s`
 
 if test ! `pgrep -u "$USER" -f "emacs --daemon"`; then
