@@ -51,7 +51,7 @@ See URL `http://racket-lang.org/'."
     (require 'cider-inspector)
     (require 'cider-macroexpansion)
     (add-hook 'clojure-mode-hook 'paredit-mode)
-    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+    (add-hook 'cider-mode-hook 'eldoc-mode)
     (setq cider-show-error-buffer 'except-in-repl)))
 
 ;;; Haskell

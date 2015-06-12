@@ -1,1 +1,2 @@
-{:user {:plugins [[cider/cider-nrepl "0.8.2"]]}}
+{:user {:dependencies [[org.clojure/tools.nrepl "0.2.10"]]
+        :plugins [[cider/cider-nrepl "0.9.0-SNAPSHOT"]]}}
