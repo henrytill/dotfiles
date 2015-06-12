@@ -80,3 +80,16 @@
     (if (y-or-n-p "Start REPL now? ")
         (call-interactively 'run-geiser)
       (message nil))))
+
+(eval-after-load 'geiser-mode
+  '(progn (defun geiser-run-tests ()
+            (interactive)
+            (cond ((string-equal geiser-impl--implementation "racket")
+                   (progn (when (string-equal major-mode "scheme-mode")
+                            (geiser-mode-switch-to-repl-and-enter))
+                          (insert ",enter #f ")
+                          (geiser-repl--maybe-send)
+                          (insert "(require test-engine/racket-tests)\n")
+                          (insert "(test)")
+                          (geiser-repl--maybe-send)))
+                  (t nil)))))

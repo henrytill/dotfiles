@@ -50,9 +50,10 @@ See URL `http://racket-lang.org/'."
     (require 'cider-grimoire)
     (require 'cider-inspector)
     (require 'cider-macroexpansion)
-    (add-hook 'clojure-mode-hook 'paredit-mode)
     (add-hook 'cider-mode-hook 'eldoc-mode)
     (setq cider-show-error-buffer 'except-in-repl)))
+
+(add-hook 'clojure-mode-hook 'paredit-mode)
 
 ;;; Haskell
 (let ((hstyle (expand-file-name "haskell-style.el" my-site-lisp-path)))
@@ -113,8 +114,6 @@ See URL `http://racket-lang.org/'."
 (when (and (file-directory-p "~/.opam") (executable-find "opam"))
   (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
     (setenv (car var) (cadr var)))
-  (setq exec-path (append (parse-colon-path (getenv "PATH"))
-                          (list exec-directory)))
   (let ((ocaml-toplevel-path (expand-directory-name "../../share/emacs/site-lisp"
                                                     (getenv "OCAML_TOPLEVEL_PATH"))))
     (when (file-directory-p ocaml-toplevel-path)
@@ -133,19 +132,6 @@ See URL `http://racket-lang.org/'."
 
 (when (executable-find "plt-r5rs")
   (setq scheme-program-name "plt-r5rs"))
-
-(eval-after-load 'geiser-mode
-  '(progn (defun geiser-run-tests ()
-            (interactive)
-            (cond ((string-equal geiser-impl--implementation "racket")
-                   (progn (when (string-equal major-mode "scheme-mode")
-                            (geiser-mode-switch-to-repl-and-enter))
-                          (insert ",enter #f ")
-                          (geiser-repl--maybe-send)
-                          (insert "(require test-engine/racket-tests)\n")
-                          (insert "(test)")
-                          (geiser-repl--maybe-send)))
-                  (t nil)))))
 
 ;;; Supercollider
 (when (and (is-darwin-p)
