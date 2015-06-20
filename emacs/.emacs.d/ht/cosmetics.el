@@ -66,3 +66,12 @@
 ;;; paren-face
 (setq paren-face-regexp "[][(){}]")
 (global-paren-face-mode)
+
+;;; ANSI colors in compilation-mode
+(require 'ansi-color)
+
+(defun ht-display-ansi-colors ()
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
+(add-hook 'compilation-filter-hook 'ht-display-ansi-colors)
