@@ -36,6 +36,7 @@
                           flycheck
                           haskell-mode
                           idle-highlight-mode
+                          inf-clojure
                           magit
                           page-break-lines
                           paredit
