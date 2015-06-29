@@ -47,9 +47,13 @@ See URL `http://racket-lang.org/'."
     (add-to-list 'load-path cider-loc)
     (require 'cider)
     (require 'cider-apropos)
+    (require 'cider-browse-ns)
+    (require 'cider-classpath)
     (require 'cider-grimoire)
     (require 'cider-inspector)
     (require 'cider-macroexpansion)
+    (require 'cider-scratch)
+    (require 'cider-selector)
     (add-hook 'cider-mode-hook 'eldoc-mode)
     (setq cider-show-error-buffer 'except-in-repl)))
 
