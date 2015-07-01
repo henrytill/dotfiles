@@ -16,7 +16,7 @@ fi
 
 if test `hostname` = "thaumas"; then
     conkyrc="$HOME/etc/conky/conkyrc-thaumas"
-    xmodmap "$HOME/etc/x11-gentoo/xmodmaprc-thaumas"
+    xmodmap "$HOME/etc/x11/xmodmaprc-thaumas"
 fi
 
 xsetroot -solid "#5f5f5f"
