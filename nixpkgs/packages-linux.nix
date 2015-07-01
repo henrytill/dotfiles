@@ -8,12 +8,9 @@ with import <nixpkgs> {}; [
   file
   firefoxWrapper
   ghostscript
-  gimp
-  gnupg
   htop
   i3lock
   iftop
-  inkscape
   iotop
   leiningen
   libnotify
@@ -21,12 +18,12 @@ with import <nixpkgs> {}; [
   mosh
   mupdf
   nix-repl
+  nodejs
   obnam
   racket
   rxvt_unicode_with-plugins
   scrot
   sshfsFuse
-  tigervnc
   tmux
   tree
   unclutter
@@ -34,6 +31,7 @@ with import <nixpkgs> {}; [
   vlc
   wget
   xclip
+  xlibs.xmodmap
   xz
   youtube-dl
 ]
