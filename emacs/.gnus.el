@@ -5,20 +5,20 @@
       gnus-agent-synchronize-flags t
       gnus-always-dribble-file t
       gnus-asynchronous t
-      gnus-directory (expand-directory-name "news" user-emacs-directory)
+      gnus-directory (concat user-emacs-directory "news")
       gnus-dribble-directory user-emacs-directory
       gnus-fetch-old-headers 'some
       gnus-gcc-mark-as-read t
       gnus-home-directory user-emacs-directory
       gnus-ignored-from-addresses "Henry Till"
-      gnus-kill-files-directory (expand-directory-name "news" user-emacs-directory)
+      gnus-kill-files-directory (concat user-emacs-directory "news")
       gnus-message-archive-group "sent"
       gnus-select-method '(nnnil "")
       gnus-treat-display-smileys nil
       gnus-use-full-window nil
       mail-source-delete-incoming nil
-      mail-source-directory (expand-directory-name "mail" user-emacs-directory)
-      message-directory (expand-directory-name "mail" user-emacs-directory)
+      mail-source-directory (concat user-emacs-directory "mail")
+      message-directory (concat user-emacs-directory "mail")
       message-kill-buffer-on-exit t
       nnmail-crosspost nil
       user-full-name "Henry Till"
