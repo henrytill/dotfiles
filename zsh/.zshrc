@@ -74,7 +74,7 @@ if [[ $(uname) == Darwin ]]; then
     alias ls="ls -G"
 
     if [[  -d $HOME/.nix-profile/Applications/Emacs.app/ ]]; then
-        alias Emacs.app=$HOME/.nix-profile/Applications/Emacs.app/Contents/MacOS/Emacs
+        alias Emacs.app="open -n -a $HOME/.nix-profile/Applications/Emacs.app"
     fi
 fi
 
