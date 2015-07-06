@@ -13,7 +13,13 @@
     (when (file-exists-p mplus-font)
       (set-face-attribute 'default nil :font "M+ 1mn 14"))
     (add-to-list 'default-frame-alist '(height . 40))
-    (add-to-list 'default-frame-alist '(width . 100))))
+    (add-to-list 'default-frame-alist '(width . 100))
+    (defun ht-reset-frame ()
+      (interactive)
+      (let ((height (cdr (assq 'height default-frame-alist)))
+            (width (cdr (assq 'width default-frame-alist))))
+        (set-frame-height (selected-frame) height)
+        (set-frame-width (selected-frame) width)))))
 
 ;;; NixOS machines
 (when (and (is-linux-p) (file-directory-p "/etc/nixos"))
