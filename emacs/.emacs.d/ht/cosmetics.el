@@ -36,8 +36,7 @@
 
 ;;; Cursor
 (setq visible-cursor nil)
-(setq-default cursor-type 'box)
-(blink-cursor-mode 0)
+(setq-default cursor-type 'bar)
 
 ;;; hl-line
 (defun select-line-mode ()
