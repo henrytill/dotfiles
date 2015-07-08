@@ -10,6 +10,7 @@ with import <nixpkgs> {}; [
   nix-repl
   nixUnstable
   offlineimap
+  postgresql94
   rsync
   stow
   tmux
