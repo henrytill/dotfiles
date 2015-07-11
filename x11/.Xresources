@@ -9,13 +9,13 @@ Xft.rgba: rgb
 URxvt.font: xft:M+ 1mn regular:pixelsize=14
 URxvt.boldFont: xft:M+ 1mn bold:pixelsize=14
 
+URxvt.cursorBlink: true
 URxvt.internalBorder: 14
-
-URxvt.termName: xterm-256color
 URxvt.scrollBar: false
 URxvt.scrollTtyKeypress: true
 URxvt.scrollTtyOutput: false
 URxvt.scrollWithBuffer: true
+URxvt.termName: xterm-256color
 
 URxvt.keysym.M-Escape: perl:keyboard-select:activate
 URxvt.keysym.M-s: perl:keyboard-select:search
