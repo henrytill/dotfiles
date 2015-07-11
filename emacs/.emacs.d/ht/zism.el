@@ -24,4 +24,6 @@
 ;;; NixOS machines
 (when (and (is-linux-p) (file-directory-p "/etc/nixos"))
   (require 'tramp)
-  (add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
+  (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
+  (set-face-attribute 'region nil :background "lightgoldenrod2")
+  (set-face-attribute 'region nil :foreground "black"))
