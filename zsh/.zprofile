@@ -16,7 +16,7 @@ if [[ $(uname) == Darwin ]]; then
 
     if [[ -d /opt/gradle-2.4 ]]; then
         export GRADLE_HOME=/opt/gradle-2.4
-        export PATH=$PATH:$GRADLE_HOME/bin
+        export PATH=$GRADLE_HOME/bin:$PATH
     fi
 
     if [[ -d $HOME/bin ]]; then
