@@ -70,6 +70,10 @@ if [[ -n $(command -v nix-shell) ]]; then
     alias nix-zshell="nix-shell --command zsh"
 fi
 
+if [[ -n $(command -v npm) ]]; then
+    alias npm-exec="PATH=$(npm bin):$PATH"
+fi
+
 if [[ -e $HOME/.nix-profile && -n $(command -v nix-env) ]]; then
     p() {
         clear
