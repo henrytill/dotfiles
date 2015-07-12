@@ -14,6 +14,10 @@ if [[ $(uname) == Darwin ]]; then
         export FONTCONFIG_FILE=$NIX_LINK/etc/X11/fonts.conf
     fi
 
+    if [[ -d /opt/apache-maven-3.3.3 ]]; then
+        export PATH=/opt/apache-maven-3.3.3/bin:$PATH
+    fi
+
     if [[ -d /opt/gradle-2.4 ]]; then
         export GRADLE_HOME=/opt/gradle-2.4
         export PATH=$GRADLE_HOME/bin:$PATH
