@@ -74,3 +74,11 @@
     (ansi-color-apply-on-region (point-min) (point-max))))
 
 (add-hook 'compilation-filter-hook 'ht-display-ansi-colors)
+
+;;; Truncate Lines
+(defun ht-toggle-truncate-lines ()
+  (setq truncate-lines t))
+
+(add-hook 'compilation-mode-hook 'ht-toggle-truncate-lines)
+(add-hook 'dired-mode-hook 'ht-toggle-truncate-lines)
+(add-hook 'shell-mode-hook 'ht-toggle-truncate-lines)
