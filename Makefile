@@ -55,7 +55,7 @@ install: $(TARG_DIRS)
 	@stow -v $(PKG_SET)
 	@$(INSTALL_HOOK)
 
-reinstall:
+reinstall: $(TARG_DIRS)
 	@stow -Rv $(PKG_SET)
 	@$(REINSTALL_HOOK)
 
