@@ -1,7 +1,5 @@
 XTerm*font: 9x15
 XTerm*boldFont: 9x15bold
-XTerm*foreground: white
-XTerm*background: black
 
 XTerm*eightBitInput: false
 XTerm*eightBitOutput: true
