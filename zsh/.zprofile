@@ -10,10 +10,6 @@ if [[ $(uname) == Darwin ]]; then
         export ASPELL_CONF='dict-dir $NIX_LINK/lib/aspell'
     fi
 
-    if [[ -n $NIX_LINK && -f $NIX_LINK/etc/X11/fonts.conf ]]; then
-        export FONTCONFIG_FILE=$NIX_LINK/etc/X11/fonts.conf
-    fi
-
     if [[ -d /opt/apache-maven-3.3.3 ]]; then
         export PATH=/opt/apache-maven-3.3.3/bin:$PATH
     fi
