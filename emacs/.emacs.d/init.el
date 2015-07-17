@@ -109,3 +109,6 @@
 ;;; Company
 (global-company-mode 1)
 (setq company-global-modes '(not eshell-mode))
+
+;;; Magit
+(setq magit-last-seen-setup-instructions "1.4.0")
