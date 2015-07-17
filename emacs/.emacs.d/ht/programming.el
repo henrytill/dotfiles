@@ -45,6 +45,7 @@ See URL `http://racket-lang.org/'."
 (let ((cider-loc (expand-directory-name "cider" my-site-lisp-path)))
   (when (file-directory-p cider-loc)
     (add-to-list 'load-path cider-loc)
+    (require 'cl)
     (require 'cider)
     (require 'cider-apropos)
     (require 'cider-browse-ns)
