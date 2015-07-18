@@ -1,0 +1,9 @@
+# -*- mode: conf; -*-
+
+[Unit]
+Description=conky
+
+[Service]
+Type=forking
+ExecStart=/home/ht/bin/start-conky
+Environment="DISPLAY=:0"

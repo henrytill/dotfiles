@@ -4,11 +4,11 @@ MY_HOSTS  = glaucus nereus proteus tethys thalassa thaumas
 # hosts and their package sets
 glaucus   = emacs git nixpkgs tmux zile zsh
 nereus    = asdf emacs git keysnail leiningen nixpkgs sbcl tmux x11-osx zsh
-tethys    = dunst emacs git keysnail leiningen nixpkgs tmux x11-nixos xdg \
-            zile zsh
+tethys    = dunst emacs git keysnail leiningen nixpkgs systemd tmux \
+            x11-nixos xdg zile zsh
 thalassa  = emacs git keysnail leiningen tmux x11-gentoo xdg zile zsh
-thaumas   = dunst emacs git keysnail leiningen nixpkgs tmux x11-nixos xdg \
-            zile zsh
+thaumas   = dunst emacs git keysnail leiningen nixpkgs systemd tmux \
+            x11-nixos xdg zile zsh
 
 # base package set for undefined hosts
 BASE_PKGS = emacs git tmux zile zsh
@@ -42,6 +42,11 @@ ifneq (,$(findstring leiningen,$(PKG_SET)))
   TARG_DIRS += ../.lein
 endif
 
+# systemd
+ifneq (,$(findstring systemd,$(PKG_SET)))
+  TARG_DIRS += ../.config/systemd/user
+endif
+
 all: install
 
 list:
@@ -49,7 +54,7 @@ list:
 	@echo $(PKG_SET)
 
 $(TARG_DIRS):
-	@mkdir $@
+	@mkdir -p $@
 
 install: $(TARG_DIRS)
 	@stow -v $(PKG_SET)
