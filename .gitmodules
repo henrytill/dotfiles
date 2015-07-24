@@ -7,3 +7,6 @@
 [submodule "emacs/.emacs.d/site-lisp/slime"]
 	path = emacs/.emacs.d/site-lisp/slime
 	url = https://github.com/slime/slime.git
+[submodule "emacs/.emacs.d/site-lisp/use-package"]
+	path = emacs/.emacs.d/site-lisp/use-package
+	url = https://github.com/jwiegley/use-package.git
