@@ -113,7 +113,8 @@
 
 (use-package cider
   :load-path "site-lisp/cider"
-  :commands (cider-jack-in cider-connect)
+  :bind (("C-c M-c" . cider-connect)
+         ("C-c M-j" . cider-jack-in))
   :init
   (use-package cl)
   :config
