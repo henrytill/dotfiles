@@ -178,6 +178,12 @@
   :config
   (exec-path-from-shell-initialize))
 
+(use-package flx-ido
+  :ensure t
+  :config
+  (flx-ido-mode 1)
+  (setq flx-ido-use-faces nil))
+
 (use-package flycheck
   :ensure t
   :preface
