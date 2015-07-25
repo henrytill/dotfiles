@@ -300,6 +300,16 @@
   (setq paren-face-regexp "[][(){}]")
   (global-paren-face-mode))
 
+(use-package projectile
+  :load-path "site-lisp/projectile"
+  :diminish projectile-mode
+  :config
+  (use-package helm-projectile
+    :config
+    (setq projectile-completion-system 'helm)
+    (helm-projectile-on))
+  (projectile-global-mode))
+
 (use-package scheme
   :config
   (when (executable-find "plt-r5rs")
