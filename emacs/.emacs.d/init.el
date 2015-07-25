@@ -249,7 +249,17 @@
 
 (use-package ido
   :config
-  (setq ido-enable-flex-matching t)
+  (setq ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
+                          " [No match]" " [Matched]" " [Not readable]"
+                          " [Too big]" " [Confirm]")
+        ido-enable-flex-matching t)
+  (add-hook 'ido-minibuffer-setup-hook
+            (defun ido-disable-line-truncation ()
+              (set (make-local-variable 'truncate-lines) nil)))
+  (defun ht-ido-define-keys () ;; C-n/p is more intuitive in vertical layout
+    (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+    (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+  (add-hook 'ido-setup-hook 'ht-ido-define-keys)
   (ido-mode t))
 
 (use-package inf-clojure
@@ -436,20 +446,6 @@
 ;;; column numbers
 (column-number-mode 1)
 
-;;; display ido results vertically, rather than horizontally
-(setq ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
-                        " [No match]" " [Matched]" " [Not readable]"
-                        " [Too big]" " [Confirm]"))
-
-(add-hook 'ido-minibuffer-setup-hook
-          (defun ido-disable-line-truncation ()
-            (set (make-local-variable 'truncate-lines) nil)))
-
-(defun ht-ido-define-keys () ;; C-n/p is more intuitive in vertical layout
-  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
-
-(add-hook 'ido-setup-hook 'ht-ido-define-keys)
 
 ;;; cursor
 (setq visible-cursor nil)
