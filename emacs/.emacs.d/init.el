@@ -1,4 +1,5 @@
 ;;; utility functions
+
 (defun is-darwin-p ()
   (string-equal system-type "darwin"))
 
@@ -322,7 +323,7 @@
   :config
   (use-package slime-autoloads)
   (slime-setup '(slime-fancy slime-banner))
-  (let ((ccl-loc (executable-find "ccl64"))
+  (let ((ccl-loc  (executable-find "ccl64"))
         (sbcl-loc (executable-find "sbcl")))
     (when ccl-loc
       (if (boundp 'slime-lisp-implementations)
@@ -336,10 +337,8 @@
                 (cons `(sbcl (,sbcl-loc)) slime-lisp-implementations))
         (setq slime-lisp-implementations `((sbcl (,sbcl-loc)))))
       (setq slime-default-lisp 'sbcl)))
-  ;;; Quicklisp-related
-  (let* ((quicklisp-loc (expand-directory-name "~/quicklisp"))
+  (let* ((quicklisp-loc  (expand-directory-name "~/quicklisp"))
          (clhs-use-local (expand-file-name "clhs-use-local.el" quicklisp-loc)))
-    ;; Local HyperSpec
     (when (file-exists-p clhs-use-local)
       (load-file clhs-use-local))))
 
@@ -353,15 +352,18 @@
 (use-package tuareg
   :ensure t
   :config
-  (when (and (file-directory-p "~/.opam")
-             (executable-find "opam"))
-    (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
-      (setenv (car var) (cadr var)))
-    (let ((ocaml-toplevel-path (expand-directory-name "../../share/emacs/site-lisp"
-                                                      (getenv "OCAML_TOPLEVEL_PATH"))))
-      (when (file-directory-p ocaml-toplevel-path)
-        (add-to-list 'load-path ocaml-toplevel-path))))
-  (when (and (executable-find "utop") (locate-file "utop.el" load-path))
+  (when (and (executable-find "opam")
+             (file-directory-p "~/.opam"))
+    (let ((opam-env (car (read-from-string (shell-command-to-string
+                                            "opam config env --sexp")))))
+      (dolist (var opam-env)
+        (setenv (car var) (cadr var))))
+    (let ((toplevel (expand-directory-name "../../share/emacs/site-lisp"
+                                           (getenv "OCAML_TOPLEVEL_PATH"))))
+      (when (file-directory-p toplevel)
+        (add-to-list 'load-path toplevel))))
+  (when (and (executable-find "utop")
+             (locate-file "utop.el" load-path))
     (autoload 'utop "utop" "Toplevel for OCaml" t)
     (autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
     (add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer)))
@@ -455,9 +457,9 @@
 
 ;;; c
 (setq c-default-style '((java-mode . "java")
-                        (awk-mode . "awk")
-                        (c-mode . "k&r")
-                        (other . "gnu")))
+                        (awk-mode  . "awk")
+                        (c-mode    . "k&r")
+                        (other     . "gnu")))
 
 (setq-default c-basic-offset 4)
 (add-hook 'c-mode-hook 'electric-pair-mode)
@@ -473,9 +475,9 @@
 
 ;;; platform-specific settings
 
-;;; darwin machines
+;;; darwin
 (when (and (is-darwin-p) (window-system))
-  (let ((ansi-term (expand-file-name "ansi-term" user-emacs-directory))
+  (let ((ansi-term  (expand-file-name "ansi-term" user-emacs-directory))
         (aspell-dir (expand-directory-name "~/.nix-profile/lib/aspell/"))
         (mplus-font (expand-file-name "mplus-1mn-regular.ttf" "~/Library/Fonts")))
     (setq explicit-shell-file-name ansi-term
@@ -490,13 +492,18 @@
     (defun ht-reset-frame ()
       (interactive)
       (let ((height (cdr (assq 'height default-frame-alist)))
-            (width (cdr (assq 'width default-frame-alist))))
+            (width  (cdr (assq 'width  default-frame-alist))))
         (set-frame-height (selected-frame) height)
-        (set-frame-width (selected-frame) width)))))
+        (set-frame-width  (selected-frame) width)))))
 
-;;; nixos machines
+;;; nixos
 (when (and (is-linux-p) (file-directory-p "/etc/nixos"))
   (require 'tramp)
   (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
   (set-face-attribute 'region nil :background "lightgoldenrod2")
   (set-face-attribute 'region nil :foreground "black"))
+
+
+;;; registers
+
+(set-register ?i `(file . ,(concat user-emacs-directory "init.el")))
