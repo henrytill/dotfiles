@@ -21,7 +21,9 @@
 
 ;;; basic settings
 
-(setq browse-url-browser-function 'browse-url-default-browser
+(setq apropos-do-all t
+      backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
+      browse-url-browser-function 'browse-url-default-browser
       custom-file (expand-file-name "custom.el" user-emacs-directory)
       doc-view-resolution 300
       epa-armor t
@@ -29,14 +31,29 @@
       ido-handle-duplicate-virtual-buffers 2
       ido-use-virtual-buffers t
       inhibit-startup-message t
+      load-prefer-newer t
+      mouse-yank-at-point t
       org-directory "~/org"
+      require-final-newline t
       ring-bell-function 'ignore
-      scroll-conservatively 1)
+      save-interprogram-paste-before-kill t
+      save-place-file (concat user-emacs-directory "places")
+      scroll-conservatively 1
+      visible-bell t
+      x-select-enable-primary t
+      x-select-enable-clipboard t)
 
-(setq-default indent-tabs-mode nil      ; also set by better-defaults
+(setq-default indent-tabs-mode nil
               ispell-program-name "aspell")
 
 (load custom-file t)
+
+(global-set-key (kbd "M-/")     'hippie-expand)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-s")     'isearch-forward-regexp)
+(global-set-key (kbd "C-r")     'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s")   'isearch-forward)
+(global-set-key (kbd "C-M-r")   'isearch-backward)
 
 
 ;;; package.el
@@ -69,7 +86,6 @@
 (require 'bind-key)
 (require 'diminish "diminish-0.44.el")
 
-(use-package better-defaults     :ensure t)
 (use-package clojure-mode        :ensure t)
 (use-package dash                :ensure t)
 (use-package idle-highlight-mode :ensure t)
@@ -231,6 +247,11 @@
          ("M-<f5>"   . hs-hide-all)
          ("M-S-<f5>" . hs-show-all)))
 
+(use-package ido
+  :config
+  (setq ido-enable-flex-matching t)
+  (ido-mode t))
+
 (use-package inf-clojure
   :ensure t
   :config
@@ -311,6 +332,10 @@
     (helm-projectile-on))
   (projectile-global-mode))
 
+(use-package saveplace
+  :config
+  (setq-default save-place t))
+
 (use-package scheme
   :config
   (when (executable-find "plt-r5rs")
@@ -374,6 +399,10 @@
   :config
   (add-hook 'prog-mode-hook 'undo-tree-mode))
 
+(use-package uniquify
+  :config
+  (setq uniquify-buffer-name-style 'forward))
+
 (use-package whitespace
   :diminish whitespace-mode
   :config
@@ -383,6 +412,14 @@
 
 
 ;;; cosmetics
+
+(menu-bar-mode -1)
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+
+(show-paren-mode 1)
 
 ;;; frame titles
 (setq frame-title-format
