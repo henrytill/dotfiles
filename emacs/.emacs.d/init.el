@@ -1,58 +1,4 @@
-;;;; init.el
-
-(setq browse-url-browser-function 'browse-url-default-browser
-      custom-file (expand-file-name "custom.el" user-emacs-directory)
-      doc-view-resolution 300
-      epa-armor t
-      gnutls-min-prime-bits 1024
-      ido-handle-duplicate-virtual-buffers 2
-      ido-use-virtual-buffers t
-      inhibit-startup-message t
-      org-directory "~/org"
-      ring-bell-function 'ignore
-      scroll-conservatively 1)
-
-(setq-default indent-tabs-mode nil      ; also set by better-defaults
-              ispell-program-name "aspell")
-
-(load custom-file t)
-
-;;; packages
-(require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/"))
-(package-initialize)
-
-(when (null package-archive-contents)
-  (package-refresh-contents))
-
-(defvar common-packages '(better-defaults
-                          clojure-mode
-                          company
-                          dash
-                          diminish
-                          flycheck
-                          haskell-mode
-                          idle-highlight-mode
-                          inf-clojure
-                          magit
-                          page-break-lines
-                          paredit
-                          paren-face
-                          pkg-info
-                          queue
-                          smex
-                          sml-mode
-                          tuareg
-                          undo-tree))
-
-(defvar darwin-packages '(exec-path-from-shell))
-
-(defvar linux-packages '())
-
-;;; helper functions
+;;; utility functions
 (defun is-darwin-p ()
   (string-equal system-type "darwin"))
 
@@ -71,44 +17,457 @@
 (defun expand-directory-name (dir &optional parent-dir)
   (file-name-as-directory (expand-file-name dir parent-dir)))
 
-(defun install-my-packages (pkgs)
-  (unless (not pkgs)
-    (dolist (p pkgs)
-      (when (not (package-installed-p p))
-        (package-install p)))))
+
+;;; basic settings
 
-;;; install packages
-(install-my-packages common-packages)
+(setq browse-url-browser-function 'browse-url-default-browser
+      custom-file (expand-file-name "custom.el" user-emacs-directory)
+      doc-view-resolution 300
+      epa-armor t
+      gnutls-min-prime-bits 1024
+      ido-handle-duplicate-virtual-buffers 2
+      ido-use-virtual-buffers t
+      inhibit-startup-message t
+      org-directory "~/org"
+      ring-bell-function 'ignore
+      scroll-conservatively 1)
 
-(when (is-darwin-p)
-  (install-my-packages darwin-packages)
-  (exec-path-from-shell-initialize))
+(setq-default indent-tabs-mode nil      ; also set by better-defaults
+              ispell-program-name "aspell")
 
-(when (is-linux-p)
-  (install-my-packages linux-packages))
+(load custom-file t)
 
-;; my-site-lisp
-(let ((my-site-lisp (expand-directory-name "site-lisp" user-emacs-directory)))
-  (when (file-directory-p my-site-lisp)
-    (defconst my-site-lisp-path my-site-lisp)))
+
+;;; package.el
 
-;;; add site-lisp from ~/.nix-profile
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/"))
+(package-initialize)
+
+(when (null package-archive-contents)
+  (package-refresh-contents))
+
+
+;;; load-path
+
+(mapc #'(lambda (path)
+          (push (expand-file-name path user-emacs-directory) load-path))
+      '("site-lisp" "site-lisp/use-package"))
+
 (let ((nix-site-lisp (expand-directory-name "~/.nix-profile/share/emacs/site-lisp/")))
   (when (file-directory-p nix-site-lisp)
     (add-to-list 'load-path nix-site-lisp)))
 
-;;; load files from $HOME/.emacs.d/$USER
-(mapc 'load (directory-files (concat user-emacs-directory user-login-name)
-                             t "^[^#].*el$"))
+
+;;; packages
 
-;;; Smex
-(setq smex-save-file (concat user-emacs-directory ".smex-items"))
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
+(require 'use-package)
+(require 'bind-key)
+(require 'diminish "diminish-0.44.el")
 
-;;; Company
-(global-company-mode 1)
-(setq company-global-modes '(not eshell-mode))
+(use-package better-defaults     :ensure t)
+(use-package clojure-mode        :ensure t)
+(use-package dash                :ensure t)
+(use-package idle-highlight-mode :ensure t)
+(use-package pkg-info            :ensure t)
+(use-package queue               :ensure t)
+(use-package sml-mode            :ensure t)
 
-;;; Magit
-(setq magit-last-seen-setup-instructions "1.4.0")
+(use-package eldoc
+  :diminish eldoc-mode
+  :config
+  (add-hook 'cider-mode-hook            'eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook       'eldoc-mode)
+  (add-hook 'ielm-mode-hook             'eldoc-mode)
+  (add-hook 'lisp-interaction-mode-hook 'eldoc-mode))
+
+(use-package paredit
+  :ensure t
+  :diminish paredit-mode
+  :config
+  (add-hook 'clojure-mode-hook    'paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+  (add-hook 'ielm-mode-hook       'paredit-mode)
+  (add-hook 'lisp-mode-hook       'paredit-mode)
+  (add-hook 'scheme-mode-hook     'paredit-mode))
+
+(use-package cider
+  :load-path "site-lisp/cider"
+  :commands (cider-jack-in cider-connect)
+  :init
+  (use-package cl)
+  :config
+  (use-package cider-apropos)
+  (use-package cider-browse-ns)
+  (use-package cider-classpath)
+  (use-package cider-grimoire)
+  (use-package cider-inspector)
+  (use-package cider-macroexpansion)
+  (use-package cider-scratch)
+  (use-package cider-selector)
+  (remove-hook 'clojure-mode-hook 'inf-clojure-minor-mode)
+  (setq cider-show-error-buffer 'except-in-repl))
+
+(use-package company
+  :ensure t
+  :diminish company-mode
+  :config
+  (global-company-mode 1)
+  (setq company-global-modes '(not eshell-mode)))
+
+(use-package compile
+  :config
+  (use-package ansi-color)
+  (defun ht-display-ansi-colors ()
+    (let ((inhibit-read-only t))
+      (ansi-color-apply-on-region (point-min) (point-max))))
+  (add-hook 'compilation-filter-hook 'ht-display-ansi-colors))
+
+(use-package erc
+  :defer t
+  :config
+  (setq erc-fill-function 'erc-fill-static
+        erc-fill-static-center 19
+        erc-hide-list '("JOIN" "PART" "QUIT")
+        erc-prompt ">"
+        erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                                  "324" "329" "332" "333" "353" "477"))
+  (use-package erc-hl-nicks :ensure t)
+  (require 'erc-spelling)
+  (add-to-list 'erc-modules 'hl-nicks)
+  (add-to-list 'erc-modules 'spelling))
+
+(use-package eshell
+  :config
+  (setq eshell-prompt-function
+        (lambda nil
+          (concat "\n"
+                  (user-login-name) "@"
+                  (abbreviate-file-name (eshell/pwd)) "> "))
+        eshell-prompt-regexp "^[^>]*> ")
+  (add-hook 'eshell-prompt-load-hook
+            (defun my-color-eshell-prompt ()
+              (set-face-foreground 'eshell-prompt "#2aa198")))
+  (add-hook 'eshell-mode-hook
+            (defun my-eshell-visual-commands ()
+              (add-to-list 'eshell-visual-commands "ssh")
+              (add-to-list 'eshell-visual-commands "bash")))
+  (defun eshell-term ()
+    (interactive)
+    (eshell)
+    (setq-local mode-line-format nil))
+  (defun eshell/clear ()
+    "Clear the Eshell buffer."
+    (interactive)
+    (let ((inhibit-read-only t))
+      (erase-buffer)))
+  (defun eshell/rgrep (&rest args)
+    "Use Emacs grep facility instead of calling external grep."
+    (eshell-grep "rgrep" args t))
+  (defun eshell/scheme ()
+    (interactive)
+    (call-interactively 'run-scheme))
+  (defalias 'eshell/view 'view-file))
+
+(use-package exec-path-from-shell
+  :if (is-darwin-p)
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
+(use-package flycheck
+  :ensure t
+  :preface
+  (defun ht-rkt-predicate ()
+    (and (buffer-file-name)
+         (string-equal (file-name-extension (buffer-file-name)) "rkt")))
+  :config
+  (flycheck-define-checker racket-alt
+    "A Racket syntax checker using the Racket compiler. See URL `http://racket-lang.org/'."
+    :command ("racket" "-f" source-inplace)
+    :error-patterns
+    ((error line-start (file-name) ":" line ":" column ":" (message) line-end))
+    :modes scheme-mode
+    :predicate ht-rkt-predicate)
+  (add-to-list 'flycheck-checkers 'racket-alt)
+  (setq flycheck-completion-system 'ido))
+
+(use-package geiser
+  :load-path "site-lisp/geiser/elisp")
+
+(use-package haskell-mode
+  :ensure t
+  :config
+  (use-package haskell-style
+    :config
+    (add-hook 'haskell-mode-hook 'haskell-style))
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
+
+(use-package hs-minor-mode
+  :bind (("<f5>"     . hs-toggle-hiding)
+         ("M-<f5>"   . hs-hide-all)
+         ("M-S-<f5>" . hs-show-all)))
+
+(use-package inf-clojure
+  :ensure t
+  :config
+  (setq inf-clojure-program "lein trampoline run -m clojure.main")
+  (defun ht-revert-clojure-buffer ()
+    (let ((ext (file-name-extension buffer-file-name)))
+      (when (or (string-equal ext "clj")
+                (string-equal ext "cljs")
+                (string-equal ext "cljc"))
+        (revert-buffer))))
+  (defun ht-load-inf-clojure ()
+    (interactive)
+    (setq cider-auto-mode nil)
+    (add-hook 'clojure-mode-hook 'inf-clojure-minor-mode)
+    (ht-revert-clojure-buffer))
+  (defun ht-unload-inf-clojure ()
+    (interactive)
+    (remove-hook 'clojure-mode-hook 'inf-clojure-minor-mode)
+    (setq cider-auto-mode t)
+    (ht-revert-clojure-buffer)))
+
+(use-package magit
+  :ensure t
+  :bind ("C-x g" . magit-status)
+  :config
+  (setq magit-last-seen-setup-instructions "1.4.0"))
+
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
+(use-package org
+  :ensure t
+  :bind (("C-c l" . org-store-link)
+         ("C-c b" . org-iswitchb)
+         ("C-c c" . org-capture)
+         ("C-c a" . org-agenda))
+  :config
+  (setq org-completion-use-ido t
+        org-confirm-babel-evaluate nil
+        org-src-fontify-natively t)
+  (when (file-directory-p org-directory)
+    (let* ((notes-file
+            (expand-file-name "notes.org" org-directory))
+           (notes-template
+            `("n" "Notes" entry (file ,notes-file) "* %?\n  %i\n  %a"))
+           (todo-file
+            (expand-file-name "todo.org" org-directory))
+           (todo-template
+            `("t" "Todo" entry (file+headline ,todo-file "Tasks") "* TODO %?\n  %i\n  %a")))
+      (setq org-agenda-files (list org-directory)
+            org-capture-templates (list notes-template
+                                        todo-template)
+            org-default-notes-file notes-file)
+      (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory)))))
+  (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
+                                                           (scheme . t))))
+
+(use-package page-break-lines
+  :ensure t
+  :diminish page-break-lines-mode
+  :config
+  (setq page-break-lines-char ?-)
+  (add-hook 'prog-mode-hook 'page-break-lines-mode))
+
+(use-package paren-face
+  :ensure t
+  :config
+  (setq paren-face-regexp "[][(){}]")
+  (global-paren-face-mode))
+
+(use-package scheme
+  :config
+  (when (executable-find "plt-r5rs")
+    (setq scheme-program-name "plt-r5rs")))
+
+(use-package slime
+  :load-path "site-lisp/slime"
+  :defer t
+  :commands slime
+  :config
+  (use-package slime-autoloads)
+  (slime-setup '(slime-fancy slime-banner))
+  (let ((ccl-loc (executable-find "ccl64"))
+        (sbcl-loc (executable-find "sbcl")))
+    (when ccl-loc
+      (if (boundp 'slime-lisp-implementations)
+          (setq slime-lisp-implementations
+                (cons `(ccl (,ccl-loc)) slime-lisp-implementations))
+        (setq slime-lisp-implementations `((ccl (,ccl-loc))))
+        (setq slime-default-lisp 'ccl)))
+    (when sbcl-loc
+      (if (boundp 'slime-lisp-implementations)
+          (setq slime-lisp-implementations
+                (cons `(sbcl (,sbcl-loc)) slime-lisp-implementations))
+        (setq slime-lisp-implementations `((sbcl (,sbcl-loc)))))
+      (setq slime-default-lisp 'sbcl)))
+  ;;; Quicklisp-related
+  (let* ((quicklisp-loc (expand-directory-name "~/quicklisp"))
+         (clhs-use-local (expand-file-name "clhs-use-local.el" quicklisp-loc)))
+    ;; Local HyperSpec
+    (when (file-exists-p clhs-use-local)
+      (load-file clhs-use-local))))
+
+(use-package smex
+  :ensure t
+  :bind ("M-x" . smex)
+  :config
+  (setq smex-save-file (concat user-emacs-directory ".smex-items"))
+  (smex-initialize))
+
+(use-package tuareg
+  :ensure t
+  :config
+  (when (and (file-directory-p "~/.opam")
+             (executable-find "opam"))
+    (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
+      (setenv (car var) (cadr var)))
+    (let ((ocaml-toplevel-path (expand-directory-name "../../share/emacs/site-lisp"
+                                                      (getenv "OCAML_TOPLEVEL_PATH"))))
+      (when (file-directory-p ocaml-toplevel-path)
+        (add-to-list 'load-path ocaml-toplevel-path))))
+  (when (and (executable-find "utop") (locate-file "utop.el" load-path))
+    (autoload 'utop "utop" "Toplevel for OCaml" t)
+    (autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
+    (add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer)))
+
+(use-package undo-tree
+  :ensure t
+  :diminish undo-tree-mode
+  :config
+  (add-hook 'prog-mode-hook 'undo-tree-mode))
+
+(use-package whitespace
+  :diminish whitespace-mode
+  :config
+  (setq whitespace-style '(face tabs lines-tail trailing empty)
+        whitespace-line-column 80)
+  (add-hook 'prog-mode-hook 'whitespace-mode))
+
+
+;;; cosmetics
+
+;;; frame titles
+(setq frame-title-format
+      '("" invocation-name ": "
+        (:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
+
+;;; mode line
+(set-face-attribute 'mode-line          nil :box nil)
+(set-face-attribute 'mode-line-inactive nil :box nil)
+(set-face-attribute 'header-line        nil :box nil)
+
+;;; column numbers
+(column-number-mode 1)
+
+;;; display ido results vertically, rather than horizontally
+(setq ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
+                        " [No match]" " [Matched]" " [Not readable]"
+                        " [Too big]" " [Confirm]"))
+
+(add-hook 'ido-minibuffer-setup-hook
+          (defun ido-disable-line-truncation ()
+            (set (make-local-variable 'truncate-lines) nil)))
+
+(defun ht-ido-define-keys () ;; C-n/p is more intuitive in vertical layout
+  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+
+(add-hook 'ido-setup-hook 'ht-ido-define-keys)
+
+;;; cursor
+(setq visible-cursor nil)
+(setq-default cursor-type 'box)
+
+;;; hl-line
+(defun ht-select-line-mode ()
+  (hl-line-mode 1)
+  (setq cursor-type 'nil))
+
+(add-hook 'dired-mode-hook        'ht-select-line-mode)
+(add-hook 'ibuffer-mode-hook      'ht-select-line-mode)
+(add-hook 'gnus-group-mode-hook   'ht-select-line-mode)
+(add-hook 'gnus-summary-mode-hook 'ht-select-line-mode)
+(add-hook 'gnus-server-mode-hook  'ht-select-line-mode)
+(add-hook 'package-menu-mode-hook 'ht-select-line-mode)
+
+;;; prettify symbols
+(when (and (>= emacs-major-version 24)
+           (>= emacs-minor-version 4))
+  (global-prettify-symbols-mode)
+  (defun scheme-prettify-symbols ()
+    (push '("lambda" . "\u03bb") prettify-symbols-alist))
+  (add-hook 'scheme-mode-hook 'scheme-prettify-symbols))
+
+;;; truncate lines
+(defun ht-toggle-truncate-lines ()
+  (setq truncate-lines t))
+
+(add-hook 'compilation-mode-hook 'ht-toggle-truncate-lines)
+(add-hook 'dired-mode-hook       'ht-toggle-truncate-lines)
+(add-hook 'shell-mode-hook       'ht-toggle-truncate-lines)
+
+;;; warning keywords
+(defun ht-add-watchwords ()
+  (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
+
+(add-hook 'prog-mode-hook 'ht-add-watchwords)
+
+
+;;; misc. programming
+
+;;; c
+(setq c-default-style '((java-mode . "java")
+                        (awk-mode . "awk")
+                        (c-mode . "k&r")
+                        (other . "gnu")))
+
+(setq-default c-basic-offset 4)
+(add-hook 'c-mode-hook 'electric-pair-mode)
+
+;;; supercollider
+(when (and (is-darwin-p)
+           (executable-find "sclang")
+           (file-directory-p (expand-directory-name "~/src/other/scel")))
+  (add-to-list 'load-path (expand-directory-name "~/src/other/scel"))
+  (require 'sclang)
+  (add-hook 'sclang-mode-hook 'electric-pair-mode))
+
+
+;;; platform-specific settings
+
+;;; darwin machines
+(when (and (is-darwin-p) (window-system))
+  (let ((ansi-term (expand-file-name "ansi-term" user-emacs-directory))
+        (aspell-dir (expand-directory-name "~/.nix-profile/lib/aspell/"))
+        (mplus-font (expand-file-name "mplus-1mn-regular.ttf" "~/Library/Fonts")))
+    (setq explicit-shell-file-name ansi-term
+          mac-command-modifier 'super
+          mac-option-modifier 'meta)
+    (when (file-directory-p aspell-dir)
+      (setenv "ASPELL_CONF" (concat "dict-dir " aspell-dir)))
+    (when (file-exists-p mplus-font)
+      (set-face-attribute 'default nil :font "M+ 1mn 14"))
+    (add-to-list 'default-frame-alist '(height . 40))
+    (add-to-list 'default-frame-alist '(width . 100))
+    (defun ht-reset-frame ()
+      (interactive)
+      (let ((height (cdr (assq 'height default-frame-alist)))
+            (width (cdr (assq 'width default-frame-alist))))
+        (set-frame-height (selected-frame) height)
+        (set-frame-width (selected-frame) width)))))
+
+;;; nixos machines
+(when (and (is-linux-p) (file-directory-p "/etc/nixos"))
+  (require 'tramp)
+  (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
+  (set-face-attribute 'region nil :background "lightgoldenrod2")
+  (set-face-attribute 'region nil :foreground "black"))
