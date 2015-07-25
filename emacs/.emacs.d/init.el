@@ -196,6 +196,7 @@
   (exec-path-from-shell-initialize))
 
 (use-package flx-ido
+  :disabled t
   :ensure t
   :config
   (flx-ido-mode 1)
@@ -216,7 +217,7 @@
     :modes scheme-mode
     :predicate ht-rkt-predicate)
   (add-to-list 'flycheck-checkers 'racket-alt)
-  (setq flycheck-completion-system 'ido))
+  (setq flycheck-completion-system nil))
 
 (use-package geiser
   :load-path "site-lisp/geiser/elisp")
@@ -235,6 +236,10 @@
   :bind (("C-c h" . helm-command-prefix))
   :config
   (use-package helm)
+  (use-package helm-mode
+    :diminish helm-mode
+    :config
+    (helm-mode 1))
   (global-unset-key (kbd "C-x c"))
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action)
@@ -248,6 +253,7 @@
          ("M-S-<f5>" . hs-show-all)))
 
 (use-package ido
+  :disabled t
   :config
   (setq ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
                           " [No match]" " [Matched]" " [Not readable]"
@@ -378,6 +384,7 @@
       (load-file clhs-use-local))))
 
 (use-package smex
+  :disabled t
   :ensure t
   :bind ("M-x" . smex)
   :config
