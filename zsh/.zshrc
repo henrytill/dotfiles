@@ -71,7 +71,9 @@ if [[ -n $(command -v nix-shell) ]]; then
 fi
 
 if [[ -n $(command -v npm) ]]; then
-    alias npm-exec="PATH=$(npm bin):$PATH"
+    npm-exec () {
+        PATH=$(npm bin):$PATH $1
+    }
 fi
 
 if [[ -e $HOME/.nix-profile && -n $(command -v nix-env) ]]; then
