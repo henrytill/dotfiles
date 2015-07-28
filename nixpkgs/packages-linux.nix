@@ -4,10 +4,12 @@ with import <nixpkgs> {}; [
   conky
   (dmenu.override { enableXft = true; })
   dunst
+  ed
   emacs
   file
   firefoxWrapper
   ghostscript
+  graphviz
   htop
   i3lock
   iftop
@@ -17,10 +19,12 @@ with import <nixpkgs> {}; [
   lsof
   mosh
   mupdf
+  ncdu
   nix-repl
   nodejs
   obnam
   racket
+  rlwrap
   rxvt_unicode_with-plugins
   scrot
   sshfsFuse
