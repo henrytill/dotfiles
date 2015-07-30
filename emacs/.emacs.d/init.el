@@ -241,6 +241,9 @@
     :diminish helm-mode
     :config
     (helm-mode 1))
+  (use-package helm-adaptive
+    :config
+    (helm-adaptive-mode 1))
   (global-unset-key (kbd "C-x c"))
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action)
