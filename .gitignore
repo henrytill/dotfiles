@@ -15,6 +15,7 @@
 /emacs/.emacs.d/elpa
 /emacs/.emacs.d/eshell/history
 /emacs/.emacs.d/eshell/lastdir
+/emacs/.emacs.d/helm-adaptive-history
 /emacs/.emacs.d/ido.last
 /emacs/.emacs.d/mail
 /emacs/.emacs.d/news
