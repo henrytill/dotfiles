@@ -58,6 +58,10 @@ else
     alias la="clear && pwd && ls -lah"
 fi
 
+if [[ -n $(command -v ed) && -n $(command -v rlwrap) ]]; then
+    alias ed="rlwrap ed"
+fi
+
 if [[ -n $(command -v gpg2) ]]; then
     alias gpg="gpg2"
 fi
