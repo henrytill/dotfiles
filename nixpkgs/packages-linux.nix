@@ -9,6 +9,7 @@ with import <nixpkgs> {}; [
   file
   firefoxWrapper
   ghostscript
+  go14Packages.vault
   graphviz
   htop
   i3lock

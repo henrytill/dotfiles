@@ -6,6 +6,7 @@ with import <nixpkgs> {}; [
   ghostscript
   (gitAndTools.gitFull.override { guiSupport = false; })
   gnumake
+  go14Packages.vault
   mr
   nix-repl
   nixUnstable
