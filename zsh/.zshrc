@@ -84,6 +84,11 @@ if [[ -e $HOME/.nix-profile && -n $(command -v nix-env) ]]; then
     }
 fi
 
+if [[ -n $TMUX ]]; then
+    alias emacsclient="TERM=xterm-256color emacsclient"
+    alias emacs="TERM=xterm-256color emacs"
+fi
+
 # Darwin-specific config
 if [[ $(uname) == Darwin ]]; then
     alias ls="ls -G"
