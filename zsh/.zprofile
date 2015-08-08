@@ -7,7 +7,7 @@ if [[ $(uname) == Darwin ]]; then
     fi
 
     if [[ -n $NIX_LINK && -d $NIX_LINK/lib/aspell ]]; then
-        export ASPELL_CONF='dict-dir $NIX_LINK/lib/aspell'
+        export ASPELL_CONF="dict-dir $NIX_LINK/lib/aspell"
     fi
 
     if [[ -d /opt/apache-maven-3.3.3 ]]; then
