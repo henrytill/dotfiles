@@ -19,6 +19,10 @@ if [[ $(uname) == Darwin ]]; then
         export PATH=$GRADLE_HOME/bin:$PATH
     fi
 
+    if [[ -d /opt/zookeeper-3.4.6 ]]; then
+        export ZOOKEEPER_HOME=/opt/zookeeper-3.4.6
+    fi
+
     if [[ -d $HOME/bin ]]; then
         export PATH=$HOME/bin:$PATH
     fi
