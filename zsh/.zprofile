@@ -10,6 +10,10 @@ if [[ $(uname) == Darwin ]]; then
         export ASPELL_CONF="dict-dir $NIX_LINK/lib/aspell"
     fi
 
+    if [[ -e /usr/libexec/java_home ]]; then
+        export JAVA_HOME=$(/usr/libexec/java_home)
+    fi
+
     if [[ -d /opt/apache-maven-3.3.3 ]]; then
         export PATH=/opt/apache-maven-3.3.3/bin:$PATH
     fi
