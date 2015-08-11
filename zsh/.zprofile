@@ -27,6 +27,10 @@ if [[ $(uname) == Darwin ]]; then
         export ZOOKEEPER_HOME=/opt/zookeeper-3.4.6
     fi
 
+    if [[ -d /opt/hadoop-2.7.1 ]]; then
+        export HADOOP_PREFIX=/opt/hadoop-2.7.1
+    fi
+
     if [[ -d $HOME/bin ]]; then
         export PATH=$HOME/bin:$PATH
     fi
