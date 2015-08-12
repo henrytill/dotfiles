@@ -197,7 +197,6 @@
   (exec-path-from-shell-initialize))
 
 (use-package flx-ido
-  :disabled t
   :ensure t
   :config
   (flx-ido-mode 1)
@@ -232,6 +231,7 @@
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
 
 (use-package helm-config
+  :disabled t
   :ensure helm
   :demand t
   :bind (("C-c h" . helm-command-prefix))
@@ -257,7 +257,6 @@
          ("M-S-<f5>" . hs-show-all)))
 
 (use-package ido
-  :disabled t
   :config
   (setq ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
                           " [No match]" " [Matched]" " [Not readable]"
@@ -347,6 +346,7 @@
   :diminish projectile-mode
   :config
   (use-package helm-projectile
+    :disabled t
     :config
     (setq projectile-completion-system 'helm)
     (helm-projectile-on))
@@ -388,7 +388,6 @@
       (load-file clhs-use-local))))
 
 (use-package smex
-  :disabled t
   :ensure t
   :bind ("M-x" . smex)
   :config
