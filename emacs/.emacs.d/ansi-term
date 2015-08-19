@@ -1,5 +1,4 @@
 #! /usr/bin/env sh
 
-cd $HOME
 unset PATH
 exec $SHELL --login
