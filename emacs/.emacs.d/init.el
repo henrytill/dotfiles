@@ -430,7 +430,11 @@
   :config
   (setq whitespace-style '(face tabs lines-tail trailing empty)
         whitespace-line-column 80)
-  (set-face-attribute 'whitespace-line nil :foreground nil :background "gray90")
+  (defun ht-style-whitespace-mode ()
+    (set-face-attribute 'whitespace-line nil
+                        :foreground nil
+                        :background "gray90"))
+  (add-hook 'whitespace-mode-hook 'ht-style-whitespace-mode)
   (add-hook 'prog-mode-hook 'whitespace-mode))
 
 
