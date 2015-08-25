@@ -7,3 +7,6 @@ Description=Emacs: The extensible, self-documenting text editor.
 Type=forking
 ExecStart=/run/current-system/sw/bin/zsh -ic 'emacs --daemon'
 ExecStop=/run/current-system/sw/bin/zsh -ic 'emacsclient -e "(kill-emacs)"'
+
+[Install]
+WantedBy=default.target

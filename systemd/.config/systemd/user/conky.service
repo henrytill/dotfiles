@@ -7,3 +7,6 @@ Description=conky
 Type=forking
 ExecStart=/home/ht/bin/start-conky
 Environment="DISPLAY=:0"
+
+[Install]
+WantedBy=default.target
