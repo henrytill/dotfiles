@@ -25,6 +25,12 @@ bindkey -e
 
 # completion
 zstyle :compinstall filename '$HOME/.zshrc'
+
+if [[ -d $HOME/src/other/nix-zsh-completions ]]; then
+    source $HOME/src/other/nix-zsh-completions/nix.plugin.zsh
+    fpath=($HOME/src/other/nix-zsh-completions $fpath)
+fi
+
 autoload -Uz compinit
 compinit
 
