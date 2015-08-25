@@ -44,7 +44,7 @@ endif
 
 # systemd
 ifneq (,$(findstring systemd,$(PKG_SET)))
-  TARG_DIRS += ../.config/systemd/user
+  INSTALL_HOOK += systemctl --user enable ~/etc/systemd/*.service;
 endif
 
 all: install
