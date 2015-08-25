@@ -24,6 +24,7 @@ with import <nixpkgs> {}; [
   nix-repl
   nodejs
   obnam
+  postgresql94
   racket
   rlwrap
   rxvt_unicode_with-plugins
