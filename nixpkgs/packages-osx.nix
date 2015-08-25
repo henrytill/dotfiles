@@ -2,20 +2,25 @@ with import <nixpkgs> {}; [
   aspell
   aspellDicts.en
   cacert
+  cloc
+  ed
   emacs24Macport
   ghostscript
-  (gitAndTools.gitFull.override { guiSupport = false; })
+  (gitAndTools.gitFull.override { guiSupport = false; svnSupport = false; })
   gnumake
-  go14Packages.vault
+  graphviz
+  jq
   mr
   nix-repl
-  nixUnstable
+  nix
   offlineimap
   postgresql94
+  rlwrap
   rsync
   stow
   tmux
   tree
   wget
   xz
+  youtube-dl
 ]
