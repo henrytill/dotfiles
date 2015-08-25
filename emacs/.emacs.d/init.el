@@ -489,13 +489,13 @@
   (add-hook 'scheme-mode-hook 'scheme-prettify-symbols))
 
 ;;; truncate lines
-(defun ht-toggle-truncate-lines ()
+(defun ht-truncate-lines ()
   (setq truncate-lines t))
 
-(add-hook 'compilation-mode-hook     'ht-toggle-truncate-lines)
-(add-hook 'dired-mode-hook           'ht-toggle-truncate-lines)
-(add-hook 'shell-mode-hook           'ht-toggle-truncate-lines)
-(add-hook 'sql-interactive-mode-hook 'ht-toggle-truncate-lines)
+(add-hook 'compilation-mode-hook     'ht-truncate-lines)
+(add-hook 'dired-mode-hook           'ht-truncate-lines)
+(add-hook 'shell-mode-hook           'ht-truncate-lines)
+(add-hook 'sql-interactive-mode-hook 'ht-truncate-lines)
 
 ;;; warning keywords
 (defun ht-add-watchwords ()
