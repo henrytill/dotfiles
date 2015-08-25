@@ -492,9 +492,10 @@
 (defun ht-toggle-truncate-lines ()
   (setq truncate-lines t))
 
-(add-hook 'compilation-mode-hook 'ht-toggle-truncate-lines)
-(add-hook 'dired-mode-hook       'ht-toggle-truncate-lines)
-(add-hook 'shell-mode-hook       'ht-toggle-truncate-lines)
+(add-hook 'compilation-mode-hook     'ht-toggle-truncate-lines)
+(add-hook 'dired-mode-hook           'ht-toggle-truncate-lines)
+(add-hook 'shell-mode-hook           'ht-toggle-truncate-lines)
+(add-hook 'sql-interactive-mode-hook 'ht-toggle-truncate-lines)
 
 ;;; warning keywords
 (defun ht-add-watchwords ()
