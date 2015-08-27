@@ -480,14 +480,6 @@
 (add-hook 'gnus-server-mode-hook  'ht-select-line-mode)
 (add-hook 'package-menu-mode-hook 'ht-select-line-mode)
 
-;;; prettify symbols
-(when (and (>= emacs-major-version 24)
-           (>= emacs-minor-version 4))
-  (global-prettify-symbols-mode)
-  (defun scheme-prettify-symbols ()
-    (push '("lambda" . "\u03bb") prettify-symbols-alist))
-  (add-hook 'scheme-mode-hook 'scheme-prettify-symbols))
-
 ;;; truncate lines
 (defun ht-truncate-lines ()
   (setq truncate-lines t))
