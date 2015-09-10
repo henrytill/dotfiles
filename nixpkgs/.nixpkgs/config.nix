@@ -10,5 +10,11 @@
       if super.stdenv.isDarwin
         then super.graphviz.override { xlibs = null; }
         else super.graphviz;
+    myEclipse =
+      with super.eclipses;
+      eclipseWithPlugins
+        { eclipse = eclipse_sdk_45;
+          plugins = [ plugins.emacsplus ];
+        };
   };
 }
