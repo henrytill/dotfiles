@@ -3,11 +3,12 @@ MY_HOSTS  = glaucus nereus proteus tethys thalassa thaumas
 
 # hosts and their package sets
 glaucus   = emacs git nixpkgs tmux zile zsh
-nereus    = asdf emacs git keysnail leiningen nixpkgs sbcl tmux x11-osx zsh
-tethys    = dunst emacs git keysnail leiningen nixpkgs systemd tmux \
+nereus    = asdf boot emacs git keysnail leiningen nixpkgs sbcl tmux \
+            x11-osx zsh
+tethys    = boot dunst emacs git keysnail leiningen nixpkgs systemd tmux \
             x11-nixos xdg zile zsh
 thalassa  = emacs git keysnail leiningen tmux x11-gentoo xdg zile zsh
-thaumas   = dunst emacs git keysnail leiningen nixpkgs systemd tmux \
+thaumas   = boot dunst emacs git keysnail leiningen nixpkgs systemd tmux \
             x11-nixos xdg zile zsh
 
 # base package set for undefined hosts
@@ -28,6 +29,11 @@ ifneq (,$(findstring $(HOST),$(MY_HOSTS)))
   PKG_SET = $($(HOST))
 else
   PKG_SET = $(BASE_PKGS)
+endif
+
+# boot
+ifneq (,$(findstring boot,$(PKG_SET)))
+  TARG_DIRS += ../.boot
 endif
 
 # keysnail

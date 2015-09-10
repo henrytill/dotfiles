@@ -88,12 +88,17 @@
 (require 'bind-key)
 (require 'diminish "diminish-0.44.el")
 
-(use-package clojure-mode        :ensure t)
 (use-package dash                :ensure t)
 (use-package idle-highlight-mode :ensure t)
 (use-package pkg-info            :ensure t)
 (use-package queue               :ensure t)
 (use-package sml-mode            :ensure t)
+
+(use-package clojure-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.boot\\'" . clojure-mode))
+  (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode)))
 
 (use-package eldoc
   :diminish eldoc-mode
