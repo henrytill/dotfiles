@@ -1,6 +1,7 @@
 with import <nixpkgs> {}; [
   aspell
   aspellDicts.en
+  boot
   conky
   (dmenu.override { enableXft = true; })
   dunst
@@ -8,36 +9,26 @@ with import <nixpkgs> {}; [
   emacs
   file
   firefoxWrapper
-  ghostscript
-  go14Packages.vault
   graphviz
   htop
   i3lock
-  iftop
-  iotop
+  jdk
   leiningen
   libnotify
   lsof
-  mosh
+  maven
   mupdf
+  myEclipse
   ncdu
   nix-repl
   nodejs
-  obnam
   postgresql94
-  racket
   rlwrap
   rxvt_unicode_with-plugins
   scrot
-  sshfsFuse
   tmux
   tree
-  unclutter
   unzip
-  vlc
   wget
-  xclip
   xlibs.xmodmap
-  xz
-  youtube-dl
 ]
