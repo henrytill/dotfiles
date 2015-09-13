@@ -98,7 +98,12 @@
   :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.boot\\'" . clojure-mode))
-  (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode)))
+  (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
+  (defun ht-clojure-mode-indents ()
+    (put 'this-as                'clojure-backtracking-indent '(2))
+    (put 'js/React.createClass   'clojure-backtracking-indent '(2))
+    (put 'js/React.createElement 'clojure-backtracking-indent '(2)))
+  (add-hook 'clojure-mode-hook 'ht-clojure-mode-indents))
 
 (use-package eldoc
   :diminish eldoc-mode
