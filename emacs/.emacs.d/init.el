@@ -263,10 +263,36 @@
   (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t)))
 
-(use-package hs-minor-mode
+(use-package hideshow
   :bind (("<f5>"     . hs-toggle-hiding)
          ("M-<f5>"   . hs-hide-all)
-         ("M-S-<f5>" . hs-show-all)))
+         ("M-S-<f5>" . hs-show-all))
+  :demand t
+  :config
+  (let ((start         "<!--\\|<[^/>]*[^/]>")
+        (end           "-->\\|</[^/>]*[^/]>")
+        (comment-start "<!--"))
+    (add-to-list 'hs-special-modes-alist
+                 (list 'nxml-mode
+                       start
+                       end
+                       comment-start
+                       'nxml-forward-element
+                       nil))
+    (add-to-list 'hs-special-modes-alist
+                 (list 'html-mode
+                       start
+                       end
+                       comment-start
+                       'sgml-skip-tag-forward
+                       nil))
+    (add-to-list 'hs-special-modes-alist
+                 (list 'sgml-mode
+                       start
+                       end
+                       comment-start
+                       'sgml-skip-tag-forward
+                       nil))))
 
 (use-package ido
   :config
