@@ -47,5 +47,3 @@ fi
 if [[ -n $(command -v lein) ]]; then
     export LEIN_FAST_TRAMPOLINE=y
 fi
-
-export EDITOR='emacsclient -t --alternate-editor='

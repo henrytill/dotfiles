@@ -45,6 +45,9 @@ if [[ $TERM == xterm* ]]; then
     add-zsh-hook preexec set-title
 fi
 
+# env
+export EDITOR='emacsclient -t --alternate-editor='
+
 # aliases
 alias e="$EDITOR"
 alias lf="ls -aF"
@@ -82,7 +85,7 @@ fi
 
 if [[ -n $(command -v npm) ]]; then
     npm-exec () {
-        PATH=$(npm bin):$PATH $1
+        PATH=$(npm bin):$PATH $*
     }
 fi
 
