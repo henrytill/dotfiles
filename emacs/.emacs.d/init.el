@@ -330,6 +330,13 @@
     (setq cider-auto-mode t)
     (ht-revert-clojure-buffer)))
 
+(use-package js2-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+  (setq-default js2-show-parse-errors nil)
+  (setq-default js2-global-externs '("module" "require")))
+
 (use-package magit
   :ensure t
   :bind ("C-x g" . magit-status)
