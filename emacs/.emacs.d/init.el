@@ -229,7 +229,7 @@
     :modes scheme-mode
     :predicate ht-rkt-predicate)
   (add-to-list 'flycheck-checkers 'racket-alt)
-  (setq flycheck-completion-system nil))
+  (setq flycheck-completion-system 'ido))
 
 (use-package geiser
   :load-path "site-lisp/geiser/elisp")
