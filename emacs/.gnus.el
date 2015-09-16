@@ -33,7 +33,7 @@
                 (nnimap-server-port 993)
                 (nnimap-stream ssl))
         (nnimap "xngns"
-                (nnimap-address "mail.privateemail.com")
+                (nnimap-address "mail.xngns.net")
                 (nnimap-server-port 993)
                 (nnimap-stream ssl))
         (nntp "gmane" (nntp-address "news.gmane.org"))
