@@ -440,6 +440,19 @@
   (setq smex-save-file (concat user-emacs-directory ".smex-items"))
   (smex-initialize))
 
+(use-package tex-site
+  :ensure auctex
+  :config
+  (setq TeX-auto-save t
+        TeX-parse-self t)
+  (setq-default TeX-master nil)
+  (when (and (is-linux-p) (executable-find "mupdf-x11"))
+    (eval-after-load 'tex
+      '(progn (add-to-list 'TeX-view-program-list
+                           '("mupdf" ("mupdf-x11" (mode-io-correlate " -p %(outpage)") " %o")))
+              (add-to-list 'TeX-view-program-selection
+                           '(output-pdf "mupdf"))))))
+
 (use-package tuareg
   :ensure t
   :config
