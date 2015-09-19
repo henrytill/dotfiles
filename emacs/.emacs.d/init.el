@@ -107,7 +107,10 @@
     (put 'this-as                'clojure-backtracking-indent '(2))
     (put 'js/React.createClass   'clojure-backtracking-indent '(2))
     (put 'js/React.createElement 'clojure-backtracking-indent '(2))
-    (put 'html/clone-for         'clojure-backtracking-indent '(2)))
+    (put 'html/clone-for         'clojure-backtracking-indent '(2))
+    (put 's/conditional          'clojure-backtracking-indent '(2))
+    (put 's/defrecord            'clojure-backtracking-indent '(4 4 (2)))
+    (put 's/defprotocol          'clojure-backtracking-indent '(4 (2))))
   (add-hook 'clojure-mode-hook 'ht-clojure-mode-indents))
 
 (use-package eldoc
