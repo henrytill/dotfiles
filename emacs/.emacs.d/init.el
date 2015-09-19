@@ -1,4 +1,4 @@
-;;; utility functions
+;;; utility functions & macros
 
 (defun is-darwin-p ()
   (string-equal system-type "darwin"))
@@ -17,6 +17,10 @@
 
 (defun expand-directory-name (dir &optional parent-dir)
   (file-name-as-directory (expand-file-name dir parent-dir)))
+
+(defmacro ht-comment (&rest body)
+  "Comment out one or more s-expressions."
+  nil)
 
 
 ;;; basic settings
@@ -297,17 +301,20 @@
 
 (use-package ido
   :config
-  (setq ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
-                          " [No match]" " [Matched]" " [Not readable]"
-                          " [Too big]" " [Confirm]")
-        ido-enable-flex-matching t)
-  (add-hook 'ido-minibuffer-setup-hook
-            (defun ido-disable-line-truncation ()
-              (set (make-local-variable 'truncate-lines) nil)))
-  (defun ht-ido-define-keys () ;; C-n/p is more intuitive in vertical layout
-    (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-    (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
-  (add-hook 'ido-setup-hook 'ht-ido-define-keys)
+  (ht-comment
+   "Vertical Ido Results"
+   (setq ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
+                           " [No match]" " [Matched]" " [Not readable]"
+                           " [Too big]" " [Confirm]")
+         ido-enable-flex-matching t)
+   (add-hook 'ido-minibuffer-setup-hook
+             (defun ido-disable-line-truncation ()
+               (set (make-local-variable 'truncate-lines) nil)))
+   (defun ht-ido-define-keys () ;; C-n/p is more intuitive in vertical layout
+     (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+     (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+   (add-hook 'ido-setup-hook 'ht-ido-define-keys)
+   nil)
   (ido-mode t))
 
 (use-package inf-clojure
