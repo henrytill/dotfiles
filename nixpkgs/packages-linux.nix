@@ -9,10 +9,12 @@ with import <nixpkgs> {}; [
   emacs
   file
   firefoxWrapper
+  ghostscript
   graphviz
   htop
   i3lock
   jdk
+  jq
   leiningen
   libnotify
   lsof
