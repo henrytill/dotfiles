@@ -13,3 +13,6 @@
 [submodule "emacs/.emacs.d/site-lisp/projectile"]
 	path = emacs/.emacs.d/site-lisp/projectile
 	url = https://github.com/bbatsov/projectile.git
+[submodule "emacs/.emacs.d/site-lisp/org-mode"]
+	path = emacs/.emacs.d/site-lisp/org-mode
+	url = git://orgmode.org/org-mode.git

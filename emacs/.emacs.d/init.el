@@ -337,7 +337,8 @@
   :mode "\\.nix\\'")
 
 (use-package org
-  :ensure t
+  :load-path ("site-lisp/org-mode/lisp"
+              "site-lisp/org-mode/contrib/lisp")
   :bind (("C-c l" . org-store-link)
          ("C-c b" . org-iswitchb)
          ("C-c c" . org-capture)
