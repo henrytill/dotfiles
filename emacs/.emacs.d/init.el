@@ -250,27 +250,6 @@
     (add-hook 'haskell-mode-hook 'haskell-style))
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
 
-(use-package helm-config
-  :disabled t
-  :ensure helm
-  :demand t
-  :bind (("C-c h" . helm-command-prefix))
-  :config
-  (use-package helm)
-  (use-package helm-mode
-    :diminish helm-mode
-    :config
-    (helm-mode 1))
-  (use-package helm-adaptive
-    :config
-    (helm-adaptive-mode 1))
-  (global-unset-key (kbd "C-x c"))
-  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-z")   'helm-select-action)
-  (when (executable-find "curl")
-    (setq helm-google-suggest-use-curl-p t)))
-
 (use-package hideshow
   :bind (("<f5>"     . hs-toggle-hiding)
          ("M-<f5>"   . hs-hide-all)
@@ -401,11 +380,6 @@
   :load-path "site-lisp/projectile"
   :diminish projectile-mode
   :config
-  (use-package helm-projectile
-    :disabled t
-    :config
-    (setq projectile-completion-system 'helm)
-    (helm-projectile-on))
   (projectile-global-mode))
 
 (use-package saveplace
