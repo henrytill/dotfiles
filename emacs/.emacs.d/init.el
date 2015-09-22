@@ -1,10 +1,15 @@
+;;; pre init
+
+(defconst emacs-start-time (current-time))
+
+
 ;;; utility functions & macros
 
-(defun is-darwin-p ()
-  (string-equal system-type "darwin"))
-
-(defun is-linux-p ()
-  (string-equal system-type "gnu/linux"))
+(eval-and-compile
+  (defun is-darwin-p ()
+    (string-equal system-type "darwin"))
+  (defun is-linux-p ()
+    (string-equal system-type "gnu/linux")))
 
 (defun el-which (cmd)
   (replace-regexp-in-string "\\\n" ""
@@ -77,13 +82,14 @@
 
 ;;; load-path
 
-(mapc #'(lambda (path)
-          (push (expand-file-name path user-emacs-directory) load-path))
-      '("site-lisp" "site-lisp/use-package"))
+(eval-and-compile
+  (mapc #'(lambda (path)
+            (push (expand-file-name path user-emacs-directory) load-path))
+        '("site-lisp" "site-lisp/use-package"))
+  (let ((nix-site-lisp (expand-directory-name "~/.nix-profile/share/emacs/site-lisp/")))
+    (when (file-directory-p nix-site-lisp)
+      (add-to-list 'load-path nix-site-lisp))))
 
-(let ((nix-site-lisp (expand-directory-name "~/.nix-profile/share/emacs/site-lisp/")))
-  (when (file-directory-p nix-site-lisp)
-    (add-to-list 'load-path nix-site-lisp)))
 
 ;;; other paths
 
@@ -101,17 +107,19 @@
 (require 'bind-key)
 (require 'diminish "diminish-0.44.el")
 
-(use-package dash                :ensure t)
-(use-package idle-highlight-mode :ensure t)
-(use-package pkg-info            :ensure t)
-(use-package queue               :ensure t)
-(use-package sml-mode            :ensure t)
+(use-package dash                :ensure t :defer t)
+(use-package idle-highlight-mode :ensure t :defer t)
+(use-package pkg-info            :ensure t :defer t)
+(use-package queue               :ensure t :defer t)
 
 (use-package clojure-mode
   :ensure t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.boot\\'" . clojure-mode))
+  :mode (("\\.clj\\'"  . clojure-mode)
+         ("\\.edn\\'"  . clojure-mode)
+         ("\\.boot\\'" . clojure-mode))
+  :init
   (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
+  (add-hook 'clojure-mode-hook 'paredit-mode)
   (defun ht-clojure-mode-indents ()
     (put 'this-as                'clojure-backtracking-indent '(2))
     (put 'js/React.createClass   'clojure-backtracking-indent '(2))
@@ -122,30 +130,14 @@
     (put 's/defprotocol          'clojure-backtracking-indent '(4 (2))))
   (add-hook 'clojure-mode-hook 'ht-clojure-mode-indents))
 
-(use-package eldoc
-  :diminish eldoc-mode
-  :config
-  (add-hook 'cider-mode-hook            'eldoc-mode)
-  (add-hook 'emacs-lisp-mode-hook       'eldoc-mode)
-  (add-hook 'ielm-mode-hook             'eldoc-mode)
-  (add-hook 'lisp-interaction-mode-hook 'eldoc-mode))
-
-(use-package paredit
-  :ensure t
-  :diminish paredit-mode
-  :config
-  (add-hook 'clojure-mode-hook    'paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-  (add-hook 'ielm-mode-hook       'paredit-mode)
-  (add-hook 'lisp-mode-hook       'paredit-mode)
-  (add-hook 'scheme-mode-hook     'paredit-mode))
-
 (use-package cider
   :load-path "site-lisp/cider"
   :bind (("C-c M-c" . cider-connect)
          ("C-c M-j" . cider-jack-in))
   :init
   (use-package cl)
+  (add-hook 'cider-mode-hook 'eldoc-mode)
+  (remove-hook 'clojure-mode-hook 'inf-clojure-minor-mode)
   :config
   (use-package cider-apropos)
   (use-package cider-browse-ns)
@@ -155,23 +147,27 @@
   (use-package cider-macroexpansion)
   (use-package cider-scratch)
   (use-package cider-selector)
-  (remove-hook 'clojure-mode-hook 'inf-clojure-minor-mode)
   (setq cider-show-error-buffer 'except-in-repl))
 
 (use-package company
   :ensure t
+  :commands company-mode
   :diminish company-mode
   :config
-  (global-company-mode 1)
   (setq company-global-modes '(not eshell-mode)))
 
 (use-package compile
-  :config
+  :commands compile
+  :init
   (use-package ansi-color)
   (defun ht-display-ansi-colors ()
     (let ((inhibit-read-only t))
       (ansi-color-apply-on-region (point-min) (point-max))))
   (add-hook 'compilation-filter-hook 'ht-display-ansi-colors))
+
+(use-package eldoc
+  :commands eldoc-mode
+  :diminish eldoc-mode)
 
 (use-package erc
   :defer t
@@ -188,7 +184,10 @@
   (add-to-list 'erc-modules 'spelling))
 
 (use-package eshell
-  :config
+  :commands (eshell eshell-command)
+  :defines eshell-visual-commands
+  :functions (eshell/pwd eshell-grep)
+  :init
   (setq eshell-prompt-function
         (lambda nil
           (concat "\n"
@@ -233,6 +232,7 @@
 
 (use-package flycheck
   :ensure t
+  :defer 5
   :preface
   (defun ht-rkt-predicate ()
     (and (buffer-file-name)
@@ -249,10 +249,14 @@
   (setq flycheck-completion-system 'ido))
 
 (use-package geiser
-  :load-path "site-lisp/geiser/elisp")
+  :load-path "site-lisp/geiser/elisp"
+  :defines geiser-active-implementations
+  :config
+  (setq geiser-active-implementations '(racket)))
 
 (use-package haskell-mode
   :ensure t
+  :mode "\\.hs\\(c\\|-boot\\)?\\'"
   :config
   (use-package haskell-style
     :config
@@ -263,32 +267,17 @@
   :bind (("<f5>"     . hs-toggle-hiding)
          ("M-<f5>"   . hs-hide-all)
          ("M-S-<f5>" . hs-show-all))
-  :demand t
+  :functions ht-hs-add-xml-mode
   :config
-  (let ((start         "<!--\\|<[^/>]*[^/]>")
-        (end           "-->\\|</[^/>]*[^/]>")
-        (comment-start "<!--"))
-    (add-to-list 'hs-special-modes-alist
-                 (list 'nxml-mode
-                       start
-                       end
-                       comment-start
-                       'nxml-forward-element
-                       nil))
-    (add-to-list 'hs-special-modes-alist
-                 (list 'html-mode
-                       start
-                       end
-                       comment-start
-                       'sgml-skip-tag-forward
-                       nil))
-    (add-to-list 'hs-special-modes-alist
-                 (list 'sgml-mode
-                       start
-                       end
-                       comment-start
-                       'sgml-skip-tag-forward
-                       nil))))
+  (defun ht-hs-add-xml-mode (mode forward-sexp-func)
+    (let ((start         "<!--\\|<[^/>]*[^/]>")
+          (end           "-->\\|</[^/>]*[^/]>")
+          (comment-start "<!--"))
+      (push (list mode start end comment-start forward-sexp-func nil)
+            hs-special-modes-alist)))
+  (ht-hs-add-xml-mode 'nxml-mode 'nxml-forward-element)
+  (ht-hs-add-xml-mode 'html-mode 'sgml-skip-tag-forward)
+  (ht-hs-add-xml-mode 'sgml-mode 'sgml-skip-tag-forward))
 
 (use-package ido
   :config
@@ -308,7 +297,15 @@
    nil)
   (ido-mode t))
 
+(use-package ielm
+  :commands ielm
+  :init
+  (add-hook 'ielm-mode-hook 'company-mode)
+  (add-hook 'ielm-mode-hook 'eldoc-mode)
+  (add-hook 'ielm-mode-hook 'paredit-mode))
+
 (use-package inf-clojure
+  :disabled t
   :ensure t
   :config
   (setq inf-clojure-program "lein trampoline run -m clojure.main")
@@ -331,10 +328,18 @@
 
 (use-package js2-mode
   :ensure t
+  :mode "\\.js\\'"
   :config
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   (setq-default js2-show-parse-errors nil)
   (setq-default js2-global-externs '("module" "require")))
+
+(use-package lisp-mode
+  :init
+  (add-hook 'lisp-mode-hook 'eldoc-mode)
+  (add-hook 'lisp-mode-hook 'paredit-mode)
+  (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook 'paredit-mode))
 
 (use-package magit
   :ensure t
@@ -352,6 +357,8 @@
          ("C-c b" . org-iswitchb)
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda))
+  :defer 30
+  :functions org-bookmark-jump-unhide
   :config
   (setq org-completion-use-ido t
         org-confirm-babel-evaluate nil
@@ -383,10 +390,15 @@
 
 (use-package page-break-lines
   :ensure t
+  :commands page-break-lines-mode
   :diminish page-break-lines-mode
   :config
-  (setq page-break-lines-char ?-)
-  (add-hook 'prog-mode-hook 'page-break-lines-mode))
+  (setq page-break-lines-char ?-))
+
+(use-package paredit
+  :ensure t
+  :commands paredit-mode
+  :diminish paredit-mode)
 
 (use-package paren-face
   :ensure t
@@ -396,15 +408,27 @@
 
 (use-package projectile
   :load-path "site-lisp/projectile"
+  :functions projectile-global-mode
   :diminish projectile-mode
+  :defer 5
   :config
   (projectile-global-mode))
+
+(use-package prog-mode
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook 'company-mode)
+  (add-hook 'prog-mode-hook 'page-break-lines-mode)
+  (add-hook 'prog-mode-hook 'undo-tree-mode)
+  (add-hook 'prog-mode-hook 'whitespace-mode))
 
 (use-package saveplace
   :config
   (setq-default save-place t))
 
 (use-package scheme
+  :init
+  (add-hook 'scheme-mode-hook 'paredit-mode)
   :config
   (when (executable-find "plt-r5rs")
     (setq scheme-program-name "plt-r5rs")))
@@ -413,6 +437,7 @@
   :load-path "site-lisp/slime"
   :defer t
   :commands slime
+  :functions slime-setup
   :config
   (use-package slime-autoloads)
   (slime-setup '(slime-fancy slime-banner))
@@ -442,8 +467,14 @@
   (setq smex-save-file (concat user-emacs-directory ".smex-items"))
   (smex-initialize))
 
+(use-package sml-mode
+  :ensure t
+  :mode "\\.sml\\'")
+
 (use-package tex-site
   :ensure auctex
+  :mode ("\\.tex\\'" . TeX-latex-mode)
+  :defines (TeX-view-program-list TeX-view-program-selection)
   :config
   (setq TeX-auto-save t
         TeX-parse-self t)
@@ -456,7 +487,9 @@
                            '(output-pdf "mupdf"))))))
 
 (use-package tuareg
+  :disabled t
   :ensure t
+  :commands tuareg-mode
   :config
   (when (and (executable-find "opam")
              (file-directory-p "~/.opam"))
@@ -476,9 +509,8 @@
 
 (use-package undo-tree
   :ensure t
-  :diminish undo-tree-mode
-  :config
-  (add-hook 'prog-mode-hook 'undo-tree-mode))
+  :commands undo-tree-mode
+  :diminish undo-tree-mode)
 
 (use-package uniquify
   :config
@@ -486,22 +518,23 @@
 
 (use-package whitespace
   :diminish whitespace-mode
-  :config
+  :init
   (setq whitespace-style '(face tabs lines-tail trailing empty)
         whitespace-line-column 80)
   (defun ht-style-whitespace-mode ()
     (set-face-attribute 'whitespace-line nil
                         :foreground nil
                         :background "gray90"))
-  (add-hook 'whitespace-mode-hook 'ht-style-whitespace-mode)
-  (add-hook 'prog-mode-hook 'whitespace-mode))
+  (add-hook 'whitespace-mode-hook 'ht-style-whitespace-mode))
 
 
 ;;; cosmetics
 
 (menu-bar-mode -1)
+
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
+
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
@@ -521,7 +554,6 @@
 
 ;;; column numbers
 (column-number-mode 1)
-
 
 ;;; cursor
 (setq visible-cursor nil)
@@ -580,13 +612,10 @@
 ;;; darwin
 (when (and (is-darwin-p) (window-system))
   (let ((ansi-term  (expand-file-name "ansi-term" user-emacs-directory))
-        (aspell-dir (expand-directory-name "~/.nix-profile/lib/aspell/"))
         (mplus-font (expand-file-name "mplus-1mn-regular.ttf" "~/Library/Fonts")))
     (setq explicit-shell-file-name ansi-term
           mac-command-modifier 'super
           mac-option-modifier 'meta)
-    (when (file-directory-p aspell-dir)
-      (setenv "ASPELL_CONF" (concat "dict-dir " aspell-dir)))
     (when (file-exists-p mplus-font)
       (set-face-attribute 'default nil :font "M+ 1mn 14"))
     (add-to-list 'default-frame-alist '(height . 40))
@@ -609,3 +638,12 @@
 ;;; registers
 
 (set-register ?i `(file . ,(concat user-emacs-directory "init.el")))
+
+
+;;; post init
+
+(defun ht-elapsed-msg ()
+  (let ((elapsed (float-time (time-subtract (current-time) emacs-start-time))))
+    (message "Load time: %.3fs"  elapsed)))
+
+(add-hook 'after-init-hook 'ht-elapsed-msg)
