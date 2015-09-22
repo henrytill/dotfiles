@@ -84,6 +84,15 @@
 (let ((nix-site-lisp (expand-directory-name "~/.nix-profile/share/emacs/site-lisp/")))
   (when (file-directory-p nix-site-lisp)
     (add-to-list 'load-path nix-site-lisp)))
+
+;;; other paths
+
+(eval-and-compile
+  (defun ht-oz-home ()
+    (cond ((is-darwin-p) "/Applications/Mozart2.app/Contents/Resources")
+          ((is-linux-p)  "~/.nix-profile")))
+  (defun ht-oz-load-path ()
+    (expand-directory-name "share/mozart/elisp" (ht-oz-home))))
 
 
 ;;; packages
@@ -362,7 +371,15 @@
             org-default-notes-file notes-file)
       (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory)))))
   (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
-                                                           (scheme . t))))
+                                                           (scheme . t)
+                                                           (oz . t))))
+
+(use-package oz
+  :load-path (lambda () (list (ht-oz-load-path)))
+  :commands (run-oz)
+  :init
+  (setenv "OZHOME" (ht-oz-home))
+  (add-hook 'oz-mode-hook 'electric-pair-mode))
 
 (use-package page-break-lines
   :ensure t
