@@ -112,6 +112,10 @@
 (use-package pkg-info            :ensure t :defer t)
 (use-package queue               :ensure t :defer t)
 
+(use-package ace-window
+  :ensure t
+  :bind ("M-p" . ace-window))
+
 (use-package avy
   :ensure t
   :bind (("C-:"   . avy-goto-char)
