@@ -112,6 +112,17 @@
 (use-package pkg-info            :ensure t :defer t)
 (use-package queue               :ensure t :defer t)
 
+(use-package avy
+  :ensure t
+  :bind (("C-:"   . avy-goto-char)
+         ("C-'"   . avy-goto-char-2)
+         ("M-g f" . avy-goto-line)
+         ("M-g w" . avy-goto-word-1)
+         ("M-g e" . avy-goto-word-0))
+  :init
+  (eval-after-load "isearch"
+    '(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
+
 (use-package clojure-mode
   :ensure t
   :mode (("\\.clj\\'"  . clojure-mode)
