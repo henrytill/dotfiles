@@ -398,10 +398,14 @@
 
 (use-package oz
   :load-path (lambda () (list (ht-oz-load-path)))
-  :commands (run-oz)
+  :mode ("\\.oz\\'" . oz-mode)
+  :commands run-oz
   :init
   (setenv "OZHOME" (ht-oz-home))
-  (add-hook 'oz-mode-hook 'electric-pair-mode))
+  (add-hook 'oz-mode-hook 'electric-pair-mode)
+  (add-hook 'oz-mode-hook 'page-break-lines-mode)
+  (add-hook 'oz-mode-hook 'undo-tree-mode)
+  (add-hook 'oz-mode-hook 'whitespace-mode))
 
 (use-package page-break-lines
   :ensure t
