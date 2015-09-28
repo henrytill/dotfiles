@@ -11,15 +11,6 @@
   (defun is-linux-p ()
     (string-equal system-type "gnu/linux")))
 
-(defun el-which (cmd)
-  (replace-regexp-in-string "\\\n" ""
-                            (shell-command-to-string
-                             (concat "type -p " cmd))))
-
-(defun shell-command-p (cmd)
-  (let ((result (el-which cmd)))
-    (> (length result) 0)))
-
 (defun expand-directory-name (dir &optional parent-dir)
   (file-name-as-directory (expand-file-name dir parent-dir)))
 
