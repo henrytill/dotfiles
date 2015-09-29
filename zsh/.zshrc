@@ -102,6 +102,10 @@ if [[ -n $TMUX ]]; then
     alias emacs="TERM=xterm-256color emacs"
 fi
 
+if [[ -n $INSIDE_EMACS ]]; then
+    unset zle_bracketed_paste
+fi
+
 # Darwin-specific config
 if [[ $(uname) == Darwin ]]; then
     alias ls="ls -G"
