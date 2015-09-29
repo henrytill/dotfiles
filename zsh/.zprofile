@@ -38,6 +38,10 @@ if [[ $(uname) == Darwin ]]; then
     export LANG=en_US.UTF-8
 fi
 
+if [[ $(uname) == Linux && -d /etc/nixos ]]; then
+    export PLTCONFIGDIR="$HOME/opt/racket"
+fi
+
 if [[ $(uname) == Linux && ! -d /etc/nixos ]]; then
     if [[ -d $HOME/bin ]]; then
         export PATH=$HOME/bin:$PATH
