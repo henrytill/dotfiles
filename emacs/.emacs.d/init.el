@@ -498,25 +498,28 @@
                            '(output-pdf "mupdf"))))))
 
 (use-package tuareg
-  :disabled t
-  :ensure t
-  :commands tuareg-mode
-  :config
-  (when (and (executable-find "opam")
-             (file-directory-p "~/.opam"))
-    (let ((opam-env (car (read-from-string (shell-command-to-string
-                                            "opam config env --sexp")))))
-      (dolist (var opam-env)
-        (setenv (car var) (cadr var))))
-    (let ((toplevel (expand-directory-name "../../share/emacs/site-lisp"
-                                           (getenv "OCAML_TOPLEVEL_PATH"))))
-      (when (file-directory-p toplevel)
-        (add-to-list 'load-path toplevel))))
-  (when (and (executable-find "utop")
-             (locate-file "utop.el" load-path))
-    (autoload 'utop "utop" "Toplevel for OCaml" t)
-    (autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
-    (add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer)))
+  :mode (("\\.ml[ip]?\\'" . tuareg-mode)
+         ("\\.eliomi?\\'" . tuareg-mode))
+  :init
+  (defun ht-opam-config-env ()
+    (when (executable-find "opam")
+      (dolist (var (car (read-from-string (shell-command-to-string
+                                           "opam config env --sexp"))))
+        (setenv (car var) (cadr var)))))
+  (defun ht-opam-load-path ()
+    (let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
+      (when ocaml-toplevel-path
+        (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path))))
+  (ht-opam-config-env)
+  (let ((opam-load-path (ht-opam-load-path)))
+    (when opam-load-path
+      (add-to-list 'load-path opam-load-path)))
+  (use-package utop
+    :if (executable-find "utop"))
+  (use-package utop-minor-mode
+    :if (executable-find "utop")
+    :init
+    (add-hook 'tuareg-mode-hook 'utop-minor-mode)))
 
 (use-package undo-tree
   :ensure t
