@@ -128,6 +128,7 @@
   (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
   (add-hook 'clojure-mode-hook 'paredit-mode)
   (defun ht-clojure-mode-indents ()
+    (put 'match                  'clojure-backtracking-indent '(2))
     (put 'this-as                'clojure-backtracking-indent '(2))
     (put 'js/React.createClass   'clojure-backtracking-indent '(2))
     (put 'js/React.createElement 'clojure-backtracking-indent '(2))
