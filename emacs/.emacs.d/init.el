@@ -532,6 +532,14 @@
   (let ((opam-load-path (ht-opam-load-path)))
     (when opam-load-path
       (add-to-list 'load-path opam-load-path)))
+  (use-package merlin
+    :if (executable-find "ocamlmerlin")
+    :commands merlin-mode
+    :init
+    (add-hook 'merlin-mode-hook 'company-mode)
+    (add-hook 'tuareg-mode-hook 'merlin-mode)
+    :config
+    (add-to-list 'company-backends 'merlin-company-backend))
   (use-package utop
     :if (executable-find "utop"))
   (use-package utop-minor-mode
