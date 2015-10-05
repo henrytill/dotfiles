@@ -256,6 +256,23 @@
   (add-to-list 'flycheck-checkers 'racket-alt)
   (setq flycheck-completion-system 'ido))
 
+(use-package forth-mode
+  :if (executable-find "gforth")
+  :mode "\\.fs\\'"
+  :init
+  (autoload 'forth-mode "gforth.el")
+  (defun ht-forth-mode ()
+    (setq forth-indent-level 4
+          forth-minor-indent-level 2
+          forth-hilight-level 3))
+  (add-hook 'forth-mode-hook 'ht-forth-mode))
+
+(use-package forth-block-mode
+  :if (executable-find "gforth")
+  :mode "\\.fb\\'"
+  :init
+  (autoload 'forth-block-mode "gforth.el"))
+
 (use-package geiser
   :load-path "site-lisp/geiser/elisp"
   :defines geiser-active-implementations
