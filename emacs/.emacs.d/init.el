@@ -282,11 +282,12 @@
 (use-package haskell-mode
   :ensure t
   :mode "\\.hs\\(c\\|-boot\\)?\\'"
-  :config
+  :init
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (use-package haskell-style
     :config
-    (add-hook 'haskell-mode-hook 'haskell-style))
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
+    (add-hook 'haskell-mode-hook 'haskell-style)))
 
 (use-package hideshow
   :bind (("<f5>"     . hs-toggle-hiding)
