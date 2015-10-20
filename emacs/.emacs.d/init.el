@@ -404,8 +404,9 @@
             org-default-notes-file notes-file)
       (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory)))))
   (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
-                                                           (scheme . t)
-                                                           (oz . t))))
+                                                           (haskell . t)
+                                                           (oz . t)
+                                                           (scheme . t))))
 
 (use-package oz
   :load-path (lambda () (list (ht-oz-load-path)))
