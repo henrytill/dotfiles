@@ -232,6 +232,9 @@
   :config
   (exec-path-from-shell-initialize))
 
+(use-package evil
+  :ensure t)
+
 (use-package flx-ido
   :ensure t
   :config
