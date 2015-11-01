@@ -4,6 +4,7 @@ Emacs.fontBackend:          xft
 URxvt.boldFont:             xft:M+ 1mn bold:pixelsize=14
 URxvt.font:                 xft:M+ 1mn regular:pixelsize=14
 URxvt.internalBorder:       14
+URxvt.iso14755:             false
 URxvt.keysym.M-u:           perl:url-select:select_next
 URxvt.perl-ext:             url-select
 URxvt.scrollBar:            false
