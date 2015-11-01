@@ -233,7 +233,11 @@
   (exec-path-from-shell-initialize))
 
 (use-package evil
-  :ensure t)
+  :ensure t
+  :commands evil-mode
+  :config
+  (define-key evil-motion-state-map (kbd "SPC")   'evil-avy-goto-word-1)
+  (define-key evil-motion-state-map (kbd "M-SPC") 'evil-avy-goto-line))
 
 (use-package flx-ido
   :ensure t
