@@ -1,18 +1,17 @@
 # defined hosts
-MY_HOSTS  = glaucus nereus proteus tethys thalassa thaumas
+MY_HOSTS = glaucus nereus tethys thaumas
 
 # hosts and their package sets
-glaucus   = emacs git nixpkgs tmux zile zsh
-nereus    = asdf boot emacs git keysnail leiningen nixpkgs sbcl tmux \
-            x11-osx zsh
-tethys    = boot dunst emacs git keysnail leiningen nixpkgs systemd tmux \
-            x11-nixos xdg zile zsh
-thalassa  = emacs git keysnail leiningen tmux x11-gentoo xdg zile zsh
-thaumas   = boot dunst emacs git keysnail leiningen nixpkgs systemd tmux \
-            x11-nixos xdg zile zsh
+glaucus = emacs git nixpkgs tmux vim zsh
+nereus  = asdf boot emacs git keysnail leiningen nixpkgs sbcl tmux \
+          vim x11-osx zsh
+tethys  = boot dunst emacs git keysnail leiningen nixpkgs systemd tmux \
+          vim x11-nixos xdg zsh
+thaumas = boot dunst emacs git keysnail leiningen nixpkgs systemd tmux \
+          vim x11-nixos xdg zsh
 
 # base package set for undefined hosts
-BASE_PKGS = emacs git tmux zile zsh
+BASE_PKGS = emacs git tmux vim zsh
 
 # target directories
 TARG_DIRS = ../.config
