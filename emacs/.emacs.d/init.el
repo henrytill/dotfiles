@@ -444,14 +444,6 @@
   (setq paren-face-regexp "[][(){}]")
   (global-paren-face-mode))
 
-(use-package projectile
-  :load-path "site-lisp/projectile"
-  :functions projectile-global-mode
-  :diminish projectile-mode
-  :defer 5
-  :config
-  (projectile-global-mode))
-
 (use-package prog-mode
   :defer t
   :init
@@ -459,6 +451,14 @@
   (add-hook 'prog-mode-hook 'page-break-lines-mode)
   (add-hook 'prog-mode-hook 'undo-tree-mode)
   (add-hook 'prog-mode-hook 'whitespace-mode))
+
+(use-package projectile
+  :load-path "site-lisp/projectile"
+  :functions projectile-global-mode
+  :diminish projectile-mode
+  :defer 5
+  :config
+  (projectile-global-mode))
 
 (use-package saveplace
   :config
@@ -589,22 +589,18 @@
 
 (show-paren-mode 1)
 
-;;; frame titles
 (setq frame-title-format
       '("" invocation-name ": "
         (:eval (if (buffer-file-name)
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 
-;;; mode line
 (set-face-attribute 'mode-line          nil :box nil)
 (set-face-attribute 'mode-line-inactive nil :box nil)
 (set-face-attribute 'header-line        nil :box nil)
 
-;;; column numbers
 (column-number-mode 1)
 
-;;; cursor
 (setq visible-cursor nil)
 (setq-default cursor-type 'box)
 
