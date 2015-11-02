@@ -447,6 +447,9 @@
 (use-package prog-mode
   :defer t
   :init
+  (defun ht-prog-mode ()
+    (setq indicate-empty-lines 1))
+  (add-hook 'prog-mode-hook 'ht-prog-mode)
   (add-hook 'prog-mode-hook 'company-mode)
   (add-hook 'prog-mode-hook 'page-break-lines-mode)
   (add-hook 'prog-mode-hook 'undo-tree-mode)
