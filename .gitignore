@@ -32,3 +32,5 @@
 /xmonad/.xmonad/xmonad.hi
 /xmonad/.xmonad/xmonad.o
 /xmonad/.xmonad/xmonad-x86_64-linux
+
+*.swp
