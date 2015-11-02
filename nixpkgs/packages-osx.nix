@@ -4,7 +4,7 @@ with import <nixpkgs> {}; [
   cacert
   cloc
   ed
-  emacs24Macport
+  emacs
   ghostscript
   (gitAndTools.gitFull.override { guiSupport = false; svnSupport = false; })
   gnumake
@@ -20,6 +20,7 @@ with import <nixpkgs> {}; [
   stow
   tmux
   tree
+  vim
   wget
   xz
   youtube-dl
