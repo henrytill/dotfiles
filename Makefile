@@ -3,11 +3,11 @@ MY_HOSTS = glaucus nereus tethys thaumas
 
 # hosts and their package sets
 glaucus = emacs git nixpkgs tmux vim zsh
-nereus  = asdf boot emacs git keysnail leiningen nixpkgs sbcl tmux \
+nereus  = asdf boot emacs git leiningen nixpkgs sbcl tmux \
           vim x11-osx zsh
-tethys  = boot dunst emacs git keysnail leiningen nixpkgs systemd tmux \
+tethys  = boot dunst emacs git leiningen nixpkgs systemd tmux \
           vim x11-nixos xdg zsh
-thaumas = boot dunst emacs git keysnail leiningen nixpkgs systemd tmux \
+thaumas = boot dunst emacs git leiningen nixpkgs systemd tmux \
           vim x11-nixos xdg zsh
 
 # base package set for undefined hosts
@@ -33,13 +33,6 @@ endif
 # boot
 ifneq (,$(findstring boot,$(PKG_SET)))
   TARG_DIRS += ../.boot
-endif
-
-# keysnail
-ifneq (,$(findstring keysnail,$(PKG_SET)))
-  INSTALL_HOOK   += $(MAKE) -C keysnail/plugins;
-  REINSTALL_HOOK += $(MAKE) -C keysnail/plugins;
-  CLEAN_HOOK     += $(MAKE) clean -C keysnail/plugins;
 endif
 
 # leiningen
