@@ -234,10 +234,16 @@
 
 (use-package evil
   :ensure t
-  :commands evil-mode
+  :init
+  (use-package evil-leader
+    :ensure t
+    :config
+    (evil-leader/set-leader "<SPC>")
+    (evil-leader/set-key "w" 'evil-avy-goto-word-1)
+    (evil-leader/set-key "l" 'evil-avy-goto-line)
+    (global-evil-leader-mode))
   :config
-  (define-key evil-motion-state-map (kbd "SPC")   'evil-avy-goto-word-1)
-  (define-key evil-motion-state-map (kbd "M-SPC") 'evil-avy-goto-line))
+  (evil-mode 1))
 
 (use-package flx-ido
   :ensure t
