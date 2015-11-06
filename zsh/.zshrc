@@ -121,12 +121,3 @@ fi
 if [[ $(uname) == Linux ]]; then
     alias ls="ls --color"
 fi
-
-# Gentoo-specific config
-if [[ -f /etc/gentoo-release ]]; then
-    alias sx="xtrlock &; sudo pm-suspend"
-
-    if [[ $(tty) == /dev/tty1 ]]; then
-        exec startx
-    fi
-fi
