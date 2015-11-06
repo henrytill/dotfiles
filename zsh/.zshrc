@@ -21,7 +21,9 @@ export HISTFILE=~/.histfile
 export HISTSIZE=100000
 export SAVEHIST=100000
 
-bindkey -e
+bindkey -v
+bindkey -a '/' history-incremental-pattern-search-backward
+bindkey -a '?' history-incremental-pattern-search-forward
 
 # completion
 zstyle :compinstall filename '$HOME/.zshrc'
