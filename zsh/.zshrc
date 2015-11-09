@@ -22,8 +22,12 @@ export HISTSIZE=100000
 export SAVEHIST=100000
 
 bindkey -v
-bindkey -a '/' history-incremental-pattern-search-backward
-bindkey -a '?' history-incremental-pattern-search-forward
+bindkey '^p' up-history
+bindkey '^n' down-history
+bindkey -M vicmd   '/'  history-incremental-pattern-search-backward
+bindkey -M vicmd   '?'  history-incremental-pattern-search-forward
+bindkey -M isearch '^p' history-incremental-pattern-search-backward
+bindkey -M isearch '^n' history-incremental-pattern-search-forward
 
 # completion
 zstyle :compinstall filename '$HOME/.zshrc'
