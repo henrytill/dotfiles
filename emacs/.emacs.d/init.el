@@ -296,11 +296,14 @@
   :ensure t
   :mode "\\.hs\\(c\\|-boot\\)?\\'"
   :init
+  (defun ht-haskell-style ()
+    (setq tab-width 4
+          haskell-indentation-layout-offset 4
+          haskell-indentation-left-offset 4
+          haskell-indentation-ifte-offset 4))
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (use-package haskell-style
-    :config
-    (add-hook 'haskell-mode-hook 'haskell-style)))
+  (add-hook 'haskell-mode-hook 'ht-haskell-style))
 
 (use-package hideshow
   :bind (("<f5>"     . hs-toggle-hiding)
