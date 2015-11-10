@@ -243,6 +243,8 @@
     (evil-leader/set-key "l" 'evil-avy-goto-line)
     (global-evil-leader-mode))
   :config
+  (delete 'term-mode evil-insert-state-modes)
+  (add-to-list 'evil-emacs-state-modes 'term-mode)
   (evil-mode 1))
 
 (use-package flx-ido
