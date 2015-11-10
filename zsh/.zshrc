@@ -1,15 +1,5 @@
 #! /usr/bin/env zsh
 
-autoload -U promptinit
-promptinit
-prompt walters
-
-if [[ -n $IN_NIX_SHELL ]]; then
-    PROMPT=$'\n%F{4}%B[nix-shell]%f%b '$PROMPT
-else
-    PROMPT=$'\n'$PROMPT
-fi
-
 setopt autocd
 setopt beep
 setopt extendedglob
@@ -28,6 +18,22 @@ bindkey -M vicmd   '/'  history-incremental-pattern-search-backward
 bindkey -M vicmd   '?'  history-incremental-pattern-search-forward
 bindkey -M isearch '^p' history-incremental-pattern-search-backward
 bindkey -M isearch '^n' history-incremental-pattern-search-forward
+
+function zle-line-init zle-keymap-select {
+    local firstLine='%F{2}%B%n@%m:%~%f%b'
+    local retStatus='%(?..%F{1}[%?]%f)'
+    local nixShellMode=${IN_NIX_SHELL/1/'%F{4}[nix-shell]%f'}
+    local viMode=${${KEYMAP/vicmd/'[N]'}/(main|viins)/'[I]'}
+
+    PROMPT=$'\n'"${firstLine}"$'\n'"${retStatus}${nixShellMode}${viMode}> "
+    PROMPT2="${nixShellMode}${viMode}> "
+    RPROMPT=""
+
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 # completion
 zstyle :compinstall filename '$HOME/.zshrc'
