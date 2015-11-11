@@ -49,8 +49,3 @@ if has("autocmd")
 
   autocmd FileType make setlocal noexpandtab
 endif
-
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
-inoremap " ""<Left>
