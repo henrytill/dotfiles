@@ -11,37 +11,21 @@ export HISTFILE=~/.histfile
 export HISTSIZE=100000
 export SAVEHIST=100000
 
-bindkey -v
-bindkey '^p' up-history
-bindkey '^n' down-history
-bindkey -M vicmd   '/'  history-incremental-pattern-search-backward
-bindkey -M vicmd   '?'  history-incremental-pattern-search-forward
-bindkey -M isearch '^p' history-incremental-pattern-search-backward
-bindkey -M isearch '^n' history-incremental-pattern-search-forward
+bindkey -e
 
 # prompt
-function ht-set-prompt {
+() {
     local firstLine='%F{2}%B%n@%m:%~%f%b'
-    local retStatus='%(?..%F{1}[%?]%f)'
+    local retStatus='%(?.[%?].%F{1}[%?]%f)'
     local nixShellMode=${IN_NIX_SHELL/1/'%F{4}[nix-shell]%f'}
 
-    PROMPT=$'\n'$firstLine$'\n'$retStatus$nixShellMode$1'> '
-    PROMPT2=$nixshellMode$1'> '
+    PROMPT=$'\n'$firstLine$'\n'$retStatus$nixShellMode'> '
+    PROMPT2=$nixshellMode'> '
     RPROMPT=''
 }
 
 if [[ $EMACS == t ]]; then
     unsetopt zle
-    ht-set-prompt
-else
-    function zle-line-init zle-keymap-select {
-        local viMode=${${KEYMAP/vicmd/'[N]'}/(main|viins)/'[I]'}
-        ht-set-prompt $viMode
-        zle reset-prompt
-    }
-
-    zle -N zle-line-init
-    zle -N zle-keymap-select
 fi
 
 # completion
