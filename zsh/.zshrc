@@ -64,12 +64,12 @@ alias u="cd .. && l"
 if [[ $TERM == dumb ]]; then
     alias less="cat"
     alias more="cat"
-    alias l="pwd && ls -lh"
-    alias la="pwd && ls -lah"
+    alias l="ls -lh"
+    alias la="ls -lah"
     export PAGER="cat"
 else
-    alias l="clear && pwd && ls -lh"
-    alias la="clear && pwd && ls -lah"
+    alias l="clear && ls -lh"
+    alias la="clear && ls -lah"
 fi
 
 if [[ -n $(command -v ed) && -n $(command -v rlwrap) ]]; then
