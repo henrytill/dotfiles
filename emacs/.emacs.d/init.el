@@ -148,7 +148,6 @@
   :init
   (use-package cl)
   (add-hook 'cider-mode-hook 'eldoc-mode)
-  (remove-hook 'clojure-mode-hook 'inf-clojure-minor-mode)
   :config
   (use-package cider-apropos)
   (use-package cider-browse-ns)
@@ -349,28 +348,6 @@
   :init
   (add-hook 'ielm-mode-hook 'company-mode)
   (add-hook 'ielm-mode-hook 'eldoc-mode))
-
-(use-package inf-clojure
-  :disabled t
-  :ensure t
-  :config
-  (setq inf-clojure-program "lein trampoline run -m clojure.main")
-  (defun ht-revert-clojure-buffer ()
-    (let ((ext (file-name-extension buffer-file-name)))
-      (when (or (string-equal ext "clj")
-                (string-equal ext "cljs")
-                (string-equal ext "cljc"))
-        (revert-buffer))))
-  (defun ht-load-inf-clojure ()
-    (interactive)
-    (setq cider-auto-mode nil)
-    (add-hook 'clojure-mode-hook 'inf-clojure-minor-mode)
-    (ht-revert-clojure-buffer))
-  (defun ht-unload-inf-clojure ()
-    (interactive)
-    (remove-hook 'clojure-mode-hook 'inf-clojure-minor-mode)
-    (setq cider-auto-mode t)
-    (ht-revert-clojure-buffer)))
 
 (use-package js2-mode
   :ensure t
