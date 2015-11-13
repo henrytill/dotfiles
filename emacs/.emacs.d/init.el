@@ -371,6 +371,7 @@
   (setq magit-last-seen-setup-instructions "1.4.0"))
 
 (use-package nix-mode
+  :ensure t
   :mode "\\.nix\\'")
 
 (use-package org
