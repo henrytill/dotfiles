@@ -234,8 +234,10 @@
     :ensure t
     :config
     (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key "w" 'evil-avy-goto-word-1)
-    (evil-leader/set-key "l" 'evil-avy-goto-line)
+    (evil-leader/set-key "g;" 'evil-avy-goto-char)
+    (evil-leader/set-key "g'" 'evil-avy-goto-char-2)
+    (evil-leader/set-key "gw" 'evil-avy-goto-word-1)
+    (evil-leader/set-key "gl" 'evil-avy-goto-line)
     (global-evil-leader-mode))
   :config
   (delete 'term-mode evil-insert-state-modes)
