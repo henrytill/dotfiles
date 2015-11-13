@@ -102,6 +102,11 @@
 (use-package pkg-info            :ensure t :defer t)
 (use-package queue               :ensure t :defer t)
 
+(use-package paredit
+  :ensure t
+  :commands enable-paredit-mode
+  :diminish paredit-mode)
+
 (use-package ace-window
   :ensure t
   :bind ("M-p" . ace-window))
@@ -124,7 +129,7 @@
          ("\\.boot\\'" . clojure-mode))
   :init
   (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
-  (add-hook 'clojure-mode-hook 'paredit-mode)
+  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
   (defun ht-clojure-mode-indents ()
     (put 'match                  'clojure-backtracking-indent '(2))
     (put 'this-as                'clojure-backtracking-indent '(2))
@@ -343,8 +348,7 @@
   :commands ielm
   :init
   (add-hook 'ielm-mode-hook 'company-mode)
-  (add-hook 'ielm-mode-hook 'eldoc-mode)
-  (add-hook 'ielm-mode-hook 'paredit-mode))
+  (add-hook 'ielm-mode-hook 'eldoc-mode))
 
 (use-package inf-clojure
   :disabled t
@@ -378,10 +382,10 @@
 (use-package lisp-mode
   :init
   (add-hook 'lisp-mode-hook 'eldoc-mode)
-  (add-hook 'lisp-mode-hook 'paredit-mode)
+  (add-hook 'lisp-mode-hook 'enable-paredit-mode)
   (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-  (add-hook 'emacs-lisp-mode-hook 'paredit-mode))
+  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode))
 
 (use-package magit
   :ensure t
@@ -442,11 +446,6 @@
   :config
   (setq page-break-lines-char ?-))
 
-(use-package paredit
-  :ensure t
-  :commands paredit-mode
-  :diminish paredit-mode)
-
 (use-package paren-face
   :ensure t
   :config
@@ -478,7 +477,7 @@
 
 (use-package scheme
   :init
-  (add-hook 'scheme-mode-hook 'paredit-mode)
+  (add-hook 'scheme-mode-hook 'enable-paredit-mode)
   :config
   (when (executable-find "plt-r5rs")
     (setq scheme-program-name "plt-r5rs")))
