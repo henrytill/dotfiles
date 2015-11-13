@@ -211,10 +211,6 @@
             (defun my-eshell-visual-commands ()
               (add-to-list 'eshell-visual-commands "ssh")
               (add-to-list 'eshell-visual-commands "bash")))
-  (defun eshell-term ()
-    (interactive)
-    (eshell)
-    (setq-local mode-line-format nil))
   (defun eshell/clear ()
     "Clear the Eshell buffer."
     (interactive)
@@ -223,9 +219,6 @@
   (defun eshell/rgrep (&rest args)
     "Use Emacs grep facility instead of calling external grep."
     (eshell-grep "rgrep" args t))
-  (defun eshell/scheme ()
-    (interactive)
-    (call-interactively 'run-scheme))
   (defalias 'eshell/view 'view-file))
 
 (use-package exec-path-from-shell
