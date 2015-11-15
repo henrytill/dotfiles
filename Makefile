@@ -6,9 +6,9 @@ glaucus = emacs git nixpkgs tmux vim zsh
 nereus  = boot emacs git leiningen nixpkgs tmux \
           vim x11-osx zsh
 tethys  = boot dunst emacs git leiningen nixpkgs systemd tmux \
-          vim x11-nixos xdg zsh
+          vim x11 xdg zsh
 thaumas = boot dunst emacs git leiningen nixpkgs systemd tmux \
-          vim x11-nixos xdg zsh
+          vim x11 xdg zsh
 
 # base package set for undefined hosts
 BASE_PKGS = emacs git tmux vim zsh
