@@ -5,9 +5,9 @@ MY_HOSTS = glaucus nereus tethys thaumas
 glaucus = emacs git nixpkgs tmux vim zsh
 nereus  = boot emacs git leiningen nixpkgs tmux \
           vim x11-osx zsh
-tethys  = boot dunst emacs git leiningen nixpkgs systemd tmux \
+tethys  = boot dunst emacs git leiningen nixpkgs tmux \
           vim x11 xdg zsh
-thaumas = boot dunst emacs git leiningen nixpkgs systemd tmux \
+thaumas = boot dunst emacs git leiningen nixpkgs tmux \
           vim x11 xdg zsh
 
 # base package set for undefined hosts
@@ -38,11 +38,6 @@ endif
 # leiningen
 ifneq (,$(findstring leiningen,$(PKG_SET)))
   TARG_DIRS += ../.lein
-endif
-
-# systemd
-ifneq (,$(findstring systemd,$(PKG_SET)))
-  INSTALL_HOOK += systemctl --user enable ~/etc/systemd/*.service;
 endif
 
 all: install
