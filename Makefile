@@ -1,14 +1,16 @@
 # defined hosts
-MY_HOSTS = glaucus nereus tethys thaumas
+MY_HOSTS = glaucus nereus tethys thalassa thaumas
 
 # hosts and their package sets
-glaucus = emacs git nixpkgs tmux vim zsh
-nereus  = boot emacs git leiningen nixpkgs tmux \
-          vim x11-osx zsh
-tethys  = boot dunst emacs git leiningen nixpkgs tmux \
-          vim x11 xdg zsh
-thaumas = boot dunst emacs git leiningen nixpkgs tmux \
-          vim x11 xdg zsh
+glaucus  = emacs git nixpkgs tmux vim zsh
+nereus   = boot emacs git leiningen nixpkgs tmux \
+           vim x11-osx zsh
+tethys   = boot dunst emacs git leiningen nixpkgs tmux \
+           vim x11 xdg zsh
+thalassa = boot dunst emacs git leiningen nixpkgs tmux \
+           vim x11 xdg zsh
+thaumas  = boot dunst emacs git leiningen nixpkgs tmux \
+           vim x11 xdg zsh
 
 # base package set for undefined hosts
 BASE_PKGS = emacs git tmux vim zsh
