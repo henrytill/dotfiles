@@ -445,6 +445,14 @@
   (when (executable-find "plt-r5rs")
     (setq scheme-program-name "plt-r5rs")))
 
+(use-package shell
+  :commands shell
+  :init
+  (defun ht-add-mode-line-dirtrack ()
+    (add-to-list 'mode-line-buffer-identification
+                 '(:propertize ("" default-directory "  ") face dired-directory)))
+  (add-hook 'shell-mode-hook 'ht-add-mode-line-dirtrack))
+
 (use-package slime
   :load-path "site-lisp/slime"
   :defer t
