@@ -15,18 +15,25 @@ bindkey -e
 
 # prompt
 () {
-    local firstLine='%F{2}%B%n@%m:%~%f%b'
-    local retStatus='%(?.[%?].%F{1}[%?]%f)'
-    local nixShellMode=${IN_NIX_SHELL/1/'%F{4}[nix-shell]%f'}
+    if [[ $TERM == dumb ]]; then
+        unsetopt zle
 
-    PROMPT=$'\n'$firstLine$'\n'$retStatus$nixShellMode'> '
-    PROMPT2=$nixshellMode'> '
-    RPROMPT=''
+        local retStatus='[%?]'
+        local nixShellMode=${IN_NIX_SHELL/1/'[nix-shell]'}
+
+        PROMPT=$'\n'$retStatus$nixShellMode'> '
+        PROMPT2=$nixshellMode'> '
+        RPROMPT=''
+    else
+        local firstLine='%F{2}%B%n@%m:%~%f%b'
+        local retStatus='%(?.[%?].%F{1}[%?]%f)'
+        local nixShellMode=${IN_NIX_SHELL/1/'%F{4}[nix-shell]%f'}
+
+        PROMPT=$'\n'$firstLine$'\n'$retStatus$nixShellMode'> '
+        PROMPT2=$nixshellMode'> '
+        RPROMPT=''
+    fi
 }
-
-if [[ $EMACS == t ]]; then
-    unsetopt zle
-fi
 
 # completion
 zstyle :compinstall filename '$HOME/.zshrc'
