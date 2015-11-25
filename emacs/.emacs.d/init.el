@@ -339,7 +339,7 @@
   :mode "\\.js\\'"
   :config
   (setq-default js2-show-parse-errors nil)
-  (setq-default js2-global-externs '("module" "require")))
+  (setq-default js2-global-externs '("exports" "module" "require")))
 
 (use-package lisp-mode
   :init
