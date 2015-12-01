@@ -19,11 +19,7 @@ BASE_PKGS = emacs git tmux vim zsh
 TARG_DIRS = ../.config
 
 # get host name
-ifeq ($(shell uname),Darwin)
-  HOST = $(shell hostname -s)
-else
-  HOST ?= $(shell hostname)
-endif
+HOST = $(shell hostname -s)
 
 # define package set based on host's name
 ifneq (,$(findstring $(HOST),$(MY_HOSTS)))
