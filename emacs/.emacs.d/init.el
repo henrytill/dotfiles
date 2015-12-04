@@ -388,6 +388,7 @@
       (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory)))))
   (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
                                                            (haskell . t)
+                                                           (js . t)
                                                            (oz . t)
                                                            (scheme . t))))
 
