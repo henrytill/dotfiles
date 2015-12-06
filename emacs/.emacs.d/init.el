@@ -439,6 +439,11 @@
   :config
   (setq-default save-place t))
 
+(use-package scala-mode2
+  :ensure t
+  :config
+  (use-package sbt-mode :ensure t))
+
 (use-package scheme
   :init
   (add-hook 'scheme-mode-hook 'enable-paredit-mode)
