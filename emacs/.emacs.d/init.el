@@ -390,6 +390,7 @@
                                                            (haskell . t)
                                                            (js . t)
                                                            (oz . t)
+                                                           (scala . t)
                                                            (scheme . t))))
 
 (use-package oz
