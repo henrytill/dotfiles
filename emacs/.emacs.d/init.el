@@ -85,7 +85,7 @@
 (eval-and-compile
   (defun ht-oz-home ()
     (cond ((is-darwin-p) "/Applications/Mozart2.app/Contents/Resources")
-          ((is-linux-p)  "~/.nix-profile")))
+          ((is-linux-p)  (car (split-string (executable-find "oz") "/bin/oz")))))
   (defun ht-oz-load-path ()
     (cond ((is-darwin-p) "~/src/other/mozart-elisp")
           ((is-linux-p)  (expand-directory-name "share/mozart/elisp" (ht-oz-home))))))
