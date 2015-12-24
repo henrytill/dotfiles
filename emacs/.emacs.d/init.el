@@ -84,8 +84,12 @@
 
 (eval-and-compile
   (defun ht-oz-home ()
-    (cond ((is-darwin-p) "/Applications/Mozart2.app/Contents/Resources")
-          ((is-linux-p)  (car (split-string (executable-find "oz") "/bin/oz")))))
+    (cond ((is-darwin-p) (let ((oz-app-path "/Applications/Mozart2.app"))
+                           (when (file-directory-p oz-app-path)
+                             (concat oz-app-path "/Contents/Resources"))))
+          ((is-linux-p)  (let ((oz-binary-path (executable-find "oz")))
+                           (when oz-binary-path
+                             (car (split-string oz-binary-path "/bin/oz")))))))
   (defun ht-oz-load-path ()
     (cond ((is-darwin-p) "~/src/other/mozart-elisp")
           ((is-linux-p)  (expand-directory-name "share/mozart/elisp" (ht-oz-home))))))
