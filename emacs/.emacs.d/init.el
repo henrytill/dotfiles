@@ -442,6 +442,8 @@
 
 (use-package scala-mode2
   :ensure t
+  :init
+  (add-hook 'scala-mode-hook 'electric-pair-mode)
   :config
   (use-package sbt-mode :ensure t))
 
