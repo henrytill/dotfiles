@@ -38,6 +38,11 @@ ifneq (,$(findstring leiningen,$(PKG_SET)))
   TARG_DIRS += ../.lein
 endif
 
+# vim
+ifneq (,$(findstring vim,$(PKG_SET)))
+  TARG_DIRS += ../.vim
+endif
+
 all: install
 
 list:
