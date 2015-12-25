@@ -1,5 +1,12 @@
+Emacs.background:           #222222
+Emacs.foreground:           #bbbbbb
+
 Emacs.font:                 M+ 1mn regular:pixelsize=14
 Emacs.fontBackend:          xft
+
+URxvt.background:           #222222
+URxvt.foreground:           #bbbbbb
+URxvt.color12:              #005577
 
 URxvt.boldFont:             xft:M+ 1mn bold:pixelsize=14
 URxvt.font:                 xft:M+ 1mn regular:pixelsize=14
