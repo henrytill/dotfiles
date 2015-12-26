@@ -43,7 +43,7 @@ compinit
 zstyle ':completion:*' menu select
 
 # window titles
-if [[ $TERM == xterm* ]]; then
+if [[ $TERM == rxvt* ]]; then
     function set-title() {
         echo -en "\e]2;$USER@$HOST: $2\a"
     }
