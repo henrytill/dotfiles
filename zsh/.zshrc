@@ -37,12 +37,6 @@ bindkey -e
 
 # completion
 zstyle :compinstall filename '$HOME/.zshrc'
-
-if [[ -d $HOME/src/other/nix-zsh-completions ]]; then
-    source $HOME/src/other/nix-zsh-completions/nix.plugin.zsh
-    fpath=($HOME/src/other/nix-zsh-completions $fpath)
-fi
-
 autoload -Uz compinit
 compinit
 
@@ -58,7 +52,7 @@ if [[ $TERM == xterm* ]]; then
 fi
 
 # env
-export EDITOR='emacsclient -t --alternate-editor='
+export EDITOR="emacsclient -t --alternate-editor="
 
 # aliases
 alias e="$EDITOR"
@@ -79,10 +73,6 @@ else
     alias la="clear && ls -lah"
 fi
 
-if [[ -n $(command -v ed) && -n $(command -v rlwrap) ]]; then
-    alias ed="rlwrap ed"
-fi
-
 if [[ -n $(command -v gpg2) ]]; then
     alias gpg="gpg2"
 fi
@@ -99,19 +89,6 @@ if [[ -n $(command -v npm) ]]; then
     npm-exec () {
         PATH=$(npm bin):$PATH $*
     }
-fi
-
-if [[ -e $HOME/.nix-profile && -n $(command -v nix-env) ]]; then
-    p() {
-        clear
-        echo 'Current Profile: ' && readlink $HOME/.nix-profile
-        echo && echo 'Installed:' && nix-env -q
-    }
-fi
-
-if [[ -n $TMUX ]]; then
-    alias emacsclient="TERM=xterm-256color emacsclient"
-    alias emacs="TERM=xterm-256color emacs"
 fi
 
 # Darwin-specific config
