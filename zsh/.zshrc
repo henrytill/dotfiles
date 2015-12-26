@@ -56,6 +56,7 @@ export EDITOR="emacsclient -t --alternate-editor="
 
 # aliases
 alias e="$EDITOR"
+alias v="vim"
 alias lf="ls -aF"
 alias ll="ls -la"
 alias llt="ls -lat"
