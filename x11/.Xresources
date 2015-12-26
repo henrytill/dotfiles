@@ -18,7 +18,6 @@ URxvt.scrollBar:            false
 URxvt.scrollTtyKeypress:    true
 URxvt.scrollTtyOutput:      false
 URxvt.scrollWithBuffer:     true
-URxvt.termName:             xterm-256color
 URxvt.url-select.launcher:  firefox
 URxvt.url-select.underline: true
 
