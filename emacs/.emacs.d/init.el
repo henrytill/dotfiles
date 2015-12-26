@@ -575,6 +575,8 @@
 
 ;;; cosmetics
 
+(setq frame-background-mode 'dark)
+
 (menu-bar-mode -1)
 
 (when (fboundp 'tool-bar-mode)
