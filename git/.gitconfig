@@ -7,3 +7,5 @@
     bpush = !git push origin "$@" && git push backup "$@"
 [rebase]
     autosquash = true
+[core]
+    excludesfile = ~/.gitignore_global
