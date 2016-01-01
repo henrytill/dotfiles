@@ -1,11 +1,9 @@
 [user]
-	name = Henry Till
-	email = henrytill@gmail.com
-
+    name = Henry Till
+    email = henrytill@gmail.com
 [push]
-	default = simple
-
+    default = simple
 [alias]
-        bpush = !git push origin "$@" && git push backup "$@"
+    bpush = !git push origin "$@" && git push backup "$@"
 [rebase]
-	autosquash = true
+    autosquash = true
