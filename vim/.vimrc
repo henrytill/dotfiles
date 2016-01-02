@@ -13,6 +13,7 @@ set hlsearch
 set ignorecase
 set incsearch
 set modeline
+set nowrap
 set ruler
 set showcmd
 set showmatch
