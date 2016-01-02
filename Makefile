@@ -7,9 +7,9 @@ nereus   = boot emacs git leiningen nixpkgs tmux \
            vim x11-osx zsh
 tethys   = boot dunst emacs git leiningen nixpkgs tmux \
            vim x11 xdg zsh
-thalassa = boot dunst emacs ctags git leiningen nixpkgs tmux \
+thalassa = boot dunst emacs ctags git leiningen nixpkgs sbt tmux \
            vim x11 xdg zsh
-thaumas  = boot dunst emacs ctags git leiningen nixpkgs tmux \
+thaumas  = boot dunst emacs ctags git leiningen nixpkgs sbt tmux \
            vim x11 xdg zsh
 
 # base package set for undefined hosts
@@ -36,6 +36,11 @@ endif
 # leiningen
 ifneq (,$(findstring leiningen,$(PKG_SET)))
   TARG_DIRS += ../.lein
+endif
+
+# sbt
+ifneq (,$(findstring sbt,$(PKG_SET)))
+  TARG_DIRS += ../.sbt/0.13/plugins
 endif
 
 # vim
