@@ -27,7 +27,7 @@ bindkey -e
     else
         local firstLine='%F{6}%B%n@%m:%~%f%b'
         local retStatus='%(?.[%?].%F{1}[%?]%f)'
-        local nixShellMode=${IN_NIX_SHELL/1/'%F{4}[nix-shell]%f'}
+        local nixShellMode=${IN_NIX_SHELL/1/'[nix-shell]'}
 
         PROMPT=$'\n'$firstLine$'\n'$retStatus$nixShellMode'> '
         PROMPT2=$nixshellMode'> '
