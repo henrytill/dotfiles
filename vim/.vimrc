@@ -28,6 +28,8 @@ set softtabstop=4
 set tabstop=4
 set textwidth=80
 
+setglobal tags=./tags;
+
 if has("autocmd")
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
