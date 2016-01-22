@@ -115,6 +115,18 @@
   :ensure t
   :bind ("M-p" . ace-window))
 
+(use-package agda2-mode
+  :if (executable-find "agda-mode")
+  :mode "\\.agda\\'"
+  :init
+  (load-file (let ((coding-system-for-read 'utf-8))
+               (shell-command-to-string "agda-mode locate")))
+  (defun ht-agda-mode ()
+    (let ((agda-includes (cons "." (split-string (getenv "buildDependsAgdaShareAgda")))))
+      (dolist (var agda-includes)
+        (add-to-list 'agda2-include-dirs var))))
+  (add-hook 'agda2-mode-hook 'ht-agda-mode))
+
 (use-package avy
   :ensure t
   :bind (("C-:"   . avy-goto-char)
