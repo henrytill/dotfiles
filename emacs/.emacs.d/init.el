@@ -589,6 +589,13 @@
 
 (setq frame-background-mode 'dark)
 
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (with-selected-frame frame
+                  (load-theme 'inl t))))
+  (load-theme 'inl t))
+
 (menu-bar-mode -1)
 
 (when (fboundp 'tool-bar-mode)
