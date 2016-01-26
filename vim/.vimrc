@@ -9,7 +9,6 @@ set background=dark
 
 set nocompatible
 set expandtab
-set hlsearch
 set ignorecase
 set incsearch
 set modeline
