@@ -61,8 +61,8 @@
 ;;; package.el
 
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (package-initialize)
 
 (when (null package-archive-contents)
@@ -376,13 +376,11 @@
   :mode "\\.nix\\'")
 
 (use-package org
-  :load-path ("site-lisp/org-mode/lisp"
-              "site-lisp/org-mode/contrib/lisp")
+  :ensure org-plus-contrib
   :bind (("C-c l" . org-store-link)
          ("C-c b" . org-iswitchb)
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda))
-  :defer 30
   :functions org-bookmark-jump-unhide
   :config
   (setq org-completion-use-ido t
