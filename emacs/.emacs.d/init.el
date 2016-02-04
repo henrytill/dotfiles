@@ -245,6 +245,10 @@
     (evil-leader/set-key "gw" 'evil-avy-goto-word-1)
     (evil-leader/set-key "gl" 'evil-avy-goto-line)
     (global-evil-leader-mode))
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1))
   :config
   (delete 'term-mode evil-insert-state-modes)
   (add-to-list 'evil-emacs-state-modes 'term-mode)
