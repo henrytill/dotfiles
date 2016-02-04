@@ -22,3 +22,6 @@
 [submodule "vim/.vim/bundle/vim-inl"]
 	path = vim/.vim/bundle/vim-inl
 	url = https://github.com/henrytill/vim-inl.git
+[submodule "vim/.vim/bundle/vim-surround"]
+	path = vim/.vim/bundle/vim-surround
+	url = https://github.com/tpope/vim-surround.git
