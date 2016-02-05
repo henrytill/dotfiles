@@ -375,6 +375,13 @@
   :config
   (setq magit-last-seen-setup-instructions "1.4.0"))
 
+(use-package markdown-mode
+  :ensure t
+  :mode (("\\.md\\'"       . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init
+  (add-hook 'markdown-mode-hook 'whitespace-mode))
+
 (use-package nix-mode
   :ensure t
   :mode "\\.nix\\'")
