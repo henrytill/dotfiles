@@ -101,6 +101,7 @@
 (require 'bind-key)
 (require 'diminish "diminish-0.44.el")
 
+(use-package ace-window          :ensure t)
 (use-package dash                :ensure t :defer t)
 (use-package idle-highlight-mode :ensure t :defer t)
 (use-package pkg-info            :ensure t :defer t)
@@ -110,10 +111,6 @@
   :ensure t
   :commands enable-paredit-mode
   :diminish paredit-mode)
-
-(use-package ace-window
-  :ensure t
-  :bind ("M-p" . ace-window))
 
 (use-package agda2-mode
   :if (executable-find "agda-mode")
@@ -244,6 +241,7 @@
     (evil-leader/set-key "g'" 'evil-avy-goto-char-2)
     (evil-leader/set-key "gw" 'evil-avy-goto-word-1)
     (evil-leader/set-key "gl" 'evil-avy-goto-line)
+    (evil-leader/set-key "w"  'ace-window)
     (global-evil-leader-mode))
   (use-package evil-surround
     :ensure t
