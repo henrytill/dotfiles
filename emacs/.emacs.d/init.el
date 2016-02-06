@@ -241,6 +241,7 @@
     (evil-leader/set-key "g'" 'evil-avy-goto-char-2)
     (evil-leader/set-key "gw" 'evil-avy-goto-word-1)
     (evil-leader/set-key "gl" 'evil-avy-goto-line)
+    (evil-leader/set-key "ms" 'magit-status)
     (evil-leader/set-key "w"  'ace-window)
     (global-evil-leader-mode))
   (use-package evil-surround
@@ -369,7 +370,7 @@
 
 (use-package magit
   :ensure t
-  :bind ("C-x g" . magit-status)
+  :commands magit-status
   :config
   (setq magit-last-seen-setup-instructions "1.4.0"))
 
