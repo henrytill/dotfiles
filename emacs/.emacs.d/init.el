@@ -104,6 +104,7 @@
 (use-package ace-window          :ensure t)
 (use-package dash                :ensure t :defer t)
 (use-package idle-highlight-mode :ensure t :defer t)
+(use-package pandoc-mode         :ensure t)
 (use-package pkg-info            :ensure t :defer t)
 (use-package queue               :ensure t :defer t)
 
@@ -379,6 +380,7 @@
   :mode (("\\.md\\'"       . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init
+  (add-hook 'markdown-mode-hook 'pandoc-mode)
   (add-hook 'markdown-mode-hook 'whitespace-mode))
 
 (use-package nix-mode
