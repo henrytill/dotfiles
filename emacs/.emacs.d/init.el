@@ -128,11 +128,6 @@
 
 (use-package avy
   :ensure t
-  :bind (("C-:"   . avy-goto-char)
-         ("C-'"   . avy-goto-char-2)
-         ("M-g f" . avy-goto-line)
-         ("M-g w" . avy-goto-word-1)
-         ("M-g e" . avy-goto-word-0))
   :init
   (eval-after-load "isearch"
     '(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
@@ -609,6 +604,12 @@
                          :foreground nil
                          :background "gray90"))
    (add-hook 'whitespace-mode-hook 'ht-style-whitespace-mode)))
+
+(use-package yasnippet
+  :ensure t
+  :diminish yas-minor-mode
+  :config
+  (yas-global-mode 1))
 
 
 ;;; cosmetics
