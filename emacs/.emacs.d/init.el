@@ -470,8 +470,10 @@
 (use-package scala-mode2
   :ensure t
   :init
+  (use-package ensime   :ensure t)
   (use-package sbt-mode :ensure t)
-  (add-hook 'scala-mode-hook 'electric-pair-mode))
+  (add-hook 'scala-mode-hook 'electric-pair-mode)
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
 
 (use-package scheme
   :init

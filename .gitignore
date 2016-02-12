@@ -13,6 +13,7 @@
 /emacs/.emacs.d/backups
 /emacs/.emacs.d/bookmarks
 /emacs/.emacs.d/elpa
+/emacs/.emacs.d/ensime
 /emacs/.emacs.d/eshell/history
 /emacs/.emacs.d/eshell/lastdir
 /emacs/.emacs.d/helm-adaptive-history
