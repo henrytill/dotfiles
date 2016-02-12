@@ -137,6 +137,31 @@
   (eval-after-load "isearch"
     '(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
 
+(use-package bind-map
+  :ensure t
+  :config
+  (bind-map ht-base-leader-map
+    :keys ("M-m")
+    :evil-keys ("SPC")
+    :evil-states (motion normal visual))
+  (bind-map-set-keys ht-base-leader-map
+    "w" 'ace-window)
+  ;; Avy
+  (bind-map ht-avy-leader-map
+    :keys ("M-m g")
+    :evil-keys ("SPC g"))
+  (bind-map-set-keys ht-avy-leader-map
+    ";" 'evil-avy-goto-char
+    "'" 'evil-avy-goto-char-2
+    "w" 'evil-avy-goto-word-1
+    "l" 'evil-avy-goto-line)
+  ;; Magit
+  (bind-map ht-magit-leader-map
+    :keys ("M-m m")
+    :evil-keys ("SPC m"))
+  (bind-map-set-keys ht-magit-leader-map
+    "s" 'magit-status))
+
 (use-package clojure-mode
   :ensure t
   :mode (("\\.clj\\'"  . clojure-mode)
@@ -235,17 +260,6 @@
 (use-package evil
   :ensure t
   :init
-  (use-package evil-leader
-    :ensure t
-    :config
-    (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key "g;" 'evil-avy-goto-char)
-    (evil-leader/set-key "g'" 'evil-avy-goto-char-2)
-    (evil-leader/set-key "gw" 'evil-avy-goto-word-1)
-    (evil-leader/set-key "gl" 'evil-avy-goto-line)
-    (evil-leader/set-key "ms" 'magit-status)
-    (evil-leader/set-key "w"  'ace-window)
-    (global-evil-leader-mode))
   (use-package evil-surround
     :ensure t
     :config
