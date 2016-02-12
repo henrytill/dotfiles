@@ -107,6 +107,7 @@
 (use-package pandoc-mode         :ensure t)
 (use-package pkg-info            :ensure t :defer t)
 (use-package queue               :ensure t :defer t)
+(use-package spinner             :ensure t)
 
 (use-package paredit
   :ensure t
