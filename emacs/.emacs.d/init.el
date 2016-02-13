@@ -611,6 +611,7 @@
   :ensure t
   :diminish yas-minor-mode
   :config
+  (setq yas-prompt-functions '(yas-ido-prompt))
   (yas-global-mode 1))
 
 
