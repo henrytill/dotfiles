@@ -262,6 +262,7 @@
   :config
   (delete 'term-mode evil-insert-state-modes)
   (add-to-list 'evil-emacs-state-modes 'term-mode)
+  (add-to-list 'evil-insert-state-modes 'sbt-mode)
   (evil-mode 1))
 
 (use-package flx-ido
