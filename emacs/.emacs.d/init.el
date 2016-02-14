@@ -663,6 +663,7 @@
 
 (column-number-mode 1)
 
+(blink-cursor-mode 0)
 (setq visible-cursor nil)
 (setq-default cursor-type 'box)
 
