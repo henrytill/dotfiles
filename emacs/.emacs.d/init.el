@@ -420,13 +420,14 @@
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda))
   :functions org-bookmark-jump-unhide
+  :init
+  (use-package htmlize :ensure t)
   :config
   (setq org-completion-use-ido t
         org-confirm-babel-evaluate nil
         org-src-fontify-natively t)
   (when (file-directory-p org-directory)
-    (let* ((notes-file
-            (expand-file-name "notes.org" org-directory))
+    (let* ((notes-file (expand-file-name "notes.org" org-directory))
            (notes-template
             `("n" "Notes" entry (file ,notes-file) "* %?\n  %i\n  %a"))
            (todo-file
@@ -434,8 +435,7 @@
            (todo-template
             `("t" "Todo" entry (file+headline ,todo-file "Tasks") "* TODO %?\n  %i\n  %a")))
       (setq org-agenda-files (list org-directory)
-            org-capture-templates (list notes-template
-                                        todo-template)
+            org-capture-templates (list notes-template todo-template)
             org-default-notes-file notes-file)
       (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory)))))
   (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
