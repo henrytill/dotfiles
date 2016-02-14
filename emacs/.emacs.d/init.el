@@ -150,6 +150,14 @@
     "'" 'evil-avy-goto-char-2
     "w" 'evil-avy-goto-word-1
     "l" 'evil-avy-goto-line)
+  ;; Ido
+  (bind-map ht-ido-leader-map
+    :keys ("M-m b")
+    :evil-keys ("SPC b"))
+  (bind-map-set-keys ht-ido-leader-map
+    "b" 'ido-switch-buffer
+    "f" 'ido-find-file
+    "k" 'ido-kill-buffer)
   ;; Magit
   (bind-map ht-magit-leader-map
     :keys ("M-m m")
