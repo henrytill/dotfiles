@@ -277,6 +277,7 @@
   (define-key evil-emacs-state-map (kbd "C-w C-w") 'ht-other-window)
   (define-key evil-emacs-state-map (kbd "C-w s")   'split-window-below)
   (define-key evil-emacs-state-map (kbd "C-w v")   'split-window-right)
+  (define-key evil-emacs-state-map (kbd "C-w o")   'delete-other-windows)
   (define-key evil-emacs-state-map (kbd "C-o")     'evil-execute-in-normal-state)
   (evil-mode 1))
 
