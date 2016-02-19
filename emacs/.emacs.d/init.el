@@ -140,7 +140,8 @@
     :evil-keys ("SPC")
     :evil-states (motion normal visual))
   (bind-map-set-keys ht-base-leader-map
-    "w" 'ace-window)
+    "w" 'ace-window
+    "x" 'smex)
   ;; Avy
   (bind-map ht-avy-leader-map
     :keys ("M-m g")
