@@ -28,11 +28,15 @@
       smtpmail-smtp-service 587)
 
 (setq gnus-secondary-select-methods
-      '((nnimap "gmail"
+      '((nnimap "henrytill@gmail.com"
                 (nnimap-address "imap.gmail.com")
                 (nnimap-server-port 993)
                 (nnimap-stream ssl))
-        (nnimap "xngns"
+        (nnimap "ht@xngns.net"
+                (nnimap-address "mail.xngns.net")
+                (nnimap-server-port 993)
+                (nnimap-stream ssl))
+        (nnimap "admin@xngns.net"
                 (nnimap-address "mail.xngns.net")
                 (nnimap-server-port 993)
                 (nnimap-stream ssl))
