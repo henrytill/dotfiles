@@ -269,9 +269,11 @@
     :config
     (global-evil-surround-mode 1))
   :config
+  (delete 'shell-mode evil-insert-state-modes)
   (delete 'term-mode evil-insert-state-modes)
-  (add-to-list 'evil-emacs-state-modes 'term-mode)
   (add-to-list 'evil-emacs-state-modes 'sbt-mode)
+  (add-to-list 'evil-emacs-state-modes 'shell-mode)
+  (add-to-list 'evil-emacs-state-modes 'term-mode)
   (defun ht-other-window ()
     (interactive)
     (other-window 1))
