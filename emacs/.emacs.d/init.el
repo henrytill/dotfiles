@@ -388,10 +388,7 @@
 
 (use-package js2-mode
   :ensure t
-  :mode "\\.js\\'"
-  :config
-  (setq-default js2-show-parse-errors nil)
-  (setq-default js2-global-externs '("exports" "module" "require")))
+  :mode "\\.js\\'")
 
 (use-package lisp-mode
   :init
