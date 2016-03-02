@@ -323,6 +323,7 @@
     :predicate ht-rkt-predicate)
   (add-to-list 'flycheck-checkers 'racket-alt)
   (setq flycheck-completion-system 'ido))
+  (setq-default flycheck-disabled-checkers '(javascript-jslint))
 
 (use-package forth-mode
   :if (executable-find "gforth")
@@ -409,7 +410,10 @@
 
 (use-package js2-mode
   :ensure t
-  :mode "\\.js\\'")
+  :mode "\\.js\\'"
+  :init
+  (add-hook 'js2-mode-hook 'electric-pair-mode)
+  (add-hook 'js2-mode-hook 'flycheck-mode))
 
 (use-package lisp-mode
   :init
