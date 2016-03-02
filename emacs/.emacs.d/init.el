@@ -126,6 +126,12 @@
         (add-to-list 'agda2-include-dirs var))))
   (add-hook 'agda2-mode-hook 'ht-agda-mode))
 
+(use-package alert
+  :ensure t
+  :config
+  (when (is-linux-p)
+    (setq alert-default-style 'libnotify)))
+
 (use-package avy
   :ensure t
   :init
@@ -219,9 +225,17 @@
   (setq erc-fill-function 'erc-fill-static
         erc-fill-static-center 19
         erc-hide-list '("JOIN" "PART" "QUIT")
+        erc-keywords '("henrytill" "musnix")
         erc-prompt ">"
         erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
                                   "324" "329" "332" "333" "353" "477"))
+  (defun my-erc-hook (&optional match-type nick message)
+    (let (alert-log-messages)
+      (alert (or message (buffer-string))
+             :title (concat "ERC: " (or nick (buffer-name)))
+             :severity 'high
+             :data message)))
+  (add-hook 'erc-text-matched-hook 'my-erc-hook)
   (use-package erc-hl-nicks :ensure t)
   (require 'erc-spelling)
   (add-to-list 'erc-modules 'hl-nicks)
@@ -332,6 +346,13 @@
   :defines geiser-active-implementations
   :config
   (setq geiser-active-implementations '(racket)))
+
+(use-package gnus-desktop-notify
+  :ensure t
+  :config
+  (gnus-desktop-notify-mode)
+  (gnus-demon-add-scanmail)
+  (setq gnus-desktop-notify-groups 'gnus-desktop-notify-explicit))
 
 (use-package haskell-mode
   :ensure t
