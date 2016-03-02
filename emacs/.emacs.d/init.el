@@ -437,6 +437,26 @@
   (add-hook 'markdown-mode-hook 'pandoc-mode)
   (add-hook 'markdown-mode-hook 'whitespace-mode))
 
+(use-package mmm-mode
+  :ensure t
+  :config
+  (setq mmm-global-mode 'maybe)
+  (mmm-add-group 'html-js2
+                 '((js-script-cdata
+                    :submode js2-mode
+                    :face mmm-code-submode-face
+                    :front "<script[^>]*>[ \t\n]*\\(//\\)?<!\\[CDATA\\[[ \t]*\n?"
+                    :back "[ \t]*\\(//\\)?]]>[ \t\n]*</script>")
+                   (js-script
+                    :submode js2-mode
+                    :face mmm-code-submode-face
+                    :front "<script[^>]*>[ \t]*\n?"
+                    :back "[ \t]*</script>"
+                    :insert ((?j js-tag nil @ "<script type=\"text/javascript\">\n"
+                                 @ "" _ "" @ "\n</script>" @)))))
+  (mmm-add-mode-ext-class 'html-mode nil 'html-css)
+  (mmm-add-mode-ext-class 'html-mode nil 'html-js2))
+
 (use-package nix-mode
   :ensure t
   :mode "\\.nix\\'")
