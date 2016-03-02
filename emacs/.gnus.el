@@ -45,5 +45,7 @@
 
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
-(gnus-demon-add-handler 'gnus-group-get-new-news 10 t)
+(gnus-demon-add-handler 'gnus-demon-scan-news         5   2)
+(gnus-demon-add-handler 'gnus-demon-close-connections nil 3)
+(gnus-demon-add-handler 'save-gnus-newsrc             nil 1)
 (gnus-demon-init)
