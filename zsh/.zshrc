@@ -7,10 +7,6 @@ setopt histfcntllock
 setopt histignoredups
 setopt sharehistory
 
-export HISTFILE=~/.histfile
-export HISTSIZE=100000
-export SAVEHIST=100000
-
 bindkey -e
 
 # prompt
@@ -51,9 +47,6 @@ if [[ $TERM == rxvt* ]]; then
     add-zsh-hook preexec set-title
 fi
 
-# env
-export EDITOR="emacsclient -t --alternate-editor="
-
 # aliases
 alias e="$EDITOR"
 alias v="vim"
@@ -87,9 +80,7 @@ if [[ -n $(command -v nix-shell) ]]; then
 fi
 
 if [[ -n $(command -v npm) ]]; then
-    npm-exec () {
-        PATH=$(npm bin):$PATH $*
-    }
+    npm-exec () { PATH=$(npm bin):$PATH $* }
 fi
 
 # Darwin-specific config
