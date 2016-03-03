@@ -7,6 +7,10 @@ setopt histfcntllock
 setopt histignoredups
 setopt sharehistory
 
+export HISTFILE=~/.histfile
+export HISTSIZE=100000
+export SAVEHIST=100000
+
 bindkey -e
 
 # prompt

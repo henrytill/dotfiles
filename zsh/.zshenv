@@ -53,7 +53,3 @@ if [[ -d $HOME/node_modules/.bin ]]; then
 fi
 
 export EDITOR="emacsclient -t --alternate-editor="
-
-export HISTFILE=~/.histfile
-export HISTSIZE=100000
-export SAVEHIST=100000
