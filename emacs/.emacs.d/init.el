@@ -413,7 +413,9 @@
   :mode "\\.js\\'"
   :init
   (add-hook 'js2-mode-hook 'electric-pair-mode)
-  (add-hook 'js2-mode-hook 'flycheck-mode))
+  (add-hook 'js2-mode-hook 'flycheck-mode)
+  :config
+  (setq js2-include-node-externs t))
 
 (use-package lisp-mode
   :init
