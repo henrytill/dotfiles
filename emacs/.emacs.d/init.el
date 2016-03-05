@@ -483,12 +483,13 @@
   (setq org-completion-use-ido t
         org-confirm-babel-evaluate nil
         org-src-fontify-natively t)
+  (setq org-link-abbrev-alist
+        '(("pinboard-topic" . "https://pinboard.in/u:henrytill/t:")))
   (when (file-directory-p org-directory)
     (let* ((notes-file (expand-file-name "notes.org" org-directory))
+           (todo-file  (expand-file-name "todo.org"  org-directory))
            (notes-template
             `("n" "Notes" entry (file ,notes-file) "* %?\n  %i\n  %a"))
-           (todo-file
-            (expand-file-name "todo.org" org-directory))
            (todo-template
             `("t" "Todo" entry (file+headline ,todo-file "Tasks") "* TODO %?\n  %i\n  %a")))
       (setq org-agenda-files (list org-directory)
