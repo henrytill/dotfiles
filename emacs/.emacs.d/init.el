@@ -821,6 +821,15 @@
 (set-register ?i `(file . ,(concat user-emacs-directory "init.el")))
 
 
+;;; experiments
+
+(defun ht-erc-sesh ()
+  (interactive)
+  (let ((erc-sesh (expand-file-name "erc-sesh.el.gpg" "~/Dropbox/doc")))
+    (when (file-exists-p erc-sesh)
+      (load-file erc-sesh))))
+
+
 ;;; post init
 
 (defun ht-elapsed-msg ()
