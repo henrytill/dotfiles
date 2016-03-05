@@ -25,7 +25,6 @@
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
       browse-url-browser-function 'browse-url-default-browser
       custom-file (expand-file-name "custom.el" user-emacs-directory)
-      doc-view-resolution 200
       epa-armor t
       gnutls-min-prime-bits 1024
       ido-handle-duplicate-virtual-buffers 2
