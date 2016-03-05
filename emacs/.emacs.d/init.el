@@ -408,13 +408,21 @@
   (add-hook 'ielm-mode-hook 'company-mode)
   (add-hook 'ielm-mode-hook 'eldoc-mode))
 
+(use-package js
+  :init
+  (add-hook 'js-mode-hook 'electric-pair-mode)
+  :config
+  (setq js-indent-level 2))
+
 (use-package js2-mode
   :ensure t
-  :mode "\\.js\\'"
+  :mode (("\\.js\\'"  . js2-mode)
+         ("\\.jsx\\'" . js2-jsx-mode))
+  :interpreter ("node" . js2-mode)
   :init
-  (add-hook 'js2-mode-hook 'electric-pair-mode)
   (add-hook 'js2-mode-hook 'flycheck-mode)
   :config
+  (setq js2-basic-offset 2)
   (setq js2-include-node-externs t))
 
 (use-package lisp-mode
