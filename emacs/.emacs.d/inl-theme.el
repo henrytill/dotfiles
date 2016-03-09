@@ -1,5 +1,5 @@
 (deftheme inl
-  "Created 2016-01-16.")
+  "Created 2016-03-03.")
 
 (custom-theme-set-faces
  'inl
@@ -45,6 +45,7 @@
  '(match ((((class color) (min-colors 88) (background light)) (:background "yellow1")) (((class color) (min-colors 88) (background dark)) (:background "RoyalBlue3")) (((class color) (min-colors 8) (background light)) (:foreground "black" :background "yellow")) (((class color) (min-colors 8) (background dark)) (:foreground "white" :background "blue")) (((type tty) (class mono)) (:inverse-video t)) (t (:background "gray"))))
  '(next-error ((t (:inherit (region)))))
  '(query-replace ((t (:inherit (isearch)))))
- '(default ((t nil))))
+ '(default ((t nil)))
+ '(error ((t (:foreground "orange red" :weight bold)))))
 
 (provide-theme 'inl)
