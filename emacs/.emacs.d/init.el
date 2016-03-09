@@ -349,10 +349,12 @@
 
 (use-package gnus-desktop-notify
   :ensure t
-  :config
-  (gnus-desktop-notify-mode)
-  (gnus-demon-add-scanmail)
-  (setq gnus-desktop-notify-groups 'gnus-desktop-notify-explicit))
+  :commands gnus-desktop-notify-mode
+  :preface
+  (defun ht-gnus-desktop-notify ()
+    (gnus-desktop-notify-mode)
+    (setq gnus-desktop-notify-groups 'gnus-desktop-notify-explicit))
+  (add-hook 'gnus-group-mode-hook 'ht-gnus-desktop-notify))
 
 (use-package haskell-mode
   :ensure t
