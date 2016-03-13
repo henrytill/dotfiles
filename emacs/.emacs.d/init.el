@@ -282,11 +282,21 @@
     :config
     (global-evil-surround-mode 1))
   :config
-  (delete 'shell-mode evil-insert-state-modes)
-  (delete 'term-mode evil-insert-state-modes)
-  (add-to-list 'evil-emacs-state-modes 'sbt-mode)
-  (add-to-list 'evil-emacs-state-modes 'shell-mode)
-  (add-to-list 'evil-emacs-state-modes 'term-mode)
+  (dolist (mode '(cider-repl-mode
+                  geiser-repl-mode
+                  inferior-caml-mode
+                  inferior-emacs-lisp-mode
+                  inferior-python-mode
+                  inferior-scheme-mode
+                  inferior-sml-mode
+                  prolog-inferior-mode
+                  sbt-mode
+                  shell-mode
+                  slime-repl-mode
+                  term-mode))
+    (progn (when (member mode evil-insert-state-modes)
+             (delete mode evil-insert-state-modes))
+           (add-to-list 'evil-emacs-state-modes mode)))
   (defun ht-other-window ()
     (interactive)
     (other-window 1))
