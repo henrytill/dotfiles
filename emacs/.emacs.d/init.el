@@ -209,10 +209,10 @@
   :commands compile
   :init
   (use-package ansi-color)
-  (defun ht-display-ansi-colors ()
+  (defun ht-colorize-compilation-buffer ()
     (let ((inhibit-read-only t))
-      (ansi-color-apply-on-region (point-min) (point-max))))
-  (add-hook 'compilation-filter-hook 'ht-display-ansi-colors))
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  (add-hook 'compilation-filter-hook 'ht-colorize-compilation-buffer))
 
 (use-package eldoc
   :commands eldoc-mode
