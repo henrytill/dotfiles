@@ -7,9 +7,9 @@ nereus   = boot emacs git leiningen nixpkgs tmux \
            vim x11-osx zsh
 tethys   = boot dunst emacs git leiningen nixpkgs tmux \
            vim x11 xdg zsh
-thalassa = boot dunst emacs ctags ghc git leiningen nixpkgs sbt tmux \
+thalassa = boot dunst emacs ctags ghc git leiningen nixpkgs npm sbt tmux \
            vim x11 xdg zsh
-thaumas  = boot dunst emacs ctags ghc git leiningen nixpkgs sbt tmux \
+thaumas  = boot dunst emacs ctags ghc git leiningen nixpkgs npm sbt tmux \
            vim x11 xdg zsh
 
 # base package set for undefined hosts
