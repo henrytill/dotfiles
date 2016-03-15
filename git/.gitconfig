@@ -9,3 +9,9 @@
     autosquash = true
 [core]
     excludesfile = ~/.gitignore_global
+[transfer]
+    fsckObjects = true
+[fetch]
+    fsckObjects = true
+[receive]
+    fsckObjects = true
