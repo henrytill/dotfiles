@@ -143,10 +143,11 @@
   (bind-map ht-base-leader-map
     :keys ("M-m")
     :evil-keys ("SPC")
-    :evil-states (motion normal visual))
+    :evil-states (motion normal visual paredit))
   (bind-map-set-keys ht-base-leader-map
     "w" 'ace-window
-    "x" 'smex)
+    "x" 'smex
+    "l" 'evil-paredit-state)
   ;; Avy
   (bind-map ht-avy-leader-map
     :keys ("M-m g")
@@ -307,6 +308,38 @@
   (define-key evil-emacs-state-map (kbd "C-w c")   'delete-window)
   (define-key evil-emacs-state-map (kbd "C-w q")   'ido-kill-buffer)
   (define-key evil-emacs-state-map (kbd "C-o")     'evil-execute-in-normal-state)
+  ;; paredit
+  (evil-define-state paredit "Paredit state." :tag " <PAR> "
+    :enable (paredit normal)
+    :intercept-esc nil)
+  (defconst evil-paredit-state-bindings
+    '(("j"     . paredit-forward)
+      ("k"     . paredit-backward)
+      ("h"     . paredit-backward-up)
+      ("l"     . paredit-forward-down)
+      ("C-b"   . paredit-backward-down)
+      ("C-f"   . paredit-forward-up)
+      ("J"     . evil-next-line)
+      ("K"     . evil-previous-line)
+      ("H"     . evil-backward-char)
+      ("L"     . evil-forward-char)
+      ("M-r"   . paredit-raise-sexp)
+      ("M-c"   . paredit-convolute-sexp)
+      (")"     . paredit-forward-slurp-sexp)
+      ("}"     . paredit-forward-barf-sexp)
+      ("("     . paredit-backward-slurp-sexp)
+      ("{"     . paredit-backward-barf-sexp)
+      ("C-d"   . paredit-forward-delete)
+      ("DEL"   . paredit-backward-delete)
+      ("M-d"   . paredit-forward-kill-word)
+      ("M-DEL" . paredit-backward-kill-word)
+      ("M-j"   . paredit-splice-sexp-killing-forward)
+      ("M-k"   . paredit-splice-sexp-killing-backward)
+      ("C-o"   . evil-execute-in-normal-state)))
+  (dolist (binding evil-paredit-state-bindings)
+    (let ((key (car binding))
+          (cmd (cdr binding)))
+      (define-key evil-paredit-state-map (kbd key) cmd)))
   (evil-mode 1))
 
 (use-package flx-ido
