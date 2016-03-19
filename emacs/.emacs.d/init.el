@@ -137,41 +137,6 @@
   (eval-after-load "isearch"
     '(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
 
-(use-package bind-map
-  :ensure t
-  :config
-  (bind-map ht-base-leader-map
-    :keys ("M-m")
-    :evil-keys ("SPC")
-    :evil-states (motion normal visual paredit))
-  (bind-map-set-keys ht-base-leader-map
-    "w" 'ace-window
-    "x" 'smex
-    "l" 'evil-paredit-state)
-  ;; Avy
-  (bind-map ht-avy-leader-map
-    :keys ("M-m g")
-    :evil-keys ("SPC g"))
-  (bind-map-set-keys ht-avy-leader-map
-    ";" 'evil-avy-goto-char
-    "'" 'evil-avy-goto-char-2
-    "w" 'evil-avy-goto-word-1
-    "l" 'evil-avy-goto-line)
-  ;; Ido
-  (bind-map ht-ido-leader-map
-    :keys ("M-m b")
-    :evil-keys ("SPC b"))
-  (bind-map-set-keys ht-ido-leader-map
-    "b" 'ido-switch-buffer
-    "f" 'ido-find-file
-    "k" 'ido-kill-buffer)
-  ;; Magit
-  (bind-map ht-magit-leader-map
-    :keys ("M-m m")
-    :evil-keys ("SPC m"))
-  (bind-map-set-keys ht-magit-leader-map
-    "s" 'magit-status))
-
 (use-package clojure-mode
   :ensure t
   :mode (("\\.clj\\'"  . clojure-mode)
@@ -277,13 +242,9 @@
 
 (use-package evil
   :ensure t
-  :init
-  (use-package evil-surround
-    :ensure t
-    :config
-    (global-evil-surround-mode 1))
   :config
   (dolist (mode '(cider-repl-mode
+                  cider-stacktrace-mode
                   geiser-repl-mode
                   inferior-caml-mode
                   inferior-emacs-lisp-mode
@@ -298,16 +259,22 @@
     (progn (when (member mode evil-insert-state-modes)
              (delete mode evil-insert-state-modes))
            (add-to-list 'evil-emacs-state-modes mode)))
+  ;; window management
   (defun ht-other-window ()
     (interactive)
     (other-window 1))
-  (define-key evil-emacs-state-map (kbd "C-w C-w") 'ht-other-window)
-  (define-key evil-emacs-state-map (kbd "C-w s")   'split-window-below)
-  (define-key evil-emacs-state-map (kbd "C-w v")   'split-window-right)
-  (define-key evil-emacs-state-map (kbd "C-w o")   'delete-other-windows)
-  (define-key evil-emacs-state-map (kbd "C-w c")   'delete-window)
-  (define-key evil-emacs-state-map (kbd "C-w q")   'ido-kill-buffer)
-  (define-key evil-emacs-state-map (kbd "C-o")     'evil-execute-in-normal-state)
+  (defconst evil-emacs-state-bindings
+    '(("C-w C-w" . ht-other-window)
+      ("C-w s"   . split-window-below)
+      ("C-w v"   . split-window-right)
+      ("C-w o"   . delete-other-windows)
+      ("C-w c"   . delete-window)
+      ("C-w q"   . ido-kill-buffer)
+      ("C-o"     . evil-execute-in-normal-state)))
+  (dolist (binding evil-emacs-state-bindings)
+    (let ((key (car binding))
+          (cmd (cdr binding)))
+      (define-key evil-emacs-state-map (kbd key) cmd)))
   ;; paredit
   (evil-define-state paredit "Paredit state." :tag " <PAR> "
     :enable (paredit normal)
@@ -340,6 +307,47 @@
     (let ((key (car binding))
           (cmd (cdr binding)))
       (define-key evil-paredit-state-map (kbd key) cmd)))
+  ;; leadering
+  (use-package bind-map
+    :ensure t
+    :config
+    (bind-map ht-base-leader-map
+      :keys ("M-m")
+      :evil-keys ("SPC")
+      :evil-states (motion normal visual paredit))
+    (bind-map-set-keys ht-base-leader-map
+      "w" 'ace-window
+      "x" 'smex
+      "l" 'evil-paredit-state)
+    ;; avy
+    (bind-map ht-avy-leader-map
+      :keys ("M-m g")
+      :evil-keys ("SPC g"))
+    (bind-map-set-keys ht-avy-leader-map
+      ";" 'evil-avy-goto-char
+      "'" 'evil-avy-goto-char-2
+      "w" 'evil-avy-goto-word-1
+      "l" 'evil-avy-goto-line)
+    ;; ido
+    (bind-map ht-ido-leader-map
+      :keys ("M-m b")
+      :evil-keys ("SPC b"))
+    (bind-map-set-keys ht-ido-leader-map
+      "b" 'ido-switch-buffer
+      "f" 'ido-find-file
+      "k" 'ido-kill-buffer)
+    ;; magit
+    (bind-map ht-magit-leader-map
+      :keys ("M-m m")
+      :evil-keys ("SPC m"))
+    (bind-map-set-keys ht-magit-leader-map
+      "s" 'magit-status))
+  ;; surround
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1))
+  ;; enable
   (evil-mode 1))
 
 (use-package flx-ido
