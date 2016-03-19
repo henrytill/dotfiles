@@ -23,7 +23,7 @@
 
 (setq apropos-do-all t
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
-      browse-url-browser-function 'browse-url-default-browser
+      browse-url-browser-function 'browse-url-chromium
       custom-file (expand-file-name "custom.el" user-emacs-directory)
       epa-armor t
       gnutls-min-prime-bits 1024
