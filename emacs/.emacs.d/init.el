@@ -151,18 +151,16 @@
   :bind (("C-c M-c" . cider-connect)
          ("C-c M-j" . cider-jack-in))
   :init
-  (use-package cl)
-  (add-hook 'cider-mode-hook 'eldoc-mode)
+  (add-hook 'cider-mode-hook      'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook 'eldoc-mode)
   :config
   (use-package cider-apropos)
-  (use-package cider-browse-ns)
   (use-package cider-classpath)
-  (use-package cider-grimoire)
-  (use-package cider-inspector)
   (use-package cider-macroexpansion)
   (use-package cider-scratch)
   (use-package cider-selector)
-  (setq cider-show-error-buffer 'except-in-repl))
+  (setq cider-repl-display-help-banner nil
+        cider-show-error-buffer 'except-in-repl))
 
 (use-package company
   :ensure t
