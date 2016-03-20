@@ -480,8 +480,9 @@
     (flycheck-mode 1))
   (add-hook 'js2-init-hook 'ht-js2-init)
   :config
-  (setq js2-basic-offset 2)
-  (setq js2-include-node-externs t))
+  (setq js2-basic-offset 2
+        js2-include-node-externs t
+        js2-indent-switch-body t))
 
 (use-package lisp-mode
   :init
