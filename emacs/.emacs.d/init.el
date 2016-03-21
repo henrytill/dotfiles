@@ -600,7 +600,6 @@
   :load-path "site-lisp/projectile"
   :functions projectile-global-mode
   :diminish projectile-mode
-  :defer 5
   :config
   (projectile-global-mode))
 
