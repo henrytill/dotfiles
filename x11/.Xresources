@@ -29,7 +29,7 @@ URxvt.scrollBar:            false
 URxvt.scrollTtyKeypress:    true
 URxvt.scrollTtyOutput:      false
 URxvt.scrollWithBuffer:     true
-URxvt.url-select.launcher:  firefox
+URxvt.url-select.launcher:  xdg-open
 URxvt.url-select.underline: true
 
 Xft.antialias:              true
