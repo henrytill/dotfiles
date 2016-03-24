@@ -494,6 +494,7 @@
   :ensure t
   :commands magit-status
   :config
+  (put 'magit-clean 'disabled nil)
   (setq magit-last-seen-setup-instructions "1.4.0"))
 
 (use-package markdown-mode
