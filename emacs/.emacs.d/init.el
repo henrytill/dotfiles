@@ -23,7 +23,6 @@
 
 (setq apropos-do-all t
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
-      browse-url-browser-function 'browse-url-chromium
       custom-file (expand-file-name "custom.el" user-emacs-directory)
       epa-armor t
       gnutls-min-prime-bits 1024
@@ -852,13 +851,17 @@
 (when (and (is-darwin-p) (window-system))
   (let ((ansi-term  (expand-file-name "ansi-term" user-emacs-directory))
         (mplus-font (expand-file-name "mplus-1mn-regular.ttf" "~/Library/Fonts")))
-    (setq explicit-shell-file-name ansi-term
+    (setq browse-url-browser-function 'browse-url-default-browser
+          dired-use-ls-dired nil
+          explicit-shell-file-name ansi-term
           mac-command-modifier 'super
           mac-option-modifier 'meta)
     (when (file-exists-p mplus-font)
       (set-face-attribute 'default nil :font "M+ 1mn 14"))
     (add-to-list 'default-frame-alist '(height . 40))
     (add-to-list 'default-frame-alist '(width . 100))
+    (add-to-list 'default-frame-alist '(foreground-color . "#bbbbbb"))
+    (add-to-list 'default-frame-alist '(background-color . "#222222"))
     (defun ht-reset-frame ()
       (interactive)
       (let ((height (cdr (assq 'height default-frame-alist)))
@@ -870,6 +873,7 @@
 (when (and (is-linux-p) (file-directory-p "/etc/nixos"))
   (require 'tramp)
   (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
+  (setq browse-url-browser-function 'browse-url-chromium)
   (set-face-attribute 'region nil :background "lightgoldenrod2")
   (set-face-attribute 'region nil :foreground "black"))
 
