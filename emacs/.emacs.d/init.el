@@ -702,13 +702,13 @@
   (add-hook 'typescript-mode-hook 'ht-typescript-mode))
 
 (use-package tuareg
+  :ensure t
   :mode (("\\.ml[ip]?\\'" . tuareg-mode)
          ("\\.eliomi?\\'" . tuareg-mode))
   :init
   (defun ht-opam-config-env ()
     (when (executable-find "opam")
-      (dolist (var (car (read-from-string (shell-command-to-string
-                                           "opam config env --sexp"))))
+      (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
         (setenv (car var) (cadr var)))))
   (defun ht-opam-load-path ()
     (let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
@@ -725,6 +725,8 @@
     (add-hook 'merlin-mode-hook 'company-mode)
     (add-hook 'tuareg-mode-hook 'merlin-mode)
     :config
+    (when (executable-find "opam")
+      (setq merlin-command 'opam))
     (add-to-list 'company-backends 'merlin-company-backend))
   (use-package utop
     :if (executable-find "utop"))
