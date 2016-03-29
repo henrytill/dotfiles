@@ -243,6 +243,7 @@
   (dolist (mode '(cider-repl-mode
                   cider-stacktrace-mode
                   geiser-repl-mode
+                  haskell-interactive-mode
                   inferior-caml-mode
                   inferior-emacs-lisp-mode
                   inferior-python-mode
@@ -252,7 +253,8 @@
                   sbt-mode
                   shell-mode
                   slime-repl-mode
-                  term-mode))
+                  term-mode
+                  utop-mode))
     (progn (when (member mode evil-insert-state-modes)
              (delete mode evil-insert-state-modes))
            (add-to-list 'evil-emacs-state-modes mode)))
