@@ -1,5 +1,9 @@
 ;;;; Gnus
 
+(let ((my-gnus-startup-file "~/Dropbox/doc/gnus/.newsrc"))
+  (when (file-exists-p my-gnus-startup-file)
+    (setq gnus-startup-file my-gnus-startup-file)))
+
 (setq gnus-agent-enable-expiration 'DISABLE
       gnus-agent-expire-days 0
       gnus-agent-synchronize-flags t
