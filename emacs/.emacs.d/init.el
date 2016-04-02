@@ -115,6 +115,7 @@
 (use-package agda2-mode
   :if (executable-find "agda-mode")
   :mode "\\.agda\\'"
+  :defines agda2-include-dirs
   :init
   (load-file (let ((coding-system-for-read 'utf-8))
                (shell-command-to-string "agda-mode locate")))
@@ -377,6 +378,7 @@
 (use-package forth-mode
   :if (executable-find "gforth")
   :mode "\\.fs\\'"
+  :defines (forth-indent-level forth-minor-indent-level forth-hilight-level)
   :init
   (autoload 'forth-mode "gforth.el")
   (defun ht-forth-mode ()
@@ -750,6 +752,7 @@
   :ensure t
   :mode (("\\.ml[ip]?\\'" . tuareg-mode)
          ("\\.eliomi?\\'" . tuareg-mode))
+  :defines merlin-command
   :init
   (defun ht-opam-config-env ()
     (when (executable-find "opam")
