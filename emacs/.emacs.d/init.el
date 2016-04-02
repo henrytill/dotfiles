@@ -546,9 +546,52 @@
          ("C-c a" . org-agenda))
   :functions org-bookmark-jump-unhide
   :init
-  (use-package htmlize :ensure t)
+  (use-package org-bullets
+    :ensure t
+    :init
+    (add-hook 'org-mode-hook 'org-bullets-mode))
+  (defun ht-prettify-org-mode ()
+    (interactive)
+    (let ((variable-faces '((org-agenda-structure . 2.0)
+                            (org-document-title   . 1.5)
+                            (org-level-1          . 1.75)
+                            (org-level-2          . 1.5)
+                            (org-level-3          . 1.25)
+                            (org-level-4          . 1.1)
+                            (org-level-5          . nil)
+                            (org-level-6          . nil)
+                            (org-level-7          . nil)
+                            (org-level-8          . nil)))
+          (fixed-faces     '(org-code
+                             org-table
+                             org-verbatim))
+          (meta-faces      '(org-block-begin-line
+                             org-block-end-line
+                             org-document-info-keyword
+                             org-meta-line)))
+      (variable-pitch-mode t)
+      (setq org-src-fontify-natively nil)
+      (set-face-attribute 'org-block nil :inherit nil :font "M+ 2m medium")
+      (dolist (face variable-faces)
+        (if (cdr face)
+            (set-face-attribute (car face) nil :height (cdr face) :inherit 'variable-pitch)
+          (set-face-attribute (car face) nil :inherit 'variable-pitch)))
+      (dolist (face fixed-faces)
+        (set-face-attribute face nil :inherit 'fixed-pitch))
+      (dolist (face meta-faces)
+        (set-face-attribute face nil :inherit 'variable-pitch :foreground (face-foreground 'font-lock-comment-face nil)))))
+  (add-hook 'org-mode-hook 'ht-prettify-org-mode)
   :config
-  (setq org-completion-use-ido t
+  (org-babel-do-load-languages 'org-babel-load-languages '((clojure    . t)
+                                                           (emacs-lisp . t)
+                                                           (haskell    . t)
+                                                           (js         . t)
+                                                           (oz         . t)
+                                                           (scala      . t)
+                                                           (scheme     . t)
+                                                           (shell      . t)))
+  (setq org-babel-clojure-backend 'cider
+        org-completion-use-ido t
         org-confirm-babel-evaluate nil
         org-src-fontify-natively t)
   (setq org-link-abbrev-alist
@@ -563,13 +606,7 @@
       (setq org-agenda-files (list org-directory)
             org-capture-templates (list notes-template todo-template)
             org-default-notes-file notes-file)
-      (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory)))))
-  (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
-                                                           (haskell . t)
-                                                           (js . t)
-                                                           (oz . t)
-                                                           (scala . t)
-                                                           (scheme . t))))
+      (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory))))))
 
 (use-package oz
   :load-path (lambda () (list (ht-oz-load-path)))
@@ -835,6 +872,14 @@
   (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
 
 (add-hook 'prog-mode-hook 'ht-add-watchwords)
+
+;;; fonts
+(defconst ht-fixed-font    '(:font "M+ 2m medium"))
+
+(defconst ht-variable-font '(:font "M+ 2p medium"))
+
+(custom-set-faces `(fixed-pitch    ((t (,@ht-fixed-font))))
+                  `(variable-pitch ((t (,@ht-variable-font)))))
 
 
 ;;; misc. programming
