@@ -552,6 +552,10 @@
     :ensure t
     :init
     (add-hook 'org-mode-hook 'org-bullets-mode))
+  (use-package cdlatex
+    :ensure t
+    :init
+    (add-hook 'org-mode-hook 'turn-on-org-cdlatex))
   (defun ht-prettify-org-mode ()
     (interactive)
     (let ((variable-faces '((org-agenda-structure . 2.0)
@@ -564,7 +568,9 @@
                             (org-level-6          . nil)
                             (org-level-7          . nil)
                             (org-level-8          . nil)))
-          (fixed-faces     '(org-code
+          (fixed-faces     '(org-block
+                             org-code
+                             org-date
                              org-table
                              org-verbatim))
           (meta-faces      '(org-block-begin-line
@@ -595,7 +601,10 @@
   (setq org-babel-clojure-backend 'cider
         org-completion-use-ido t
         org-confirm-babel-evaluate nil
-        org-src-fontify-natively t)
+        org-edit-src-content-indentation 0
+        org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
+        org-src-tab-acts-natively t
+        org-src-window-setup 'other-window)
   (setq org-link-abbrev-alist
         '(("pinboard-topic" . "https://pinboard.in/u:henrytill/t:")))
   (when (file-directory-p org-directory)
