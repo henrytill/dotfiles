@@ -7,7 +7,7 @@
  '(auth-source-save-behavior nil)
  '(custom-safe-themes
    (quote
-    ("8cf1d82b3e02742456212627e6aa6932d55c715f835a5ea2b067ba431e9ae965" default))))
+    ("a895e1cd5a0f6345c6f7759fe626c4dac424fbe442fc253040e01356721e7ddf" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

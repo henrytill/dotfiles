@@ -573,7 +573,7 @@
                              org-meta-line)))
       (variable-pitch-mode t)
       (setq org-src-fontify-natively nil)
-      (set-face-attribute 'org-block nil :inherit nil :font "M+ 2m medium")
+      (set-face-attribute 'org-link nil :font (plist-get ht-fixed-font :font))
       (dolist (face variable-faces)
         (if (cdr face)
             (set-face-attribute (car face) nil :height (cdr face) :inherit 'variable-pitch)
@@ -815,11 +815,21 @@
 
 (setq frame-background-mode 'dark)
 
+(defconst ht-fixed-font    '(:font "M+ 2m medium"))
+(defconst ht-variable-font '(:font "M+ 2p medium"))
+
+(defun ht-custom-set-faces ()
+  (custom-set-faces `(fixed-pitch    ((t ,ht-fixed-font)))
+                    `(variable-pitch ((t ,ht-variable-font)))))
+
+(ht-custom-set-faces)
+
+(defun ht-after-make-frame-function (frame)
+  (with-selected-frame frame
+    (load-theme 'inl t)))
+
 (if (daemonp)
-    (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (with-selected-frame frame
-                  (load-theme 'inl t))))
+    (add-hook 'after-make-frame-functions 'ht-after-make-frame-function)
   (load-theme 'inl t))
 
 (menu-bar-mode -1)
@@ -876,13 +886,6 @@
 
 (add-hook 'prog-mode-hook 'ht-add-watchwords)
 
-;;; fonts
-(defconst ht-fixed-font    '(:font "M+ 2m medium"))
-
-(defconst ht-variable-font '(:font "M+ 2p medium"))
-
-(custom-set-faces `(fixed-pitch    ((t (,@ht-fixed-font))))
-                  `(variable-pitch ((t (,@ht-variable-font)))))
 
 
 ;;; misc. programming
@@ -909,25 +912,23 @@
 
 ;;; darwin
 (when (and (is-darwin-p) (window-system))
-  (let ((ansi-term  (expand-file-name "ansi-term" user-emacs-directory))
-        (mplus-font (expand-file-name "mplus-1mn-regular.ttf" "~/Library/Fonts")))
-    (setq browse-url-browser-function 'browse-url-default-browser
-          dired-use-ls-dired nil
-          explicit-shell-file-name ansi-term
-          mac-command-modifier 'super
-          mac-option-modifier 'meta)
-    (when (file-exists-p mplus-font)
-      (set-face-attribute 'default nil :font "M+ 1mn 14"))
-    (add-to-list 'default-frame-alist '(height . 40))
-    (add-to-list 'default-frame-alist '(width . 100))
-    (add-to-list 'default-frame-alist '(foreground-color . "#bbbbbb"))
-    (add-to-list 'default-frame-alist '(background-color . "#222222"))
-    (defun ht-reset-frame ()
-      (interactive)
-      (let ((height (cdr (assq 'height default-frame-alist)))
-            (width  (cdr (assq 'width  default-frame-alist))))
-        (set-frame-height (selected-frame) height)
-        (set-frame-width  (selected-frame) width)))))
+  (setq browse-url-browser-function 'browse-url-default-browser
+        dired-use-ls-dired nil
+        explicit-shell-file-name (expand-file-name "ansi-term" user-emacs-directory)
+        mac-command-modifier 'super
+        mac-option-modifier 'meta)
+  (when (member "M+ 1mn" (font-family-list))
+    (set-face-attribute 'default nil :font "M+ 1mn 14"))
+  (add-to-list 'default-frame-alist '(height . 40))
+  (add-to-list 'default-frame-alist '(width . 100))
+  (add-to-list 'default-frame-alist '(foreground-color . "#bbbbbb"))
+  (add-to-list 'default-frame-alist '(background-color . "#222222"))
+  (defun ht-reset-frame ()
+    (interactive)
+    (let ((height (cdr (assq 'height default-frame-alist)))
+          (width  (cdr (assq 'width  default-frame-alist))))
+      (set-frame-height (selected-frame) height)
+      (set-frame-width  (selected-frame) width))))
 
 ;;; nixos
 (when (and (is-linux-p) (file-directory-p "/etc/nixos"))
