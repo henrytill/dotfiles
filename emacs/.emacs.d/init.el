@@ -499,7 +499,8 @@
   (add-hook 'lisp-mode-hook 'enable-paredit-mode)
   (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode))
+  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+  (add-to-list 'magic-mode-alist '("#! emacs --script" . emacs-lisp-mode)))
 
 (use-package magit
   :ensure t
