@@ -41,7 +41,8 @@
       x-select-enable-primary t
       x-select-enable-clipboard t)
 
-(setq-default indent-tabs-mode nil
+(setq-default fill-column 80
+              indent-tabs-mode nil
               ispell-program-name "aspell")
 
 (load custom-file t)
