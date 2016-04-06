@@ -254,6 +254,7 @@
                   haskell-interactive-mode
                   inferior-caml-mode
                   inferior-emacs-lisp-mode
+                  inferior-forth-mode
                   inferior-python-mode
                   inferior-scheme-mode
                   inferior-sml-mode
