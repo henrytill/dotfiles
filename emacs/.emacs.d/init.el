@@ -132,6 +132,12 @@
   (when (is-linux-p)
     (setq alert-default-style 'libnotify)))
 
+(use-package auth-source
+  :config
+  (let ((authinfo (expand-file-name "authinfo.gpg" "~/Dropbox/doc")))
+    (when (file-exists-p authinfo)
+      (add-to-list 'auth-sources authinfo))))
+
 (use-package avy
   :ensure t
   :init
