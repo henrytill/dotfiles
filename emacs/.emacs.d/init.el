@@ -600,6 +600,7 @@
   :config
   (org-babel-do-load-languages 'org-babel-load-languages '((clojure    . t)
                                                            (emacs-lisp . t)
+                                                           (forth      . t)
                                                            (haskell    . t)
                                                            (js         . t)
                                                            (oz         . t)
@@ -612,7 +613,7 @@
         org-edit-src-content-indentation 0
         org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
         org-src-tab-acts-natively t
-        org-src-window-setup 'other-window)
+        org-src-window-setup 'current-window)
   (setq org-link-abbrev-alist
         '(("pinboard-topic" . "https://pinboard.in/u:henrytill/t:")))
   (when (file-directory-p org-directory)
