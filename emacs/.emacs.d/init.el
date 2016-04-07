@@ -129,8 +129,9 @@
 (use-package alert
   :ensure t
   :config
-  (when (is-linux-p)
-    (setq alert-default-style 'libnotify)))
+  (cond
+   ((is-darwin-p) (setq-default alert-default-style 'ignore))
+   ((is-linux-p)  (setq-default alert-default-style 'libnotify))))
 
 (use-package auth-source
   :config
