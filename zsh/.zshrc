@@ -51,6 +51,10 @@ if [[ $TERM == rxvt* ]]; then
     add-zsh-hook preexec set-title
 fi
 
+# env
+
+export EDITOR="emacsclient -t --alternate-editor="
+
 # aliases
 alias e="$EDITOR"
 alias v="vim"
