@@ -774,18 +774,18 @@
          ("\\.eliomi?\\'" . tuareg-mode))
   :defines merlin-command
   :init
-  (defun ht-opam-config-env ()
-    (when (executable-find "opam")
-      (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
-        (setenv (car var) (cadr var)))))
-  (defun ht-opam-load-path ()
-    (let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
-      (when ocaml-toplevel-path
-        (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path))))
-  (ht-opam-config-env)
-  (let ((opam-load-path (ht-opam-load-path)))
-    (when opam-load-path
-      (add-to-list 'load-path opam-load-path)))
+  (when (executable-find "opam")
+    (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
+      (setenv (car var) (cadr var))))
+  (let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH"))
+        (merlin-site-lisp    (getenv "MERLIN_SITE_LISP"))
+        (utop-site-lisp      (getenv "UTOP_SITE_LISP")))
+    (when ocaml-toplevel-path
+      (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))
+    (when merlin-site-lisp
+      (add-to-list 'load-path merlin-site-lisp))
+    (when utop-site-lisp
+      (add-to-list 'load-path utop-site-lisp)))
   (use-package merlin
     :if (executable-find "ocamlmerlin")
     :commands merlin-mode
@@ -801,7 +801,8 @@
   (use-package utop-minor-mode
     :if (executable-find "utop")
     :init
-    (add-hook 'tuareg-mode-hook 'utop-minor-mode)))
+    (when (fboundp 'utop-minor-mode)
+      (add-hook 'tuareg-mode-hook 'utop-minor-mode))))
 
 (use-package undo-tree
   :ensure t
