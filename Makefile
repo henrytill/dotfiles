@@ -3,13 +3,11 @@ MY_HOSTS = glaucus nereus tethys thalassa thaumas
 
 # hosts and their package sets
 glaucus  = emacs git nixpkgs tmux vim zsh
-nereus   = boot emacs git leiningen nixpkgs ocaml tmux \
+nereus   = boot ctags emacs ghc git leiningen nixpkgs npm ocaml sbt tmux \
            vim x11-osx zsh
-tethys   = boot dunst emacs git leiningen nixpkgs tmux \
+thalassa = boot ctags dunst emacs ghc git leiningen nixpkgs npm sbt tmux \
            vim x11 xdg zsh
-thalassa = boot dunst emacs ctags ghc git leiningen nixpkgs npm sbt tmux \
-           vim x11 xdg zsh
-thaumas  = boot dunst emacs ctags ghc git leiningen nixpkgs npm sbt tmux \
+thaumas  = boot ctags dunst emacs ghc git leiningen nixpkgs npm sbt tmux \
            vim x11 xdg zsh
 
 # base package set for undefined hosts
