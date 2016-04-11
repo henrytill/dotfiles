@@ -14,6 +14,9 @@
 (defun expand-directory-name (dir &optional parent-dir)
   (file-name-as-directory (expand-file-name dir parent-dir)))
 
+(defun ht-strip-trailing-newline (string)
+  (replace-regexp-in-string "\n\\'" "" string))
+
 (defmacro ht-comment (&rest body)
   "Comment out one or more s-expressions."
   nil)
@@ -47,21 +50,27 @@
 
 (load custom-file t)
 
-(global-set-key (kbd "M-/")     'hippie-expand)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-s")     'isearch-forward-regexp)
-(global-set-key (kbd "C-r")     'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s")   'isearch-forward)
-(global-set-key (kbd "C-M-r")   'isearch-backward)
-(global-set-key (kbd "M-%")     'query-replace-regexp)
-(global-set-key (kbd "C-M-%")   'query-replace)
+(defconst ht-global-bindings
+  '(("M-/"     . hippie-expand)
+    ("C-x C-b" . ibuffer)
+    ("C-s"     . isearch-forward-regexp)
+    ("C-r"     . isearch-backward-regexp)
+    ("C-M-s"   . isearch-forward)
+    ("C-M-r"   . isearch-backward)
+    ("M-%"     . query-replace-regexp)
+    ("C-M-%"   . query-replace)))
+
+(dolist (binding ht-global-bindings)
+  (let ((key (car binding))
+        (cmd (cdr binding)))
+    (global-set-key (kbd key) cmd)))
 
 
 ;;; package.el
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("org"   . "http://orgmode.org/elpa/"))
 (package-initialize)
 
 (when (null package-archive-contents)
@@ -264,11 +273,11 @@
                   shell-mode
                   slime-repl-mode
                   term-mode
+                  tuareg-interactive-mode
                   utop-mode))
     (progn (when (member mode evil-insert-state-modes)
              (delete mode evil-insert-state-modes))
            (add-to-list 'evil-emacs-state-modes mode)))
-  ;; window management
   (defun ht-other-window ()
     (interactive)
     (other-window 1))
@@ -605,6 +614,7 @@
                                                            (forth      . t)
                                                            (haskell    . t)
                                                            (js         . t)
+                                                           (ocaml      . t)
                                                            (oz         . t)
                                                            (scala      . t)
                                                            (scheme     . t)
@@ -802,7 +812,9 @@
     :if (executable-find "utop")
     :init
     (when (fboundp 'utop-minor-mode)
-      (add-hook 'tuareg-mode-hook 'utop-minor-mode))))
+      (add-hook 'tuareg-mode-hook 'utop-minor-mode)))
+  :config
+  (setq tuareg-indent-align-with-first-arg nil))
 
 (use-package undo-tree
   :ensure t
