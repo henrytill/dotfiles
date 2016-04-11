@@ -3,7 +3,7 @@ MY_HOSTS = glaucus nereus tethys thalassa thaumas
 
 # hosts and their package sets
 glaucus  = emacs git nixpkgs tmux vim zsh
-nereus   = boot emacs git leiningen nixpkgs tmux \
+nereus   = boot emacs git leiningen nixpkgs ocaml tmux \
            vim x11-osx zsh
 tethys   = boot dunst emacs git leiningen nixpkgs tmux \
            vim x11 xdg zsh
