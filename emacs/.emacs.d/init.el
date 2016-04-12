@@ -436,8 +436,7 @@
   (defun ht-haskell-style ()
     (setq tab-width 4
           haskell-indentation-layout-offset 4
-          haskell-indentation-left-offset 4
-          haskell-indentation-ifte-offset 4))
+          haskell-indentation-left-offset 4))
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'ht-haskell-style))
