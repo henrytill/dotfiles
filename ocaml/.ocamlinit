@@ -7,6 +7,4 @@ let () =
 
 #use "topfind";;
 #thread;;
-(* #camlp4o;; *)
-#require "core";;
-#require "ppx_jane";;
+#require "ppx_jane,core.top";;
