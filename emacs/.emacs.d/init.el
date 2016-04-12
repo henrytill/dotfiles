@@ -11,6 +11,9 @@
   (defun is-linux-p ()
     (string-equal system-type "gnu/linux")))
 
+(defun in-nix-shell-p ()
+  (string-equal (getenv "IN_NIX_SHELL") "1"))
+
 (defun expand-directory-name (dir &optional parent-dir)
   (file-name-as-directory (expand-file-name dir parent-dir)))
 
@@ -787,15 +790,21 @@
   (when (executable-find "opam")
     (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
       (setenv (car var) (cadr var))))
-  (let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH"))
-        (merlin-site-lisp    (getenv "MERLIN_SITE_LISP"))
-        (utop-site-lisp      (getenv "UTOP_SITE_LISP")))
+  (let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
     (when ocaml-toplevel-path
-      (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))
-    (when merlin-site-lisp
-      (add-to-list 'load-path merlin-site-lisp))
-    (when utop-site-lisp
-      (add-to-list 'load-path utop-site-lisp)))
+      (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path))))
+  (when (in-nix-shell-p)
+    (let ((merlin-site-lisp (getenv "MERLIN_SITE_LISP"))
+          (utop-site-lisp   (getenv "UTOP_SITE_LISP"))
+          (ocamlinit        (getenv "OCAMLINIT")))
+      (when merlin-site-lisp
+        (add-to-list 'load-path merlin-site-lisp))
+      (when utop-site-lisp
+        (add-to-list 'load-path utop-site-lisp))
+      (when ocamlinit
+        (setq org-babel-ocaml-command    (format "ocaml -init %s"       ocamlinit)
+              tuareg-interactive-program (format "ocaml -init %s"       ocamlinit)
+              utop-command               (format "utop -emacs -init %s" ocamlinit)))))
   (use-package merlin
     :if (executable-find "ocamlmerlin")
     :commands merlin-mode
