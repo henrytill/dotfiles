@@ -782,36 +782,40 @@
 
 (use-package tuareg
   :ensure t
-  :mode (("\\.ml[ip]?\\'" . tuareg-mode)
-         ("\\.eliomi?\\'" . tuareg-mode))
-  :defines merlin-command
+  :mode (("\\.ml[ilpy]?\\'" . tuareg-mode)
+         ("\\.eliomi?\\'"   . tuareg-mode))
   :init
-  (when (executable-find "opam")
-    (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
-      (setenv (car var) (cadr var))))
-  (let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
-    (when ocaml-toplevel-path
-      (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path))))
-  (when (in-nix-shell-p)
-    (let ((merlin-site-lisp (getenv "MERLIN_SITE_LISP"))
-          (utop-site-lisp   (getenv "UTOP_SITE_LISP"))
-          (ocamlinit        (getenv "OCAMLINIT")))
-      (when merlin-site-lisp
-        (add-to-list 'load-path merlin-site-lisp))
-      (when utop-site-lisp
-        (add-to-list 'load-path utop-site-lisp))
-      (when ocamlinit
-        (setq org-babel-ocaml-command    (format "ocaml -init %s"       ocamlinit)
-              tuareg-interactive-program (format "ocaml -init %s"       ocamlinit)
-              utop-command               (format "utop -emacs -init %s" ocamlinit)))))
+  (defun ht-setup-tuareg ()
+    (when (executable-find "opam")
+      (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
+        (setenv (car var) (cadr var))))
+    (let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
+      (when ocaml-toplevel-path
+        (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path))))
+    (when (in-nix-shell-p)
+      (let ((merlin-site-lisp (getenv "MERLIN_SITE_LISP"))
+            (utop-site-lisp   (getenv "UTOP_SITE_LISP"))
+            (ocamlinit        (getenv "OCAMLINIT")))
+        (when merlin-site-lisp
+          (add-to-list 'load-path merlin-site-lisp))
+        (when utop-site-lisp
+          (add-to-list 'load-path utop-site-lisp))
+        (when ocamlinit
+          (setq tuareg-opam                nil
+                org-babel-ocaml-command    (format "ocaml -init %s"       ocamlinit)
+                tuareg-interactive-program (format "ocaml -init %s"       ocamlinit)
+                utop-command               (format "utop -emacs -init %s" ocamlinit))))))
+  (ht-setup-tuareg)
   (use-package merlin
     :if (executable-find "ocamlmerlin")
     :commands merlin-mode
+    :defines merlin-command
     :init
     (add-hook 'merlin-mode-hook 'company-mode)
     (add-hook 'tuareg-mode-hook 'merlin-mode)
     :config
-    (when (executable-find "opam")
+    (when (and (executable-find "opam")
+               (not (in-nix-shell-p)))
       (setq merlin-command 'opam))
     (add-to-list 'company-backends 'merlin-company-backend))
   (use-package utop
