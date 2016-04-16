@@ -418,7 +418,8 @@
   :load-path "site-lisp/geiser/elisp"
   :defines geiser-active-implementations
   :config
-  (setq geiser-active-implementations '(racket)))
+  (setq geiser-active-implementations '(racket)
+        geiser-default-implementation 'racket))
 
 (use-package gnus-desktop-notify
   :ensure t
@@ -621,6 +622,7 @@
                                                            (scala      . t)
                                                            (scheme     . t)
                                                            (shell      . t)))
+  (eval-after-load 'ob-scheme (load-file (locate-file "ob-scheme-fix.el" load-path)))
   (setq org-babel-clojure-backend 'cider
         org-completion-use-ido t
         org-confirm-babel-evaluate nil
@@ -700,6 +702,13 @@
 
 (use-package scheme
   :init
+  (defun ht-scheme-mode ()
+    (dolist (form+n '((conde . 0)
+                      (fresh . 1)
+                      (run   . 2)
+                      (run*  . 1)))
+      (put (car form+n) 'scheme-indent-function (cdr form+n))))
+  (add-hook 'scheme-mode-hook 'ht-scheme-mode)
   (add-hook 'scheme-mode-hook 'enable-paredit-mode)
   :config
   (when (executable-find "plt-r5rs")
