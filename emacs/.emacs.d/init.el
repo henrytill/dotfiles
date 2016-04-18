@@ -687,6 +687,10 @@
   :config
   (projectile-global-mode))
 
+(use-package protobuf-mode
+  :ensure t
+  :mode "\\.proto\\'")
+
 (use-package saveplace
   :config
   (setq-default save-place t))
