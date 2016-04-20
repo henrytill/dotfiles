@@ -4,7 +4,7 @@
 [push]
     default = simple
 [alias]
-    bpush = !git push origin "$@" && git push backup "$@"
+    allpush = ! git remote | xargs -L1 git push
 [rebase]
     autosquash = true
 [core]
