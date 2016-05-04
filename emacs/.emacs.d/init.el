@@ -430,6 +430,10 @@
     (setq gnus-desktop-notify-groups 'gnus-desktop-notify-explicit))
   (add-hook 'gnus-group-mode-hook 'ht-gnus-desktop-notify))
 
+(use-package grep
+  :config
+  (add-to-list 'grep-find-ignored-directories "target"))
+
 (use-package haskell-mode
   :ensure t
   :mode "\\.hs\\(c\\|-boot\\)?\\'"
