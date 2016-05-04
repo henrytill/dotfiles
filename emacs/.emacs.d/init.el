@@ -702,6 +702,9 @@
     :ensure t
     :commands ensime-mode)
   (use-package sbt-mode :ensure t)
+  (defun ht-scala-mode ()
+    (setq scala-indent:align-parameters t))
+  (add-hook 'scala-mode-hook 'ht-scala-mode)
   (add-hook 'scala-mode-hook 'electric-pair-mode))
 
 (use-package scheme
