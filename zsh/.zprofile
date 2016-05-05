@@ -32,6 +32,10 @@ if [[ $(uname) == Darwin ]]; then
         export HADOOP_PREFIX=/opt/hadoop-2.7.1
     fi
 
+    if [[ -d /Volumes/vms/vagrant.d ]]; then
+        export VAGRANT_HOME=/Volumes/vms/vagrant.d
+    fi
+
     if [[ -n $(command -v opam) && -d $HOME/.opam ]]; then
       . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
     fi
