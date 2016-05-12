@@ -996,6 +996,9 @@
       (set-frame-height (selected-frame) height)
       (set-frame-width  (selected-frame) width))))
 
+(when (is-linux-p)
+  (setq dired-listing-switches (concat dired-listing-switches " --group-directories-first")))
+
 ;;; nixos
 (when (and (is-linux-p) (file-directory-p "/etc/nixos"))
   (require 'tramp)
