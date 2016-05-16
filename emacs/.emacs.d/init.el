@@ -977,11 +977,23 @@
 ;;; platform-specific settings
 
 ;;; darwin
-(when (and (is-darwin-p) (window-system))
+(when (is-darwin-p)
   (setq browse-url-browser-function 'browse-url-default-browser
         dired-use-ls-dired nil
-        explicit-shell-file-name (expand-file-name "ansi-term" user-emacs-directory)
-        mac-command-modifier 'super
+        explicit-shell-file-name (expand-file-name "ansi-term" user-emacs-directory))
+  (defun ht-dired-sort ()
+    "Sort dired listings with directories first."
+    (save-excursion
+      (let (buffer-read-only)
+        (forward-line 2) ;; beyond dir. header
+        (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
+      (set-buffer-modified-p nil)))
+  (defadvice dired-readin (after dired-after-updating-hook first () activate)
+    "Sort dired listings with directories first before adding marks."
+    (ht-dired-sort)))
+
+(when (and (is-darwin-p) (window-system))
+  (setq mac-command-modifier 'super
         mac-option-modifier 'meta)
   (when (member "M+ 1mn" (font-family-list))
     (set-face-attribute 'default nil :font "M+ 1mn 14"))
@@ -996,6 +1008,7 @@
       (set-frame-height (selected-frame) height)
       (set-frame-width  (selected-frame) width))))
 
+;;; linux
 (when (is-linux-p)
   (setq dired-listing-switches (concat dired-listing-switches " --group-directories-first")))
 
