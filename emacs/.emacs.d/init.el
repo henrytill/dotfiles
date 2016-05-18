@@ -695,6 +695,10 @@
   :ensure t
   :mode "\\.proto\\'")
 
+(use-package rust-mode
+  :ensure t
+  :mode "\\.rs\\'")
+
 (use-package saveplace
   :config
   (setq-default save-place t))
