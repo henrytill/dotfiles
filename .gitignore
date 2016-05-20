@@ -22,7 +22,7 @@
 /emacs/.emacs.d/mail
 /emacs/.emacs.d/news
 /emacs/.emacs.d/places
-/emacs/.emacs.d/projectile-bookmarks.eld
+/emacs/.emacs.d/projectile*
 /emacs/.emacs.d/recentf
 /emacs/.emacs.d/semanticdb
 /emacs/.emacs.d/tramp
