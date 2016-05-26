@@ -691,6 +691,9 @@
   :config
   (projectile-global-mode))
 
+(use-package proof-site
+  :load-path "site-lisp/PG/generic")
+
 (use-package protobuf-mode
   :ensure t
   :mode "\\.proto\\'")
