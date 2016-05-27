@@ -692,7 +692,15 @@
   (projectile-global-mode))
 
 (use-package proof-site
-  :load-path "site-lisp/PG/generic")
+  :load-path "site-lisp/PG/generic"
+  :init
+  (use-package coq-mode
+    :defer t
+    :init
+    (add-hook 'coq-mode-hook 'electric-pair-mode)
+    (add-hook 'coq-mode-hook 'whitespace-mode))
+  :config
+  (setq proof-colour-locked nil))
 
 (use-package protobuf-mode
   :ensure t
