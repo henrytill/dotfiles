@@ -636,7 +636,8 @@
         org-src-tab-acts-natively t
         org-src-window-setup 'current-window)
   (setq org-link-abbrev-alist
-        '(("pinboard-topic" . "https://pinboard.in/u:henrytill/t:")))
+        '(("hoogle"         . "https://www.haskell.org/hoogle/?hoogle=")
+          ("pinboard-topic" . "https://pinboard.in/u:henrytill/t:")))
   (when (file-directory-p org-directory)
     (let* ((notes-file (expand-file-name "notes.org" org-directory))
            (todo-file  (expand-file-name "todo.org"  org-directory))
