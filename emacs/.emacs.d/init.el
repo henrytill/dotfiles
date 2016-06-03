@@ -698,6 +698,10 @@
   (use-package coq-mode
     :defer t
     :init
+    (use-package company-coq
+      :ensure t
+      :init
+      (add-hook 'coq-mode-hook 'company-coq-mode))
     (add-hook 'coq-mode-hook 'electric-pair-mode)
     (add-hook 'coq-mode-hook 'whitespace-mode))
   :config
