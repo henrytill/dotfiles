@@ -879,7 +879,8 @@
 (use-package whitespace
   :diminish whitespace-mode
   :init
-  (setq whitespace-style '(face tabs trailing empty))
+  (setq whitespace-style '(face tabs lines-tail trailing empty)
+        whitespace-line-column 100)
   (ht-comment
    (defun ht-style-whitespace-mode ()
      (set-face-attribute 'whitespace-line nil
