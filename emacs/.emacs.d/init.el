@@ -651,6 +651,7 @@
       (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory))))))
 
 (use-package oz
+  :if (executable-find "oz")
   :load-path (lambda () (list (ht-oz-load-path)))
   :mode ("\\.oz\\'" . oz-mode)
   :commands run-oz
