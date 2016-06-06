@@ -2,22 +2,23 @@ with import <nixpkgs> {}; [
   aspell
   aspellDicts.en
   cacert
-  # cloc
-  ed
+  coq
+  ctags
   emacs
+  gforth
   ghostscript
-  # (gitAndTools.gitFull.override { guiSupport = false; svnSupport = false; })
+  (gitAndTools.gitFull.override { guiSupport = false; svnSupport = false; })
   gnumake
   graphviz
   haskellPackages.cabal-install
   haskellPackages.cabal2nix
   haskellPackages.ghc
-  jq
+  jshon
   mr
-  nix-repl
   nix
+  nix-repl
+  nodejs
   offlineimap
-  # postgresql94
   rlwrap
   rsync
   stow
@@ -26,5 +27,5 @@ with import <nixpkgs> {}; [
   vim
   wget
   xz
-  # youtube-dl
+  youtube-dl
 ]
