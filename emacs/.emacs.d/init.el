@@ -384,6 +384,11 @@
   (defun ht-rkt-predicate ()
     (and (buffer-file-name)
          (string-equal (file-name-extension (buffer-file-name)) "rkt")))
+  :init
+  (use-package flycheck-haskell
+    :ensure t
+    :init
+    (add-hook 'flycheck-mode-hook 'flycheck-haskell-setup))
   :config
   (flycheck-define-checker racket-alt
     "A Racket syntax checker using the Racket compiler. See URL `http://racket-lang.org/'."
@@ -438,13 +443,16 @@
   :ensure t
   :mode "\\.hs\\(c\\|-boot\\)?\\'"
   :init
-  (defun ht-haskell-style ()
+  (defun ht-haskell-mode ()
+    (when (executable-find "hasktags")
+      (setq haskell-tags-on-save t))
     (setq tab-width 4
           haskell-indentation-layout-offset 4
           haskell-indentation-left-offset 4))
+  (add-hook 'haskell-mode-hook 'electric-pair-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (add-hook 'haskell-mode-hook 'ht-haskell-style))
+  (add-hook 'haskell-mode-hook 'ht-haskell-mode))
 
 (use-package hideshow
   :bind (("<f5>"     . hs-toggle-hiding)
