@@ -713,8 +713,8 @@
       (add-hook 'coq-mode-hook 'company-coq-mode))
     (add-hook 'coq-mode-hook 'electric-pair-mode)
     (add-hook 'coq-mode-hook 'whitespace-mode))
-  :config
-  (setq proof-colour-locked nil))
+  (with-eval-after-load 'proof-faces
+    (set-face-attribute 'proof-locked-face nil :background "#222232")))
 
 (use-package protobuf-mode
   :ensure t
