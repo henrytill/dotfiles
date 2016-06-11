@@ -5,3 +5,11 @@ XTerm*eightBitInput: false
 XTerm*eightBitOutput: true
 XTerm*termName: xterm-256color
 XTerm*utf8: 1
+
+XTerm*background: #222222
+XTerm*foreground: #bbbbbb
+XTerm*color4:  #5fd7ff
+XTerm*color11: #ffffaf
+XTerm*color12: #005577
+XTerm*color13: #875fff
+XTerm*color14: #5fd7ff
