@@ -733,9 +733,6 @@
 (use-package scala-mode2
   :ensure t
   :init
-  (use-package ensime
-    :ensure t
-    :commands ensime-mode)
   (use-package sbt-mode :ensure t)
   (defun ht-scala-mode ()
     (setq scala-indent:align-parameters t))
