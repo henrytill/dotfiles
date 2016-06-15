@@ -492,14 +492,6 @@
   (add-hook 'ielm-mode-hook 'company-mode)
   (add-hook 'ielm-mode-hook 'eldoc-mode))
 
-(use-package jdee
-  :ensure t
-  :mode ("\\.java\\'" . jdee-mode)
-  :config
-  (let ((server-dir "~/src/other/jdee-server/target"))
-    (when (file-directory-p server-dir)
-      (setq jdee-server-dir server-dir))))
-
 (use-package js
   :init
   (add-hook 'js-mode-hook 'electric-pair-mode)
