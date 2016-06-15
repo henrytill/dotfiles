@@ -24,6 +24,22 @@
   "Comment out one or more s-expressions."
   nil)
 
+;;; https://www.emacswiki.org/emacs/ElispCookbook
+(defun ht-list-subdirs (dir exclude)
+  "Find all directories in DIR."
+  (unless (file-directory-p dir)
+    (error "Not a directory `%s'" dir))
+  (let ((dir   (directory-file-name dir))
+        (files (directory-files dir nil nil t))
+        (dirs  '()))
+    (dolist (file files)
+      (unless (member file (append '("." "..") exclude))
+        (let ((file (concat (file-name-as-directory dir) file)))
+          (when (file-directory-p file)
+            (setq dirs (append (cons file (ht-list-subdirs file exclude)) dirs))))))
+    dirs))
+
+
 
 ;;; basic settings
 
@@ -594,7 +610,9 @@
                             (org-level-6          . nil)
                             (org-level-7          . nil)
                             (org-level-8          . nil)))
-          (fixed-faces     '(org-block
+          (fixed-faces     '(org-agenda-date
+                             org-agenda-date-today
+                             org-block
                              org-code
                              org-date
                              org-table
@@ -628,6 +646,7 @@
                                                            (shell      . t)))
   (eval-after-load 'ob-scheme (load-file (locate-file "ob-scheme-fix.el" load-path)))
   (setq org-babel-clojure-backend 'cider
+        org-clock-persist 'history
         org-completion-use-ido t
         org-confirm-babel-evaluate nil
         org-edit-src-content-indentation 0
@@ -638,14 +657,16 @@
   (setq org-link-abbrev-alist
         '(("hoogle"         . "https://www.haskell.org/hoogle/?hoogle=")
           ("pinboard-topic" . "https://pinboard.in/u:henrytill/t:")))
+  (org-clock-persistence-insinuate)
   (when (file-directory-p org-directory)
-    (let* ((notes-file (expand-file-name "notes.org" org-directory))
+    (let* ((agenda-dir (expand-directory-name "agenda" org-directory))
+           (notes-file (expand-file-name "notes.org" org-directory))
            (todo-file  (expand-file-name "todo.org"  org-directory))
            (notes-template
             `("n" "Notes" entry (file ,notes-file) "* %?\n  %i\n  %a"))
            (todo-template
             `("t" "Todo" entry (file+headline ,todo-file "Tasks") "* TODO %?\n  %i\n  %a")))
-      (setq org-agenda-files (list org-directory)
+      (setq org-agenda-files (cons agenda-dir (ht-list-subdirs agenda-dir '(".git")))
             org-capture-templates (list notes-template todo-template)
             org-default-notes-file notes-file)
       (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory))))))
