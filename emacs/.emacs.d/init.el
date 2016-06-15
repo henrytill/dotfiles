@@ -312,6 +312,12 @@
     (let ((key (car binding))
           (cmd (cdr binding)))
       (define-key evil-emacs-state-map (kbd key) cmd)))
+  (defconst evil-normal-state-bindings
+    '(("C-w C-]" . find-tag-other-window)))
+  (dolist (binding evil-normal-state-bindings)
+    (let ((key (car binding))
+          (cmd (cdr binding)))
+      (define-key evil-normal-state-map (kbd key) cmd)))
   ;; paredit
   (evil-define-state paredit "Paredit state." :tag " <PAR> "
     :enable (paredit normal)
