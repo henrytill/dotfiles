@@ -15,11 +15,12 @@ bindkey -e
 
 # prompt
 () {
+    local nixShellMode=${IN_NIX_SHELL/1/"[$name]"}
+
     if [[ $TERM == dumb ]]; then
         unsetopt zle
 
         local retStatus='[%?]'
-        local nixShellMode=${IN_NIX_SHELL/1/'[nix-shell]'}
 
         PROMPT=$'\n'$retStatus$nixShellMode'> '
         PROMPT2=$nixshellMode'> '
@@ -27,7 +28,6 @@ bindkey -e
     else
         local firstLine='%F{6}%B%n@%m:%~%f%b'
         local retStatus='%(?.[%?].%F{1}[%?]%f)'
-        local nixShellMode=${IN_NIX_SHELL/1/'[nix-shell]'}
 
         PROMPT=$'\n'$firstLine$'\n'$retStatus$nixShellMode'> '
         PROMPT2=$nixshellMode'> '
