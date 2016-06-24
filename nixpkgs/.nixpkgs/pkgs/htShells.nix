@@ -39,6 +39,18 @@
       JAVA_HOME = "${myJDK}/lib/openjdk";
     };
 
+  jdk8-lein =
+    let
+      myJDK  = jdk8;
+      myLein = leiningen.override { jdk = myJDK; };
+    in
+    stdenv.mkDerivation {
+      name = "shell-jdk8-lein";
+      src = null;
+      buildInputs = [ myJDK myLein ];
+      JAVA_HOME = "${myJDK}/lib/openjdk";
+    };
+
   jdk8-sbt =
     let
       myJDK = jdk8;
