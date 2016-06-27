@@ -599,7 +599,10 @@
   (use-package org-bullets
     :ensure t
     :init
-    (add-hook 'org-mode-hook 'org-bullets-mode))
+    (defun ht-turn-on-org-bullets-mode ()
+      (when (window-system)
+        (org-bullets-mode 1)))
+    (add-hook 'org-mode-hook 'ht-turn-on-org-bullets-mode))
   (use-package cdlatex
     :ensure t
     :init
