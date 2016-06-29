@@ -7,6 +7,10 @@ if [[ $(uname) == Darwin ]]; then
         export NIX_PATH=nixpkgs=$HOME/src/nixpkgs
     fi
 
+    if [[ -n $NIX_LINK && -d $NIX_LINK/share/man ]]; then
+        export MANPATH=$NIX_LINK/share/man:$MANPATH
+    fi
+
     if [[ -n $NIX_LINK && -f $NIX_LINK/etc/X11/fonts.conf ]]; then
         export FONTCONFIG_FILE=$NIX_LINK/etc/X11/fonts.conf
     fi
