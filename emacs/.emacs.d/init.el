@@ -942,14 +942,6 @@
 
 (ht-custom-set-faces)
 
-(defun ht-after-make-frame-function (frame)
-  (with-selected-frame frame
-    (load-theme 'inl t)))
-
-(if (daemonp)
-    (add-hook 'after-make-frame-functions 'ht-after-make-frame-function)
-  (load-theme 'inl t))
-
 (menu-bar-mode -1)
 
 (when (fboundp 'tool-bar-mode)
