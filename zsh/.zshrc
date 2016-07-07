@@ -51,9 +51,23 @@ if [[ $TERM == rxvt* ]]; then
     add-zsh-hook preexec set-title
 fi
 
-# env
+# Darwin-specific config
+if [[ $(uname) == Darwin ]]; then
+    alias ls="ls -G"
 
-export EDITOR="emacsclient -t --alternate-editor="
+    if [[  -d /Applications/Emacs.app/ ]]; then
+        alias Emacs.app="open -n -a /Applications/Emacs.app"
+    fi
+
+    export EDITOR="emacsclient -t"
+fi
+
+# Linux-specific config
+if [[ $(uname) == Linux ]]; then
+    alias ls="ls --color"
+
+    export EDITOR="emacsclient -t --alternate-editor="
+fi
 
 # aliases
 alias e="$EDITOR"
@@ -89,18 +103,4 @@ fi
 
 if [[ -n $(command -v npm) ]]; then
     npm-exec () { PATH=$(npm bin):$PATH $* }
-fi
-
-# Darwin-specific config
-if [[ $(uname) == Darwin ]]; then
-    alias ls="ls -G"
-
-    if [[  -d $HOME/.nix-profile/Applications/Emacs.app/ ]]; then
-        alias Emacs.app="open -n -a $HOME/.nix-profile/Applications/Emacs.app"
-    fi
-fi
-
-# Linux-specific config
-if [[ $(uname) == Linux ]]; then
-    alias ls="ls --color"
 fi
