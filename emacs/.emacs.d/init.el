@@ -1050,7 +1050,14 @@
     (let ((height (cdr (assq 'height default-frame-alist)))
           (width  (cdr (assq 'width  default-frame-alist))))
       (set-frame-height (selected-frame) height)
-      (set-frame-width  (selected-frame) width))))
+      (set-frame-width  (selected-frame) width)))
+  (defun ht-darwin-terminal-frame-setup (frame)
+    (with-selected-frame frame
+      (unless (display-graphic-p frame)
+        (set-face-foreground 'default "unspecified-fg" frame)
+        (set-face-background 'default "unspecified-bg" frame))))
+  (add-hook 'after-make-frame-functions 'ht-darwin-terminal-frame-setup)
+  (server-mode 1))
 
 ;;; linux
 (when (is-linux-p)
