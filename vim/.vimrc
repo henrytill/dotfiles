@@ -4,7 +4,6 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
 syntax on
-colorscheme inl
 set background=dark
 
 set nocompatible
