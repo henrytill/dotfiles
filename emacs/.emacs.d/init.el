@@ -1073,8 +1073,7 @@
 ;;; darwin
 (when (is-darwin-p)
   (setq browse-url-browser-function 'browse-url-default-browser
-        dired-use-ls-dired nil
-        explicit-shell-file-name (expand-file-name "ansi-term" user-emacs-directory))
+        dired-use-ls-dired nil)
   (defun ht-dired-sort ()
     "Sort dired listings with directories first."
     (save-excursion
