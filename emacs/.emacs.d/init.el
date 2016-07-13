@@ -792,6 +792,7 @@
 
 (use-package proof-site
   :load-path "site-lisp/PG/generic"
+  :mode ("\\.v\\'" . coq-mode)
   :init
   (use-package coq-mode
     :defer t
