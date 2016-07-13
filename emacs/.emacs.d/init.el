@@ -39,6 +39,65 @@
             (setq dirs (append (cons file (ht-list-subdirs file exclude)) dirs))))))
     dirs))
 
+
+;;; basic cosmetics
+
+(unless (and (is-linux-p) (window-system))
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1))
+
+(setq frame-background-mode 'dark)
+
+(when (and (is-linux-p) (window-system))
+  (set-face-foreground 'fringe (face-attribute 'default :foreground))
+  (set-face-background 'fringe (face-attribute 'default :background)))
+
+(when (and (is-darwin-p) (window-system))
+  (let ((fg-color "#bbbbbb")
+        (bg-color "#222222"))
+    (add-to-list 'default-frame-alist '(internal-border-width . 14))
+    (add-to-list 'default-frame-alist '(height . 60))
+    (add-to-list 'default-frame-alist '(width . 100))
+    (add-to-list 'default-frame-alist `(foreground-color . ,fg-color))
+    (add-to-list 'default-frame-alist `(background-color . ,bg-color))
+    (set-face-attribute 'fringe nil :foreground fg-color)
+    (set-face-attribute 'fringe nil :background bg-color)
+    (when (member "Fira Mono" (font-family-list))
+      (set-face-attribute 'default nil :font "Fira Mono 12"))
+    (setq-default line-spacing 2)
+    (defun ht-reset-frame ()
+      (interactive)
+      (let ((height (cdr (assq 'height default-frame-alist)))
+            (width  (cdr (assq 'width  default-frame-alist))))
+        (set-frame-height (selected-frame) height)
+        (set-frame-width  (selected-frame) width)))
+    (defun ht-darwin-terminal-frame-setup (frame)
+      (with-selected-frame frame
+        (unless (display-graphic-p frame)
+          (set-face-foreground 'default "unspecified-fg" frame)
+          (set-face-background 'default "unspecified-bg" frame))))
+    (add-hook 'after-make-frame-functions 'ht-darwin-terminal-frame-setup)))
+
+(when (window-system)
+  (set-face-attribute 'region nil :background "lightgoldenrod2")
+  (set-face-attribute 'region nil :foreground "black"))
+
+(defconst ht-fixed-font
+  (cond
+   ((is-linux-p)  '(:font "M+ 2m medium"))
+   ((is-darwin-p) '(:font "Fira Mono"))))
+
+(defconst ht-variable-font
+  (cond
+   ((is-linux-p)  '(:font "M+ 2p medium"))
+   ((is-darwin-p) '(:font "Fira Sans"))))
+
+(defun ht-custom-set-faces ()
+  (custom-set-faces `(fixed-pitch    ((t ,ht-fixed-font)))
+                    `(variable-pitch ((t ,ht-variable-font)))))
+
+(ht-custom-set-faces)
 
 
 ;;; basic settings
@@ -51,6 +110,7 @@
       ido-handle-duplicate-virtual-buffers 2
       ido-use-virtual-buffers t
       inhibit-startup-message t
+      initial-scratch-message nil
       load-prefer-newer t
       mouse-yank-at-point t
       org-directory "~/org"
@@ -540,6 +600,13 @@
         js2-include-node-externs t
         js2-indent-switch-body t))
 
+(use-package linum
+  :init
+  (defun ht-linum-mode ()
+    (set-face-foreground 'linum "grey30")
+    (setq linum-format "%4d "))
+  (add-hook 'linum-mode-hook 'ht-linum-mode))
+
 (use-package lisp-mode
   :init
   (add-hook 'lisp-mode-hook 'eldoc-mode)
@@ -709,7 +776,7 @@
   :defer t
   :init
   (defun ht-prog-mode ()
-    (setq indicate-empty-lines 1))
+    (linum-mode 1))
   (add-hook 'prog-mode-hook 'ht-prog-mode)
   (add-hook 'prog-mode-hook 'company-mode)
   (add-hook 'prog-mode-hook 'page-break-lines-mode)
@@ -929,26 +996,7 @@
   (yas-global-mode 1))
 
 
-;;; cosmetics
-
-(setq frame-background-mode 'dark)
-
-(defconst ht-fixed-font    '(:font "M+ 2m medium"))
-(defconst ht-variable-font '(:font "M+ 2p medium"))
-
-(defun ht-custom-set-faces ()
-  (custom-set-faces `(fixed-pitch    ((t ,ht-fixed-font)))
-                    `(variable-pitch ((t ,ht-variable-font)))))
-
-(ht-custom-set-faces)
-
-(menu-bar-mode -1)
-
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
+;;; more cosmetics
 
 (show-paren-mode 1)
 
@@ -1039,24 +1087,6 @@
 (when (and (is-darwin-p) (window-system))
   (setq mac-command-modifier 'super
         mac-option-modifier 'meta)
-  (when (member "M+ 1mn" (font-family-list))
-    (set-face-attribute 'default nil :font "M+ 1mn 14"))
-  (add-to-list 'default-frame-alist '(height . 40))
-  (add-to-list 'default-frame-alist '(width . 100))
-  (add-to-list 'default-frame-alist '(foreground-color . "#bbbbbb"))
-  (add-to-list 'default-frame-alist '(background-color . "#222222"))
-  (defun ht-reset-frame ()
-    (interactive)
-    (let ((height (cdr (assq 'height default-frame-alist)))
-          (width  (cdr (assq 'width  default-frame-alist))))
-      (set-frame-height (selected-frame) height)
-      (set-frame-width  (selected-frame) width)))
-  (defun ht-darwin-terminal-frame-setup (frame)
-    (with-selected-frame frame
-      (unless (display-graphic-p frame)
-        (set-face-foreground 'default "unspecified-fg" frame)
-        (set-face-background 'default "unspecified-bg" frame))))
-  (add-hook 'after-make-frame-functions 'ht-darwin-terminal-frame-setup)
   (server-mode 1))
 
 ;;; linux
@@ -1067,9 +1097,7 @@
 (when (and (is-linux-p) (file-directory-p "/etc/nixos"))
   (require 'tramp)
   (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
-  (setq browse-url-browser-function 'browse-url-chromium)
-  (set-face-attribute 'region nil :background "lightgoldenrod2")
-  (set-face-attribute 'region nil :foreground "black"))
+  (setq browse-url-browser-function 'browse-url-chromium))
 
 
 ;;; registers
