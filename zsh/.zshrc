@@ -58,16 +58,14 @@ if [[ $(uname) == Darwin ]]; then
     if [[  -d /Applications/Emacs.app/ ]]; then
         alias Emacs.app="open -n -a /Applications/Emacs.app"
     fi
-
-    export EDITOR="emacsclient -t"
 fi
 
 # Linux-specific config
 if [[ $(uname) == Linux ]]; then
     alias ls="ls --color"
-
-    export EDITOR="emacsclient -t --alternate-editor="
 fi
+
+export EDITOR="vim"
 
 # aliases
 alias e="$EDITOR"
