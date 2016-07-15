@@ -1,0 +1,11 @@
+set noerrorbells
+set surround
+set visualbell
+
+let mapleader = " "
+nnoremap <leader>b     :action GotoDeclaration<CR>
+nnoremap <leader><a-b> :action GotoImplementation<CR>
+nnoremap <leader>B     :action GotoTypeDeclaration<CR>
+nnoremap <leader>h     :action TypeHierarchy<CR>
+nnoremap <leader>p     :action ParameterInfo<CR>
+nnoremap <leader>u     :action GotoSuperMethod<CR>
