@@ -924,6 +924,10 @@
               (add-to-list 'TeX-view-program-selection
                            '(output-pdf "mupdf"))))))
 
+(use-package toml-mode
+  :ensure t
+  :mode "\\.toml\\'")
+
 (use-package typescript-mode
   :ensure t
   :mode "\\.ts\\'"
