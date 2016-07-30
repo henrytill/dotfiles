@@ -536,6 +536,7 @@
           haskell-indentation-layout-offset 4
           haskell-indentation-left-offset 4))
   (add-hook 'haskell-mode-hook 'electric-pair-mode)
+  (add-hook 'haskell-mode-hook 'flycheck-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'ht-haskell-mode))
