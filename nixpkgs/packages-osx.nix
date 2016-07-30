@@ -2,14 +2,9 @@ with import <nixpkgs> {}; [
   aspell
   aspellDicts.en
   cacert
-  coq
   ctags
-  emacs
-  gforth
-  ghostscript
   (gitAndTools.gitFull.override { guiSupport = false; svnSupport = false; })
   gnumake
-  graphviz
   haskellPackages.cabal-install
   haskellPackages.cabal2nix
   haskellPackages.ghc
