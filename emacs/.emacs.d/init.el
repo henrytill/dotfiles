@@ -471,6 +471,10 @@
     :ensure t
     :init
     (add-hook 'flycheck-mode-hook 'flycheck-haskell-setup))
+  (use-package flycheck-rust
+    :ensure t
+    :init
+    (add-hook 'flycheck-mode-hook 'flycheck-rust-setup))
   :config
   (flycheck-define-checker racket-alt
     "A Racket syntax checker using the Racket compiler. See URL `http://racket-lang.org/'."
@@ -814,7 +818,21 @@
   :ensure t
   :mode "\\.rs\\'"
   :init
-  (add-hook 'rust-mode-hook 'electric-pair-mode))
+  (use-package racer
+    :ensure t
+    :init
+    (let ((cmd (executable-find "racer")))
+      (when cmd
+        (setq racer-cmd cmd)))
+    (let ((dir (expand-directory-name "src/other/rust/src" (getenv "HOME"))))
+      (when (file-directory-p dir)
+        (setq racer-rust-src-path dir)))
+    (add-hook 'racer-mode-hook 'company-mode)
+    (add-hook 'racer-mode-hook 'eldoc-mode))
+  (add-hook 'rust-mode-hook 'auto-revert-mode)
+  (add-hook 'rust-mode-hook 'electric-pair-mode)
+  (add-hook 'rust-mode-hook 'flycheck-mode)
+  (add-hook 'rust-mode-hook 'racer-mode))
 
 (use-package saveplace
   :config
