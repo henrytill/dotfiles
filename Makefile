@@ -1,5 +1,5 @@
 # defined hosts
-MY_HOSTS = glaucus nereus tethys thalassa thaumas
+MY_HOSTS = glaucus nereus thalassa thaumas
 
 # hosts and their package sets
 glaucus  = emacs git nixpkgs tmux vim zsh
