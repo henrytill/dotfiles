@@ -60,10 +60,6 @@ if [[ $(uname) == Darwin ]]; then
       . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
     fi
 
-    if [[ -d $HOME/.cargo/bin ]]; then
-        export PATH=$HOME/.cargo/bin:$PATH
-    fi
-
     export GHC_DOT_APP="/Applications/ghc-7.10.3.app"
 
     if [[ -d $GHC_DOT_APP ]]; then
@@ -72,14 +68,14 @@ if [[ $(uname) == Darwin ]]; then
 
     export JAVA_HOME=$(/usr/libexec/java_home -v 1.7.0_80)
 
-    if [[ -d $HOME/bin ]]; then
-        export PATH=$HOME/bin:$PATH
-    fi
-
     export LANG=en_US.UTF-8
 fi
 
-if [[ $(uname) == Linux && ! -d /etc/nixos ]]; then
+if [[ ! -d /etc/nixos ]]; then
+    if [[ -d $HOME/.cargo/bin ]]; then
+        export PATH=$HOME/.cargo/bin:$PATH
+    fi
+
     if [[ -d $HOME/bin ]]; then
         export PATH=$HOME/bin:$PATH
     fi
