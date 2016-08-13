@@ -261,6 +261,8 @@
   (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
   (add-hook 'clojure-mode-hook 'enable-paredit-mode))
 
+(use-package cmake-mode :ensure t)
+
 (use-package cider
   :load-path "site-lisp/cider"
   :bind (("C-c M-c" . cider-connect)
