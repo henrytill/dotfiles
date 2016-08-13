@@ -234,8 +234,10 @@
     '(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
 
 (use-package c++-mode
-  :mode "\\.cpp\\'"
+  :mode (("\\.cc\\'"  . c++-mode)
+         ("\\.cpp\\'" . c++-mode))
   :init
+  (use-package clang-format :ensure t)
   (use-package irony
     :ensure t
     :init
