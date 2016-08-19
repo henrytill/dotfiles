@@ -179,7 +179,12 @@
                              (car (split-string oz-binary-path "/bin/oz")))))))
   (defun ht-oz-load-path ()
     (cond ((is-darwin-p) "~/src/other/mozart-elisp")
-          ((is-linux-p)  (expand-directory-name "share/mozart/elisp" (ht-oz-home))))))
+          ((is-linux-p)  (expand-directory-name "share/mozart/elisp" (ht-oz-home)))))
+  (defun ht-rtags-load-path ()
+    (letrec ((rtags-site-lisp  (expand-directory-name "../../share/emacs/site-lisp/rtags"
+                                                      (executable-find "rdm"))))
+      (when (file-directory-p rtags-site-lisp)
+        rtags-site-lisp))))
 
 
 ;;; packages
@@ -240,7 +245,19 @@
   (use-package clang-format :ensure t)
   (use-package irony
     :ensure t
+  (use-package rtags
+    :if (executable-find "rdm")
+    :commands rtags-start-process-unless-running
+    :load-path (lambda () (ht-rtags-load-path))
     :init
+    (use-package company-rtags
+      :disabled t
+      :load-path (lambda () (ht-rtags-load-path)))
+    (defun ht-flycheck-rtags-mode ()
+      (flycheck-select-checker 'rtags)
+      (setq-local flycheck-check-syntax-automatically nil)
+      (setq-local flycheck-highlighting-mode nil)
+      (flycheck-mode 1)))
     (use-package company-irony
       :ensure t
       :init
@@ -252,7 +269,8 @@
       (add-hook 'irony-mode-hook 'irony-eldoc))
     (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
   (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c++-mode-hook 'flycheck-mode))
+  (add-hook 'c++-mode-hook 'ht-flycheck-rtags-mode)
+  (add-hook 'c++-mode-hook 'rtags-start-process-unless-running))
 
 (use-package clojure-mode
   :ensure t
@@ -497,9 +515,12 @@
     :init
     (add-hook 'flycheck-mode-hook 'flycheck-haskell-setup))
   (use-package flycheck-irony
+    :disabled t
     :ensure t
     :init
     (add-hook 'flycheck-mode-hook 'flycheck-irony-setup))
+  (use-package flycheck-rtags
+    :load-path (lambda () (ht-rtags-load-path)))
   (use-package flycheck-rust
     :ensure t
     :init
