@@ -193,13 +193,15 @@
 (require 'bind-key)
 (require 'diminish "diminish-0.44.el")
 
-(use-package ace-window          :ensure t)
+(setq use-package-verbose t)
+
+(use-package ace-window          :ensure t :defer t)
 (use-package dash                :ensure t :defer t)
 (use-package idle-highlight-mode :ensure t :defer t)
-(use-package pandoc-mode         :ensure t)
+(use-package pandoc-mode         :ensure t :defer t)
 (use-package pkg-info            :ensure t :defer t)
 (use-package queue               :ensure t :defer t)
-(use-package spinner             :ensure t)
+(use-package spinner             :ensure t :defer t)
 
 (use-package paredit
   :ensure t
@@ -221,12 +223,14 @@
 
 (use-package alert
   :ensure t
+  :defer t
   :config
   (cond
    ((is-darwin-p) (setq-default alert-default-style 'ignore))
    ((is-linux-p)  (setq-default alert-default-style 'libnotify))))
 
 (use-package auth-source
+  :defer t
   :config
   (let ((authinfo (expand-file-name "authinfo.gpg" "~/Dropbox/doc")))
     (when (file-exists-p authinfo)
@@ -234,6 +238,10 @@
 
 (use-package avy
   :ensure t
+  :commands (avy-goto-char
+             avy-goto-char-2
+             avy-goto-word-1
+             avy-goto-line)
   :init
   (eval-after-load "isearch"
     '(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
@@ -242,9 +250,11 @@
   :mode (("\\.cc\\'"  . c++-mode)
          ("\\.cpp\\'" . c++-mode))
   :init
-  (use-package clang-format :ensure t)
-  (use-package irony
+  (use-package clang-format
     :ensure t
+    :commands (clang-format
+               clang-format-buffer
+               clang-format-region))
   (use-package rtags
     :if (executable-find "rdm")
     :commands rtags-start-process-unless-running
@@ -258,6 +268,10 @@
       (setq-local flycheck-check-syntax-automatically nil)
       (setq-local flycheck-highlighting-mode nil)
       (flycheck-mode 1)))
+  (use-package irony
+    :ensure t
+    :commands irony-mode
+    :config
     (use-package company-irony
       :ensure t
       :init
@@ -281,7 +295,10 @@
   (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
   (add-hook 'clojure-mode-hook 'enable-paredit-mode))
 
-(use-package cmake-mode :ensure t)
+(use-package cmake-mode
+  :ensure t
+  :mode (("CMakeLists\\.txt\\'" . cmake-mode)
+         ("\\.cmake\\'"         . cmake-mode)))
 
 (use-package cider
   :load-path "site-lisp/cider"
@@ -372,8 +389,9 @@
   (defalias 'eshell/view 'view-file))
 
 (use-package exec-path-from-shell
-  :if (is-darwin-p)
   :ensure t
+  :if (is-darwin-p)
+  :defer t
   :config
   (exec-path-from-shell-initialize))
 
@@ -491,16 +509,10 @@
   ;; surround
   (use-package evil-surround
     :ensure t
-    :config
-    (global-evil-surround-mode 1))
+    :commands global-evil-surround-mode)
   ;; enable
-  (evil-mode 1))
-
-(use-package flx-ido
-  :ensure t
-  :config
-  (flx-ido-mode 1)
-  (setq flx-ido-use-faces nil))
+  (evil-mode 1)
+  (global-evil-surround-mode 1))
 
 (use-package flycheck
   :ensure t
@@ -509,7 +521,7 @@
   (defun ht-rkt-predicate ()
     (and (buffer-file-name)
          (string-equal (file-name-extension (buffer-file-name)) "rkt")))
-  :init
+  :config
   (use-package flycheck-haskell
     :ensure t
     :init
@@ -525,7 +537,6 @@
     :ensure t
     :init
     (add-hook 'flycheck-mode-hook 'flycheck-rust-setup))
-  :config
   (flycheck-define-checker racket-alt
     "A Racket syntax checker using the Racket compiler. See URL `http://racket-lang.org/'."
     :command ("racket" "-f" source-inplace)
@@ -557,6 +568,7 @@
 
 (use-package geiser
   :load-path "site-lisp/geiser/elisp"
+  :defer t
   :defines geiser-active-implementations
   :config
   (setq geiser-active-implementations '(racket)
@@ -572,6 +584,7 @@
   (add-hook 'gnus-group-mode-hook 'ht-gnus-desktop-notify))
 
 (use-package grep
+  :commands (grep find-grep find-grep-dired)
   :config
   (add-to-list 'grep-find-ignored-directories "target"))
 
@@ -609,6 +622,11 @@
 
 (use-package ido
   :config
+  (use-package flx-ido
+    :ensure t
+    :commands flx-ido-mode
+    :config
+    (setq flx-ido-use-faces nil))
   ;; Vertical Ido Results
   (setq ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
                           " [No match]" " [Matched]" " [Not readable]"
@@ -621,6 +639,7 @@
     (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
     (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
   (add-hook 'ido-setup-hook 'ht-ido-define-keys)
+  (add-hook 'ido-setup-hook 'flx-ido-mode)
   (ido-mode t))
 
 (use-package ielm
@@ -630,6 +649,7 @@
   (add-hook 'ielm-mode-hook 'eldoc-mode))
 
 (use-package js
+  :mode (("\\.json\\'" . js-mode))
   :init
   (add-hook 'js-mode-hook 'electric-pair-mode)
   :config
@@ -663,6 +683,7 @@
   (add-hook 'linum-mode-hook 'ht-linum-mode))
 
 (use-package lisp-mode
+  :defer t
   :init
   (add-hook 'lisp-mode-hook 'eldoc-mode)
   (add-hook 'lisp-mode-hook 'enable-paredit-mode)
@@ -687,6 +708,7 @@
   (add-hook 'markdown-mode-hook 'whitespace-mode))
 
 (use-package mmm-mode
+  :defer t
   :ensure t
   :config
   (setq mmm-global-mode 'maybe)
@@ -720,15 +742,14 @@
   :init
   (use-package org-bullets
     :ensure t
-    :init
+    :commands ht-turn-on-org-bullets-mode
+    :preface
     (defun ht-turn-on-org-bullets-mode ()
       (when (window-system)
-        (org-bullets-mode 1)))
-    (add-hook 'org-mode-hook 'ht-turn-on-org-bullets-mode))
+        (org-bullets-mode 1))))
   (use-package cdlatex
     :ensure t
-    :init
-    (add-hook 'org-mode-hook 'turn-on-org-cdlatex))
+    :commands turn-on-org-cdlatex)
   (defun ht-prettify-org-mode ()
     (interactive)
     (let ((variable-faces '((org-agenda-structure . 2.0)
@@ -763,7 +784,9 @@
         (set-face-attribute face nil :inherit 'fixed-pitch))
       (dolist (face meta-faces)
         (set-face-attribute face nil :inherit 'variable-pitch :foreground (face-foreground 'font-lock-comment-face nil)))))
+  (add-hook 'org-mode-hook 'ht-turn-on-org-bullets-mode)
   (add-hook 'org-mode-hook 'ht-prettify-org-mode)
+  (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
   :config
   (org-babel-do-load-languages 'org-babel-load-languages '((clojure    . t)
                                                            (emacs-lisp . t)
@@ -823,6 +846,7 @@
 
 (use-package paren-face
   :ensure t
+  :defer t
   :config
   (setq paren-face-regexp "[][(){}]")
   (global-paren-face-mode))
@@ -840,6 +864,7 @@
 
 (use-package projectile
   :load-path "site-lisp/projectile"
+  :defer 5
   :functions projectile-global-mode
   :diminish projectile-mode
   :config
@@ -850,12 +875,12 @@
   :mode ("\\.v\\'" . coq-mode)
   :init
   (use-package coq-mode
-    :defer t
+    :commands coq-mode
     :init
     (use-package company-coq
       :ensure t
-      :init
-      (add-hook 'coq-mode-hook 'company-coq-mode))
+      :commands company-coq-mode)
+    (add-hook 'coq-mode-hook 'company-coq-mode)
     (add-hook 'coq-mode-hook 'electric-pair-mode)
     (add-hook 'coq-mode-hook 'whitespace-mode))
   (with-eval-after-load 'proof-faces
@@ -871,6 +896,7 @@
   :init
   (use-package racer
     :ensure t
+    :commands racer-mode
     :init
     (let ((cmd (executable-find "racer")))
       (when cmd
@@ -885,14 +911,14 @@
   (add-hook 'rust-mode-hook 'flycheck-mode)
   (add-hook 'rust-mode-hook 'racer-mode))
 
-(use-package saveplace
-  :config
-  (setq-default save-place t))
-
 (use-package scala-mode
   :ensure t
+  :mode (("\\.scala\\'" . scala-mode)
+         ("\\.sbt\\'"   . scala-mode))
   :init
-  (use-package sbt-mode :ensure t)
+  (use-package sbt-mode
+    :ensure t
+    :commands sbt-start)
   (defun ht-scala-mode ()
     (setq scala-indent:align-parameters t))
   (add-hook 'scala-mode-hook 'ht-scala-mode)
@@ -900,6 +926,8 @@
   (add-hook 'scala-mode-hook 'electric-pair-mode))
 
 (use-package scheme
+  :mode (("\\.rkt\\'" . scheme-mode)
+         ("\\.scm\\'" . scheme-mode))
   :init
   (defun ht-scheme-mode ()
     (dolist (form+n '((conde . 0)
@@ -1032,12 +1060,13 @@
       (setq merlin-command 'opam))
     (add-to-list 'company-backends 'merlin-company-backend))
   (use-package utop
-    :if (executable-find "utop"))
+    :if (executable-find "utop")
+    :commands utop)
   (use-package utop-minor-mode
     :if (executable-find "utop")
-    :init
-    (when (fboundp 'utop-minor-mode)
-      (add-hook 'tuareg-mode-hook 'utop-minor-mode)))
+    :commands utop-minor-mode)
+  (when (fboundp 'utop-minor-mode)
+    (add-hook 'tuareg-mode-hook 'utop-minor-mode))
   :config
   (setq tuareg-indent-align-with-first-arg nil))
 
@@ -1047,10 +1076,12 @@
   :diminish undo-tree-mode)
 
 (use-package uniquify
+  :defer t
   :config
   (setq uniquify-buffer-name-style 'forward))
 
 (use-package whitespace
+  :commands whitespace-mode
   :diminish whitespace-mode
   :init
   (setq whitespace-style '(face tabs lines-tail trailing empty)
@@ -1064,6 +1095,7 @@
 
 (use-package yasnippet
   :ensure t
+  :defer 10
   :diminish yas-minor-mode
   :config
   (add-hook 'term-mode-hook (lambda ()
