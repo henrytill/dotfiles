@@ -123,7 +123,8 @@
       x-select-enable-primary t
       x-select-enable-clipboard t)
 
-(setq-default fill-column 80
+(setq-default c-basic-offset 4
+              fill-column 80
               indent-tabs-mode nil
               ispell-program-name "aspell")
 
@@ -1151,27 +1152,6 @@
   (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
 
 (add-hook 'prog-mode-hook 'ht-add-watchwords)
-
-
-
-;;; misc. programming
-
-;;; c
-(setq c-default-style '((java-mode . "java")
-                        (awk-mode  . "awk")
-                        (c-mode    . "k&r")
-                        (other     . "gnu")))
-
-(setq-default c-basic-offset 4)
-(add-hook 'c-mode-hook 'electric-pair-mode)
-
-;;; supercollider
-(when (and (is-darwin-p)
-           (executable-find "sclang")
-           (file-directory-p (expand-directory-name "~/src/other/scel")))
-  (add-to-list 'load-path (expand-directory-name "~/src/other/scel"))
-  (require 'sclang)
-  (add-hook 'sclang-mode-hook 'electric-pair-mode))
 
 
 ;;; platform-specific settings
