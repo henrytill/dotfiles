@@ -946,10 +946,9 @@
 (use-package shell
   :commands shell
   :init
-  (defun ht-add-mode-line-dirtrack ()
-    (add-to-list 'mode-line-buffer-identification
-                 '(:propertize ("" default-directory "  ") face dired-directory)))
-  (add-hook 'shell-mode-hook 'ht-add-mode-line-dirtrack))
+  (defun ht-mode-line-dirtrack ()
+    (add-to-list 'mode-line-buffer-identification '("" default-directory "  ")))
+  (add-hook 'shell-mode-hook 'ht-mode-line-dirtrack))
 
 (use-package slime
   :load-path "site-lisp/slime"
