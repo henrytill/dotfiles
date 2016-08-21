@@ -475,6 +475,8 @@
   (use-package bind-map
     :ensure t
     :config
+    (eval-after-load 'compile
+      '(define-key compilation-mode-map (kbd "SPC") nil))
     (bind-map ht-base-leader-map
       :keys ("M-m")
       :evil-keys ("SPC")
