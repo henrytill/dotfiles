@@ -392,7 +392,6 @@
 (use-package exec-path-from-shell
   :ensure t
   :if (is-darwin-p)
-  :defer t
   :config
   (exec-path-from-shell-initialize))
 
