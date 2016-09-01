@@ -283,6 +283,7 @@
       :init
       (add-hook 'irony-mode-hook 'irony-eldoc))
     (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+  (add-hook 'c++-mode-hook 'electric-pair-mode)
   (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c++-mode-hook 'ht-flycheck-rtags-mode)
   (add-hook 'c++-mode-hook 'rtags-start-process-unless-running))
