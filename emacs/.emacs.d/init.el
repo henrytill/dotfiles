@@ -270,9 +270,11 @@
     (use-package company-rtags
       :disabled t
       :load-path (lambda () (ht-rtags-load-path)))
+    (defun ht-rtags-mode ()
+      (define-key evil-normal-state-local-map (kbd "C-]") 'rtags-find-symbol-at-point)
+      (define-key evil-normal-state-local-map (kbd "C-t") 'rtags-location-stack-back))
     (defun ht-flycheck-rtags-mode ()
       (flycheck-select-checker 'rtags)
-      (setq-local flycheck-check-syntax-automatically nil)
       (setq-local flycheck-highlighting-mode nil)
       (flycheck-mode 1)))
   (use-package irony
@@ -290,8 +292,9 @@
       (add-hook 'irony-mode-hook 'irony-eldoc))
     (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
   (add-hook 'c++-mode-hook 'electric-pair-mode)
-  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c++-mode-hook 'ht-rtags-mode)
   (add-hook 'c++-mode-hook 'ht-flycheck-rtags-mode)
+  (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c++-mode-hook 'rtags-start-process-unless-running))
 
 (use-package clojure-mode
