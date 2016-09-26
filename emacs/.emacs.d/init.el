@@ -1004,6 +1004,17 @@
               (add-to-list 'TeX-view-program-selection
                            '(output-pdf "mupdf"))))))
 
+(use-package tide
+  :ensure t
+  :commands tide-setup
+  :init
+  (defun ht-tide-mode ()
+    (tide-setup)
+    (flycheck-mode 1)
+    (eldoc-mode 1)
+    (define-key evil-normal-state-local-map (kbd "C-]") 'tide-jump-to-definition)
+    (define-key evil-normal-state-local-map (kbd "C-t") 'tide-jump-back)))
+
 (use-package toml-mode
   :ensure t
   :mode "\\.toml\\'")
@@ -1012,16 +1023,7 @@
   :ensure t
   :mode "\\.ts\\'"
   :init
-  (use-package tide
-    :ensure t
-    :commands tide-setup)
-  (defun ht-typescript-mode ()
-    (tide-setup)
-    (flycheck-mode 1)
-    (eldoc-mode 1)
-    (define-key evil-normal-state-local-map (kbd "C-]") 'tide-jump-to-definition)
-    (define-key evil-normal-state-local-map (kbd "C-t") 'tide-jump-back))
-  (add-hook 'typescript-mode-hook 'ht-typescript-mode))
+  (add-hook 'typescript-mode-hook 'ht-tide-mode))
 
 (use-package tuareg
   :ensure t
