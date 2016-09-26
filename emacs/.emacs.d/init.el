@@ -204,6 +204,12 @@
 (use-package queue               :ensure t :defer t)
 (use-package spinner             :ensure t :defer t)
 
+(use-package exec-path-from-shell
+  :ensure t
+  :if (is-darwin-p)
+  :config
+  (exec-path-from-shell-initialize))
+
 (use-package paredit
   :ensure t
   :commands enable-paredit-mode
@@ -389,12 +395,6 @@
     "Use Emacs grep facility instead of calling external grep."
     (eshell-grep "rgrep" args t))
   (defalias 'eshell/view 'view-file))
-
-(use-package exec-path-from-shell
-  :ensure t
-  :if (is-darwin-p)
-  :config
-  (exec-path-from-shell-initialize))
 
 (use-package evil
   :ensure t
