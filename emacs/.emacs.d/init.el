@@ -635,6 +635,13 @@
   (ht-hs-add-xml-mode 'html-mode 'sgml-skip-tag-forward)
   (ht-hs-add-xml-mode 'sgml-mode 'sgml-skip-tag-forward))
 
+(use-package hl-line-mode
+  :commands hl-line-mode
+  :init
+  (defun ht-hl-line-mode ()
+    (set-face-attribute 'hl-line nil :background "grey20"))
+  (add-hook 'hl-line-mode-hook 'ht-hl-line-mode))
+
 (use-package ido
   :config
   (use-package flx-ido
