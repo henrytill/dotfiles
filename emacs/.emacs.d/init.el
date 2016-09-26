@@ -404,6 +404,7 @@
   :config
   (dolist (mode '(cider-repl-mode
                   cider-stacktrace-mode
+                  flycheck-error-list-mode
                   geiser-repl-mode
                   haskell-interactive-mode
                   inferior-caml-mode
@@ -498,6 +499,14 @@
       "'" 'evil-avy-goto-char-2
       "w" 'evil-avy-goto-word-1
       "l" 'evil-avy-goto-line)
+    ;; flycheck
+    (bind-map ht-flycheck-leader-map
+      :keys ("M-m f")
+      :evil-keys ("SPC f"))
+    (bind-map-set-keys ht-flycheck-leader-map
+      "l" 'flycheck-list-errors
+      "j" 'flycheck-next-error
+      "k" 'flycheck-previous-error)
     ;; ido
     (bind-map ht-ido-leader-map
       :keys ("M-m b")
