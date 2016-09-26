@@ -13,8 +13,14 @@ export SAVEHIST=100000
 
 bindkey -e
 
+# check if in docker container
+if [ -f /.dockerenv ]; then
+    IN_DOCKER_CONTAINER=1
+fi
+
 # prompt
 () {
+    local inDocker=${IN_DOCKER_CONTAINER/1/"[docker]"}
     local nixShellMode=${IN_NIX_SHELL/1/"[$name]"}
 
     if [[ $TERM == dumb ]]; then
@@ -22,15 +28,15 @@ bindkey -e
 
         local retStatus='[%?]'
 
-        PROMPT=$'\n'$retStatus$nixShellMode'> '
-        PROMPT2=$nixshellMode'> '
+        PROMPT=$'\n'$retStatus$inDocker$nixShellMode'> '
+        PROMPT2=$inDocker$nixshellMode'> '
         RPROMPT=''
     else
         local firstLine='%F{6}%B%n@%m:%~%f%b'
         local retStatus='%(?.[%?].%F{1}[%?]%f)'
 
-        PROMPT=$'\n'$firstLine$'\n'$retStatus$nixShellMode'> '
-        PROMPT2=$nixshellMode'> '
+        PROMPT=$'\n'$firstLine$'\n'$retStatus$inDocker$nixShellMode'> '
+        PROMPT2=$inDocker$nixshellMode'> '
         RPROMPT=''
     fi
 }
