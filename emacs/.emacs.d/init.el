@@ -1084,6 +1084,15 @@
   :config
   (setq uniquify-buffer-name-style 'forward))
 
+(use-package web-mode
+  :ensure t
+  :mode "\\.tsx\\'"
+  :init
+  (defun ht-web-mode ()
+    (when (string-equal "tsx" (file-name-extension buffer-file-name))
+      (ht-tide-mode)))
+  (add-hook 'web-mode-hook 'ht-web-mode))
+
 (use-package whitespace
   :commands whitespace-mode
   :diminish whitespace-mode
