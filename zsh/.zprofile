@@ -44,8 +44,18 @@ if [[ $(uname) == Darwin ]]; then
         export PATH=/opt/mongodb/bin:$PATH
     fi
 
-    if [[ -d /opt/rabbitmq_server-2.6.1 ]]; then
-        export PATH=/opt/rabbitmq_server-2.6.1/sbin:$PATH
+    if [[ -d /opt/rabbitmq_server-3.0.2 ]]; then
+        export PATH=/opt/rabbitmq_server-3.0.2/sbin:$PATH
+    fi
+
+    if [[ -d /opt/protoc-3.0.2-osx-x86_64 ]]; then
+        export PATH=/opt/protoc-3.0.2-osx-x86_64/bin:$PATH
+    fi
+
+    if [[ -d /opt/clang+llvm-3.8.0-x86_64-apple-darwin ]]; then
+        export CC=/opt/clang+llvm-3.8.0-x86_64-apple-darwin/bin/clang
+        export CXX=/opt/clang+llvm-3.8.0-x86_64-apple-darwin/bin/clang++
+        export PATH=/opt/clang+llvm-3.8.0-x86_64-apple-darwin/bin:$PATH
     fi
 
     if [[ -d $HOME/.gem/ruby/2.0.0/bin ]]; then
