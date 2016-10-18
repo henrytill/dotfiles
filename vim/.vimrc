@@ -12,6 +12,7 @@ set ignorecase
 set incsearch
 set modeline
 set nowrap
+set relativenumber
 set ruler
 set showcmd
 set showmatch
@@ -55,3 +56,6 @@ if has("autocmd")
 
   autocmd FileType make setlocal noexpandtab
 endif
+
+highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+highlight CursorLineNr  term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
