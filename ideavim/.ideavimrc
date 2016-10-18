@@ -1,4 +1,10 @@
+set clipboard+=unnamed
+set ignorecase
+set incsearch
 set noerrorbells
+set relativenumber
+set showmode
+set smartcase
 set surround
 set visualbell
 
