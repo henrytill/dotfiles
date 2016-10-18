@@ -32,14 +32,6 @@ if [[ $(uname) == Darwin ]]; then
         export PATH=$GRADLE_HOME/bin:$PATH
     fi
 
-    if [[ -d /opt/zookeeper-3.4.6 ]]; then
-        export ZOOKEEPER_HOME=/opt/zookeeper-3.4.6
-    fi
-
-    if [[ -d /opt/hadoop-2.7.1 ]]; then
-        export HADOOP_PREFIX=/opt/hadoop-2.7.1
-    fi
-
     if [[ -d /opt/mongodb ]]; then
         export PATH=/opt/mongodb/bin:$PATH
     fi
@@ -69,14 +61,6 @@ if [[ $(uname) == Darwin ]]; then
     if [[ -n $(command -v opam) && -d $HOME/.opam ]]; then
       . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
     fi
-
-    export GHC_DOT_APP="/Applications/ghc-7.10.3.app"
-
-    if [[ -d $GHC_DOT_APP ]]; then
-        export PATH="${HOME}/.local/bin:${HOME}/.cabal/bin:${GHC_DOT_APP}/Contents/bin:${PATH}"
-    fi
-
-    export JAVA_HOME=$(/usr/libexec/java_home -v 1.7.0_80)
 
     export LANG=en_US.UTF-8
 fi
