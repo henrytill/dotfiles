@@ -345,6 +345,8 @@
       (ansi-color-apply-on-region compilation-filter-start (point))))
   (add-hook 'compilation-filter-hook 'ht-colorize-compilation-buffer))
 
+(use-package docker-tramp :ensure t)
+
 (use-package eldoc
   :commands eldoc-mode
   :diminish eldoc-mode)
