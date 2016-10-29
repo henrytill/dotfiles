@@ -880,6 +880,10 @@
   (setq paren-face-regexp "[][(){}]")
   (global-paren-face-mode))
 
+(use-package powershell
+  :ensure t
+  :mode ("\\.ps1\\'" . powershell-mode))
+
 (use-package prog-mode
   :defer t
   :init
