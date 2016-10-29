@@ -1100,6 +1100,12 @@
     :commands (utop utop-minor-mode)
     :init
     (add-hook 'tuareg-mode-hook 'utop-minor-mode))
+  (use-package ocp-indent
+    :if (and (executable-find "ocp-indent")
+             (locate-file "ocp-indent.el" load-path))
+    :commands ocp-setup-indent
+    :init
+    (add-hook 'tuareg-mode-hook 'ocp-setup-indent))
   :config
   (setq tuareg-indent-align-with-first-arg nil))
 
