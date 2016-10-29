@@ -9,10 +9,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-
 Plug 'derekwyatt/vim-scala'
 Plug 'tpope/vim-surround'
-
 call plug#end()
 
 syntax on
@@ -32,7 +30,6 @@ set smartindent
 set smarttab
 
 set backspace=indent,eol,start
-set laststatus=2
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
