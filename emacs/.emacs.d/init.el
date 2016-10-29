@@ -1082,7 +1082,8 @@
                 utop-command               (format "utop -emacs -init %s" ocamlinit))))))
   (ht-setup-tuareg)
   (use-package merlin
-    :if (executable-find "ocamlmerlin")
+    :if (and (executable-find "ocamlmerlin")
+             (locate-file "merlin.el" load-path))
     :commands merlin-mode
     :defines merlin-command
     :init
@@ -1094,12 +1095,10 @@
       (setq merlin-command 'opam))
     (add-to-list 'company-backends 'merlin-company-backend))
   (use-package utop
-    :if (executable-find "utop")
-    :commands utop)
-  (use-package utop-minor-mode
-    :if (executable-find "utop")
-    :commands utop-minor-mode)
-  (when (fboundp 'utop-minor-mode)
+    :if (and (executable-find "utop")
+             (locate-file "utop.el" load-path))
+    :commands (utop utop-minor-mode)
+    :init
     (add-hook 'tuareg-mode-hook 'utop-minor-mode))
   :config
   (setq tuareg-indent-align-with-first-arg nil))
