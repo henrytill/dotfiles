@@ -58,14 +58,14 @@ if [[ $(uname) == Darwin ]]; then
         export VAGRANT_HOME=/Volumes/vms/vagrant.d
     fi
 
-    if [[ -n $(command -v opam) && -d $HOME/.opam ]]; then
-      . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-    fi
-
     export LANG=en_US.UTF-8
 fi
 
 if [[ ! -d /etc/nixos ]]; then
+    if [[ -n $(command -v opam) && -d $HOME/.opam ]]; then
+        . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+    fi
+
     if [[ -d $HOME/.cargo/bin ]]; then
         export PATH=$HOME/.cargo/bin:$PATH
     fi
