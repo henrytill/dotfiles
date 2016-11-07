@@ -1256,8 +1256,7 @@
 
 (when (and (is-darwin-p) (window-system))
   (setq mac-command-modifier 'super
-        mac-option-modifier 'meta)
-  (server-mode 1))
+        mac-option-modifier 'meta))
 
 ;;; linux
 (when (is-linux-p)
