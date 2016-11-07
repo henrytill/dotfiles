@@ -642,10 +642,26 @@
   (add-hook 'haskell-mode-hook 'ht-haskell-mode))
 
 (use-package hideshow
-  :bind (("<f5>"     . hs-toggle-hiding)
-         ("M-<f5>"   . hs-hide-all)
-         ("M-S-<f5>" . hs-show-all))
+  :bind (("<f5>"     . ht-hs-toggle-hiding)
+         ("M-<f5>"   . ht-hs-hide-all)
+         ("M-S-<f5>" . ht-hs-show-all))
   :functions ht-hs-add-xml-mode
+  :preface
+  (defun ht-hs-minor-mode ()
+    (when (not (bound-and-true-p hs-minor-mode))
+      (hs-minor-mode)))
+  (defun ht-hs-toggle-hiding ()
+    (interactive)
+    (ht-hs-minor-mode)
+    (hs-toggle-hiding))
+  (defun ht-hs-hide-all ()
+    (interactive)
+    (ht-hs-minor-mode)
+    (hs-hide-all))
+  (defun ht-hs-show-all ()
+    (interactive)
+    (ht-hs-minor-mode)
+    (hs-show-all))
   :config
   (defun ht-hs-add-xml-mode (mode forward-sexp-func)
     (let ((start         "<!--\\|<[^/>]*[^/]>")
