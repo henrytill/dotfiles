@@ -90,7 +90,7 @@
 
 (defconst ht-variable-font
   (cond
-   ((is-linux-p)  '(:font "Droid Sans"))
+   ((is-linux-p)  '(:font "Sans Serif"))
    ((is-darwin-p) '(:font "Fira Sans"))))
 
 (defun ht-custom-set-faces ()
