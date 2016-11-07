@@ -123,8 +123,7 @@
       x-select-enable-primary t
       x-select-enable-clipboard t)
 
-(setq-default c-basic-offset 4
-              fill-column 80
+(setq-default fill-column 80
               indent-tabs-mode nil
               ispell-program-name "aspell")
 
@@ -253,44 +252,65 @@
   (eval-after-load "isearch"
     '(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
 
+(use-package clang-format
+  :ensure t
+  :commands (clang-format
+             clang-format-buffer
+             clang-format-region))
+
+(use-package rtags
+  :if (executable-find "rdm")
+  :commands rtags-start-process-unless-running
+  :load-path (lambda () (ht-rtags-load-path))
+  :init
+  (use-package company-rtags
+    :disabled t
+    :load-path (lambda () (ht-rtags-load-path)))
+  (defun ht-rtags-mode ()
+    (define-key evil-normal-state-local-map (kbd "C-]") 'rtags-find-symbol-at-point)
+    (define-key evil-normal-state-local-map (kbd "C-t") 'rtags-location-stack-back))
+  (defun ht-flycheck-rtags-mode ()
+    (flycheck-select-checker 'rtags)
+    (setq-local flycheck-highlighting-mode nil)
+    (flycheck-mode 1)))
+
+(use-package irony
+  :ensure t
+  :commands irony-mode
+  :config
+  (use-package company-irony
+    :ensure t
+    :init
+    (eval-after-load 'company
+      '(add-to-list 'company-backends 'company-irony)))
+  (use-package irony-eldoc
+    :ensure t
+    :init
+    (add-hook 'irony-mode-hook 'irony-eldoc))
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+
+(use-package c-mode
+  :mode (("\\.c\\'" . c-mode)
+         ("\\.h\\'" . c-mode))
+  :init
+  (eval-after-load 'cc-styles
+    '(progn
+       (c-add-style "stevens" '("bsd" (c-basic-offset . 4)))
+       (c-add-style "hnf"     '("bsd" (c-basic-offset . 2)))
+       (setq c-default-style "hnf")))
+  (add-hook 'c-mode-hook 'electric-pair-mode)
+  (add-hook 'c-mode-hook 'ht-rtags-mode)
+  (add-hook 'c-mode-hook 'ht-flycheck-rtags-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'rtags-start-process-unless-running))
+
 (use-package c++-mode
   :mode (("\\.cc\\'"  . c++-mode)
          ("\\.cpp\\'" . c++-mode))
   :init
-  (use-package clang-format
-    :ensure t
-    :commands (clang-format
-               clang-format-buffer
-               clang-format-region))
-  (use-package rtags
-    :if (executable-find "rdm")
-    :commands rtags-start-process-unless-running
-    :load-path (lambda () (ht-rtags-load-path))
-    :init
-    (use-package company-rtags
-      :disabled t
-      :load-path (lambda () (ht-rtags-load-path)))
-    (defun ht-rtags-mode ()
-      (define-key evil-normal-state-local-map (kbd "C-]") 'rtags-find-symbol-at-point)
-      (define-key evil-normal-state-local-map (kbd "C-t") 'rtags-location-stack-back))
-    (defun ht-flycheck-rtags-mode ()
-      (flycheck-select-checker 'rtags)
-      (setq-local flycheck-highlighting-mode nil)
-      (flycheck-mode 1)))
-  (use-package irony
-    :ensure t
-    :commands irony-mode
-    :config
-    (use-package company-irony
-      :ensure t
-      :init
-      (eval-after-load 'company
-        '(add-to-list 'company-backends 'company-irony)))
-    (use-package irony-eldoc
-      :ensure t
-      :init
-      (add-hook 'irony-mode-hook 'irony-eldoc))
-    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+  (defun ht-c++-mode ()
+    (c-set-style "stroustrup"))
+  (add-hook 'c++-mode-hook 'ht-c++-mode)
   (add-hook 'c++-mode-hook 'electric-pair-mode)
   (add-hook 'c++-mode-hook 'ht-rtags-mode)
   (add-hook 'c++-mode-hook 'ht-flycheck-rtags-mode)
