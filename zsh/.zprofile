@@ -44,10 +44,18 @@ if [[ $(uname) == Darwin ]]; then
         export PATH=/opt/protoc-3.0.2-osx-x86_64/bin:$PATH
     fi
 
-    if [[ -d /opt/clang+llvm-3.8.0-x86_64-apple-darwin ]]; then
-        export CC=/opt/clang+llvm-3.8.0-x86_64-apple-darwin/bin/clang
-        export CXX=/opt/clang+llvm-3.8.0-x86_64-apple-darwin/bin/clang++
-        export PATH=/opt/clang+llvm-3.8.0-x86_64-apple-darwin/bin:$PATH
+    if [[ -d /opt/clang+llvm-3.9.0-x86_64-apple-darwin ]]; then
+        export CC=/opt/clang+llvm-3.9.0-x86_64-apple-darwin/bin/clang
+        export CXX=/opt/clang+llvm-3.9.0-x86_64-apple-darwin/bin/clang++
+        export PATH=/opt/clang+llvm-3.9.0-x86_64-apple-darwin/bin:$PATH
+    fi
+
+    if [[ -d /Library/Frameworks/Mono.framework ]]; then
+        export PATH=/Library/Frameworks/Mono.framework/Versions/Current/bin:$PATH
+    fi
+
+    if [[ -d $HOME/./multirust/toolchains/stable-x86_64-apple-darwin ]]; then
+        export RUST_SRC_PATH=$HOME/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
     fi
 
     if [[ -d $HOME/.gem/ruby/2.0.0/bin ]]; then
@@ -82,3 +90,4 @@ fi
 if [[ -d $HOME/node_modules/.bin ]]; then
     export PATH=$HOME/node_modules/.bin:$PATH
 fi
+
