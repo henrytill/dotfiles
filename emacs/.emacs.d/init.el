@@ -39,6 +39,9 @@
             (setq dirs (append (cons file (ht-list-subdirs file exclude)) dirs))))))
     dirs))
 
+(defun ht-replace-item-in-alist (alist key value)
+  (cons `(,key . ,value) (assq-delete-all key alist)))
+
 
 ;;; basic cosmetics
 
@@ -128,6 +131,8 @@
               ispell-program-name "aspell")
 
 (load custom-file t)
+
+(put 'dired-find-alternate-file 'disabled nil)
 
 (defconst ht-global-bindings
   '(("M-/"     . hippie-expand)
@@ -427,10 +432,12 @@
                   cider-stacktrace-mode
                   flycheck-error-list-mode
                   geiser-repl-mode
+                  haskell-error-mode
                   haskell-interactive-mode
                   inferior-caml-mode
                   inferior-emacs-lisp-mode
                   inferior-forth-mode
+                  inferior-haskell-mode
                   inferior-python-mode
                   inferior-scheme-mode
                   inferior-sml-mode
@@ -635,7 +642,6 @@
           haskell-indentation-layout-offset 4
           haskell-indentation-left-offset 4))
   (add-hook 'haskell-mode-hook 'electric-pair-mode)
-  (add-hook 'haskell-mode-hook 'flycheck-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'ht-haskell-mode))
