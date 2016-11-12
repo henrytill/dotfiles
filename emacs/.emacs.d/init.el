@@ -244,13 +244,12 @@
 
 (use-package avy
   :ensure t
+  :bind (:map isearch-mode-map ("C-c '" . avy-isearch))
   :commands (avy-goto-char
              avy-goto-char-2
              avy-goto-word-1
-             avy-goto-line)
-  :init
-  (eval-after-load "isearch"
-    '(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
+             avy-goto-line
+             avy-isearch))
 
 (use-package clang-format
   :ensure t
