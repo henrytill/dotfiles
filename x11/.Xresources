@@ -15,8 +15,16 @@ URxvt.color12:              #005577
 URxvt.color13:              #875fff
 URxvt.color14:              #5fd7ff
 
-URxvt.boldFont:             xft:Inconsolata:style=Medium:pixelsize=16
-URxvt.font:                 xft:Inconsolata:style=Medium:pixelsize=16
+URxvt.boldFont:             xft:Inconsolata:style=Medium:pixelsize=16, \
+                            xft:DejaVu Sans Mono:style=Book:pixelsize=16,\
+                            xft:FreeSans:style=Regular:pixelsize=16,\
+                            xft:FreeSerif:style=Regular:pixelsize=14,\
+                            xft:Unifont:style=Regular:pixelsize=16
+URxvt.font:                 xft:Inconsolata:style=Medium:pixelsize=16, \
+                            xft:DejaVu Sans Mono:style=Book:pixelsize=16,\
+                            xft:FreeSans:style=Regular:pixelsize=16,\
+                            xft:FreeSerif:style=Regular:pixelsize=14,\
+                            xft:Unifont:style=Regular:pixelsize=16
 URxvt.internalBorder:       16
 URxvt.iso14755:             false
 URxvt.keysym.M-u:           perl:url-select:select_next
