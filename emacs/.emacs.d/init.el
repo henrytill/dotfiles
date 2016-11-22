@@ -981,6 +981,27 @@
   :ensure t
   :mode "\\.proto\\'")
 
+(use-package purescript-mode
+  :ensure t
+  :mode "\\.purs\\'"
+  :init
+  (defun ht-purescript-mode ()
+    (setq evil-auto-indent nil
+          purescript-indentation-layout-offset 4
+          purescript-indentation-left-offset 4))
+  (use-package psc-ide
+    :if (executable-find "psc-ide-server")
+    :ensure t
+    :commands psc-ide-mode
+    :init
+    (defun ht-psc-ide-mode ()
+      (psc-ide-mode 1)
+      (company-mode 1)
+      (define-key evil-normal-state-local-map (kbd "C-]") 'psc-ide-goto-definition))
+    (add-hook 'purescript-mode-hook 'ht-psc-ide-mode))
+  (add-hook 'purescript-mode-hook 'purescript-indentation-mode)
+  (add-hook 'purescript-mode-hook 'ht-purescript-mode))
+
 (use-package rust-mode
   :ensure t
   :mode "\\.rs\\'"
