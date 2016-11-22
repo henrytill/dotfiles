@@ -633,18 +633,37 @@
 
 (use-package haskell-mode
   :ensure t
-  :mode "\\.hs\\(c\\|-boot\\)?\\'"
+  :bind (("C-`"  . haskell-interactive-bring)
+         ("<f6>" . recompile))
+  :mode (("\\.hs\\(c\\|-boot\\)?\\'" . haskell-mode)
+         ("\\.lhs\\'"                . literate-haskell-mode)
+         ("\\.cabal\\'"              . haskell-cabal-mode))
   :init
+  (defun ht-haskell-interactive-wrapper (arg)
+    "Prompt user to enter an additional argument to add to haskell-process-args-cabal-repl"
+    (interactive "sEnter argument: ")
+    (add-to-list 'haskell-process-args-cabal-repl arg)
+    (haskell-interactive-bring))
   (defun ht-haskell-mode ()
     (when (executable-find "hasktags")
       (setq haskell-tags-on-save t))
-    (setq tab-width 4
+    (setq evil-auto-indent nil
           haskell-indentation-layout-offset 4
           haskell-indentation-left-offset 4))
-  (add-hook 'haskell-mode-hook 'electric-pair-mode)
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (add-hook 'haskell-mode-hook 'ht-haskell-mode))
+  (dolist (mode '(electric-pair-mode
+                  flycheck-mode
+                  haskell-indentation-mode
+                  ht-haskell-mode
+                  interactive-haskell-mode))
+    (add-hook 'haskell-mode-hook mode))
+  (eval-after-load 'align
+    '(nconc align-rules-list
+            (mapcar (lambda (x)
+                      `(,(car x) (regexp . ,(cdr x)) (modes quote (haskell-mode literate-haskell-mode))))
+                    '((haskell-types       . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
+                      (haskell-assignment  . "\\(\\s-+\\)=\\s-+")
+                      (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+                      (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+"))))))
 
 (use-package hideshow
   :bind (("<f5>"     . ht-hs-toggle-hiding)
