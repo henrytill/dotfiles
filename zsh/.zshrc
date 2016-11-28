@@ -21,21 +21,21 @@ fi
 # prompt
 () {
     local inDocker=${IN_DOCKER_CONTAINER/1/"[docker]"}
-    local nixShellMode=${IN_NIX_SHELL/1/"[$name]"}
+    local inNixShell=${IN_NIX_SHELL/1/"[$name]"}
 
     if [[ $TERM == dumb ]]; then
         unsetopt zle
 
         local retStatus='[%?]'
 
-        PROMPT=$'\n'$retStatus$inDocker$nixShellMode'> '
+        PROMPT=$'\n'$retStatus$inDocker$inNixShell'> '
         PROMPT2=$inDocker$nixshellMode'> '
         RPROMPT=''
     else
         local firstLine='%F{6}%B%n@%m:%~%f%b'
         local retStatus='%(?.[%?].%F{1}[%?]%f)'
 
-        PROMPT=$'\n'$firstLine$'\n'$retStatus$inDocker$nixShellMode'> '
+        PROMPT=$'\n'$firstLine$'\n'$retStatus$inDocker$inNixShell'> '
         PROMPT2=$inDocker$nixshellMode'> '
         RPROMPT=''
     fi
