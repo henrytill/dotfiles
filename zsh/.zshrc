@@ -1,4 +1,4 @@
-#! /usr/bin/env zsh
+# .zshrc
 
 setopt autocd
 setopt beep
