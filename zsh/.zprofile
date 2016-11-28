@@ -44,12 +44,6 @@ if [[ $(uname) == Darwin ]]; then
         export PATH=/opt/protoc-3.0.2-osx-x86_64/bin:$PATH
     fi
 
-    if [[ -d /opt/clang+llvm-3.9.0-x86_64-apple-darwin ]]; then
-        export CC=/opt/clang+llvm-3.9.0-x86_64-apple-darwin/bin/clang
-        export CXX=/opt/clang+llvm-3.9.0-x86_64-apple-darwin/bin/clang++
-        export PATH=/opt/clang+llvm-3.9.0-x86_64-apple-darwin/bin:$PATH
-    fi
-
     if [[ -d /Library/Frameworks/Mono.framework ]]; then
         export PATH=/Library/Frameworks/Mono.framework/Versions/Current/bin:$PATH
     fi
@@ -60,6 +54,10 @@ if [[ $(uname) == Darwin ]]; then
 
     if [[ -d $HOME/.gem/ruby/2.0.0/bin ]]; then
         export PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
+    fi
+
+    if [[ -d /opt/omnicore-0.0.11.1-rel ]]; then
+        export PATH=/opt/omnicore-0.0.11.1-rel/bin:$PATH
     fi
 
     if [[ -d /Volumes/vms/vagrant.d ]]; then
@@ -91,3 +89,4 @@ if [[ -d $HOME/node_modules/.bin ]]; then
     export PATH=$HOME/node_modules/.bin:$PATH
 fi
 
+export EDITOR="vim"

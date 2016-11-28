@@ -71,8 +71,6 @@ if [[ $(uname) == Linux ]]; then
     alias ls="ls --color"
 fi
 
-export EDITOR="vim"
-
 # aliases
 alias e="$EDITOR"
 alias v="vim"
