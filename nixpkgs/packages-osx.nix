@@ -2,6 +2,7 @@ with import <nixpkgs> {}; [
   aspell
   aspellDicts.en
   cacert
+  darcs
   haskellPackages.cabal-install
   haskellPackages.cabal2nix
   haskellPackages.ghc
@@ -9,5 +10,6 @@ with import <nixpkgs> {}; [
   nix
   nix-repl
   nixops
+  offlineimap
   socat
 ]
