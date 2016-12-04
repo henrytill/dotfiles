@@ -7,6 +7,8 @@ setopt histfcntllock
 setopt histignoredups
 setopt sharehistory
 
+typeset -U path
+
 export HISTFILE=~/.histfile
 export HISTSIZE=100000
 export SAVEHIST=100000
@@ -127,4 +129,8 @@ fi
 
 if [[ -n $(command -v npm) ]]; then
     npm-exec () { PATH=$(npm bin):$PATH $* }
+fi
+
+if [[ -d $HOME/node_modules/.bin ]]; then
+    path=($HOME/node_modules/.bin $path)
 fi

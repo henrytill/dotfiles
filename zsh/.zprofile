@@ -79,14 +79,10 @@ if [[ ! -d /etc/nixos ]]; then
     if [[ -d $HOME/bin ]]; then
         export PATH=$HOME/bin:$PATH
     fi
+
+    export EDITOR="vim"
 fi
 
 if [[ -n $(command -v lein) ]]; then
     export LEIN_FAST_TRAMPOLINE=y
 fi
-
-if [[ -d $HOME/node_modules/.bin ]]; then
-    export PATH=$HOME/node_modules/.bin:$PATH
-fi
-
-export EDITOR="vim"
