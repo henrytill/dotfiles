@@ -726,6 +726,11 @@
   (add-hook 'ido-setup-hook 'flx-ido-mode)
   (ido-mode t))
 
+(use-package idris-mode
+  :ensure t
+  :init
+  (add-hook 'idris-mode-hook 'electric-pair-mode))
+
 (use-package ielm
   :commands ielm
   :init
