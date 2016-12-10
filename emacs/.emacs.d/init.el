@@ -975,6 +975,7 @@
     :init
     (use-package company-coq
       :ensure t
+      :diminish company-coq-mode
       :commands company-coq-mode)
     (add-hook 'coq-mode-hook 'company-coq-mode)
     (add-hook 'coq-mode-hook 'electric-pair-mode)
