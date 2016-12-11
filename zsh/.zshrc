@@ -130,7 +130,3 @@ fi
 if [[ -n $(command -v npm) ]]; then
     npm-exec () { PATH=$(npm bin):$PATH $* }
 fi
-
-if [[ -d $HOME/node_modules/.bin ]]; then
-    path=($HOME/node_modules/.bin $path)
-fi
