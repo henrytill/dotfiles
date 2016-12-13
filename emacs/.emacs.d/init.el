@@ -897,7 +897,9 @@
   (setq org-babel-clojure-backend 'cider
         org-clock-persist 'history
         org-completion-use-ido t
+        org-confirm-babel-evaluate nil
         org-edit-src-content-indentation 0
+        org-export-babel-evaluate nil
         org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
         org-src-tab-acts-natively t
         org-src-window-setup 'current-window)
