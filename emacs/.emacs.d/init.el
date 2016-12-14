@@ -1179,6 +1179,10 @@
     :commands merlin-mode
     :defines merlin-command
     :init
+    (defun ht-merlin-mode ()
+      (define-key evil-normal-state-local-map (kbd "C-]") 'merlin-locate)
+      (define-key evil-normal-state-local-map (kbd "C-t") 'merlin-pop-stack))
+    (add-hook 'merlin-mode-hook 'ht-merlin-mode)
     (add-hook 'merlin-mode-hook 'company-mode)
     (add-hook 'tuareg-mode-hook 'merlin-mode)
     :config
