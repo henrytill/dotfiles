@@ -1,9 +1,8 @@
 Emacs.background:           #222222
 Emacs.foreground:           #bbbbbb
 
-Emacs.font:                 Inconsolata:style=Medium:pixelsize=16
-Emacs.fontBackend:          xft
-Emacs.internalBorder:       16
+Emacs.font:                 Fira Mono:style=Regular:pixelsize=14
+Emacs.internalBorder:       14
 Emacs.menuBar:              off
 Emacs.toolBar:              off
 Emacs.verticalScrollBars:   off
@@ -15,17 +14,15 @@ URxvt.color12:              #005577
 URxvt.color13:              #875fff
 URxvt.color14:              #5fd7ff
 
-URxvt.boldFont:             xft:Inconsolata:style=Medium:pixelsize=16, \
-                            xft:DejaVu Sans Mono:style=Book:pixelsize=16,\
-                            xft:FreeSans:style=Regular:pixelsize=16,\
+URxvt.boldFont:             xft:Fira Mono:style=Bold:pixelsize=14,\
+                            xft:FreeSans:style=Bold:pixelsize=14,\
+                            xft:FreeSerif:style=Bold:pixelsize=14,\
+                            xft:Unifont:style=Medium:pixelsize=14
+URxvt.font:                 xft:Fira Mono:style=Regular:pixelsize=14,\
+                            xft:FreeSans:style=Regular:pixelsize=14,\
                             xft:FreeSerif:style=Regular:pixelsize=14,\
-                            xft:Unifont:style=Regular:pixelsize=16
-URxvt.font:                 xft:Inconsolata:style=Medium:pixelsize=16, \
-                            xft:DejaVu Sans Mono:style=Book:pixelsize=16,\
-                            xft:FreeSans:style=Regular:pixelsize=16,\
-                            xft:FreeSerif:style=Regular:pixelsize=14,\
-                            xft:Unifont:style=Regular:pixelsize=16
-URxvt.internalBorder:       16
+                            xft:Unifont:style=Medium:pixelsize=14
+URxvt.internalBorder:       14
 URxvt.iso14755:             false
 URxvt.keysym.M-u:           perl:url-select:select_next
 URxvt.perl-ext:             url-select
