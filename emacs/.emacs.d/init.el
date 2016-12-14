@@ -88,12 +88,12 @@
 
 (defconst ht-fixed-font
   (cond
-   ((is-linux-p)  '(:font "Inconsolata"))
+   ((is-linux-p)  '(:font "Fira Mono"))
    ((is-darwin-p) '(:font "Fira Mono"))))
 
 (defconst ht-variable-font
   (cond
-   ((is-linux-p)  '(:font "Sans Serif"))
+   ((is-linux-p)  '(:font "Fira Sans"))
    ((is-darwin-p) '(:font "Fira Sans"))))
 
 (defun ht-custom-set-faces ()
