@@ -125,6 +125,10 @@ if [[ -n $(command -v nix-shell) ]]; then
             nix-shell --add-root "$PWD/.result" --indirect --run "$CABAL $*"
         fi
     }
+
+    nix-default-shell () {
+        nix-shell -E "(import <nixpkgs> {}).callPackage ./default.nix {}" $*
+    }
 fi
 
 if [[ -n $(command -v npm) ]]; then
