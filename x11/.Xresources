@@ -1,34 +1,28 @@
 Emacs.background:           #222222
 Emacs.foreground:           #bbbbbb
 
-Emacs.font:                 Fira Mono:style=Regular:pixelsize=14
-Emacs.internalBorder:       14
+Emacs.font:                 Fira Mono:style=Regular:pixelsize=12
+Emacs.internalBorder:       12
 Emacs.menuBar:              off
 Emacs.toolBar:              off
 Emacs.verticalScrollBars:   off
 
-URxvt.background:           #222222
-URxvt.foreground:           #bbbbbb
-URxvt.color11:              #ffffaf
-URxvt.color12:              #005577
-URxvt.color13:              #875fff
-URxvt.color14:              #5fd7ff
+XTerm*background:           #222222
+XTerm*foreground:           #bbbbbb
+XTerm*color11:              #ffffaf
+XTerm*color12:              #005577
+XTerm*color13:              #875fff
+XTerm*color14:              #5fd7ff
 
-URxvt.boldFont:             xft:Fira Mono:style=Bold:pixelsize=14,\
-                            xft:FreeSans:style=Bold:pixelsize=14,\
-                            xft:FreeSerif:style=Bold:pixelsize=14,\
-                            xft:Unifont:style=Medium:pixelsize=14
-URxvt.font:                 xft:Fira Mono:style=Regular:pixelsize=14,\
-                            xft:FreeSans:style=Regular:pixelsize=14,\
-                            xft:FreeSerif:style=Regular:pixelsize=14,\
-                            xft:Unifont:style=Medium:pixelsize=14
-URxvt.internalBorder:       14
-URxvt.iso14755:             false
-URxvt.keysym.M-u:           perl:url-select:select_next
-URxvt.perl-ext:             url-select
-URxvt.scrollBar:            false
-URxvt.scrollTtyKeypress:    true
-URxvt.scrollTtyOutput:      false
-URxvt.scrollWithBuffer:     true
-URxvt.url-select.launcher:  xdg-open
-URxvt.url-select.underline: true
+XTerm*faceName:             xft:Fira Mono:style=Regular:pixelsize=12
+XTerm*renderFont:           true
+XTerm*internalBorder:       12
+XTerm*termName:             xterm-256color
+
+Xft.antialias:              true
+Xft.autohint:               false
+Xft.dpi:                    96
+Xft.hinting:                true
+Xft.hintstyle:              hintslight
+Xft.lcdfilter:              lcddefault
+Xft.rgba:                   rgb
