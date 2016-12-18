@@ -1180,16 +1180,18 @@
     :defines merlin-command
     :init
     (defun ht-merlin-mode ()
-      (define-key evil-normal-state-local-map (kbd "C-]") 'merlin-locate)
-      (define-key evil-normal-state-local-map (kbd "C-t") 'merlin-pop-stack))
-    (add-hook 'merlin-mode-hook 'ht-merlin-mode)
-    (add-hook 'merlin-mode-hook 'company-mode)
-    (add-hook 'tuareg-mode-hook 'merlin-mode)
-    :config
-    (when (and (executable-find "opam")
-               (not (in-nix-shell-p)))
-      (setq merlin-command 'opam))
-    (add-to-list 'company-backends 'merlin-company-backend))
+      (let ((extension (file-name-extension buffer-file-name)))
+        (when (not (or (string-equal "mll" extension)
+                       (string-equal "mly" extension)))
+          (define-key evil-normal-state-local-map (kbd "C-]") 'merlin-locate)
+          (define-key evil-normal-state-local-map (kbd "C-t") 'merlin-pop-stack)
+          (merlin-mode 1)
+          (company-mode 1)
+          (when (and (executable-find "opam")
+                     (not (in-nix-shell-p)))
+            (setq merlin-command 'opam))
+          (add-to-list 'company-backends 'merlin-company-backend))))
+    (add-hook 'tuareg-mode-hook 'ht-merlin-mode))
   (use-package utop
     :if (and (executable-find "utop")
              (locate-file "utop.el" load-path))
