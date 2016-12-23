@@ -862,6 +862,7 @@
                              org-block
                              org-code
                              org-date
+                             org-footnote
                              org-table
                              org-verbatim))
           (meta-faces      '(org-block-begin-line
