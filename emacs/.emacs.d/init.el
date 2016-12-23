@@ -142,7 +142,8 @@
     ("C-M-s"   . isearch-forward)
     ("C-M-r"   . isearch-backward)
     ("M-%"     . query-replace-regexp)
-    ("C-M-%"   . query-replace)))
+    ("C-M-%"   . query-replace)
+    ("<f6>"    . recompile)))
 
 (dolist (binding ht-global-bindings)
   (let ((key (car binding))
@@ -633,8 +634,7 @@
 
 (use-package haskell-mode
   :ensure t
-  :bind (("C-`"  . haskell-interactive-bring)
-         ("<f6>" . recompile))
+  :bind (("C-`"  . haskell-interactive-bring))
   :mode (("\\.hs\\(c\\|-boot\\)?\\'" . haskell-mode)
          ("\\.lhs\\'"                . literate-haskell-mode)
          ("\\.cabal\\'"              . haskell-cabal-mode))
