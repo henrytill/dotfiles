@@ -48,12 +48,16 @@ if [[ $(uname) == Darwin ]]; then
         export PATH=/Library/Frameworks/Mono.framework/Versions/Current/bin:$PATH
     fi
 
-    if [[ -d $HOME/./multirust/toolchains/stable-x86_64-apple-darwin ]]; then
+    if [[ -d $HOME/.multirust/toolchains/stable-x86_64-apple-darwin ]]; then
         export RUST_SRC_PATH=$HOME/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
     fi
 
     if [[ -d $HOME/.gem/ruby/2.0.0/bin ]]; then
         export PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
+    fi
+
+    if [[ -d $HOME/Library/Python/2.7/bin ]]; then
+        export PATH=$HOME/Library/Python/2.7/bin:$PATH
     fi
 
     if [[ -d /opt/omnicore-0.0.11.1-rel ]]; then
@@ -68,6 +72,7 @@ if [[ $(uname) == Darwin ]]; then
 fi
 
 if [[ ! -d /etc/nixos ]]; then
+
     if [[ -n $(command -v opam) && -d $HOME/.opam ]]; then
         . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
     fi
