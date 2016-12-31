@@ -1,7 +1,8 @@
-# .zprofile
+# -*- sh-indent-for-case-label: 0; sh-indent-for-case-alt: +; -*-
 
-if [[ $(uname) == Darwin ]]; then
+case $(uname) in
 
+"Darwin")
     if [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]]; then
         source $HOME/.nix-profile/etc/profile.d/nix.sh
         export NIX_PATH=nixpkgs=$HOME/src/nixpkgs
@@ -48,10 +49,6 @@ if [[ $(uname) == Darwin ]]; then
         export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
     fi
 
-    if [[ -d $HOME/.multirust/toolchains/stable-x86_64-apple-darwin ]]; then
-        export RUST_SRC_PATH=$HOME/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
-    fi
-
     if [[ -d $HOME/.gem/ruby/2.0.0/bin ]]; then
         export PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
     fi
@@ -69,25 +66,43 @@ if [[ $(uname) == Darwin ]]; then
     fi
 
     export LANG=en_US.UTF-8
+
+    RUST_TOOLCHAIN="stable-x86_64-apple-darwin"
+    ;;
+
+"Linux")
+    RUST_TOOLCHAIN="stable-x86_64-unknown-linux-gnu"
+    ;;
+
+esac
+
+if [[ -d $HOME/.multirust/toolchains/$RUST_TOOLCHAIN ]]; then
+    export RUST_SRC_PATH=$HOME/.multirust/toolchains/$RUST_TOOLCHAIN/lib/rustlib/src/rust/src
 fi
 
-if [[ ! -d /etc/nixos ]]; then
+if [[ -n $(command -v opam) && -d $HOME/.opam ]]; then
+    . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+fi
 
-    if [[ -n $(command -v opam) && -d $HOME/.opam ]]; then
-        . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-    fi
+if [[ -d $HOME/.cargo/bin ]]; then
+    export PATH=$HOME/.cargo/bin:$PATH
+fi
 
-    if [[ -d $HOME/.cargo/bin ]]; then
-        export PATH=$HOME/.cargo/bin:$PATH
-    fi
+if [[ -d $HOME/.conscript ]]; then
+    export CONSCRIPT_HOME="$HOME/.conscript"
+    export CONSCRIPT_OPTS="-XX:MaxPermSize=512M -Dfile.encoding=UTF-8"
+    export PATH=$CONSCRIPT_HOME/bin:$PATH
+fi
 
-    if [[ -d $HOME/bin ]]; then
-        export PATH=$HOME/bin:$PATH
-    fi
-
-    export EDITOR="vim"
+if [[ -d $HOME/bin ]]; then
+    export PATH=$HOME/bin:$PATH
 fi
 
 if [[ -n $(command -v lein) ]]; then
     export LEIN_FAST_TRAMPOLINE=y
 fi
+
+export EDITOR="vim"
+
+# Only unique entries please.
+typeset -U path
