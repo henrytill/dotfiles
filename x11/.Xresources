@@ -18,6 +18,8 @@ XTerm*faceName:             xft:Fira Mono:style=Regular:pixelsize=12
 XTerm*renderFont:           true
 XTerm*internalBorder:       12
 XTerm*termName:             xterm-256color
+XTerm*eightBitInput:        false
+XTerm*eightBitOutput:       true
 
 Xft.antialias:              true
 Xft.autohint:               false
