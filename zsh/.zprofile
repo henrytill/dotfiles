@@ -45,7 +45,7 @@ if [[ $(uname) == Darwin ]]; then
     fi
 
     if [[ -d /Library/Frameworks/Mono.framework ]]; then
-        export PATH=/Library/Frameworks/Mono.framework/Versions/Current/bin:$PATH
+        export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
     fi
 
     if [[ -d $HOME/.multirust/toolchains/stable-x86_64-apple-darwin ]]; then
