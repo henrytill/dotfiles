@@ -1201,9 +1201,7 @@
              (locate-file "ocp-indent.el" load-path))
     :commands ocp-setup-indent
     :init
-    (add-hook 'tuareg-mode-hook 'ocp-setup-indent))
-  :config
-  (setq tuareg-indent-align-with-first-arg nil))
+    (add-hook 'tuareg-mode-hook 'ocp-setup-indent)))
 
 (use-package undo-tree
   :ensure t
