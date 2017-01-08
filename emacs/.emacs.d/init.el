@@ -1027,9 +1027,6 @@
     (let ((cmd (executable-find "racer")))
       (when cmd
         (setq racer-cmd cmd)))
-    (let ((dir (expand-directory-name "src/other/rust/src" (getenv "HOME"))))
-      (when (file-directory-p dir)
-        (setq racer-rust-src-path dir)))
     (add-hook 'racer-mode-hook 'company-mode)
     (add-hook 'racer-mode-hook 'eldoc-mode))
   (add-hook 'rust-mode-hook 'auto-revert-mode)
