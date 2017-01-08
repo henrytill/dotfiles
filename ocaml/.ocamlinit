@@ -7,4 +7,3 @@ let () =
 
 #use "topfind";;
 #thread;;
-#require "ppx_jane,core.top";;
