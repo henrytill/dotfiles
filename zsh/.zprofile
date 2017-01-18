@@ -33,14 +33,6 @@ case $(uname) in
         export PATH=$GRADLE_HOME/bin:$PATH
     fi
 
-    if [[ -d /opt/mongodb ]]; then
-        export PATH=/opt/mongodb/bin:$PATH
-    fi
-
-    if [[ -d /opt/rabbitmq_server-3.0.2 ]]; then
-        export PATH=/opt/rabbitmq_server-3.0.2/sbin:$PATH
-    fi
-
     if [[ -d /opt/protoc-3.0.2-osx-x86_64 ]]; then
         export PATH=/opt/protoc-3.0.2-osx-x86_64/bin:$PATH
     fi
@@ -55,10 +47,6 @@ case $(uname) in
 
     if [[ -d $HOME/Library/Python/2.7/bin ]]; then
         export PATH=$HOME/Library/Python/2.7/bin:$PATH
-    fi
-
-    if [[ -d /opt/omnicore-0.0.11.1-rel ]]; then
-        export PATH=/opt/omnicore-0.0.11.1-rel/bin:$PATH
     fi
 
     if [[ -d /Volumes/vms/vagrant.d ]]; then
