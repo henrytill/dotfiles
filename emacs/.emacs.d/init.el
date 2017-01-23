@@ -1249,7 +1249,7 @@
 
 ;;; other settings
 
-(eval-after-load 'caml-font
+(eval-after-load 'caml-types
   '(let ((color (face-attribute 'default :background)))
      (dolist (face '(caml-types-expr-face
                      caml-types-occ-face
