@@ -1302,25 +1302,11 @@
 ;;; darwin
 (when (is-darwin-p)
   (setq browse-url-browser-function 'browse-url-default-browser
-        dired-use-ls-dired nil)
-  (defun ht-dired-sort ()
-    "Sort dired listings with directories first."
-    (save-excursion
-      (let (buffer-read-only)
-        (forward-line 2) ;; beyond dir. header
-        (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
-      (set-buffer-modified-p nil)))
-  (defadvice dired-readin (after dired-after-updating-hook first () activate)
-    "Sort dired listings with directories first before adding marks."
-    (ht-dired-sort)))
+        dired-use-ls-dired nil))
 
 (when (and (is-darwin-p) (window-system))
   (setq mac-command-modifier 'super
         mac-option-modifier 'meta))
-
-;;; linux
-(when (is-linux-p)
-  (setq dired-listing-switches (concat dired-listing-switches " --group-directories-first")))
 
 ;;; nixos
 (when (and (is-linux-p) (file-directory-p "/etc/nixos"))
