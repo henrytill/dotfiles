@@ -1250,6 +1250,17 @@
 
 ;;; other settings
 
+(eval-after-load 'caml-font
+  '(let ((color (face-attribute 'default :background)))
+     (dolist (face '(caml-types-expr-face
+                     caml-types-occ-face
+                     caml-types-scope-face
+                     caml-types-typed-face))
+       (set-face-foreground face color))))
+
+(eval-after-load 'caml-help
+  '(set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
+
 (eval-after-load 'tramp-sh
   '(add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
 
