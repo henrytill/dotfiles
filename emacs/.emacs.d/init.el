@@ -272,12 +272,17 @@
     :disabled t
     :load-path (lambda () (ht-rtags-load-path)))
   (defun ht-rtags-mode ()
+    (rtags-start-process-unless-running)
     (define-key evil-normal-state-local-map (kbd "C-]") 'rtags-find-symbol-at-point)
     (define-key evil-normal-state-local-map (kbd "C-t") 'rtags-location-stack-back))
   (defun ht-flycheck-rtags-mode ()
     (flycheck-select-checker 'rtags)
     (setq-local flycheck-highlighting-mode nil)
-    (flycheck-mode 1)))
+    (flycheck-mode 1))
+  (add-hook 'c-mode-hook 'ht-rtags-mode)
+  (add-hook 'c-mode-hook 'ht-flycheck-rtags-mode)
+  (add-hook 'c++-mode-hook 'ht-rtags-mode)
+  (add-hook 'c++-mode-hook 'ht-flycheck-rtags-mode))
 
 (use-package irony
   :ensure t
@@ -292,7 +297,9 @@
     :ensure t
     :init
     (add-hook 'irony-mode-hook 'irony-eldoc))
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'c++-mode-hook 'irony-mode))
 
 (use-package c-mode
   :mode (("\\.c\\'" . c-mode)
@@ -303,11 +310,7 @@
        (c-add-style "stevens" '("bsd" (c-basic-offset . 4)))
        (c-add-style "hnf"     '("bsd" (c-basic-offset . 2)))
        (setq c-default-style "hnf")))
-  (add-hook 'c-mode-hook 'electric-pair-mode)
-  (add-hook 'c-mode-hook 'ht-rtags-mode)
-  (add-hook 'c-mode-hook 'ht-flycheck-rtags-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'rtags-start-process-unless-running))
+  (add-hook 'c-mode-hook 'electric-pair-mode))
 
 (use-package c++-mode
   :mode (("\\.cc\\'"  . c++-mode)
@@ -316,11 +319,7 @@
   (defun ht-c++-mode ()
     (c-set-style "stroustrup"))
   (add-hook 'c++-mode-hook 'ht-c++-mode)
-  (add-hook 'c++-mode-hook 'electric-pair-mode)
-  (add-hook 'c++-mode-hook 'ht-rtags-mode)
-  (add-hook 'c++-mode-hook 'ht-flycheck-rtags-mode)
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c++-mode-hook 'rtags-start-process-unless-running))
+  (add-hook 'c++-mode-hook 'electric-pair-mode))
 
 (use-package clojure-mode
   :ensure t
