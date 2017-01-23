@@ -1248,6 +1248,12 @@
   (yas-global-mode 1))
 
 
+;;; other settings
+
+(eval-after-load 'tramp-sh
+  '(add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
+
+
 ;;; more cosmetics
 
 (show-paren-mode 1)
@@ -1307,12 +1313,6 @@
 (when (and (is-darwin-p) (window-system))
   (setq mac-command-modifier 'super
         mac-option-modifier 'meta))
-
-;;; nixos
-(when (and (is-linux-p) (file-directory-p "/etc/nixos"))
-  (require 'tramp)
-  (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
-  (setq browse-url-browser-function 'browse-url-chromium))
 
 
 ;;; registers
