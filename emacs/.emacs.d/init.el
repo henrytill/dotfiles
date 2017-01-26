@@ -878,7 +878,7 @@
       (dolist (face fixed-faces)
         (set-face-attribute face nil :inherit 'fixed-pitch))
       (dolist (face meta-faces)
-        (set-face-attribute face nil :inherit 'variable-pitch :foreground (face-foreground 'font-lock-comment-face nil)))))
+        (set-face-attribute face nil :inherit 'fixed-pitch :foreground (face-foreground 'font-lock-comment-face nil)))))
   (add-hook 'org-mode-hook 'ht-turn-on-org-bullets-mode)
   (add-hook 'org-mode-hook 'ht-prettify-org-mode)
   (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
