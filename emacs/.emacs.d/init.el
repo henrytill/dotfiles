@@ -1205,7 +1205,14 @@
     :commands ocp-setup-indent
     :init
     (add-hook 'tuareg-mode-hook 'ocp-setup-indent))
-  (add-hook 'tuareg-mode-hook 'electric-pair-mode))
+  (defun ht-tuareg-set-compile-command ()
+    (let ((build-dir (and (locate-dominating-file buffer-file-name "build")
+                          (locate-dominating-file buffer-file-name "_tags"))))
+      (when build-dir
+        (setq default-directory build-dir)
+        (set (make-local-variable 'compile-command) "./build"))))
+  (add-hook 'tuareg-mode-hook 'electric-pair-mode)
+  (add-hook 'tuareg-mode-hook 'ht-tuareg-set-compile-command))
 
 (use-package undo-tree
   :ensure t
