@@ -1025,8 +1025,9 @@
     :commands racer-mode
     :init
     (defun ht-racer-mode ()
-      (when-let ((cmd (executable-find "racer")))
-        (setq racer-cmd cmd)))
+      (let ((cmd (executable-find "racer")))
+        (when cmd
+          (setq racer-cmd cmd))))
     (add-hook 'racer-mode-hook 'ht-racer-mode)
     (add-hook 'racer-mode-hook 'company-mode)
     (add-hook 'racer-mode-hook 'eldoc-mode))
