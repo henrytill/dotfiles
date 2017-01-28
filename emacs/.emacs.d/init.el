@@ -441,6 +441,7 @@
                   inferior-python-mode
                   inferior-scheme-mode
                   inferior-sml-mode
+                  ocamldebug-mode
                   prolog-inferior-mode
                   sbt-mode
                   shell-mode
