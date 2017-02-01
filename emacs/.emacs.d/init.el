@@ -291,8 +291,8 @@
   (use-package company-irony
     :ensure t
     :init
-    (eval-after-load 'company
-      '(add-to-list 'company-backends 'company-irony)))
+    (with-eval-after-load 'company
+      (add-to-list 'company-backends 'company-irony)))
   (use-package irony-eldoc
     :ensure t
     :init
@@ -305,11 +305,10 @@
   :mode (("\\.c\\'" . c-mode)
          ("\\.h\\'" . c-mode))
   :init
-  (eval-after-load 'cc-styles
-    '(progn
-       (c-add-style "stevens" '("bsd" (c-basic-offset . 4)))
-       (c-add-style "hnf"     '("bsd" (c-basic-offset . 2)))
-       (setq c-default-style "hnf")))
+  (with-eval-after-load 'cc-styles
+    (c-add-style "stevens" '("bsd" (c-basic-offset . 4)))
+    (c-add-style "hnf"     '("bsd" (c-basic-offset . 2)))
+    (setq c-default-style "hnf"))
   (add-hook 'c-mode-hook 'electric-pair-mode))
 
 (use-package c++-mode
@@ -509,8 +508,8 @@
   (use-package bind-map
     :ensure t
     :config
-    (eval-after-load 'compile
-      '(define-key compilation-mode-map (kbd "SPC") nil))
+    (with-eval-after-load 'compile
+      (define-key compilation-mode-map (kbd "SPC") nil))
     (bind-map ht-base-leader-map
       :keys ("M-m")
       :evil-keys ("SPC")
@@ -656,14 +655,14 @@
                   ht-haskell-mode
                   interactive-haskell-mode))
     (add-hook 'haskell-mode-hook mode))
-  (eval-after-load 'align
-    '(nconc align-rules-list
-            (mapcar (lambda (x)
-                      `(,(car x) (regexp . ,(cdr x)) (modes quote (haskell-mode literate-haskell-mode))))
-                    '((haskell-types       . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
-                      (haskell-assignment  . "\\(\\s-+\\)=\\s-+")
-                      (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-                      (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+"))))))
+  (with-eval-after-load 'align
+    (nconc align-rules-list
+           (mapcar (lambda (x)
+                     `(,(car x) (regexp . ,(cdr x)) (modes quote (haskell-mode literate-haskell-mode))))
+                   '((haskell-types       . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
+                     (haskell-assignment  . "\\(\\s-+\\)=\\s-+")
+                     (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+                     (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+"))))))
 
 (use-package hideshow
   :bind (("<f5>"     . ht-hs-toggle-hiding)
@@ -894,7 +893,8 @@
                                                            (scala      . t)
                                                            (scheme     . t)
                                                            (shell      . t)))
-  (eval-after-load 'ob-scheme (load-file (locate-file "ob-scheme-fix.el" load-path)))
+  (with-eval-after-load 'ob-scheme
+    (load-file (locate-file "ob-scheme-fix.el" load-path)))
   (setq org-babel-clojure-backend 'cider
         org-clock-persist 'history
         org-completion-use-ido t
@@ -1121,11 +1121,11 @@
         TeX-parse-self t)
   (setq-default TeX-master nil)
   (when (and (is-linux-p) (executable-find "mupdf-x11"))
-    (eval-after-load 'tex
-      '(progn (add-to-list 'TeX-view-program-list
-                           '("mupdf" ("mupdf-x11" (mode-io-correlate " -p %(outpage)") " %o")))
-              (add-to-list 'TeX-view-program-selection
-                           '(output-pdf "mupdf"))))))
+    (with-eval-after-load 'tex
+      (add-to-list 'TeX-view-program-list
+                   '("mupdf" ("mupdf-x11" (mode-io-correlate " -p %(outpage)") " %o")))
+      (add-to-list 'TeX-view-program-selection
+                   '(output-pdf "mupdf")))))
 
 (use-package tide
   :ensure t
@@ -1259,19 +1259,19 @@
 
 ;;; other settings
 
-(eval-after-load 'caml-types
-  '(let ((color (face-attribute 'default :background)))
-     (dolist (face '(caml-types-expr-face
-                     caml-types-occ-face
-                     caml-types-scope-face
-                     caml-types-typed-face))
-       (set-face-foreground face color))))
+(with-eval-after-load 'caml-types
+  (let ((color (face-attribute 'default :background)))
+    (dolist (face '(caml-types-expr-face
+                    caml-types-occ-face
+                    caml-types-scope-face
+                    caml-types-typed-face))
+      (set-face-foreground face color))))
 
-(eval-after-load 'caml-help
-  '(set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
+(with-eval-after-load 'caml-help
+  (set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
 
-(eval-after-load 'tramp-sh
-  '(add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
+(with-eval-after-load 'tramp-sh
+  (add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
 
 
 ;;; more cosmetics
