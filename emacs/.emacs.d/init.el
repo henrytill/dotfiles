@@ -983,8 +983,18 @@
       :diminish company-coq-mode
       :commands company-coq-mode
       :init
+      (defun ht-company-coq-fix-issue-126 ()
+        "https://github.com/cpitclaudel/company-coq/issues/126"
+        (defconst company-coq-tg--preprocessor-substitutions
+          '(("\n"  . " ")
+            ("[ "  . "( OR-GROUP ")
+            (" ]"  . " )")
+            (" | " . " OR ")
+            ("; "  . " AND ")
+            ("'"   . "’"))))
       (setq company-coq-disabled-features '(prettify-symbols
-                                            smart-subscripts)))
+                                            smart-subscripts))
+      (add-hook 'company-coq-mode-hook #'ht-company-coq-fix-issue-126))
     (add-hook 'coq-mode-hook 'company-coq-mode)
     (add-hook 'coq-mode-hook 'electric-pair-mode)
     (add-hook 'coq-mode-hook 'whitespace-mode))
