@@ -17,17 +17,17 @@
 (defun expand-directory-name (dir &optional parent-dir)
   (file-name-as-directory (expand-file-name dir parent-dir)))
 
-(defun ht-strip-trailing-newline (string)
+(defun ht/strip-trailing-newline (string)
   (replace-regexp-in-string "\n\\'" "" string))
 
-(defmacro ht-comment (&rest body)
+(defmacro ht/comment (&rest body)
   "Comment out one or more s-expressions."
   nil)
 
-(put 'ht-comment 'lisp-indent-function 'defun)
+(put 'ht/comment 'lisp-indent-function 'defun)
 
 ;;; https://www.emacswiki.org/emacs/ElispCookbook
-(defun ht-list-subdirs (dir exclude)
+(defun ht/list-subdirs (dir exclude)
   "Find all directories in DIR."
   (unless (file-directory-p dir)
     (error "Not a directory `%s'" dir))
@@ -38,10 +38,10 @@
       (unless (member file (append '("." "..") exclude))
         (let ((file (concat (file-name-as-directory dir) file)))
           (when (file-directory-p file)
-            (setq dirs (append (cons file (ht-list-subdirs file exclude)) dirs))))))
+            (setq dirs (append (cons file (ht/list-subdirs file exclude)) dirs))))))
     dirs))
 
-(defun ht-replace-item-in-alist (alist key value)
+(defun ht/replace-item-in-alist (alist key value)
   (cons `(,key . ,value) (assq-delete-all key alist)))
 
 
@@ -71,38 +71,38 @@
     (when (member "Fira Mono" (font-family-list))
       (set-face-attribute 'default nil :font "Fira Mono 12"))
     (setq-default line-spacing 2)
-    (defun ht-reset-frame ()
+    (defun ht/reset-frame ()
       (interactive)
       (let ((height (cdr (assq 'height default-frame-alist)))
             (width  (cdr (assq 'width  default-frame-alist))))
         (set-frame-height (selected-frame) height)
         (set-frame-width  (selected-frame) width)))
-    (defun ht-darwin-terminal-frame-setup (frame)
+    (defun ht/darwin-terminal-frame-setup (frame)
       (with-selected-frame frame
         (unless (display-graphic-p frame)
           (set-face-foreground 'default "unspecified-fg" frame)
           (set-face-background 'default "unspecified-bg" frame))))
-    (add-hook 'after-make-frame-functions 'ht-darwin-terminal-frame-setup)))
+    (add-hook 'after-make-frame-functions 'ht/darwin-terminal-frame-setup)))
 
 (when (window-system)
   (set-face-attribute 'region nil :background "lightgoldenrod2")
   (set-face-attribute 'region nil :foreground "black"))
 
-(defconst ht-fixed-font
+(defconst ht/fixed-font
   (cond
    ((is-linux-p)  '(:font "Fira Mono"))
    ((is-darwin-p) '(:font "Fira Mono"))))
 
-(defconst ht-variable-font
+(defconst ht/variable-font
   (cond
    ((is-linux-p)  '(:font "Fira Sans"))
    ((is-darwin-p) '(:font "Fira Sans"))))
 
-(defun ht-custom-set-faces ()
-  (custom-set-faces `(fixed-pitch    ((t ,ht-fixed-font)))
-                    `(variable-pitch ((t ,ht-variable-font)))))
+(defun ht/custom-set-faces ()
+  (custom-set-faces `(fixed-pitch    ((t ,ht/fixed-font)))
+                    `(variable-pitch ((t ,ht/variable-font)))))
 
-(ht-custom-set-faces)
+(ht/custom-set-faces)
 
 
 ;;; basic settings
@@ -136,7 +136,7 @@
 
 (put 'dired-find-alternate-file 'disabled nil)
 
-(defconst ht-global-bindings
+(defconst ht/global-bindings
   '(("M-/"     . hippie-expand)
     ("C-x C-b" . ibuffer)
     ("C-s"     . isearch-forward-regexp)
@@ -147,7 +147,7 @@
     ("C-M-%"   . query-replace)
     ("<f6>"    . recompile)))
 
-(dolist (binding ht-global-bindings)
+(dolist (binding ht/global-bindings)
   (let ((key (car binding))
         (cmd (cdr binding)))
     (global-set-key (kbd key) cmd)))
@@ -178,17 +178,17 @@
 ;;; other paths
 
 (eval-and-compile
-  (defun ht-oz-home ()
+  (defun ht/oz-home ()
     (cond ((is-darwin-p) (let ((oz-app-path "/Applications/Mozart2.app"))
                            (when (file-directory-p oz-app-path)
                              (concat oz-app-path "/Contents/Resources"))))
           ((is-linux-p)  (let ((oz-binary-path (executable-find "oz")))
                            (when oz-binary-path
                              (car (split-string oz-binary-path "/bin/oz")))))))
-  (defun ht-oz-load-path ()
+  (defun ht/oz-load-path ()
     (cond ((is-darwin-p) "~/src/other/mozart-elisp")
-          ((is-linux-p)  (expand-directory-name "share/mozart/elisp" (ht-oz-home)))))
-  (defun ht-rtags-load-path ()
+          ((is-linux-p)  (expand-directory-name "share/mozart/elisp" (ht/oz-home)))))
+  (defun ht/rtags-load-path ()
     (letrec ((rtags-site-lisp  (expand-directory-name "../../share/emacs/site-lisp/rtags"
                                                       (executable-find "rdm"))))
       (when (file-directory-p rtags-site-lisp)
@@ -229,11 +229,11 @@
   :init
   (load-file (let ((coding-system-for-read 'utf-8))
                (shell-command-to-string "agda-mode locate")))
-  (defun ht-agda-mode ()
+  (defun ht/agda-mode ()
     (let ((agda-includes (cons "." (split-string (getenv "buildDependsAgdaShareAgda")))))
       (dolist (var agda-includes)
         (add-to-list 'agda2-include-dirs var))))
-  (add-hook 'agda2-mode-hook 'ht-agda-mode))
+  (add-hook 'agda2-mode-hook 'ht/agda-mode))
 
 (use-package alert
   :ensure t
@@ -268,23 +268,23 @@
 (use-package rtags
   :if (executable-find "rdm")
   :commands rtags-start-process-unless-running
-  :load-path (lambda () (ht-rtags-load-path))
+  :load-path (lambda () (ht/rtags-load-path))
   :init
   (use-package company-rtags
     :disabled t
-    :load-path (lambda () (ht-rtags-load-path)))
-  (defun ht-rtags-mode ()
+    :load-path (lambda () (ht/rtags-load-path)))
+  (defun ht/rtags-mode ()
     (rtags-start-process-unless-running)
     (define-key evil-normal-state-local-map (kbd "C-]") 'rtags-find-symbol-at-point)
     (define-key evil-normal-state-local-map (kbd "C-t") 'rtags-location-stack-back))
-  (defun ht-flycheck-rtags-mode ()
+  (defun ht/flycheck-rtags-mode ()
     (flycheck-select-checker 'rtags)
     (setq-local flycheck-highlighting-mode nil)
     (flycheck-mode 1))
-  (add-hook 'c-mode-hook 'ht-rtags-mode)
-  (add-hook 'c-mode-hook 'ht-flycheck-rtags-mode)
-  (add-hook 'c++-mode-hook 'ht-rtags-mode)
-  (add-hook 'c++-mode-hook 'ht-flycheck-rtags-mode))
+  (add-hook 'c-mode-hook 'ht/rtags-mode)
+  (add-hook 'c-mode-hook 'ht/flycheck-rtags-mode)
+  (add-hook 'c++-mode-hook 'ht/rtags-mode)
+  (add-hook 'c++-mode-hook 'ht/flycheck-rtags-mode))
 
 (use-package irony
   :ensure t
@@ -317,9 +317,9 @@
   :mode (("\\.cc\\'"  . c++-mode)
          ("\\.cpp\\'" . c++-mode))
   :init
-  (defun ht-c++-mode ()
+  (defun ht/c++-mode ()
     (c-set-style "stroustrup"))
-  (add-hook 'c++-mode-hook 'ht-c++-mode)
+  (add-hook 'c++-mode-hook 'ht/c++-mode)
   (add-hook 'c++-mode-hook 'electric-pair-mode))
 
 (use-package clojure-mode
@@ -364,11 +364,11 @@
   :init
   ;; http://endlessparentheses.com/ansi-colors-in-the-compilation-buffer-output.html
   (require 'ansi-color)
-  (defun ht-colorize-compilation-buffer ()
+  (defun ht/colorize-compilation-buffer ()
     "Colorize from `compilation-filter-start' to `point'."
     (let ((inhibit-read-only t))
       (ansi-color-apply-on-region compilation-filter-start (point))))
-  (add-hook 'compilation-filter-hook 'ht-colorize-compilation-buffer))
+  (add-hook 'compilation-filter-hook 'ht/colorize-compilation-buffer))
 
 (use-package docker-tramp :ensure t)
 
@@ -453,11 +453,11 @@
     (progn (when (member mode evil-insert-state-modes)
              (delete mode evil-insert-state-modes))
            (add-to-list 'evil-emacs-state-modes mode)))
-  (defun ht-other-window ()
+  (defun ht/other-window ()
     (interactive)
     (other-window 1))
   (defconst evil-emacs-state-bindings
-    '(("C-w C-w" . ht-other-window)
+    '(("C-w C-w" . ht/other-window)
       ("C-w s"   . split-window-below)
       ("C-w v"   . split-window-right)
       ("C-w o"   . delete-other-windows)
@@ -512,45 +512,51 @@
     :config
     (with-eval-after-load 'compile
       (define-key compilation-mode-map (kbd "SPC") nil))
-    (bind-map ht-base-leader-map
+    (bind-map ht/base-leader-map
       :keys ("M-m")
       :evil-keys ("SPC")
       :evil-states (motion normal visual paredit))
-    (bind-map-set-keys ht-base-leader-map
+    (bind-map-set-keys ht/base-leader-map
       "w" 'ace-window
       "x" 'smex
       "l" 'evil-paredit-state)
     ;; avy
-    (bind-map ht-avy-leader-map
+    (bind-map ht/avy-leader-map
       :keys ("M-m g")
       :evil-keys ("SPC g"))
-    (bind-map-set-keys ht-avy-leader-map
+    (bind-map-set-keys ht/avy-leader-map
       ";" 'evil-avy-goto-char
       "'" 'evil-avy-goto-char-2
       "w" 'evil-avy-goto-word-1
       "l" 'evil-avy-goto-line)
     ;; flycheck
-    (bind-map ht-flycheck-leader-map
+    (bind-map ht/flycheck-leader-map
       :keys ("M-m f")
       :evil-keys ("SPC f"))
-    (bind-map-set-keys ht-flycheck-leader-map
+    (bind-map-set-keys ht/flycheck-leader-map
       "l" 'flycheck-list-errors
       "j" 'flycheck-next-error
       "k" 'flycheck-previous-error)
     ;; ido
-    (bind-map ht-ido-leader-map
+    (bind-map ht/ido-leader-map
       :keys ("M-m b")
       :evil-keys ("SPC b"))
-    (bind-map-set-keys ht-ido-leader-map
+    (bind-map-set-keys ht/ido-leader-map
       "b" 'ido-switch-buffer
       "f" 'ido-find-file
       "k" 'ido-kill-buffer)
     ;; magit
-    (bind-map ht-magit-leader-map
+    (bind-map ht/magit-leader-map
       :keys ("M-m m")
       :evil-keys ("SPC m"))
-    (bind-map-set-keys ht-magit-leader-map
-      "s" 'magit-status))
+    (bind-map-set-keys ht/magit-leader-map
+      "s" 'magit-status)
+    ;; text processing
+    (bind-map ht/text-leader-map
+      :keys ("M-m t")
+      :evil-keys ("SPC t"))
+    (bind-map-set-keys ht/text-leader-map
+      "a" 'align))
   ;; surround
   (use-package evil-surround
     :ensure t
@@ -563,7 +569,7 @@
   :ensure t
   :defer 5
   :preface
-  (defun ht-rkt-predicate ()
+  (defun ht/rkt-predicate ()
     (and (buffer-file-name)
          (string-equal (file-name-extension (buffer-file-name)) "rkt")))
   :config
@@ -577,7 +583,7 @@
     :init
     (add-hook 'flycheck-mode-hook 'flycheck-irony-setup))
   (use-package flycheck-rtags
-    :load-path (lambda () (ht-rtags-load-path)))
+    :load-path (lambda () (ht/rtags-load-path)))
   (use-package flycheck-rust
     :ensure t
     :init
@@ -588,7 +594,7 @@
     :error-patterns
     ((error line-start (file-name) ":" line ":" column ":" (message) line-end))
     :modes scheme-mode
-    :predicate ht-rkt-predicate)
+    :predicate ht/rkt-predicate)
   (add-to-list 'flycheck-checkers 'racket-alt)
   (setq flycheck-completion-system 'ido)
   (setq-default flycheck-disabled-checkers '(javascript-jslint)))
@@ -599,11 +605,11 @@
   :defines (forth-indent-level forth-minor-indent-level forth-hilight-level)
   :init
   (autoload 'forth-mode "gforth.el")
-  (defun ht-forth-mode ()
+  (defun ht/forth-mode ()
     (setq forth-indent-level 4
           forth-minor-indent-level 2
           forth-hilight-level 3))
-  (add-hook 'forth-mode-hook 'ht-forth-mode))
+  (add-hook 'forth-mode-hook 'ht/forth-mode))
 
 (use-package forth-block-mode
   :if (executable-find "gforth")
@@ -623,10 +629,10 @@
   :ensure t
   :commands gnus-desktop-notify-mode
   :preface
-  (defun ht-gnus-desktop-notify ()
+  (defun ht/gnus-desktop-notify ()
     (gnus-desktop-notify-mode)
     (setq gnus-desktop-notify-groups 'gnus-desktop-notify-explicit))
-  (add-hook 'gnus-group-mode-hook 'ht-gnus-desktop-notify))
+  (add-hook 'gnus-group-mode-hook 'ht/gnus-desktop-notify))
 
 (use-package grep
   :commands (grep find-grep find-grep-dired)
@@ -640,12 +646,12 @@
          ("\\.lhs\\'"                . literate-haskell-mode)
          ("\\.cabal\\'"              . haskell-cabal-mode))
   :init
-  (defun ht-haskell-interactive-wrapper (arg)
+  (defun ht/haskell-interactive-wrapper (arg)
     "Prompt user to enter an additional argument to add to haskell-process-args-cabal-repl"
     (interactive "sEnter argument: ")
     (add-to-list 'haskell-process-args-cabal-repl arg)
     (haskell-interactive-bring))
-  (defun ht-haskell-mode ()
+  (defun ht/haskell-mode ()
     (when (executable-find "hasktags")
       (setq haskell-tags-on-save t))
     (setq evil-auto-indent nil
@@ -654,7 +660,7 @@
   (dolist (mode '(electric-pair-mode
                   flycheck-mode
                   haskell-indentation-mode
-                  ht-haskell-mode
+                  ht/haskell-mode
                   interactive-haskell-mode))
     (add-hook 'haskell-mode-hook mode))
   (with-eval-after-load 'align
@@ -667,43 +673,43 @@
                      (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+"))))))
 
 (use-package hideshow
-  :bind (("<f5>"     . ht-hs-toggle-hiding)
-         ("M-<f5>"   . ht-hs-hide-all)
-         ("M-S-<f5>" . ht-hs-show-all))
-  :functions ht-hs-add-xml-mode
+  :bind (("<f5>"     . ht/hs-toggle-hiding)
+         ("M-<f5>"   . ht/hs-hide-all)
+         ("M-S-<f5>" . ht/hs-show-all))
+  :functions ht/hs-add-xml-mode
   :preface
-  (defun ht-hs-minor-mode ()
+  (defun ht/hs-minor-mode ()
     (when (not (bound-and-true-p hs-minor-mode))
       (hs-minor-mode)))
-  (defun ht-hs-toggle-hiding ()
+  (defun ht/hs-toggle-hiding ()
     (interactive)
-    (ht-hs-minor-mode)
+    (ht/hs-minor-mode)
     (hs-toggle-hiding))
-  (defun ht-hs-hide-all ()
+  (defun ht/hs-hide-all ()
     (interactive)
-    (ht-hs-minor-mode)
+    (ht/hs-minor-mode)
     (hs-hide-all))
-  (defun ht-hs-show-all ()
+  (defun ht/hs-show-all ()
     (interactive)
-    (ht-hs-minor-mode)
+    (ht/hs-minor-mode)
     (hs-show-all))
   :config
-  (defun ht-hs-add-xml-mode (mode forward-sexp-func)
+  (defun ht/hs-add-xml-mode (mode forward-sexp-func)
     (let ((start         "<!--\\|<[^/>]*[^/]>")
           (end           "-->\\|</[^/>]*[^/]>")
           (comment-start "<!--"))
       (push (list mode start end comment-start forward-sexp-func nil)
             hs-special-modes-alist)))
-  (ht-hs-add-xml-mode 'nxml-mode 'nxml-forward-element)
-  (ht-hs-add-xml-mode 'html-mode 'sgml-skip-tag-forward)
-  (ht-hs-add-xml-mode 'sgml-mode 'sgml-skip-tag-forward))
+  (ht/hs-add-xml-mode 'nxml-mode 'nxml-forward-element)
+  (ht/hs-add-xml-mode 'html-mode 'sgml-skip-tag-forward)
+  (ht/hs-add-xml-mode 'sgml-mode 'sgml-skip-tag-forward))
 
 (use-package hl-line-mode
   :commands hl-line-mode
   :init
-  (defun ht-hl-line-mode ()
+  (defun ht/hl-line-mode ()
     (set-face-attribute 'hl-line nil :background "grey20"))
-  (add-hook 'hl-line-mode-hook 'ht-hl-line-mode))
+  (add-hook 'hl-line-mode-hook 'ht/hl-line-mode))
 
 (use-package ido
   :config
@@ -720,10 +726,10 @@
   (add-hook 'ido-minibuffer-setup-hook
             (defun ido-disable-line-truncation ()
               (set (make-local-variable 'truncate-lines) nil)))
-  (defun ht-ido-define-keys ()
+  (defun ht/ido-define-keys ()
     (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
     (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
-  (add-hook 'ido-setup-hook 'ht-ido-define-keys)
+  (add-hook 'ido-setup-hook 'ht/ido-define-keys)
   (add-hook 'ido-setup-hook 'flx-ido-mode)
   (ido-mode t))
 
@@ -752,15 +758,15 @@
          ("\\.jsx\\'" . js2-jsx-mode))
   :interpreter ("node" . js2-mode)
   :init
-  (defun ht-npm-local-executable-path (name)
+  (defun ht/npm-local-executable-path (name)
     (let* ((npm-bin-path (string-trim (shell-command-to-string "npm bin")))
            (npm-exe-path (expand-file-name name npm-bin-path)))
       (when (file-executable-p npm-exe-path) npm-exe-path)))
-  (defun ht-js2-init ()
+  (defun ht/js2-init ()
     (setq js2-additional-externs '("describe" "it"))
-    (setq flycheck-javascript-eslint-executable (ht-npm-local-executable-path "eslint"))
+    (setq flycheck-javascript-eslint-executable (ht/npm-local-executable-path "eslint"))
     (flycheck-mode 1))
-  (add-hook 'js2-init-hook 'ht-js2-init)
+  (add-hook 'js2-init-hook 'ht/js2-init)
   :config
   (setq js2-basic-offset 2
         js2-include-node-externs t
@@ -769,14 +775,14 @@
 (use-package linum
   :init
   (use-package linum-relative :ensure t)
-  (defun ht-linum-mode ()
+  (defun ht/linum-mode ()
     (setq linum-format "%4d ")
     (set-face-foreground 'linum "grey30")
     (set-face-foreground 'linum-relative-current-face "grey30")
     (set-face-background 'linum-relative-current-face (face-attribute 'default :background))
     (set-face-attribute 'linum-relative-current-face nil :weight 'normal)
     (linum-relative-on))
-  (add-hook 'linum-mode-hook 'ht-linum-mode))
+  (add-hook 'linum-mode-hook 'ht/linum-mode))
 
 (use-package lisp-mode
   :defer t
@@ -838,15 +844,15 @@
   :init
   (use-package org-bullets
     :ensure t
-    :commands ht-turn-on-org-bullets-mode
+    :commands ht/turn-on-org-bullets-mode
     :preface
-    (defun ht-turn-on-org-bullets-mode ()
+    (defun ht/turn-on-org-bullets-mode ()
       (when (window-system)
         (org-bullets-mode 1))))
   (use-package cdlatex
     :ensure t
     :commands turn-on-org-cdlatex)
-  (defun ht-prettify-org-mode ()
+  (defun ht/prettify-org-mode ()
     (interactive)
     (let ((variable-faces '((org-agenda-structure . 2.0)
                             (org-document-title   . 1.5)
@@ -872,7 +878,7 @@
                              org-meta-line)))
       (variable-pitch-mode t)
       (setq org-src-fontify-natively nil)
-      (set-face-attribute 'org-link nil :font (plist-get ht-fixed-font :font))
+      (set-face-attribute 'org-link nil :font (plist-get ht/fixed-font :font))
       (dolist (face variable-faces)
         (if (cdr face)
             (set-face-attribute (car face) nil :height (cdr face) :inherit 'variable-pitch)
@@ -881,8 +887,8 @@
         (set-face-attribute face nil :inherit 'fixed-pitch))
       (dolist (face meta-faces)
         (set-face-attribute face nil :inherit 'fixed-pitch :foreground (face-foreground 'font-lock-comment-face nil)))))
-  (add-hook 'org-mode-hook 'ht-turn-on-org-bullets-mode)
-  (add-hook 'org-mode-hook 'ht-prettify-org-mode)
+  (add-hook 'org-mode-hook 'ht/turn-on-org-bullets-mode)
+  (add-hook 'org-mode-hook 'ht/prettify-org-mode)
   (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
   :config
   (org-babel-do-load-languages 'org-babel-load-languages '((clojure    . t)
@@ -918,18 +924,18 @@
             `("n" "Notes" entry (file ,notes-file) "* %?\n  %i\n  %a"))
            (todo-template
             `("t" "Todo" entry (file+headline ,todo-file "Tasks") "* TODO %?\n  %i\n  %a")))
-      (setq org-agenda-files (cons agenda-dir (ht-list-subdirs agenda-dir '(".git")))
+      (setq org-agenda-files (cons agenda-dir (ht/list-subdirs agenda-dir '(".git")))
             org-capture-templates (list notes-template todo-template)
             org-default-notes-file notes-file)
       (set-register ?n `(file . ,(expand-file-name "notes.org" org-directory))))))
 
 (use-package oz
   :if (executable-find "oz")
-  :load-path (lambda () (list (ht-oz-load-path)))
+  :load-path (lambda () (list (ht/oz-load-path)))
   :mode ("\\.oz\\'" . oz-mode)
   :commands run-oz
   :init
-  (setenv "OZHOME" (ht-oz-home))
+  (setenv "OZHOME" (ht/oz-home))
   (add-hook 'oz-mode-hook 'electric-pair-mode)
   (add-hook 'oz-mode-hook 'page-break-lines-mode)
   (add-hook 'oz-mode-hook 'undo-tree-mode)
@@ -956,9 +962,9 @@
 (use-package prog-mode
   :defer t
   :init
-  (defun ht-prog-mode ()
+  (defun ht/prog-mode ()
     (linum-mode 1))
-  (add-hook 'prog-mode-hook 'ht-prog-mode)
+  (add-hook 'prog-mode-hook 'ht/prog-mode)
   (add-hook 'prog-mode-hook 'company-mode)
   (add-hook 'prog-mode-hook 'page-break-lines-mode)
   (add-hook 'prog-mode-hook 'undo-tree-mode)
@@ -985,7 +991,7 @@
       :diminish company-coq-mode
       :commands company-coq-mode
       :init
-      (defun ht-company-coq-fix-issue-126 ()
+      (defun ht/company-coq-fix-issue-126 ()
         "https://github.com/cpitclaudel/company-coq/issues/126"
         (defconst company-coq-tg--preprocessor-substitutions
           '(("\n"  . " ")
@@ -996,7 +1002,7 @@
             ("'"   . "’"))))
       (setq company-coq-disabled-features '(prettify-symbols
                                             smart-subscripts))
-      (add-hook 'company-coq-mode-hook #'ht-company-coq-fix-issue-126))
+      (add-hook 'company-coq-mode-hook #'ht/company-coq-fix-issue-126))
     (add-hook 'coq-mode-hook 'company-coq-mode)
     (add-hook 'coq-mode-hook 'electric-pair-mode)
     (add-hook 'coq-mode-hook 'whitespace-mode))
@@ -1011,7 +1017,7 @@
   :ensure t
   :mode "\\.purs\\'"
   :init
-  (defun ht-purescript-mode ()
+  (defun ht/purescript-mode ()
     (setq evil-auto-indent nil
           purescript-indentation-layout-offset 4
           purescript-indentation-left-offset 4))
@@ -1020,13 +1026,13 @@
     :ensure t
     :commands psc-ide-mode
     :init
-    (defun ht-psc-ide-mode ()
+    (defun ht/psc-ide-mode ()
       (psc-ide-mode 1)
       (company-mode 1)
       (define-key evil-normal-state-local-map (kbd "C-]") 'psc-ide-goto-definition))
-    (add-hook 'purescript-mode-hook 'ht-psc-ide-mode))
+    (add-hook 'purescript-mode-hook 'ht/psc-ide-mode))
   (add-hook 'purescript-mode-hook 'purescript-indentation-mode)
-  (add-hook 'purescript-mode-hook 'ht-purescript-mode))
+  (add-hook 'purescript-mode-hook 'ht/purescript-mode))
 
 (use-package rust-mode
   :ensure t
@@ -1037,11 +1043,11 @@
     :if (executable-find "racer")
     :commands racer-mode
     :init
-    (defun ht-racer-mode ()
+    (defun ht/racer-mode ()
       (let ((cmd (executable-find "racer")))
         (when cmd
           (setq racer-cmd cmd))))
-    (add-hook 'racer-mode-hook 'ht-racer-mode)
+    (add-hook 'racer-mode-hook 'ht/racer-mode)
     (add-hook 'racer-mode-hook 'company-mode)
     (add-hook 'racer-mode-hook 'eldoc-mode))
   (add-hook 'rust-mode-hook 'auto-revert-mode)
@@ -1057,9 +1063,9 @@
   (use-package sbt-mode
     :ensure t
     :commands sbt-start)
-  (defun ht-scala-mode ()
+  (defun ht/scala-mode ()
     (setq scala-indent:align-parameters t))
-  (add-hook 'scala-mode-hook 'ht-scala-mode)
+  (add-hook 'scala-mode-hook 'ht/scala-mode)
   (add-hook 'scala-mode-hook 'auto-revert-mode)
   (add-hook 'scala-mode-hook 'electric-pair-mode))
 
@@ -1067,13 +1073,13 @@
   :mode (("\\.rkt\\'" . scheme-mode)
          ("\\.scm\\'" . scheme-mode))
   :init
-  (defun ht-scheme-mode ()
+  (defun ht/scheme-mode ()
     (dolist (form+n '((conde . 0)
                       (fresh . 1)
                       (run   . 2)
                       (run*  . 1)))
       (put (car form+n) 'scheme-indent-function (cdr form+n))))
-  (add-hook 'scheme-mode-hook 'ht-scheme-mode)
+  (add-hook 'scheme-mode-hook 'ht/scheme-mode)
   (add-hook 'scheme-mode-hook 'enable-paredit-mode)
   :config
   (when (executable-find "plt-r5rs")
@@ -1082,9 +1088,9 @@
 (use-package shell
   :commands shell
   :init
-  (defun ht-mode-line-dirtrack ()
+  (defun ht/mode-line-dirtrack ()
     (add-to-list 'mode-line-buffer-identification '("" default-directory "  ")))
-  (add-hook 'shell-mode-hook 'ht-mode-line-dirtrack))
+  (add-hook 'shell-mode-hook 'ht/mode-line-dirtrack))
 
 (use-package slime
   :load-path "site-lisp/slime"
@@ -1143,7 +1149,7 @@
   :ensure t
   :commands tide-setup
   :init
-  (defun ht-tide-mode ()
+  (defun ht/tide-mode ()
     (tide-setup)
     (flycheck-mode 1)
     (eldoc-mode 1)
@@ -1158,14 +1164,14 @@
   :ensure t
   :mode "\\.ts\\'"
   :init
-  (add-hook 'typescript-mode-hook 'ht-tide-mode))
+  (add-hook 'typescript-mode-hook 'ht/tide-mode))
 
 (use-package tuareg
   :ensure t
   :mode (("\\.ml[ilpy]?\\'" . tuareg-mode)
          ("\\.eliomi?\\'"   . tuareg-mode))
   :init
-  (defun ht-setup-tuareg ()
+  (defun ht/setup-tuareg ()
     (when (executable-find "opam")
       (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
         (setenv (car var) (cadr var))))
@@ -1185,14 +1191,14 @@
                 org-babel-ocaml-command    (format "ocaml -init %s"       ocamlinit)
                 tuareg-interactive-program (format "ocaml -init %s"       ocamlinit)
                 utop-command               (format "utop -emacs -init %s" ocamlinit))))))
-  (ht-setup-tuareg)
+  (ht/setup-tuareg)
   (use-package merlin
     :if (and (executable-find "ocamlmerlin")
              (locate-file "merlin.el" load-path))
     :commands merlin-mode
     :defines merlin-command
     :init
-    (defun ht-merlin-mode ()
+    (defun ht/merlin-mode ()
       (let ((extension (file-name-extension buffer-file-name)))
         (when (not (or (string-equal "mll" extension)
                        (string-equal "mly" extension)))
@@ -1204,7 +1210,7 @@
                      (not (in-nix-shell-p)))
             (setq merlin-command 'opam))
           (add-to-list 'company-backends 'merlin-company-backend))))
-    (add-hook 'tuareg-mode-hook 'ht-merlin-mode))
+    (add-hook 'tuareg-mode-hook 'ht/merlin-mode))
   (use-package utop
     :if (and (executable-find "utop")
              (locate-file "utop.el" load-path))
@@ -1217,14 +1223,14 @@
     :commands ocp-setup-indent
     :init
     (add-hook 'tuareg-mode-hook 'ocp-setup-indent))
-  (defun ht-tuareg-set-compile-command ()
+  (defun ht/tuareg-set-compile-command ()
     (let ((build-dir (and (locate-dominating-file buffer-file-name "build")
                           (locate-dominating-file buffer-file-name "_tags"))))
       (when build-dir
         (setq default-directory build-dir)
         (set (make-local-variable 'compile-command) "./build"))))
   (add-hook 'tuareg-mode-hook 'electric-pair-mode)
-  (add-hook 'tuareg-mode-hook 'ht-tuareg-set-compile-command))
+  (add-hook 'tuareg-mode-hook 'ht/tuareg-set-compile-command))
 
 (use-package undo-tree
   :ensure t
@@ -1240,10 +1246,10 @@
   :ensure t
   :mode "\\.tsx\\'"
   :init
-  (defun ht-web-mode ()
+  (defun ht/web-mode ()
     (when (string-equal "tsx" (file-name-extension buffer-file-name))
-      (ht-tide-mode)))
-  (add-hook 'web-mode-hook 'ht-web-mode))
+      (ht/tide-mode)))
+  (add-hook 'web-mode-hook 'ht/web-mode))
 
 (use-package whitespace
   :commands whitespace-mode
@@ -1251,12 +1257,12 @@
   :init
   (setq whitespace-style '(face tabs lines-tail trailing empty)
         whitespace-line-column 100)
-  (ht-comment
-    (defun ht-style-whitespace-mode ()
+  (ht/comment
+    (defun ht/style-whitespace-mode ()
       (set-face-attribute 'whitespace-line nil
                           :foreground nil
                           :background "gray90"))
-    (add-hook 'whitespace-mode-hook 'ht-style-whitespace-mode)))
+    (add-hook 'whitespace-mode-hook 'ht/style-whitespace-mode)))
 
 (use-package yasnippet
   :ensure t
@@ -1307,32 +1313,32 @@
 (setq-default cursor-type 'box)
 
 ;;; hl-line
-(defun ht-select-line-mode ()
+(defun ht/select-line-mode ()
   (hl-line-mode 1)
   (setq cursor-type 'nil))
 
-(add-hook 'dired-mode-hook        'ht-select-line-mode)
-(add-hook 'ibuffer-mode-hook      'ht-select-line-mode)
-(add-hook 'gnus-group-mode-hook   'ht-select-line-mode)
-(add-hook 'gnus-summary-mode-hook 'ht-select-line-mode)
-(add-hook 'gnus-server-mode-hook  'ht-select-line-mode)
-(add-hook 'package-menu-mode-hook 'ht-select-line-mode)
+(add-hook 'dired-mode-hook        'ht/select-line-mode)
+(add-hook 'ibuffer-mode-hook      'ht/select-line-mode)
+(add-hook 'gnus-group-mode-hook   'ht/select-line-mode)
+(add-hook 'gnus-summary-mode-hook 'ht/select-line-mode)
+(add-hook 'gnus-server-mode-hook  'ht/select-line-mode)
+(add-hook 'package-menu-mode-hook 'ht/select-line-mode)
 
 ;;; truncate lines
-(defun ht-truncate-lines ()
+(defun ht/truncate-lines ()
   (setq truncate-lines t))
 
-(add-hook 'compilation-mode-hook     'ht-truncate-lines)
-(add-hook 'dired-mode-hook           'ht-truncate-lines)
-(add-hook 'prog-mode-hook            'ht-truncate-lines)
-(add-hook 'shell-mode-hook           'ht-truncate-lines)
-(add-hook 'sql-interactive-mode-hook 'ht-truncate-lines)
+(add-hook 'compilation-mode-hook     'ht/truncate-lines)
+(add-hook 'dired-mode-hook           'ht/truncate-lines)
+(add-hook 'prog-mode-hook            'ht/truncate-lines)
+(add-hook 'shell-mode-hook           'ht/truncate-lines)
+(add-hook 'sql-interactive-mode-hook 'ht/truncate-lines)
 
 ;;; warning keywords
-(defun ht-add-watchwords ()
+(defun ht/add-watchwords ()
   (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
 
-(add-hook 'prog-mode-hook 'ht-add-watchwords)
+(add-hook 'prog-mode-hook 'ht/add-watchwords)
 
 
 ;;; platform-specific settings
@@ -1354,7 +1360,7 @@
 
 ;;; experiments
 
-(defun ht-erc-sesh ()
+(defun ht/erc-sesh ()
   (interactive)
   (let ((erc-sesh (expand-file-name "erc-sesh.el.gpg" "~/Dropbox/doc")))
     (when (file-exists-p erc-sesh)
@@ -1363,8 +1369,8 @@
 
 ;;; post init
 
-(defun ht-elapsed-msg ()
+(defun ht/elapsed-msg ()
   (let ((elapsed (float-time (time-subtract (current-time) emacs-start-time))))
     (message "Load time: %.3fs"  elapsed)))
 
-(add-hook 'after-init-hook 'ht-elapsed-msg)
+(add-hook 'after-init-hook 'ht/elapsed-msg)
