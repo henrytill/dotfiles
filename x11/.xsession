@@ -20,4 +20,6 @@ if test -f $CONKYRC; then
     (conky -c $CONKYRC | while read LINE; do xsetroot -name "$LINE"; done) &
 fi
 
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 exec dbus-launch --auto-syntax --exit-with-session dwm
