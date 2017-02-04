@@ -1229,8 +1229,20 @@
       (when build-dir
         (setq default-directory build-dir)
         (set (make-local-variable 'compile-command) "./build"))))
-  (add-hook 'tuareg-mode-hook 'electric-pair-mode)
-  (add-hook 'tuareg-mode-hook 'ht/tuareg-set-compile-command))
+  (defun ht/tuareg-mode ()
+    (setq evil-auto-indent nil))
+  (dolist (mode '(electric-pair-mode
+                  ;; ht/tuareg-set-compile-command
+                  ht/tuareg-mode))
+    (add-hook 'tuareg-mode-hook mode))
+  (with-eval-after-load 'align
+    (nconc align-rules-list
+           (mapcar (lambda (x)
+                     `(,(car x) (regexp . ,(cdr x)) (modes quote (tuareg-mode))))
+                   '((ocaml-types       . "\\(\\s-+\\):\\s-+")
+                     (ocaml-assignment  . "\\(\\s-+\\)=\\s-+")
+                     (ocaml-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+                     (ocaml-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+"))))))
 
 (use-package undo-tree
   :ensure t
