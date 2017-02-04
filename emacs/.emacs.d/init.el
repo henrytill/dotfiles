@@ -26,6 +26,25 @@
 
 (put 'ht/comment 'lisp-indent-function 'defun)
 
+;;; https://github.com/magnars/s.el/blob/fc395c8d5e6c14d5e0920ab80d4d5df007eed14a/s.el#L32-L48
+(defun ht/s-trim-left (s)
+  "Remove whitespace at the beginning of S."
+  (save-match-data
+    (if (string-match "\\`[ \t\n\r]+" s)
+        (replace-match "" t t s)
+      s)))
+
+(defun ht/s-trim-right (s)
+  "Remove whitespace at the end of S."
+  (save-match-data
+    (if (string-match "[ \t\n\r]+\\'" s)
+        (replace-match "" t t s)
+      s)))
+
+(defun ht/s-trim (s)
+  "Remove whitespace at the beginning and end of S."
+  (ht/s-trim-left (ht/s-trim-right s)))
+
 ;;; https://www.emacswiki.org/emacs/ElispCookbook
 (defun ht/list-subdirs (dir exclude)
   "Find all directories in DIR."
@@ -156,8 +175,9 @@
 ;;; package.el
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("org"   . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa"        . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
+(add-to-list 'package-archives '("org"          . "http://orgmode.org/elpa/"))
 (package-initialize)
 
 (when (null package-archive-contents)
@@ -646,23 +666,7 @@
          ("\\.lhs\\'"                . literate-haskell-mode)
          ("\\.cabal\\'"              . haskell-cabal-mode))
   :init
-  (defun ht/haskell-interactive-wrapper (arg)
-    "Prompt user to enter an additional argument to add to haskell-process-args-cabal-repl"
-    (interactive "sEnter argument: ")
-    (add-to-list 'haskell-process-args-cabal-repl arg)
-    (haskell-interactive-bring))
-  (defun ht/haskell-mode ()
-    (when (executable-find "hasktags")
-      (setq haskell-tags-on-save t))
-    (setq evil-auto-indent nil
-          haskell-indentation-layout-offset 4
-          haskell-indentation-left-offset 4))
-  (dolist (mode '(electric-pair-mode
-                  flycheck-mode
-                  haskell-indentation-mode
-                  ht/haskell-mode
-                  interactive-haskell-mode))
-    (add-hook 'haskell-mode-hook mode))
+  ;; alignment of haskell forms
   (with-eval-after-load 'align
     (nconc align-rules-list
            (mapcar (lambda (x)
@@ -670,7 +674,55 @@
                    '((haskell-types       . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
                      (haskell-assignment  . "\\(\\s-+\\)=\\s-+")
                      (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-                     (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+"))))))
+                     (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
+  ;; ghc-mod
+  (ht/comment
+   ;; Nice, but somewhat fragile.
+   ;; Saved here for future reference
+   (use-package ghc
+     :if (executable-find "ghc-mod")
+     :ensure t
+     :pin melpa-stable
+     :init
+     (use-package company-ghc
+       :ensure t
+       :pin melpa-stable
+       :init
+       (add-hook 'haskell-mode-hook 'company-mode)
+       :config
+       (add-to-list 'company-backends 'company-ghc)
+       (setq company-ghc-show-info t))
+     (add-hook 'haskell-mode-hook #'ghc-init))
+   nil)
+  (use-package company-ghci
+    :ensure t
+    :init
+    (add-hook 'haskell-mode-hook 'company-mode)
+    :config
+    (add-to-list 'company-backends 'company-ghci))
+  (defun ht/haskell-mode ()
+    (setq electric-indent-local-mode 0))
+  (dolist (mode '(electric-pair-mode
+                  flycheck-mode
+                  haskell-indentation-mode
+                  ht/haskell-mode
+                  interactive-haskell-mode))
+    (add-hook 'haskell-mode-hook mode))
+  ;; utilities
+  (defun ht/haskell-interactive-wrapper (arg)
+    "Prompt user to enter an additional argument to add to haskell-process-args-cabal-repl"
+    (interactive "sEnter argument: ")
+    (add-to-list 'haskell-process-args-cabal-repl arg)
+    (haskell-interactive-bring))
+  :config
+  ;; https://github.com/syl20bnr/spacemacs/blob/c788da709bb1c74344f5ab1b6f18cfdf6b930df8/layers/%2Blang/haskell/README.org#indentation-doesnt-reset-when-pressing-return-after-an-empty-line
+  (defun haskell-indentation-advice ()
+    (when (and (< 1 (line-number-at-pos))
+               (save-excursion (forward-line -1)
+                               (string= "" (ht/s-trim (buffer-substring (line-beginning-position)
+                                                                        (line-end-position))))))
+      (delete-region (line-beginning-position) (point))))
+  (advice-add 'haskell-indentation-newline-and-indent :after 'haskell-indentation-advice))
 
 (use-package hideshow
   :bind (("<f5>"     . ht/hs-toggle-hiding)
