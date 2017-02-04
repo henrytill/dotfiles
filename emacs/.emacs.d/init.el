@@ -1028,7 +1028,10 @@
   :functions projectile-global-mode
   :diminish projectile-mode
   :config
-  (projectile-global-mode))
+  (projectile-global-mode)
+  (add-to-list 'projectile-project-root-files "_tags")
+  (projectile-register-project-type 'ocamlbuild-make '("_tags" "Makefile") "make" "make test")
+  (projectile-register-project-type 'ocamlbuild-script '("_tags" "build") "./build" "./build tests"))
 
 (use-package proof-site
   :load-path "site-lisp/PG/generic"
