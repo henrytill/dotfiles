@@ -24,6 +24,8 @@
   "Comment out one or more s-expressions."
   nil)
 
+(put 'ht-comment 'lisp-indent-function 'defun)
+
 ;;; https://www.emacswiki.org/emacs/ElispCookbook
 (defun ht-list-subdirs (dir exclude)
   "Find all directories in DIR."
@@ -1250,11 +1252,11 @@
   (setq whitespace-style '(face tabs lines-tail trailing empty)
         whitespace-line-column 100)
   (ht-comment
-   (defun ht-style-whitespace-mode ()
-     (set-face-attribute 'whitespace-line nil
-                         :foreground nil
-                         :background "gray90"))
-   (add-hook 'whitespace-mode-hook 'ht-style-whitespace-mode)))
+    (defun ht-style-whitespace-mode ()
+      (set-face-attribute 'whitespace-line nil
+                          :foreground nil
+                          :background "gray90"))
+    (add-hook 'whitespace-mode-hook 'ht-style-whitespace-mode)))
 
 (use-package yasnippet
   :ensure t
