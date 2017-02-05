@@ -7,8 +7,6 @@ setopt histfcntllock
 setopt histignoredups
 setopt sharehistory
 
-typeset -U path
-
 export HISTFILE=~/.histfile
 export HISTSIZE=100000
 export SAVEHIST=100000
@@ -16,32 +14,34 @@ export SAVEHIST=100000
 bindkey -e
 
 # check if in docker container
-if [ -f /.dockerenv ]; then
+if [ -f /.dockerenv ]
+then
     IN_DOCKER_CONTAINER=1
 fi
 
 # prompt
-() {
+create_prompt ()
+{
     local inDocker=${IN_DOCKER_CONTAINER/1/"[docker]"}
     local inNixShell=${IN_NIX_SHELL/1/"[$name]"}
 
-    if [[ $TERM == dumb ]]; then
+    if [[ $TERM == dumb ]]
+    then
         unsetopt zle
-
         local retStatus='[%?]'
-
         PROMPT=$'\n'$retStatus$inDocker$inNixShell'> '
         PROMPT2=$inDocker$nixshellMode'> '
         RPROMPT=''
     else
         local firstLine='%F{6}%B%n@%m:%~%f%b'
         local retStatus='%(?.[%?].%F{1}[%?]%f)'
-
         PROMPT=$'\n'$firstLine$'\n'$retStatus$inDocker$inNixShell'> '
         PROMPT2=$inDocker$nixshellMode'> '
         RPROMPT=''
     fi
 }
+
+create_prompt
 
 # completion
 zstyle :compinstall filename '$HOME/.zshrc'
@@ -51,7 +51,8 @@ compinit
 zstyle ':completion:*' menu select
 
 # window titles
-if [[ $TERM == rxvt* ]]; then
+if [[ $TERM == rxvt* ]]
+then
     function set-title() {
         echo -en "\e]2;$USER@$HOST: $2\a"
     }
@@ -60,16 +61,19 @@ if [[ $TERM == rxvt* ]]; then
 fi
 
 # Darwin-specific config
-if [[ $(uname) == Darwin ]]; then
+if [[ $(uname) == Darwin ]]
+then
     alias ls="ls -G"
 
-    if [[  -d /Applications/Emacs.app/ ]]; then
+    if [[  -d /Applications/Emacs.app/ ]]
+    then
         alias Emacs.app="open -n -a /Applications/Emacs.app"
     fi
 fi
 
 # Linux-specific config
-if [[ $(uname) == Linux ]]; then
+if [[ $(uname) == Linux ]]
+then
     alias ls="ls --color"
 fi
 
@@ -82,7 +86,8 @@ alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
 
-if [[ $TERM == dumb ]]; then
+if [[ $TERM == dumb ]]
+then
     alias less="cat"
     alias more="cat"
     alias l="ls -lh"
@@ -93,26 +98,32 @@ else
     alias la="clear && ls -lah"
 fi
 
-if [[ -n $(command -v gpg2) ]]; then
+if [[ -n $(command -v gpg2) ]]
+then
     alias gpg="gpg2"
 fi
 
-if [[ -n $(command -v htop) ]]; then
+if [[ -n $(command -v htop) ]]
+then
     alias htop="TERM=xterm htop"
 fi
 
-if [[ -n $(command -v nix-shell) ]]; then
+if [[ -n $(command -v nix-shell) ]]
+then
     alias nix-zshell="nix-shell --command zsh"
 
     # https://github.com/haskell/cabal/issues/3651#issuecomment-236697644
-    nix-cabal () {
+    nix-cabal ()
+    {
         CABAL=$(whence -p cabal)  # always use same cabal as current shell
-        if [[ -a "$PWD/.shell.drv" ]]; then
+        if [[ -a "$PWD/.shell.drv" ]]
+        then
             nix-shell --add-root "$PWD/.result" \
                       --indirect \
                       "$PWD/.shell.drv" \
                       --run "$CABAL $*"
-        elif [[ -a "$PWD/shell.nix" ]]; then
+        elif [[ -a "$PWD/shell.nix" ]]
+        then
             nix-instantiate --add-root "$PWD/.shell.drv" \
                             --indirect \
                             "$PWD/shell.nix" \
@@ -126,11 +137,16 @@ if [[ -n $(command -v nix-shell) ]]; then
         fi
     }
 
-    nix-default-shell () {
+    nix-default-shell ()
+    {
         nix-shell -E "(import <nixpkgs> {}).callPackage ./default.nix {}" $*
     }
 fi
 
-if [[ -n $(command -v npm) ]]; then
-    npm-exec () { PATH=$(npm bin):$PATH $* }
+if [[ -n $(command -v npm) ]]
+then
+    npm-exec ()
+    {
+        PATH=$(npm bin):$PATH $*
+    }
 fi
