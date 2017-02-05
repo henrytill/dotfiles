@@ -175,9 +175,11 @@
 ;;; package.el
 
 (require 'package)
-(add-to-list 'package-archives '("melpa"        . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
-(add-to-list 'package-archives '("org"          . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("org"   . "http://orgmode.org/elpa/"))
+(ht/comment
+  ;; needed for ghc-mod
+  (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")))
 (package-initialize)
 
 (when (null package-archive-contents)
