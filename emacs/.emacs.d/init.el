@@ -252,8 +252,8 @@
   (load-file (let ((coding-system-for-read 'utf-8))
                (shell-command-to-string "agda-mode locate")))
   (defun ht/agda-mode ()
-    (let ((agda-includes (cons "." (split-string (getenv "buildDependsAgdaShareAgda")))))
-      (dolist (var agda-includes)
+    (when (in-nix-shell-p)
+      (dolist (var (agda-includes (cons "." (split-string (getenv "buildDependsAgdaShareAgda")))))
         (add-to-list 'agda2-include-dirs var))))
   (add-hook 'agda2-mode-hook 'ht/agda-mode))
 
