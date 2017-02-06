@@ -831,6 +831,7 @@
   (use-package linum-relative :ensure t)
   (defun ht/linum-mode ()
     (setq linum-format "%4d ")
+    (setq linum-relative-format "%4s ")
     (set-face-foreground 'linum "grey30")
     (set-face-foreground 'linum-relative-current-face "grey30")
     (set-face-background 'linum-relative-current-face (face-attribute 'default :background))
