@@ -705,7 +705,6 @@
   (defun ht/haskell-mode ()
     (setq electric-indent-local-mode 0))
   (dolist (mode '(electric-pair-mode
-                  flycheck-mode
                   haskell-indentation-mode
                   ht/haskell-mode
                   interactive-haskell-mode))
