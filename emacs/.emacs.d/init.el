@@ -583,6 +583,13 @@
   (use-package evil-surround
     :ensure t
     :commands global-evil-surround-mode)
+  ;; additional ex commands
+  (evil-define-command tnext ()
+    (find-tag nil t))
+  (evil-ex-define-cmd "tn[ext]" 'tnext)
+  (evil-define-command tprevious ()
+    (find-tag nil '-))
+  (evil-ex-define-cmd "tp[revious]" 'tprevious)
   ;; enable
   (evil-mode 1)
   (global-evil-surround-mode 1))
