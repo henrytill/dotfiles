@@ -1093,7 +1093,6 @@
     (defun ht/psc-ide-mode ()
       (psc-ide-mode 1)
       (company-mode 1)
-      (setq psc-ide-use-npm-bin t)
       (define-key evil-normal-state-local-map (kbd "C-]") 'psc-ide-goto-definition))
     (add-hook 'purescript-mode-hook 'ht/psc-ide-mode))
   (add-hook 'purescript-mode-hook 'purescript-indentation-mode)
