@@ -63,6 +63,11 @@ case $(uname -s) in
         ;;
 
     "Linux")
+        if [[ $HOST = "thaumas" && -e $HOME/.nix-profile/etc/profile.d/nix.sh ]]
+        then
+            source $HOME/.nix-profile/etc/profile.d/nix.sh
+        fi
+
         RUST_TOOLCHAIN="stable-x86_64-unknown-linux-gnu"
         ;;
 esac
