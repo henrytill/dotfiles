@@ -50,12 +50,9 @@ case $(uname -s) in
         fi
 
         add_dir_to_path_back "/Library/Frameworks/Mono.framework/Versions/Current/bin"
-        add_dir_to_path_front "/opt/apache-maven-3.3.3/bin"
         add_dir_to_path_front "/opt/protoc-3.0.2-osx-x86_64/bin"
         add_dir_to_path_front "$HOME/.gem/ruby/2.0.0/bin"
         add_dir_to_path_front "$HOME/Library/Python/2.7/bin"
-        add_dir_to_path_front "/opt/ghc/8.0.1/bin"
-        add_dir_to_path_front "$HOME/.cabal/bin"
 
         export LANG=en_US.UTF-8
 
@@ -100,10 +97,6 @@ then
 fi
 
 add_dir_to_path_front "$HOME/.cargo/bin"
-add_dir_to_path_front "$HOME/opt/agda/.cabal-sandbox/bin"
-add_dir_to_path_front "$HOME/opt/idris/.cabal-sandbox/bin"
-add_dir_to_path_front "$HOME/opt/haskell-tools/.cabal-sandbox/bin"
-add_dir_to_path_front "$HOME/opt/ghcjs/.cabal-sandbox/bin"
 add_dir_to_path_front "$HOME/bin"
 
 # Only unique entries please.
