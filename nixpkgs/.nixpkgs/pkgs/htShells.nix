@@ -1,78 +1,57 @@
-{ stdenv, jdk7, jdk8, leiningen, maven, nodejs, sbt, haskellPackages }:
+{ stdenv, pkgs }:
 
-{
-  jdk7-sbt-bnfc =
+rec {
+
+  jdk-sbt = { jdk }:
     let
-      myJDK = jdk7;
-      mySbt = sbt.override { jre = myJDK.jre; };
-      bnfc  = haskellPackages.BNFC;
+      sbt  = pkgs.sbt.override { jre = jdk.jre; };
     in
     stdenv.mkDerivation {
-      name = "shell-jdk7-sbt-bnfc";
+      name = "shell-${jdk.name}-sbt";
       src = null;
-      buildInputs = [ myJDK mySbt bnfc ];
-      JAVA_HOME = "${myJDK}";
+      buildInputs = [ jdk sbt ];
+      JAVA_HOME = "${jdk}";
     };
 
-  jdk7-sbt-maven-bnfc =
+  jdk-sbt-nodejs = { jdk }:
     let
-      myJDK = jdk7;
-      mySbt = sbt.override { jre = myJDK.jre; };
-      myMvn = maven.override { jdk = myJDK; };
-      bnfc  = haskellPackages.BNFC;
+      sbt  = pkgs.sbt.override { jre = jdk.jre; };
     in
     stdenv.mkDerivation {
-      name = "shell-jdk7-sbt-maven-bnfc";
+      name = "shell-${jdk.name}-sbt-nodejs";
       src = null;
-      buildInputs = [ myJDK mySbt maven bnfc ];
-      JAVA_HOME = "${myJDK}";
+      buildInputs = [ jdk sbt pkgs.nodejs ];
+      JAVA_HOME = "${jdk}";
     };
 
-  jdk7-sbt-nodejs =
+  jdk-maven = { jdk }:
     let
-      myJDK = jdk7;
-      mySbt = sbt.override { jre = myJDK.jre; };
+      maven  = pkgs.maven.override { jdk = jdk; };
     in
     stdenv.mkDerivation {
-      name = "shell-jdk7-sbt-nodejs";
+      name = "shell-${jdk.name}-maven";
       src = null;
-      buildInputs = [ myJDK mySbt nodejs ];
-      JAVA_HOME = "${myJDK}";
+      buildInputs = [ jdk maven ];
+      JAVA_HOME = "${jdk}";
     };
 
-  jdk8-lein =
+  jdk-lein = { jdk }:
     let
-      myJDK  = jdk8;
-      myLein = leiningen.override { jdk = myJDK; };
+      leiningen  = pkgs.leiningen.override { jdk = jdk; };
     in
     stdenv.mkDerivation {
-      name = "shell-jdk8-lein";
+      name = "shell-${jdk.name}-leiningen";
       src = null;
-      buildInputs = [ myJDK myLein ];
-      JAVA_HOME = "${myJDK}";
+      buildInputs = [ jdk leiningen ];
+      JAVA_HOME = "${jdk}";
     };
 
-  jdk8-sbt =
-    let
-      myJDK = jdk8;
-      mySbt = sbt.override { jre = myJDK.jre; };
-    in
-    stdenv.mkDerivation {
-      name = "shell-jdk8-sbt";
-      src = null;
-      buildInputs = [ myJDK mySbt ];
-      JAVA_HOME = "${myJDK}";
-    };
-
-  jdk8-sbt-nodejs =
-    let
-      myJDK = jdk8;
-      mySbt = sbt.override { jre = myJDK.jre; };
-    in
-    stdenv.mkDerivation {
-      name = "shell-jdk8-sbt-nodejs";
-      src = null;
-      buildInputs = [ myJDK mySbt nodejs ];
-      JAVA_HOME = "${myJDK}";
-    };
+  jdk7-sbt        = jdk-sbt        { jdk = pkgs.jdk7; };
+  jdk8-sbt        = jdk-sbt        { jdk = pkgs.jdk8; };
+  jdk7-sbt-nodejs = jdk-sbt-nodejs { jdk = pkgs.jdk7; };
+  jdk8-sbt-nodejs = jdk-sbt-nodejs { jdk = pkgs.jdk8; };
+  jdk7-maven      = jdk-maven      { jdk = pkgs.jdk7; };
+  jdk8-maven      = jdk-maven      { jdk = pkgs.jdk8; };
+  jdk7-lein       = jdk-lein       { jdk = pkgs.jdk7; };
+  jdk8-lein       = jdk-lein       { jdk = pkgs.jdk8; };
 }
