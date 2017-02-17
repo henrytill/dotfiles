@@ -675,15 +675,6 @@
          ("\\.lhs\\'"                . literate-haskell-mode)
          ("\\.cabal\\'"              . haskell-cabal-mode))
   :init
-  ;; alignment of haskell forms
-  (with-eval-after-load 'align
-    (nconc align-rules-list
-           (mapcar (lambda (x)
-                     `(,(car x) (regexp . ,(cdr x)) (modes quote (haskell-mode literate-haskell-mode))))
-                   '((haskell-types       . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
-                     (haskell-assignment  . "\\(\\s-+\\)=\\s-+")
-                     (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-                     (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
   ;; ghc-mod
   (ht/comment
    ;; Nice, but somewhat fragile.
@@ -1082,9 +1073,7 @@
   :mode "\\.purs\\'"
   :init
   (defun ht/purescript-mode ()
-    (setq evil-auto-indent nil
-          purescript-indentation-layout-offset 4
-          purescript-indentation-left-offset 4))
+    (setq electric-indent-local-mode 0))
   (use-package psc-ide
     :if (executable-find "psc-ide-server")
     :ensure t
@@ -1094,7 +1083,9 @@
       (psc-ide-mode 1)
       (company-mode 1)
       (define-key evil-normal-state-local-map (kbd "C-]") 'psc-ide-goto-definition))
-    (add-hook 'purescript-mode-hook 'ht/psc-ide-mode))
+    (ht/comment
+      (add-hook 'purescript-mode-hook 'ht/psc-ide-mode)
+      nil))
   (add-hook 'purescript-mode-hook 'purescript-indentation-mode)
   (add-hook 'purescript-mode-hook 'ht/purescript-mode))
 
@@ -1352,6 +1343,18 @@
 
 
 ;;; other settings
+
+;; alignment of haskell & purescript forms
+(with-eval-after-load 'align
+  (nconc align-rules-list
+         (mapcar (lambda (x)
+                   `(,(car x) (regexp . ,(cdr x)) (modes quote (haskell-mode
+                                                                literate-haskell-mode
+                                                                purescript-mode))))
+                 '((haskell-types       . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
+                   (haskell-assignment  . "\\(\\s-+\\)=\\s-+")
+                   (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+                   (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
 
 (with-eval-after-load 'caml-types
   (let ((color (face-attribute 'default :background)))
