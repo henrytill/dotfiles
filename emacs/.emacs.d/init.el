@@ -1356,6 +1356,7 @@
                    (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
                    (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
 
+;; alignment of ocaml forms
 (with-eval-after-load 'caml-types
   (let ((color (face-attribute 'default :background)))
     (dolist (face '(caml-types-expr-face
@@ -1367,6 +1368,7 @@
 (with-eval-after-load 'caml-help
   (set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
 
+;; nixos support
 (with-eval-after-load 'tramp-sh
   (add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
 
