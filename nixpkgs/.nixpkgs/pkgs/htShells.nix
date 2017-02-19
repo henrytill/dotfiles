@@ -2,6 +2,18 @@
 
 rec {
 
+  haskell =
+    stdenv.mkDerivation {
+      name = "shell-haskell";
+      src = null;
+      buildInputs = [
+        (pkgs.haskellPackages.ghcWithPackages (hsPkgs: with hsPkgs; [
+          mtl
+        ]))
+        pkgs.haskellPackages.doctest
+      ];
+    };
+
   jdk-sbt = { jdk }:
     let
       sbt  = pkgs.sbt.override { jre = jdk.jre; };
