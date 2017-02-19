@@ -1438,7 +1438,7 @@
 
 (defun ht/hostname ()
   (when (executable-find "hostname")
-    (string-trim (shell-command-to-string "hostname -s"))))
+    (ht/s-trim (shell-command-to-string "hostname -s"))))
 
 (when (string-equal "thaumas" (ht/hostname))
   (setq doc-view-resolution 150
