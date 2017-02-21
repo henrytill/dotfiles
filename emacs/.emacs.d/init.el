@@ -1331,6 +1331,10 @@
                           :background "gray90"))
     (add-hook 'whitespace-mode-hook 'ht/style-whitespace-mode)))
 
+(use-package yaml-mode
+  :ensure t
+  :mode "\\.yml'")
+
 (use-package yasnippet
   :ensure t
   :defer 10
