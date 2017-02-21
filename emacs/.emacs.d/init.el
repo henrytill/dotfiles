@@ -677,23 +677,23 @@
   :init
   ;; ghc-mod
   (ht/comment
-   ;; Nice, but somewhat fragile.
-   ;; Saved here for future reference
-   (use-package ghc
-     :if (executable-find "ghc-mod")
-     :ensure t
-     :pin melpa-stable
-     :init
-     (use-package company-ghc
-       :ensure t
-       :pin melpa-stable
-       :init
-       (add-hook 'haskell-mode-hook 'company-mode)
-       :config
-       (add-to-list 'company-backends 'company-ghc)
-       (setq company-ghc-show-info t))
-     (add-hook 'haskell-mode-hook #'ghc-init))
-   nil)
+    ;; Nice, but somewhat fragile.
+    ;; Saved here for future reference
+    (use-package ghc
+      :if (executable-find "ghc-mod")
+      :ensure t
+      :pin melpa-stable
+      :init
+      (use-package company-ghc
+        :ensure t
+        :pin melpa-stable
+        :init
+        (add-hook 'haskell-mode-hook 'company-mode)
+        :config
+        (add-to-list 'company-backends 'company-ghc)
+        (setq company-ghc-show-info t))
+      (add-hook 'haskell-mode-hook #'ghc-init))
+    nil)
   (use-package company-ghci
     :ensure t
     :init
