@@ -79,12 +79,16 @@ fi
 
 # aliases
 alias e="$EDITOR"
-alias v="vim"
 alias lf="ls -aF"
 alias ll="ls -la"
 alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
+
+if [[ -n $(command -v view) ]]
+then
+    alias v="view"
+fi
 
 if [[ $TERM == dumb ]]
 then
