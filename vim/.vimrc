@@ -9,8 +9,10 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'derekwyatt/vim-scala'
 Plug 'tpope/vim-surround'
+Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
+Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
+Plug 'derekwyatt/vim-scala',    { 'for': 'scala' }
 call plug#end()
 
 syntax on
@@ -68,3 +70,5 @@ endif
 
 highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 highlight CursorLineNr  term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+map <space> <leader>
