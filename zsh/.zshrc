@@ -116,31 +116,6 @@ if [[ -n $(command -v nix-shell) ]]
 then
     alias nix-zshell="nix-shell --command zsh"
 
-    # https://github.com/haskell/cabal/issues/3651#issuecomment-236697644
-    nix-cabal ()
-    {
-        CABAL=$(whence -p cabal)  # always use same cabal as current shell
-        if [[ -a "$PWD/.shell.drv" ]]
-        then
-            nix-shell --add-root "$PWD/.result" \
-                      --indirect \
-                      "$PWD/.shell.drv" \
-                      --run "$CABAL $*"
-        elif [[ -a "$PWD/shell.nix" ]]
-        then
-            nix-instantiate --add-root "$PWD/.shell.drv" \
-                            --indirect \
-                            "$PWD/shell.nix" \
-                            -A env
-            nix-shell --add-root "$PWD/.result" \
-                      --indirect \
-                      "$PWD/.shell.drv" \
-                      --run "$CABAL $*" || rm "$PWD/.shell.drv"
-        else
-            nix-shell --add-root "$PWD/.result" --indirect --run "$CABAL $*"
-        fi
-    }
-
     nix-default-shell ()
     {
         nix-shell -E "(import <nixpkgs> {}).callPackage ./default.nix {}" $*
