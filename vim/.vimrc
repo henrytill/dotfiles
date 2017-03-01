@@ -1,9 +1,24 @@
 " vimrc
 
+set nocompatible
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-surround'
+Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
+Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
+Plug 'derekwyatt/vim-scala',    { 'for': 'scala' }
+Plug 'let-def/ocp-indent-vim',  { 'for': 'ocaml' }
+call plug#end()
+
 syntax on
 set background=dark
 
-set nocompatible
 set expandtab
 set ignorecase
 set incsearch
@@ -27,19 +42,6 @@ set textwidth=80
 map <space> <leader>
 
 setglobal tags=./tags;
-
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
-
-call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-surround'
-Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
-Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
-Plug 'derekwyatt/vim-scala',    { 'for': 'scala' }
-call plug#end()
 
 if has("autocmd")
   " Enable file type detection.
@@ -66,7 +68,12 @@ if has("autocmd")
     \   exe "normal! g`\"" |
     \ endif
 
+  " use tabs in Makefiles
   autocmd FileType make setlocal noexpandtab
+
+  " merlin
+  let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+  execute "set rtp+=" . g:opamshare . "/merlin/vim"
 endif
 
 highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
