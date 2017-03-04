@@ -14,6 +14,7 @@ Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
 Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
 Plug 'derekwyatt/vim-scala',    { 'for': 'scala' }
 Plug 'let-def/ocp-indent-vim',  { 'for': 'ocaml' }
+Plug 'LnL7/vim-nix',            { 'for': 'nix' }
 call plug#end()
 
 syntax on
