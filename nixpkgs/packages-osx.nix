@@ -4,14 +4,19 @@ with import <nixpkgs> {}; [
   cacert
   haskellPackages.cabal-install
   haskellPackages.cabal2nix
+  haskellPackages.darcs
   haskellPackages.ghc
   haskellPackages.idris
-  haskellPackages.purescript_0_10_5
+  haskellPackages.purescript
+  irssi
   jshon
   mercurial
   nix
+  nix-prefetch-scripts
   nix-repl
   nixopsUnstable
   offlineimap
   socat
+  weechat
+  wget
 ]
