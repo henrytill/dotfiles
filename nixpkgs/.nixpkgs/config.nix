@@ -37,6 +37,7 @@
 
     htScripts = super.recurseIntoAttrs (super.callPackage ./pkgs/htScripts.nix {});
     htShells  = super.recurseIntoAttrs (super.callPackage ./pkgs/htShells.nix {});
+    msmtp     = super.msmtp.override { netcat = super.netcat-gnu; };
     weechat   = super.callPackage ./pkgs/weechat-minimal.nix {};
   };
 }
