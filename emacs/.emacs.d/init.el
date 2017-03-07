@@ -200,6 +200,9 @@
 ;;; other paths
 
 (eval-and-compile
+  (defun ht/agda2-load-path ()
+    (when (executable-find "agda-mode")
+      (file-name-directory (shell-command-to-string "agda-mode locate"))))
   (defun ht/oz-home ()
     (cond ((is-darwin-p) (let ((oz-app-path "/Applications/Mozart2.app"))
                            (when (file-directory-p oz-app-path)
@@ -246,16 +249,8 @@
 
 (use-package agda2-mode
   :if (executable-find "agda-mode")
-  :mode "\\.agda\\'"
-  :defines agda2-include-dirs
-  :init
-  (load-file (let ((coding-system-for-read 'utf-8))
-               (shell-command-to-string "agda-mode locate")))
-  (defun ht/agda-mode ()
-    (when (in-nix-shell-p)
-      (dolist (var (agda-includes (cons "." (split-string (getenv "buildDependsAgdaShareAgda")))))
-        (add-to-list 'agda2-include-dirs var))))
-  (add-hook 'agda2-mode-hook 'ht/agda-mode))
+  :load-path (lambda () (ht/agda2-load-path))
+  :mode "\\.agda\\'")
 
 (use-package alert
   :ensure t
