@@ -69,9 +69,6 @@ if has("autocmd")
     \   exe "normal! g`\"" |
     \ endif
 
-  " use tabs in Makefiles
-  autocmd FileType make setlocal noexpandtab
-
   " merlin
   let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
   execute "set rtp+=" . g:opamshare . "/merlin/vim"
