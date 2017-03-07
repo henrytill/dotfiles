@@ -9,10 +9,31 @@ Emacs.verticalScrollBars:   off
 
 XTerm*background:           #222222
 XTerm*foreground:           #bbbbbb
+
+! Blacks
+XTerm*color0:               #222222
+XTerm*color8:               #444444
+! Reds
+XTerm*color1:               #990000
+XTerm*color9:               #e50000
+! Greens
+XTerm*color2:               #00a600
+XTerm*color10:              #00d900
+! Yellows
+XTerm*color3:               #cccc33
 XTerm*color11:              #ffffaf
-XTerm*color12:              #005577
-XTerm*color13:              #875fff
-XTerm*color14:              #5fd7ff
+! Blues
+XTerm*color4:               #005577
+XTerm*color12:              #3333cc
+! Magentas
+XTerm*color5:               #875fff
+XTerm*color13:              #bb55bb
+! Cyans
+XTerm*color6:               #00aabb
+XTerm*color14:              #55ddff
+! Whites
+XTerm*color7:               #bbbbbb
+XTerm*color15:              #bbbbbb
 
 XTerm*faceName:             xft:Fira Mono:style=Regular:pixelsize=12
 XTerm*renderFont:           true
