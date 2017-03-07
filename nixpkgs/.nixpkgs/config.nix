@@ -35,6 +35,7 @@
         };
       };
 
+    htScripts = super.recurseIntoAttrs (super.callPackage ./pkgs/htScripts.nix {});
     htShells  = super.recurseIntoAttrs (super.callPackage ./pkgs/htShells.nix {});
     weechat   = super.callPackage ./pkgs/weechat-minimal.nix {};
   };
