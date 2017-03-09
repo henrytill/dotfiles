@@ -12,7 +12,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
 Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
-Plug 'derekwyatt/vim-scala',    { 'for': 'scala' }
+Plug 'derekwyatt/vim-scala',    { 'for': ['scala', 'sbt.scala'] }
 Plug 'let-def/ocp-indent-vim',  { 'for': 'ocaml' }
 Plug 'LnL7/vim-nix',            { 'for': 'nix' }
 call plug#end()
