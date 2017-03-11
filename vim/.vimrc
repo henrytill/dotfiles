@@ -43,6 +43,8 @@ set textwidth=80
 
 map <space> <leader>
 
+nnoremap - :e %:h<CR>
+
 setglobal tags=./tags;
 
 if has("autocmd")
