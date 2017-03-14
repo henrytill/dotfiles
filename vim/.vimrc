@@ -10,6 +10,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
+Plug 'junegunn/vim-easy-align'
 Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
 Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
 Plug 'derekwyatt/vim-scala',    { 'for': ['scala', 'sbt.scala'] }
@@ -79,3 +80,9 @@ endif
 
 highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 highlight CursorLineNr  term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
