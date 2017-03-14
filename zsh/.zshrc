@@ -48,6 +48,16 @@ zstyle :compinstall filename '$HOME/.zshrc'
 autoload -Uz compinit
 compinit
 
+autoload -Uz bashcompinit
+bashcompinit
+
+if [[ -d /etc/bash_completion.d ]]
+then
+    for f in /etc/bash_completion.d/*
+        do source $f
+    done
+fi
+
 zstyle ':completion:*' menu select
 
 # window titles
