@@ -16,6 +16,8 @@ Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
 Plug 'derekwyatt/vim-scala',    { 'for': ['scala', 'sbt.scala'] }
 Plug 'let-def/ocp-indent-vim',  { 'for': 'ocaml' }
 Plug 'LnL7/vim-nix',            { 'for': 'nix' }
+Plug 'rust-lang/rust.vim',      { 'for': 'rust' }
+Plug 'racer-rust/vim-racer',    { 'for': 'rust' }
 call plug#end()
 
 syntax on
