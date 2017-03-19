@@ -137,3 +137,8 @@ if [[ -n $(command -v opam) && -d $HOME/.opam ]]
 then
     . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi
+
+if [[ -n $(command -v hecate) ]]
+then
+    eval "$(hecate --bash-completion-script hecate)"
+fi
