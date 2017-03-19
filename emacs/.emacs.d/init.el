@@ -473,6 +473,9 @@
   (defun ht/other-window ()
     (interactive)
     (other-window 1))
+  (defun ht/dired-pwd ()
+    (interactive)
+    (dired default-directory))
   (defconst evil-emacs-state-bindings
     '(("C-w C-w" . ht/other-window)
       ("C-w s"   . split-window-below)
@@ -486,7 +489,8 @@
           (cmd (cdr binding)))
       (define-key evil-emacs-state-map (kbd key) cmd)))
   (defconst evil-normal-state-bindings
-    '(("C-w C-]" . find-tag-other-window)))
+    '(("C-w C-]" . find-tag-other-window)
+      ("-"       . ht/dired-pwd)))
   (dolist (binding evil-normal-state-bindings)
     (let ((key (car binding))
           (cmd (cdr binding)))
@@ -1370,6 +1374,12 @@
 ;; nixos support
 (with-eval-after-load 'tramp-sh
   (add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
+
+
+;;; more keybindings
+
+(with-eval-after-load 'dired
+  (bind-key "-" 'dired-up-directory dired-mode-map))
 
 
 ;;; more cosmetics
