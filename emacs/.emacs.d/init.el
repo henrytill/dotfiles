@@ -1289,15 +1289,7 @@
   (dolist (mode '(electric-pair-mode
                   ;; ht/tuareg-set-compile-command
                   ht/tuareg-mode))
-    (add-hook 'tuareg-mode-hook mode))
-  (with-eval-after-load 'align
-    (nconc align-rules-list
-           (mapcar (lambda (x)
-                     `(,(car x) (regexp . ,(cdr x)) (modes quote (tuareg-mode))))
-                   '((ocaml-types       . "\\(\\s-+\\):\\s-+")
-                     (ocaml-assignment  . "\\(\\s-+\\)=\\s-+")
-                     (ocaml-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-                     (ocaml-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+"))))))
+    (add-hook 'tuareg-mode-hook mode)))
 
 (use-package undo-tree
   :ensure t
@@ -1348,8 +1340,8 @@
 
 ;;; other settings
 
-;; alignment of haskell & purescript forms
 (with-eval-after-load 'align
+  ;; alignment of haskell & purescript forms
   (nconc align-rules-list
          (mapcar (lambda (x)
                    `(,(car x) (regexp . ,(cdr x)) (modes quote (haskell-mode
@@ -1358,9 +1350,16 @@
                  '((haskell-types       . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
                    (haskell-assignment  . "\\(\\s-+\\)=\\s-+")
                    (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-                   (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
+                   (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+"))))
+  ;; alignment of ocaml forms
+  (nconc align-rules-list
+         (mapcar (lambda (x)
+                   `(,(car x) (regexp . ,(cdr x)) (modes quote (tuareg-mode))))
+                 '((ocaml-types       . "\\(\\s-+\\):\\s-+")
+                   (ocaml-assignment  . "\\(\\s-+\\)=\\s-+")
+                   (ocaml-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+                   (ocaml-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
 
-;; alignment of ocaml forms
 (with-eval-after-load 'caml-types
   (let ((color (face-attribute 'default :background)))
     (dolist (face '(caml-types-expr-face
