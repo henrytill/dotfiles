@@ -649,6 +649,7 @@
   :load-path "site-lisp/geiser/elisp"
   :defer t
   :defines geiser-active-implementations
+  :commands geiser-mode
   :config
   (setq geiser-active-implementations '(racket)
         geiser-default-implementation 'racket))
