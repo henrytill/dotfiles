@@ -84,11 +84,6 @@ then
     export LEIN_FAST_TRAMPOLINE=y
 fi
 
-if [[ -n $(command -v opam) && -d $HOME/.opam ]]
-then
-    . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-fi
-
 if [[ -d $HOME/.conscript ]]
 then
     export CONSCRIPT_HOME="$HOME/.conscript"
