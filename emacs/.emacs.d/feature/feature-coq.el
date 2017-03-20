@@ -25,10 +25,9 @@
       :commands company-coq-mode
       :init
       (setq company-coq-disabled-features '(prettify-symbols
-                                            smart-subscripts))
-      (add-hook 'company-coq-mode-hook #'ht/company-coq-fix-issue-126))
-    (add-hook 'coq-mode-hook 'company-coq-mode)
-    (add-hook 'coq-mode-hook 'electric-pair-mode)
-    (add-hook 'coq-mode-hook 'whitespace-mode)))
+                                            smart-subscripts)))
+    (add-hook 'coq-mode-hook #'company-coq-mode)
+    (add-hook 'coq-mode-hook #'electric-pair-mode)
+    (add-hook 'coq-mode-hook #'whitespace-mode)))
 
 (provide 'feature-coq)
