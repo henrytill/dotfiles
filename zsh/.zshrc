@@ -105,11 +105,6 @@ else
     alias la="clear && ls -lah"
 fi
 
-if [[ -n $(command -v gpg2) ]]
-then
-    alias gpg="gpg2"
-fi
-
 if [[ -n $(command -v htop) ]]
 then
     alias htop="TERM=xterm htop"
