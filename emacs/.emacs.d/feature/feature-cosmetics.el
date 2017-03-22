@@ -55,6 +55,19 @@
 
 (ht/custom-set-faces)
 
+(use-package linum
+  :init
+  (use-package linum-relative :ensure t)
+  (defun ht/linum-mode ()
+    (setq linum-format "%4d ")
+    (setq linum-relative-format "%4s ")
+    (set-face-foreground 'linum "grey30")
+    (set-face-foreground 'linum-relative-current-face "grey30")
+    (set-face-background 'linum-relative-current-face (face-attribute 'default :background))
+    (set-face-attribute 'linum-relative-current-face nil :weight 'normal)
+    (linum-relative-on))
+  (add-hook 'linum-mode-hook 'ht/linum-mode))
+
 (show-paren-mode 1)
 
 (setq frame-title-format
