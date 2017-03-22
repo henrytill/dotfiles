@@ -17,6 +17,8 @@ with import <nixpkgs> {}; [
   nixopsUnstable
   offlineimap
   socat
+  tree
   weechat
   wget
+  youtube-dl
 ]
