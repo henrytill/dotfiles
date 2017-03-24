@@ -55,7 +55,7 @@
     :major-modes (tuareg-mode))
   (bind-map-set-keys ht/tuareg-leader-map
     "a" 'tuareg-find-alternate-file)
-  (electric-indent-mode 0)
+  (electric-indent-local-mode 0)
   (setq evil-auto-indent nil))
 
 (with-eval-after-load 'caml-types
