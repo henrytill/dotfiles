@@ -45,6 +45,7 @@
                     feature-dired
                     feature-erc
                     feature-flycheck
+                    feature-ido
                     feature-magit
                     feature-misc-editing
                     feature-org
