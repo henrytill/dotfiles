@@ -20,15 +20,13 @@
                            org-code
                            org-date
                            org-footnote
+                           org-link
                            org-table
                            org-verbatim))
         (meta-faces      '(org-block-begin-line
                            org-block-end-line
                            org-document-info-keyword
                            org-meta-line)))
-    (variable-pitch-mode t)
-    (setq org-src-fontify-natively nil)
-    (set-face-attribute 'org-link nil :font (plist-get ht/fixed-font :font))
     (dolist (face variable-faces)
       (if (cdr face)
           (set-face-attribute (car face) nil :height (cdr face) :inherit 'variable-pitch)
@@ -36,7 +34,9 @@
     (dolist (face fixed-faces)
       (set-face-attribute face nil :inherit 'fixed-pitch))
     (dolist (face meta-faces)
-      (set-face-attribute face nil :inherit 'fixed-pitch :foreground (face-foreground 'font-lock-comment-face nil)))))
+      (set-face-attribute face nil :inherit 'fixed-pitch :foreground (face-foreground 'font-lock-comment-face nil)))
+    (variable-pitch-mode t)
+    (setq org-src-fontify-natively nil)))
 
 (use-package org
   :ensure org-plus-contrib
@@ -47,10 +47,8 @@
   :functions org-bookmark-jump-unhide
   :init
   (use-package org-bullets :ensure t :commands ht/turn-on-org-bullets-mode)
-  (use-package cdlatex     :ensure t :commands turn-on-org-cdlatex)
-  (add-hook 'org-mode-hook 'ht/turn-on-org-bullets-mode)
-  (add-hook 'org-mode-hook 'ht/prettify-org-mode)
-  (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+  (add-hook 'org-mode-hook #'ht/prettify-org-mode)
+  (add-hook 'org-mode-hook #'ht/turn-on-org-bullets-mode)
   :config
   (org-babel-do-load-languages 'org-babel-load-languages '((clojure    . t)
                                                            (emacs-lisp . t)
