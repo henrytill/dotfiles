@@ -55,6 +55,7 @@
                     feature-tex
                     feature-yasnippet
                     ;; language-specific modes
+                    feature-agda
                     feature-c-cpp
                     feature-coq
                     feature-forth
