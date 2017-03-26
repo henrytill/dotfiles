@@ -2,6 +2,7 @@ with import <nixpkgs> {}; [
   aspell
   aspellDicts.en
   cacert
+  haskellPackages.Agda
   haskellPackages.cabal-install
   haskellPackages.cabal2nix
   haskellPackages.darcs
@@ -16,6 +17,7 @@ with import <nixpkgs> {}; [
   nix-repl
   nixopsUnstable
   offlineimap
+  pandoc
   socat
   tree
   weechat
