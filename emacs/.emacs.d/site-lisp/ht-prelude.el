@@ -43,6 +43,21 @@
   (when (executable-find "hostname")
     (ht/s-trim (shell-command-to-string "hostname -s"))))
 
+;;; https://www.emacswiki.org/emacs/ElispCookbook
+(defun ht/list-subdirs (dir exclude)
+  "Find all directories in DIR."
+  (unless (file-directory-p dir)
+    (error "Not a directory `%s'" dir))
+  (let ((dir   (directory-file-name dir))
+        (files (directory-files dir nil nil t))
+        (dirs  '()))
+    (dolist (file files)
+      (unless (member file (append '("." "..") exclude))
+        (let ((file (concat (file-name-as-directory dir) file)))
+          (when (file-directory-p file)
+            (setq dirs (append (cons file (ht/list-subdirs file exclude)) dirs))))))
+    dirs))
+
 (setq apropos-do-all t
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
       custom-file (expand-file-name "custom.el" user-emacs-directory)
