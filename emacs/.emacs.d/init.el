@@ -75,4 +75,5 @@
 (dolist (feature ht/features)
   (require feature nil t))
 
+(set-register ?i `(file . ,(concat user-emacs-directory "init.el")))
 (set-register ?f `(file . ,(concat user-emacs-directory "feature")))
