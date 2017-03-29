@@ -35,8 +35,10 @@
       (set-face-attribute face nil :inherit 'fixed-pitch))
     (dolist (face meta-faces)
       (set-face-attribute face nil :inherit 'fixed-pitch :foreground (face-foreground 'font-lock-comment-face nil)))
-    (variable-pitch-mode t)
-    (setq org-src-fontify-natively nil)))
+    (ht/comment
+      ;; At some point this was necessary for proper formatting
+      (setq org-src-fontify-natively nil))
+    (variable-pitch-mode t)))
 
 (use-package org
   :ensure org-plus-contrib
