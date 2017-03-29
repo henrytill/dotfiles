@@ -1,8 +1,6 @@
-(use-package tex-site
-  :disabled
-  :ensure auctex
+(use-package auctex
   :mode ("\\.tex\\'" . TeX-latex-mode)
-  :commands Tex-latex-mode
+  :config
   (setq TeX-auto-save t
         TeX-parse-self t)
   (setq-default TeX-master nil))
