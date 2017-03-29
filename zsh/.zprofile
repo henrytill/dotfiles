@@ -91,6 +91,7 @@ then
     export PATH=$CONSCRIPT_HOME/bin:$PATH
 fi
 
+add_dir_to_path_front "/usr/local/share/smlnj/bin"
 add_dir_to_path_front "$HOME/.cargo/bin"
 add_dir_to_path_front "$HOME/bin"
 
