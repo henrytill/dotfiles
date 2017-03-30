@@ -88,8 +88,10 @@
       (define-key evil-paredit-state-map (kbd key) cmd))))
 
 (defun ht/setup-evil-ex-commands ()
+  (evil-define-command cfile     () (flycheck-buffer))
   (evil-define-command tnext     () (find-tag nil t))
   (evil-define-command tprevious () (find-tag nil '-))
+  (evil-ex-define-cmd "cf[ile]"     'cfile)
   (evil-ex-define-cmd "tn[ext]"     'tnext)
   (evil-ex-define-cmd "tp[revious]" 'tprevious))
 
