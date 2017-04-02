@@ -16,9 +16,10 @@
 
 (use-package haskell-mode
   :ensure t
-  :mode (("\\.hs\\'"    . haskell-mode)
-         ("\\.lhs\\'"   . literate-haskell-mode)
-         ("\\.cabal\\'" . haskell-cabal-mode))
+  :mode (("\\.hs\\'"      . haskell-mode)
+         ("\\.hs-boot\\'" . haskell-mode)
+         ("\\.lhs\\'"     . literate-haskell-mode)
+         ("\\.cabal\\'"   . haskell-cabal-mode))
   :init
   (use-package flycheck-haskell
     :ensure t
