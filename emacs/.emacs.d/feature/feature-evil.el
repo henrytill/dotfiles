@@ -118,36 +118,27 @@
     :evil-keys ("SPC")
     :evil-states (motion normal visual paredit))
   (bind-map-set-keys ht/base-leader-map
+    "]" 'forward-page
+    "[" 'backward-page
     "w" 'ace-window
     "x" 'smex
     "l" 'evil-paredit-state)
-  ;; (bind-map ht/avy-leader-map
-  ;;   :keys ("M-m g")
-  ;;   :evil-keys ("SPC g"))
-  ;; (bind-map-set-keys ht/avy-leader-map
-  ;;   ";" 'evil-avy-goto-char
-  ;;   "'" 'evil-avy-goto-char-2
-  ;;   "w" 'evil-avy-goto-word-1
-  ;;   "l" 'evil-avy-goto-line)
-  ;; (bind-map ht/flycheck-leader-map
-  ;;   :keys ("M-m f")
-  ;;   :evil-keys ("SPC f"))
-  ;; (bind-map-set-keys ht/flycheck-leader-map
-  ;;   "l" 'flycheck-list-errors
-  ;;   "j" 'flycheck-next-error
-  ;;   "k" 'flycheck-previous-error)
-  ;; (bind-map ht/ido-leader-map
-  ;;   :keys ("M-m b")
-  ;;   :evil-keys ("SPC b"))
-  ;; (bind-map-set-keys ht/ido-leader-map
-  ;;   "b" 'ido-switch-buffer
-  ;;   "f" 'ido-find-file
-  ;;   "k" 'ido-kill-buffer)
-  ;; (bind-map ht/text-leader-map
-  ;;   :keys ("M-m t")
-  ;;   :evil-keys ("SPC t"))
-  ;; (bind-map-set-keys ht/text-leader-map
-  ;;   "a" 'align)
-  )
+  (ht/comment
+    (bind-map ht/avy-leader-map
+      :keys ("M-m g")
+      :evil-keys ("SPC g"))
+    (bind-map-set-keys ht/avy-leader-map
+      ";" 'evil-avy-goto-char
+      "'" 'evil-avy-goto-char-2
+      "w" 'evil-avy-goto-word-1
+      "l" 'evil-avy-goto-line)
+    (bind-map ht/flycheck-leader-map
+      :keys ("M-m f")
+      :evil-keys ("SPC f"))
+    (bind-map-set-keys ht/flycheck-leader-map
+      "l" 'flycheck-list-errors
+      "j" 'flycheck-next-error
+      "k" 'flycheck-previous-error)
+    nil))
 
 (provide 'feature-evil)
