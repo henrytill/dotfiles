@@ -7,7 +7,7 @@ setopt histfcntllock
 setopt histignoredups
 setopt sharehistory
 
-export HISTFILE=~/.histfile
+export HISTFILE=~/.zsh_histfile
 export HISTSIZE=100000
 export SAVEHIST=100000
 
