@@ -28,6 +28,12 @@
             (width  (cdr (assq 'width  default-frame-alist))))
         (set-frame-height (selected-frame) height)
         (set-frame-width  (selected-frame) width)))
+    (defun ht/double-width-frame ()
+      (interactive)
+      (let ((height (cdr (assq 'height default-frame-alist)))
+            (width  (cdr (assq 'width  default-frame-alist))))
+        (set-frame-height (selected-frame) height)
+        (set-frame-width  (selected-frame) (* 2 width))))
     (defun ht/darwin-terminal-frame-setup (frame)
       (with-selected-frame frame
         (unless (display-graphic-p frame)
