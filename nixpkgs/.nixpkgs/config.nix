@@ -22,7 +22,9 @@
         lib = super.haskell.lib;
       in
       super.haskellPackages.override {
-        overrides = self: super: {};
+        overrides = self: super: {
+          process-extras = lib.dontCheck super.process-extras;
+        };
       };
 
     htScripts = super.recurseIntoAttrs (super.callPackage ./pkgs/htScripts.nix {});
