@@ -48,6 +48,7 @@
                     feature-ido
                     feature-magit
                     feature-misc-editing
+                    feature-notmuch
                     feature-org
                     feature-prog-mode
                     feature-projectile
