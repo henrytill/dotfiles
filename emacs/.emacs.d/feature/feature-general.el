@@ -122,4 +122,10 @@
                           :background "gray90"))
     (add-hook 'whitespace-mode-hook 'ht/style-whitespace-mode)))
 
+(setq send-mail-function 'sendmail-send-it
+      sendmail-program "msmtp"
+      mail-specify-envelope-from 't
+      message-sendmail-envelope-from 'header
+      mail-envelope-from 'header)
+
 (provide 'feature-general)
