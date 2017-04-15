@@ -35,10 +35,12 @@ set showmatch
 set smartcase
 set smartindent
 set smarttab
+set wildmenu
 
 set backspace=indent,eol,start
 set clipboard=unnamed
 set laststatus=2
+set path=.,,$PWD/**
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
