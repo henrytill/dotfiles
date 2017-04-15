@@ -27,8 +27,25 @@
         };
       };
 
-    htScripts = super.recurseIntoAttrs (super.callPackage ./pkgs/htScripts.nix {});
-    htShells  = super.recurseIntoAttrs (super.callPackage ./pkgs/htShells.nix {});
-    weechat   = super.callPackage ./pkgs/weechat-minimal.nix {};
+    ht = {
+      scripts    = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/scripts.nix {});
+      shells     = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/shells.nix  {});
+      texliveEnv = super.texlive.combine {
+        inherit (super.texlive)
+        scheme-medium
+        collection-fontsextra
+        collection-fontsrecommended
+        enumitem
+        fontaxes
+        mweights
+        titlesec;
+      };
+    };
+
+    nix = super.nix.overrideAttrs (oldAttrs: {
+      meta = (oldAttrs.meta // { outputsToInstall = [ "out" "man" ]; });
+    });
+
+    weechat = super.callPackage ./pkgs/weechat-minimal.nix {};
   };
 }

@@ -1,2 +1,1 @@
-packages-linux.nix
-packages-osx.nix
+packages.nix
