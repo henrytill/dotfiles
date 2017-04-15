@@ -135,5 +135,5 @@ fi
 
 if [[ -n $(command -v hecate) ]]
 then
-    eval "$(hecate --bash-completion-script hecate)"
+    source <(hecate --bash-completion-script `which hecate`)
 fi
