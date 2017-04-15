@@ -76,7 +76,7 @@ if has("autocmd")
     \ endif
 
   " merlin
-  let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+  let g:opamshare = substitute($OCAML_TOPLEVEL_PATH, 'lib/toplevel', 'share', "")
   execute "set rtp+=" . g:opamshare . "/merlin/vim"
 endif
 
