@@ -52,6 +52,13 @@ nnoremap - :e %:h<CR>
 
 setglobal tags=./tags;
 
+function StripTrailingWhitespace()
+  let myline=line(".")
+  let mycolumn = col(".")
+  silent %s/\s\+$//
+  call cursor(myline, mycolumn)
+endfunction
+
 if has("autocmd")
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
@@ -80,6 +87,8 @@ if has("autocmd")
   " merlin
   let g:opamshare = substitute($OCAML_TOPLEVEL_PATH, 'lib/toplevel', 'share', "")
   execute "set rtp+=" . g:opamshare . "/merlin/vim"
+
+  au BufWritePre *.hs,*.md silent! call StripTrailingWhitespace()
 endif
 
 highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
