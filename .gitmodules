@@ -16,3 +16,6 @@
 [submodule "emacs/.emacs.d/site-lisp/PG"]
 	path = emacs/.emacs.d/site-lisp/PG
 	url = https://github.com/ProofGeneral/PG.git
+[submodule "emacs/.emacs.d/site-lisp/flycheck-quickfix"]
+	path = emacs/.emacs.d/site-lisp/flycheck-quickfix
+	url = https://github.com/henrytill/flycheck-quickfix.git
