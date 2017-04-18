@@ -22,6 +22,7 @@ let
     [ aspell
       aspellDicts.en
       cacert
+      ctags
       ht.texliveEnv
       jshon
       # mercurial
