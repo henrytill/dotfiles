@@ -13,6 +13,7 @@ let
       nix-prefetch-scripts
       nix-repl
       pandoc
+      pijul
     ];
 
   pkgsLinux = with nixpkgs;
