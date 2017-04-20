@@ -36,10 +36,10 @@
 
 (use-package exec-path-from-shell
   :ensure t
-  :if (is-darwin-p)
   :config
   (setq exec-path-from-shell-check-startup-files nil)
-  (exec-path-from-shell-initialize))
+  (exec-path-from-shell-initialize)
+  (setq exec-path (remove-duplicates exec-path :test 'string=)))
 
 (use-package grep
   :commands (grep find-grep find-grep-dired)
