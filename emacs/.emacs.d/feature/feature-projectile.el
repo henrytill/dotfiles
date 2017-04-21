@@ -7,6 +7,7 @@
   (projectile-global-mode)
   (add-to-list 'projectile-project-root-files "_tags")
   (projectile-register-project-type 'ocamlbuild-make '("_tags" "Makefile") "make" "make test")
-  (projectile-register-project-type 'ocamlbuild-script '("_tags" "build") "./build" "./build tests"))
+  (projectile-register-project-type 'ocamlbuild-script '("_tags" "build") "./build" "./build tests")
+  (projectile-register-project-type 'topkg '("_tags" "opam" "pkg") "topkg build" "topkg test"))
 
 (provide 'feature-projectile)
