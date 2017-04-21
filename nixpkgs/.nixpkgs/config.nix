@@ -28,6 +28,7 @@
       };
 
     ht = {
+      packages   = super.callPackage ./pkgs/ht/packages.nix {};
       scripts    = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/scripts.nix {});
       shells     = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/shells.nix  {});
       texliveEnv = super.texlive.combine {

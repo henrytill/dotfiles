@@ -1,11 +1,11 @@
-let
-  nixpkgs = import <nixpkgs> {};
-  stdenv  = nixpkgs.stdenv;
+{ stdenv, pkgs }:
 
-  pkgsShared = with nixpkgs;
+let
+  pkgsShared = with pkgs;
     [ haskellPackages.Agda
       haskellPackages.cabal-install
       haskellPackages.cabal2nix
+      haskellPackages.darcs
       haskellPackages.ghc
       haskellPackages.idris
       haskellPackages.purescript
@@ -16,10 +16,10 @@ let
       pijul
     ];
 
-  pkgsLinux = with nixpkgs;
+  pkgsLinux = with pkgs;
     [ racket ];
 
-  pkgsDarwin = with nixpkgs;
+  pkgsDarwin = with pkgs;
     [ aspell
       aspellDicts.en
       cacert
@@ -38,9 +38,9 @@ let
       youtube-dl
     ];
 
-  pkgs =
+  ps =
     pkgsShared
     ++ stdenv.lib.optional stdenv.isLinux  pkgsLinux
     ++ stdenv.lib.optional stdenv.isDarwin pkgsDarwin;
 
-in pkgs
+in ps
