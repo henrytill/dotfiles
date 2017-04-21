@@ -1,5 +1,6 @@
 (defun ht/scala-mode ()
-  (setq scala-indent:align-parameters t))
+  (setq scala-font-lock:var-face 'font-lock-variable-name-face
+        scala-indent:align-parameters t))
 
 (use-package scala-mode
   :ensure t
