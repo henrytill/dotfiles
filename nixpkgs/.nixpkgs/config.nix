@@ -36,9 +36,11 @@
         scheme-medium
         collection-fontsextra
         collection-fontsrecommended
+        collection-latexextra
         enumitem
         fontaxes
         mweights
+        svg
         titlesec;
       };
     };
