@@ -15,6 +15,13 @@
 
 (defun ht/rtags-mode ()
   (rtags-start-process-unless-running)
+  (bind-map ht/rtags-leader-map
+    :keys ("M-m")
+    :evil-keys ("SPC")
+    :evil-states (motion normal visual paredit)
+    :major-modes (c++-mode))
+  (bind-map-set-keys ht/rtags-leader-map
+    "t" 'rtags-symbol-type)
   (define-key evil-normal-state-local-map (kbd "C-]") 'rtags-find-symbol-at-point)
   (define-key evil-normal-state-local-map (kbd "C-t") 'rtags-location-stack-back))
 
@@ -40,12 +47,13 @@
   (use-package company-rtags
     :disabled t
     :load-path (lambda () (ht/rtags-load-path)))
-  (add-hook 'c-mode-hook 'ht/rtags-mode)
-  (add-hook 'c-mode-hook 'ht/flycheck-rtags-mode)
-  (add-hook 'c++-mode-hook 'ht/rtags-mode)
-  (add-hook 'c++-mode-hook 'ht/flycheck-rtags-mode))
+  (add-hook 'c-mode-hook #'ht/rtags-mode)
+  (add-hook 'c-mode-hook #'ht/flycheck-rtags-mode)
+  (add-hook 'c++-mode-hook #'ht/rtags-mode)
+  (add-hook 'c++-mode-hook #'ht/flycheck-rtags-mode))
 
 (use-package irony
+  :disabled t
   :ensure t
   :commands irony-mode
   :config
