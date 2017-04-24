@@ -9,7 +9,8 @@
   :init
   (use-package flycheck-quickfix
     :load-path "site-lisp/flycheck-quickfix"
-    :config
+    :commands flycheck-quickfix-setup
+    :init
     (add-hook 'scala-mode-hook 'flycheck-quickfix-setup)
     (add-hook 'scala-mode-hook 'flycheck-mode))
   (add-hook 'scala-mode-hook 'ht/scala-mode)
