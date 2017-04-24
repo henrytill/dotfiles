@@ -5,7 +5,6 @@
   :defer t
   :init
   (add-hook 'prog-mode-hook 'ht/prog-mode)
-  (add-hook 'prog-mode-hook 'company-mode)
   (add-hook 'prog-mode-hook 'page-break-lines-mode)
   (add-hook 'prog-mode-hook 'undo-tree-mode)
   (add-hook 'prog-mode-hook 'whitespace-mode))
