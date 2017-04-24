@@ -1,3 +1,5 @@
+;;; c-mode & c++-mode
+
 (with-eval-after-load 'cc-styles
   (c-add-style "stevens" '("bsd" (c-basic-offset . 4)))
   (c-add-style "hnf"     '("bsd" (c-basic-offset . 2)))
@@ -5,75 +7,6 @@
 
 (defun ht/c++-mode ()
   (c-set-style "stroustrup"))
-
-(eval-and-compile
-  (defun ht/rtags-load-path ()
-    (letrec ((rtags-site-lisp  (expand-directory-name "../../share/emacs/site-lisp/rtags"
-                                                      (executable-find "rdm"))))
-      (when (file-directory-p rtags-site-lisp)
-        rtags-site-lisp))))
-
-(defun ht/rtags-mode ()
-  (rtags-start-process-unless-running)
-  (bind-map ht/rtags-leader-map
-    :keys ("M-m")
-    :evil-keys ("SPC")
-    :evil-states (motion normal visual paredit)
-    :major-modes (c++-mode))
-  (bind-map-set-keys ht/rtags-leader-map
-    "t" 'rtags-symbol-type)
-  (define-key evil-normal-state-local-map (kbd "C-]") 'rtags-find-symbol-at-point)
-  (define-key evil-normal-state-local-map (kbd "C-t") 'rtags-location-stack-back))
-
-(defun ht/flycheck-rtags-mode ()
-  (flycheck-select-checker 'rtags)
-  (setq-local flycheck-highlighting-mode nil)
-  (flycheck-mode 1))
-
-(use-package clang-format
-  :ensure t
-  :commands (clang-format
-             clang-format-buffer
-             clang-format-region))
-
-(use-package rtags
-  :if (executable-find "rdm")
-  :defines rtags-start-process-unless-running
-  :commands rtags-start-process-unless-running
-  :load-path (lambda () (ht/rtags-load-path))
-  :init
-  (use-package flycheck-rtags
-    :load-path (lambda () (ht/rtags-load-path)))
-  (use-package company-rtags
-    :disabled t
-    :load-path (lambda () (ht/rtags-load-path)))
-  (add-hook 'c-mode-hook #'ht/rtags-mode)
-  (add-hook 'c-mode-hook #'ht/flycheck-rtags-mode)
-  (add-hook 'c++-mode-hook #'ht/rtags-mode)
-  (add-hook 'c++-mode-hook #'ht/flycheck-rtags-mode))
-
-(use-package irony
-  :disabled t
-  :ensure t
-  :commands irony-mode
-  :config
-  (use-package flycheck-irony
-    :disabled t
-    :ensure t
-    :init
-    (add-hook 'flycheck-mode-hook 'flycheck-irony-setup))
-  (use-package company-irony
-    :ensure t
-    :init
-    (with-eval-after-load 'company
-      (add-to-list 'company-backends 'company-irony)))
-  (use-package irony-eldoc
-    :ensure t
-    :init
-    (add-hook 'irony-mode-hook 'irony-eldoc))
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'c++-mode-hook 'irony-mode))
 
 (use-package c-mode
   :mode (("\\.c\\'" . c-mode)
@@ -87,5 +20,60 @@
   :init
   (add-hook 'c++-mode-hook 'ht/c++-mode)
   (add-hook 'c++-mode-hook 'electric-pair-mode))
+
+
+;;; rtags
+
+(eval-and-compile
+  (defun ht/rtags-load-path ()
+    (letrec ((rtags-site-lisp  (expand-directory-name "../share/emacs/site-lisp/rtags"
+                                                      (file-name-directory (executable-find "rdm")))))
+      (when (file-directory-p rtags-site-lisp)
+        rtags-site-lisp))))
+
+(defun ht/flycheck-rtags-mode ()
+  (flycheck-mode 1)
+  (when (not (featurep 'flycheck-rtags))
+    (require 'flycheck-rtags))
+  (flycheck-select-checker 'rtags)
+  (setq-local flycheck-highlighting-mode nil))
+
+(defun ht/rtags-mode ()
+  (rtags-start-process-unless-running)
+  (ht/flycheck-rtags-mode))
+
+(use-package rtags
+  :if (executable-find "rdm")
+  :defines rtags-start-process-unless-running
+  :commands rtags-start-process-unless-running
+  :load-path (lambda () (ht/rtags-load-path))
+  :init
+  (setq rtags-autostart-diagnostics t
+        rtags-completions-enabled t)
+  (add-hook 'c-mode-hook #'ht/rtags-mode)
+  (add-hook 'c++-mode-hook #'ht/rtags-mode)
+  :config
+  (when (not (featurep 'company-rtags))
+    (require 'company-rtags)
+    (add-to-list 'company-backends 'company-rtags))
+  (bind-map ht/rtags-leader-map
+    :keys ("M-m")
+    :evil-keys ("SPC")
+    :evil-states (motion normal visual paredit)
+    :major-modes (c++-mode))
+  (bind-map-set-keys ht/rtags-leader-map
+    "t" 'rtags-symbol-type)
+  (define-key evil-normal-state-local-map (kbd "C-]") 'rtags-find-symbol-at-point)
+  (define-key evil-normal-state-local-map (kbd "C-t") 'rtags-location-stack-back))
+
+
+;;; clang-format
+
+(use-package clang-format
+  :ensure t
+  :commands (clang-format
+             clang-format-buffer
+             clang-format-region))
+
 
 (provide 'feature-c-cpp)
