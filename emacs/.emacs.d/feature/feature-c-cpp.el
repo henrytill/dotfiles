@@ -63,8 +63,9 @@
     :major-modes (c++-mode))
   (bind-map-set-keys ht/rtags-leader-map
     "t" 'rtags-symbol-type)
-  (define-key evil-normal-state-local-map (kbd "C-]") 'rtags-find-symbol-at-point)
-  (define-key evil-normal-state-local-map (kbd "C-t") 'rtags-location-stack-back))
+  (evil-define-key 'normal c++-mode-map (kbd "C-c C-a") 'ff-find-other-file)
+  (evil-define-key 'normal c++-mode-map (kbd "C-]") 'rtags-find-symbol-at-point)
+  (evil-define-key 'normal c++-mode-map (kbd "C-t") 'rtags-location-stack-back))
 
 
 ;;; clang-format
