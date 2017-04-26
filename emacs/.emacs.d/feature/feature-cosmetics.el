@@ -9,6 +9,23 @@
   (set-face-foreground 'fringe (face-attribute 'default :foreground))
   (set-face-background 'fringe (face-attribute 'default :background)))
 
+(when (and (is-windows-p) (window-system))
+  (let ((fg-color "#bbbbbb")
+        (bg-color "#222222"))
+    (add-to-list 'default-frame-alist '(internal-border-width . 14))
+    (add-to-list 'default-frame-alist '(height . 60))
+    (add-to-list 'default-frame-alist '(width . 100))
+    (add-to-list 'default-frame-alist `(foreground-color . ,fg-color))
+    (add-to-list 'default-frame-alist `(background-color . ,bg-color))
+    (set-face-attribute 'fringe nil :foreground fg-color)
+    (set-face-attribute 'fringe nil :background bg-color)
+    (when (member "Consolas" (font-family-list))
+      (set-face-attribute 'default nil
+                          :family "Consolas"
+                          :foundry 'outline
+                          :width 'normal
+                          :height 98))))
+
 (when (and (is-darwin-p) (window-system))
   (let ((fg-color "#bbbbbb")
         (bg-color "#222222"))

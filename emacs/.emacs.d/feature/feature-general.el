@@ -35,6 +35,7 @@
              avy-isearch))
 
 (use-package exec-path-from-shell
+  :if (or (is-darwin-p) (is-linux-p))
   :ensure t
   :config
   (setq exec-path-from-shell-check-startup-files nil)

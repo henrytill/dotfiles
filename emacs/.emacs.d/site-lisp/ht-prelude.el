@@ -6,6 +6,10 @@
 (defun is-linux-p ()
   (string-equal system-type "gnu/linux"))
 
+(defun is-windows-p ()
+  (or (string-equal system-type "windows-nt")
+      (string-equal system-type "cygwin")))
+
 (defun in-nix-shell-p ()
   (string-equal (getenv "IN_NIX_SHELL") "1"))
 

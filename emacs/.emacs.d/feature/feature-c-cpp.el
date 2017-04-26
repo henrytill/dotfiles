@@ -26,10 +26,10 @@
 
 (eval-and-compile
   (defun ht/rtags-load-path ()
-    (letrec ((rtags-site-lisp  (expand-directory-name "../share/emacs/site-lisp/rtags"
-                                                      (file-name-directory (executable-find "rdm")))))
-      (when (file-directory-p rtags-site-lisp)
-        rtags-site-lisp))))
+    (let ((rdm-executable (executable-find "rdm")))
+      (when rdm-executable
+        (expand-directory-name "../share/emacs/site-lisp/rtags"
+                               (file-name-directory rdm-executable))))))
 
 (defun ht/flycheck-rtags-mode ()
   (flycheck-mode 1)

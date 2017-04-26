@@ -5,4 +5,9 @@
   (setq doc-view-resolution 150
         doc-view-scale-internally nil))
 
+(when (is-windows-p)
+  (let ((home (getenv "HOME")))
+    (when home
+      (setq default-directory home))))
+
 (provide 'feature-postlude)

@@ -11,6 +11,7 @@
           ((is-linux-p)  (expand-directory-name "share/mozart/elisp" (ht/oz-home))))))
 
 (use-package oz
+  :disabled t
   :if (executable-find "oz")
   :load-path (lambda () (list (ht/oz-load-path)))
   :mode ("\\.oz\\'" . oz-mode)
