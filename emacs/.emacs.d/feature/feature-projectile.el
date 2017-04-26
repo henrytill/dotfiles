@@ -6,9 +6,18 @@
   :config
   (projectile-global-mode)
   (add-to-list 'projectile-project-root-files "_tags")
-  (projectile-register-project-type 'ocamlbuild-make '("_tags" "Makefile") "make" "make test")
-  (projectile-register-project-type 'ocamlbuild-script '("_tags" "build") "./build" "./build tests")
-  (projectile-register-project-type 'topkg '("_tags" "opam" "pkg") "topkg build" "topkg test"))
+  (projectile-register-project-type 'ocamlbuild-make
+                                    '("_tags" "Makefile")
+                                    :compile "make"
+                                    :test "make test")
+  (projectile-register-project-type 'ocamlbuild-script
+                                    '("_tags" "build")
+                                    :compile "./build"
+                                    :test "./build tests")
+  (projectile-register-project-type 'topkg
+                                    '("_tags" "opam" "pkg")
+                                    :compile "topkg build"
+                                    :test "topkg test"))
 
 (with-eval-after-load 'projectile
   ;; Redefine to observe projectile-compilation-dir
