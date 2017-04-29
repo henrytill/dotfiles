@@ -5,6 +5,30 @@
 
 (setq frame-background-mode 'dark)
 
+(defun ht/reset-frame ()
+  (interactive)
+  (let ((height (cdr (assq 'height default-frame-alist)))
+        (width  (cdr (assq 'width  default-frame-alist))))
+    (set-frame-height (selected-frame) height)
+    (set-frame-width  (selected-frame) width)))
+
+(defun ht/double-width-frame ()
+  (interactive)
+  (let ((height (cdr (assq 'height default-frame-alist)))
+        (width  (cdr (assq 'width  default-frame-alist))))
+    (set-frame-height (selected-frame) height)
+    (set-frame-width  (selected-frame) (* 2 width))))
+
+(defun ht/darwin-frame-setup (frame)
+  (with-selected-frame frame
+    (if (display-graphic-p frame)
+        (progn
+          (set-face-foreground 'fringe (face-attribute 'default :foreground))
+          (set-face-background 'fringe (face-attribute 'default :background)))
+      (progn
+        (set-face-foreground 'default "unspecified-fg" frame)
+        (set-face-background 'default "unspecified-bg" frame)))))
+
 (when (and (is-linux-p) (window-system))
   (set-face-foreground 'fringe (face-attribute 'default :foreground))
   (set-face-background 'fringe (face-attribute 'default :background)))
@@ -26,37 +50,22 @@
                           :width 'normal
                           :height 98))))
 
-(when (and (is-darwin-p) (window-system))
+(when (and (is-darwin-p))
+  (add-to-list 'default-frame-alist '(height . 60))
+  (add-to-list 'default-frame-alist '(width . 100))
+  (add-hook 'after-make-frame-functions 'ht/darwin-frame-setup))
+
+(when (and (is-darwin-p) (string-equal (window-system) "ns"))
   (let ((fg-color "#bbbbbb")
         (bg-color "#222222"))
     (add-to-list 'default-frame-alist '(internal-border-width . 14))
-    (add-to-list 'default-frame-alist '(height . 60))
-    (add-to-list 'default-frame-alist '(width . 100))
     (add-to-list 'default-frame-alist `(foreground-color . ,fg-color))
     (add-to-list 'default-frame-alist `(background-color . ,bg-color))
     (set-face-attribute 'fringe nil :foreground fg-color)
     (set-face-attribute 'fringe nil :background bg-color)
     (when (member "Fira Mono" (font-family-list))
-      (set-face-attribute 'default nil :font "Fira Mono 12"))
-    (setq-default line-spacing 2)
-    (defun ht/reset-frame ()
-      (interactive)
-      (let ((height (cdr (assq 'height default-frame-alist)))
-            (width  (cdr (assq 'width  default-frame-alist))))
-        (set-frame-height (selected-frame) height)
-        (set-frame-width  (selected-frame) width)))
-    (defun ht/double-width-frame ()
-      (interactive)
-      (let ((height (cdr (assq 'height default-frame-alist)))
-            (width  (cdr (assq 'width  default-frame-alist))))
-        (set-frame-height (selected-frame) height)
-        (set-frame-width  (selected-frame) (* 2 width))))
-    (defun ht/darwin-terminal-frame-setup (frame)
-      (with-selected-frame frame
-        (unless (display-graphic-p frame)
-          (set-face-foreground 'default "unspecified-fg" frame)
-          (set-face-background 'default "unspecified-bg" frame))))
-    (add-hook 'after-make-frame-functions 'ht/darwin-terminal-frame-setup)))
+      (set-face-attribute 'default nil :font "Fira Mono 12")
+      (setq-default line-spacing 2))))
 
 (when (window-system)
   (set-face-attribute 'region nil :background "lightgoldenrod2")
@@ -128,6 +137,7 @@
 (add-hook 'compilation-mode-hook     'ht/truncate-lines)
 (add-hook 'dired-mode-hook           'ht/truncate-lines)
 (add-hook 'prog-mode-hook            'ht/truncate-lines)
+(add-hook 'rtags-mode-hook           'ht/truncate-lines)
 (add-hook 'shell-mode-hook           'ht/truncate-lines)
 (add-hook 'sql-interactive-mode-hook 'ht/truncate-lines)
 
