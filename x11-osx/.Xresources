@@ -1,6 +1,3 @@
-XTerm*font:                 -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1
-XTerm*boldFont:             -misc-fixed-bold-r-semicondensed--13-120-75-75-c-60-iso10646-1
-
 Emacs.background:           #222222
 Emacs.foreground:           #bbbbbb
 
@@ -10,15 +7,39 @@ Emacs.menuBar:              off
 Emacs.toolBar:              off
 Emacs.verticalScrollBars:   off
 
+XTerm*background:           #222222
+XTerm*foreground:           #bbbbbb
+
+! Blacks
+XTerm*color0:               #222222
+XTerm*color8:               #444444
+! Reds
+XTerm*color1:               #990000
+XTerm*color9:               #e50000
+! Greens
+XTerm*color2:               #00a600
+XTerm*color10:              #00d900
+! Yellows
+XTerm*color3:               #cccc33
+XTerm*color11:              #ffffaf
+! Blues
+XTerm*color4:               #005577
+XTerm*color12:              #3333cc
+! Magentas
+XTerm*color5:               #875fff
+XTerm*color13:              #bb55bb
+! Cyans
+XTerm*color6:               #00aabb
+XTerm*color14:              #55ddff
+! Whites
+XTerm*color7:               #bbbbbb
+XTerm*color15:              #bbbbbb
+
+XTerm*font:                 -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1
+XTerm*boldFont:             -misc-fixed-bold-r-semicondensed--13-120-75-75-c-60-iso10646-1
+XTerm*internalBorder:       14
 XTerm*eightBitInput:        false
 XTerm*eightBitOutput:       true
 XTerm*termName:             xterm-256color
 XTerm*utf8:                 1
-
-XTerm*background:           #222222
-XTerm*foreground:           #bbbbbb
-XTerm*color4:               #5fd7ff
-XTerm*color11:              #ffffaf
-XTerm*color12:              #005577
-XTerm*color13:              #875fff
-XTerm*color14:              #5fd7ff
+XTerm*geometry:             120x60+10+10
