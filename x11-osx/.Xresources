@@ -42,4 +42,4 @@ XTerm*eightBitInput:        false
 XTerm*eightBitOutput:       true
 XTerm*termName:             xterm-256color
 XTerm*utf8:                 1
-XTerm*geometry:             120x60+10+10
+XTerm.VT100.geometry:       100x60+10+10
