@@ -14,7 +14,7 @@ export SAVEHIST=100000
 bindkey -e
 
 # check if in docker container
-if [ -f /.dockerenv ]
+if [[ -f /.dockerenv ]]
 then
     IN_DOCKER_CONTAINER=1
 fi
@@ -54,7 +54,7 @@ bashcompinit
 zstyle ':completion:*' menu select
 
 # window titles
-if [[ $TERM == rxvt* ]]
+if [[ $TERM == xterm* ]]
 then
     function set-title() {
         echo -en "\e]2;$USER@$HOST: $2\a"
@@ -64,7 +64,7 @@ then
 fi
 
 # Darwin-specific config
-if [[ $(uname) == Darwin ]]
+if [[ "$(uname -s)" == "Darwin" ]]
 then
     alias ls="ls -G"
 
@@ -75,7 +75,7 @@ then
 fi
 
 # Linux-specific config
-if [[ $(uname) == Linux ]]
+if [[ "$(uname -s)" == "Linux" ]]
 then
     alias ls="ls --color"
 fi
@@ -88,12 +88,12 @@ alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
 
-if [[ -n $(command -v view) ]]
+if [[ -n "$(command -v view)" ]]
 then
     alias v="view"
 fi
 
-if [[ $TERM == dumb ]]
+if [[ $TERM == "dumb" ]]
 then
     alias less="cat"
     alias more="cat"
@@ -105,12 +105,12 @@ else
     alias la="clear && ls -lah"
 fi
 
-if [[ -n $(command -v htop) ]]
+if [[ -n "$(command -v htop)" ]]
 then
     alias htop="TERM=xterm htop"
 fi
 
-if [[ -n $(command -v nix-shell) ]]
+if [[ -n "$(command -v nix-shell)" ]]
 then
     alias nix-zshell="nix-shell --command zsh"
 
@@ -120,7 +120,7 @@ then
     }
 fi
 
-if [[ -n $(command -v npm) ]]
+if [[ -n "$(command -v npm)" ]]
 then
     npm-exec ()
     {
@@ -128,12 +128,12 @@ then
     }
 fi
 
-if [[ -n $(command -v opam) && -d $HOME/.opam ]]
+if [[ -n "$(command -v opam)" && -d "$HOME/.opam" ]]
 then
     . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi
 
-if [[ -n $(command -v hecate) ]]
+if [[ -n "$(command -v hecate)" ]]
 then
     source <(hecate --bash-completion-script `which hecate`)
 fi
