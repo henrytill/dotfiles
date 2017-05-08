@@ -5,9 +5,6 @@
   (setq doc-view-resolution 150
         doc-view-scale-internally nil))
 
-(when (string-equal "nereus" (ht/hostname))
-  (setq clang-format-executable "/opt/clang+llvm-3.9.0-x86_64-apple-darwin/bin/clang-format"))
-
 (when (is-windows-p)
   (let ((home (getenv "HOME")))
     (when home

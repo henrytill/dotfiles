@@ -3,10 +3,8 @@
 (with-eval-after-load 'cc-styles
   (c-add-style "stevens" '("bsd" (c-basic-offset . 4)))
   (c-add-style "hnf"     '("bsd" (c-basic-offset . 2)))
-  (setq c-default-style "hnf"))
-
-(defun ht/c++-mode ()
-  (c-set-style "stroustrup"))
+  (add-to-list 'c-default-style '(c-mode . "stevens"))
+  (add-to-list 'c-default-style '(c++-mode . "stroustrup")))
 
 (use-package c-mode
   :mode (("\\.c\\'" . c-mode)
@@ -18,7 +16,6 @@
   :mode (("\\.cc\\'"  . c++-mode)
          ("\\.cpp\\'" . c++-mode))
   :init
-  (add-hook 'c++-mode-hook 'ht/c++-mode)
   (add-hook 'c++-mode-hook 'electric-pair-mode))
 
 
@@ -74,7 +71,9 @@
   :ensure t
   :commands (clang-format
              clang-format-buffer
-             clang-format-region))
-
+             clang-format-region)
+  :config
+  (when (string-equal "nereus" (ht/hostname))
+    (setq clang-format-executable "/opt/clang+llvm-3.9.0-x86_64-apple-darwin/bin/clang-format")))
 
 (provide 'feature-c-cpp)
