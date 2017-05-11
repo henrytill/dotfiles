@@ -20,9 +20,13 @@
     haskellPackages =
       let
         lib = super.haskell.lib;
+        darwinStaticExe = p: if super.stdenv.isDarwin then lib.justStaticExecutables p else p;
       in
       super.haskellPackages.override {
         overrides = self: super: {
+          cabal2nix      = darwinStaticExe super.cabal2nix;
+          darcs          = darwinStaticExe super.darcs;
+          stack          = darwinStaticExe super.stack;
           process-extras = lib.dontCheck super.process-extras;
         };
       };

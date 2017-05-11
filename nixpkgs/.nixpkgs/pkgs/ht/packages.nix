@@ -1,18 +1,16 @@
 { stdenv, pkgs }:
 
 let
+
   pkgsShared = with pkgs;
-    [ haskellPackages.Agda
-      haskellPackages.cabal-install
+    [ haskellPackages.cabal-install
       haskellPackages.cabal2nix
       haskellPackages.darcs
       haskellPackages.ghc
-      haskellPackages.idris
-      haskellPackages.purescript
       nix
       nix-prefetch-scripts
       nix-repl
-      pandoc
+      # pandoc
       pijul
     ];
 
@@ -29,9 +27,8 @@ let
       # mercurial
       msmtp
       nixopsUnstable
-      notmuch
+      # notmuch
       offlineimap
-      pandoc
       socat
       tree
       wget
