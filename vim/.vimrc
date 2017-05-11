@@ -53,7 +53,7 @@ nnoremap - :e %:h<CR>
 setglobal tags=./tags;
 
 function StripTrailingWhitespace()
-  let myline=line(".")
+  let myline = line(".")
   let mycolumn = col(".")
   silent %s/\s\+$//
   call cursor(myline, mycolumn)
