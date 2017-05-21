@@ -8,6 +8,5 @@ if executable('cabal')
   command! CabalHaddock !cabal haddock
 endif
 
-nnoremap <F5> :make<CR>
 nnoremap <F6> :CabalTest<CR>
 nnoremap <F7> :CabalHaddock<CR>

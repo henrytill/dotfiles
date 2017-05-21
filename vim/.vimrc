@@ -46,10 +46,6 @@ set softtabstop=2
 set tabstop=2
 set textwidth=80
 
-map <space> <leader>
-
-nnoremap - :e %:h<CR>
-
 setglobal tags=./tags;
 
 function StripTrailingWhitespace()
@@ -93,6 +89,11 @@ endif
 
 highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 highlight CursorLineNr  term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+map <space> <leader>
+
+nnoremap - :e %:h<CR>
+nnoremap <F5> :make<CR>
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
