@@ -55,6 +55,17 @@ function StripTrailingWhitespace()
   call cursor(myline, mycolumn)
 endfunction
 
+function RunClangFormat()
+  if executable('clang-format')
+    let myline = line(".")
+    let mycolumn = col(".")
+    silent %! clang-format
+    call cursor(myline, mycolumn)
+  else
+    echo 'Could not locate clang-format'
+  endif
+endfunction
+
 if has("autocmd")
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
@@ -84,7 +95,13 @@ if has("autocmd")
   let g:opamshare = substitute($OCAML_TOPLEVEL_PATH, 'lib/toplevel', 'share', "")
   execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
-  au BufWritePre *.hs,*.md silent! call StripTrailingWhitespace()
+  " strip trailing whitespace on save
+  let s:strippable = '*.md,*.hs,*.scala,*.sbt'
+  execute "au BufWritePre " . s:strippable . " silent call StripTrailingWhitespace()"
+
+  " run clang-format on save
+  let s:clang_formattable = '*.cpp,*.cc,*.hpp,*.hh'
+  execute "au BufWritePre " . s:clang_formattable .  " silent call RunClangFormat()"
 endif
 
 highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
