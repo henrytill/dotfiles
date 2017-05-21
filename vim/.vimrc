@@ -18,6 +18,7 @@ Plug 'let-def/ocp-indent-vim',  { 'for': 'ocaml' }
 Plug 'LnL7/vim-nix',            { 'for': 'nix' }
 Plug 'rust-lang/rust.vim',      { 'for': 'rust' }
 Plug 'racer-rust/vim-racer',    { 'for': 'rust' }
+Plug 'lyuts/vim-rtags',         { 'for': 'cpp' }
 call plug#end()
 
 syntax on
