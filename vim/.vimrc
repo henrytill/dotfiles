@@ -67,6 +67,17 @@ function RunClangFormat()
   endif
 endfunction
 
+function RunPrettier()
+  if executable('prettier')
+    let myline = line(".")
+    let mycolumn = col(".")
+    silent %! prettier --stdin --single-quote
+    call cursor(myline, mycolumn)
+  else
+    echo 'Could not locate prettier'
+  endif
+endfunction
+
 if has("autocmd")
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
