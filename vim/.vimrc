@@ -52,7 +52,7 @@ setglobal tags=./tags;
 function StripTrailingWhitespace()
   let myline = line(".")
   let mycolumn = col(".")
-  silent %s/\s\+$//
+  silent! %s/\s\+$//
   call cursor(myline, mycolumn)
 endfunction
 
@@ -60,7 +60,7 @@ function RunClangFormat()
   if executable('clang-format')
     let myline = line(".")
     let mycolumn = col(".")
-    silent %! clang-format
+    silent! %!clang-format
     call cursor(myline, mycolumn)
   else
     echo 'Could not locate clang-format'
@@ -71,7 +71,7 @@ function RunPrettier()
   if executable('prettier')
     let myline = line(".")
     let mycolumn = col(".")
-    silent %! prettier --stdin --single-quote
+    silent! %!prettier --stdin --single-quote
     call cursor(myline, mycolumn)
   else
     echo 'Could not locate prettier'
