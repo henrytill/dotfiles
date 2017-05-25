@@ -91,6 +91,7 @@ then
     add_dir_to_path_front "$CONSCRIPT_HOME/bin"
 fi
 
+add_dir_to_path_front "/opt/yarn/bin"
 add_dir_to_path_front "/usr/local/share/smlnj/bin"
 add_dir_to_path_front "$HOME/.cargo/bin"
 add_dir_to_path_front "$HOME/bin"
