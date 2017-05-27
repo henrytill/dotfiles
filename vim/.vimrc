@@ -112,7 +112,7 @@ if has("autocmd")
   execute "au BufWritePre " . s:strippable . " silent call StripTrailingWhitespace()"
 
   " run clang-format on save
-  let s:clang_formattable = '*.cpp,*.cc,*.hpp,*.hh'
+  let s:clang_formattable = '*.cpp,*.cc,*.hpp,*.hh,*.h'
   execute "au BufWritePre " . s:clang_formattable .  " silent call RunClangFormat()"
 endif
 
