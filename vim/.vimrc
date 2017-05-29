@@ -78,6 +78,14 @@ function RunPrettier()
   endif
 endfunction
 
+function RunCtags(excludes)
+  if executable('ctags')
+    execute "silent! !ctags -R --exclude=" . a:excludes . " ."
+  else
+    echo 'Could not locate ctags'
+  endif
+endfunction
+
 if has("autocmd")
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
@@ -114,6 +122,8 @@ if has("autocmd")
   " run clang-format on save
   let s:clang_formattable = '*.cpp,*.cc,*.hpp,*.hh,*.h'
   execute "au BufWritePre " . s:clang_formattable .  " silent call RunClangFormat()"
+
+  au BufWritePost *.scala silent call RunCtags("target")
 endif
 
 highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
