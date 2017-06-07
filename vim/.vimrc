@@ -67,6 +67,17 @@ function RunClangFormat()
   endif
 endfunction
 
+function RunGofmt()
+  if executable('gofmt')
+    let myline = line(".")
+    let mycolumn = col(".")
+    silent! %!gofmt
+    call cursor(myline, mycolumn)
+  else
+    echo 'Could not locate gofmt'
+  endif
+endfunction
+
 function RunPrettier()
   if executable('prettier')
     let myline = line(".")
