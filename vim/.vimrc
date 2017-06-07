@@ -89,9 +89,15 @@ function RunPrettier()
   endif
 endfunction
 
-function RunCtags(excludes)
+function RunCtags(...)
   if executable('ctags')
-    execute "silent! !ctags -R --exclude=" . a:excludes . " ."
+    if len(a:000) == 0
+      let excludeString = ""
+    else
+      let excludes = join(a:000, ",")
+      let excludeString = join(["--exclude=", excludes], "")
+    endif
+    execute "silent! !ctags -R " . excludeString . " ."
   else
     echo 'Could not locate ctags'
   endif
