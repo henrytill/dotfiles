@@ -91,6 +91,18 @@ then
     add_dir_to_path_front "$CONSCRIPT_HOME/bin"
 fi
 
+if [[ -d /opt/go ]]
+then
+    export GOROOT="/opt/go"
+    add_dir_to_path_front "$GOROOT/bin"
+
+fi
+
+if [[ -d $HOME/opt/go ]]
+then
+    export GOPATH="$HOME/opt/go"
+fi
+
 add_dir_to_path_front "/opt/yarn/bin"
 add_dir_to_path_front "/usr/local/share/smlnj/bin"
 add_dir_to_path_front "$HOME/.cargo/bin"
