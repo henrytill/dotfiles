@@ -133,7 +133,7 @@ then
     . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi
 
-if [[ -n "$(command -v hecate)" ]]
+if [[ -n "$(command -v hecate)" && -d "$HOME/.hecate" ]]
 then
     source <(hecate --bash-completion-script `which hecate`)
 fi
