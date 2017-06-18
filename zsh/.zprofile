@@ -101,6 +101,7 @@ fi
 if [[ -d $HOME/opt/go ]]
 then
     export GOPATH="$HOME/opt/go"
+    add_dir_to_path_back "$GOPATH/bin"
 fi
 
 add_dir_to_path_front "/opt/yarn/bin"
