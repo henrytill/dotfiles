@@ -92,12 +92,11 @@ endfunction
 function RunCtags(...)
   if executable('ctags')
     if len(a:000) == 0
-      let excludeString = ""
+      let optionString = ""
     else
-      let excludes = join(a:000, ",")
-      let excludeString = join(["--exclude=", excludes], "")
+      let optionString = join(a:000, " ")
     endif
-    execute "silent! !ctags -R " . excludeString . " ."
+    execute "silent! !ctags " . optionString . " 2>/dev/null &"
   else
     echo 'Could not locate ctags'
   endif
@@ -140,7 +139,8 @@ if has("autocmd")
   let s:clang_formattable = '*.cpp,*.cc,*.hpp,*.hh,*.h'
   execute "au BufWritePre " . s:clang_formattable .  " silent call RunClangFormat()"
 
-  au BufWritePost *.scala silent call RunCtags("target")
+  au BufWritePost *.go    silent call RunCtags("-R", "--languages=go")
+  au BufWritePost *.scala silent call RunCtags("-R", "--exclude=target")
 endif
 
 highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
