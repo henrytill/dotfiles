@@ -132,7 +132,7 @@ if has("autocmd")
   execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
   " strip trailing whitespace on save
-  let s:strippable = '*.md,*.hs,*.scala,*.sbt'
+  let s:strippable = '*.md,*.hs,*.scala,*.sbt,*.ml'
   execute "au BufWritePre " . s:strippable . " silent call StripTrailingWhitespace()"
 
   " run clang-format on save
