@@ -14,4 +14,5 @@ nnoremap <leader><a-b> :action GotoImplementation<CR>
 nnoremap <leader>B     :action GotoTypeDeclaration<CR>
 nnoremap <leader>h     :action TypeHierarchy<CR>
 nnoremap <leader>p     :action ParameterInfo<CR>
-nnoremap <leader>u     :action GotoSuperMethod<CR>
+nnoremap <leader>s     :action GotoSuperMethod<CR>
+nnoremap <leader>u     :action FindUsages<CR>
