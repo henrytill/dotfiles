@@ -21,7 +21,13 @@ case $(uname -s) in
         if [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]]
         then
             source $HOME/.nix-profile/etc/profile.d/nix.sh
-            export NIX_PATH="nixpkgs=$HOME/src/nixpkgs"
+
+            local nixpkgs="$HOME/src/nixpkgs"
+
+            if [[ -d $nixpkgs && ! -h $HOME/.nix-defexpr/channels ]]
+            then
+                export NIX_PATH="nixpkgs=$nixpkgs"
+            fi
         fi
 
         if [[ -n $NIX_LINK && -d $NIX_LINK/share/man ]]
@@ -51,6 +57,7 @@ case $(uname -s) in
 
         add_dir_to_path_back "/Library/Frameworks/Mono.framework/Versions/Current/bin"
         add_dir_to_path_front "/opt/protoc-3.0.2-osx-x86_64/bin"
+        add_dir_to_path_front "/opt/apache-maven-3.5.0/bin"
         add_dir_to_path_front "$HOME/.gem/ruby/2.0.0/bin"
         add_dir_to_path_front "$HOME/Library/Python/2.7/bin"
 
@@ -95,7 +102,6 @@ if [[ -d /opt/go ]]
 then
     export GOROOT="/opt/go"
     add_dir_to_path_front "$GOROOT/bin"
-
 fi
 
 if [[ -d $HOME/opt/go ]]
