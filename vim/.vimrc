@@ -49,14 +49,14 @@ set textwidth=80
 
 setglobal tags=./tags;
 
-function StripTrailingWhitespace()
+function! StripTrailingWhitespace()
   let myline = line(".")
   let mycolumn = col(".")
   silent! %s/\s\+$//
   call cursor(myline, mycolumn)
 endfunction
 
-function RunClangFormat()
+function! RunClangFormat()
   if executable('clang-format')
     let myline = line(".")
     let mycolumn = col(".")
@@ -67,7 +67,7 @@ function RunClangFormat()
   endif
 endfunction
 
-function RunGofmt()
+function! RunGofmt()
   if executable('gofmt')
     let myline = line(".")
     let mycolumn = col(".")
@@ -78,7 +78,7 @@ function RunGofmt()
   endif
 endfunction
 
-function RunPrettier()
+function! RunPrettier()
   if executable('prettier')
     let myline = line(".")
     let mycolumn = col(".")
@@ -89,7 +89,7 @@ function RunPrettier()
   endif
 endfunction
 
-function RunCtags(...)
+function! RunCtags(...)
   if executable('ctags')
     if len(a:000) == 0
       let optionString = ""
