@@ -140,7 +140,7 @@ if has("autocmd")
   execute "au BufWritePre " . s:clang_formattable .  " silent call RunClangFormat()"
 
   au BufWritePost *.go    silent call RunCtags("-R", "--languages=go")
-  au BufWritePost *.scala silent call RunCtags("-R", "--exclude=target")
+  au BufWritePost *.scala silent call RunCtags("-R", "--languages=scala,java", "--exclude=target")
 endif
 
 highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
