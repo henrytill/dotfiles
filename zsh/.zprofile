@@ -18,39 +18,39 @@ add_dir_to_path_back ()
 
 case $(uname -s) in
     "Darwin")
-        if [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]]
+        if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]
         then
-            source $HOME/.nix-profile/etc/profile.d/nix.sh
+            source "$HOME/.nix-profile/etc/profile.d/nix.sh"
 
             local nixpkgs="$HOME/src/nixpkgs"
 
-            if [[ -d $nixpkgs && ! -h $HOME/.nix-defexpr/channels ]]
+            if [[ -d $nixpkgs && ! -h "$HOME/.nix-defexpr/channels" ]]
             then
                 export NIX_PATH="nixpkgs=$nixpkgs"
             fi
         fi
 
-        if [[ -n $NIX_LINK && -d $NIX_LINK/share/man ]]
+        if [[ -n $NIX_LINK && -d "$NIX_LINK/share/man" ]]
         then
             export MANPATH="$NIX_LINK/share/man:$MANPATH"
         fi
 
-        if [[ -n $NIX_LINK && -f $NIX_LINK/etc/X11/fonts.conf ]]
+        if [[ -n $NIX_LINK && -f "$NIX_LINK/etc/X11/fonts.conf" ]]
         then
             export FONTCONFIG_FILE="$NIX_LINK/etc/X11/fonts.conf"
         fi
 
-        if [[ -n $NIX_LINK && -d $NIX_LINK/lib/aspell ]]
+        if [[ -n $NIX_LINK && -d "$NIX_LINK/lib/aspell" ]]
         then
             export ASPELL_CONF="dict-dir $NIX_LINK/lib/aspell"
         fi
 
-        if [[ -e /usr/libexec/java_home ]]
+        if [[ -e "/usr/libexec/java_home" ]]
         then
             export JAVA_HOME="$(/usr/libexec/java_home)"
         fi
 
-        if [[ -d /Volumes/vms/vagrant.d ]]
+        if [[ -d "/Volumes/vms/vagrant.d" ]]
         then
             export VAGRANT_HOME="/Volumes/vms/vagrant.d"
         fi
@@ -67,9 +67,9 @@ case $(uname -s) in
         ;;
 
     "Linux")
-        if [[ $HOST == "thaumas" && -e $HOME/.nix-profile/etc/profile.d/nix.sh ]]
+        if [[ $HOST == "thaumas" && -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]
         then
-            source $HOME/.nix-profile/etc/profile.d/nix.sh
+            source "$HOME/.nix-profile/etc/profile.d/nix.sh"
         fi
 
         RUST_TOOLCHAIN="stable-x86_64-unknown-linux-gnu"
@@ -86,25 +86,25 @@ then
     export LEIN_FAST_TRAMPOLINE=y
 fi
 
-if [[ -d $HOME/.multirust/toolchains/$RUST_TOOLCHAIN ]]
+if [[ -d "$HOME/.multirust/toolchains/$RUST_TOOLCHAIN" ]]
 then
     export RUST_SRC_PATH="$HOME/.multirust/toolchains/$RUST_TOOLCHAIN/lib/rustlib/src/rust/src"
 fi
 
-if [[ -d $HOME/.conscript ]]
+if [[ -d "$HOME/.conscript" ]]
 then
     export CONSCRIPT_HOME="$HOME/.conscript"
     export CONSCRIPT_OPTS="-XX:MaxPermSize=512M -Dfile.encoding=UTF-8"
     add_dir_to_path_front "$CONSCRIPT_HOME/bin"
 fi
 
-if [[ -d /opt/go ]]
+if [[ -d "/opt/go" ]]
 then
     export GOROOT="/opt/go"
     add_dir_to_path_front "$GOROOT/bin"
 fi
 
-if [[ -d $HOME/opt/go ]]
+if [[ -d "$HOME/opt/go" ]]
 then
     export GOPATH="$HOME/opt/go"
     add_dir_to_path_back "$GOPATH/bin"
