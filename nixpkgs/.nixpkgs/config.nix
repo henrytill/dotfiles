@@ -9,6 +9,11 @@
       in
       super.haskell // {
         packages = super.haskell.packages // {
+          ghc7103_async202 = super.haskell.packages.ghc7103.override {
+            overrides = self: super: {
+              async = self.callHackage "async" "2.0.2" {};
+            };
+          };
           ghc802 = super.haskell.packages.ghc802.override {
             overrides = self: super: {
               process-extras = lib.dontCheck super.process-extras;
