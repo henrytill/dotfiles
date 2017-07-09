@@ -5,7 +5,7 @@
 
     haskell =
       let
-        lib = super.haskell.lib;
+        lib = self.haskell.lib;
       in
       super.haskell // {
         packages = super.haskell.packages // {
@@ -19,8 +19,8 @@
 
     haskellPackages =
       let
-        lib = super.haskell.lib;
-        darwinStaticExe = p: if super.stdenv.isDarwin then lib.justStaticExecutables p else p;
+        lib = self.haskell.lib;
+        darwinStaticExe = p: if self.stdenv.isDarwin then lib.justStaticExecutables p else p;
       in
       super.haskellPackages.override {
         overrides = self: super: {
@@ -32,11 +32,11 @@
       };
 
     ht = {
-      packages   = super.callPackage ./pkgs/ht/packages.nix {};
-      scripts    = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/scripts.nix {});
-      shells     = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/shells.nix  {});
-      texliveEnv = super.texlive.combine {
-        inherit (super.texlive)
+      packages   = self.callPackage ./pkgs/ht/packages.nix {};
+      scripts    = self.recurseIntoAttrs (self.callPackage ./pkgs/ht/scripts.nix {});
+      shells     = self.recurseIntoAttrs (self.callPackage ./pkgs/ht/shells.nix  {});
+      texliveEnv = self.texlive.combine {
+        inherit (self.texlive)
         scheme-medium
         collection-fontsextra
         collection-fontsrecommended
@@ -53,6 +53,6 @@
       meta = (oldAttrs.meta // { outputsToInstall = [ "out" "man" ]; });
     });
 
-    weechat = super.callPackage ./pkgs/weechat-minimal.nix {};
+    weechat = self.callPackage ./pkgs/weechat-minimal.nix {};
   };
 }
