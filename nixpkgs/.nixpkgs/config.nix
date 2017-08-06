@@ -14,11 +14,6 @@
               async = self.callHackage "async" "2.0.2" {};
             };
           };
-          ghc802 = super.haskell.packages.ghc802.override {
-            overrides = self: super: {
-              process-extras = lib.dontCheck super.process-extras;
-            };
-          };
         };
       };
 
@@ -29,10 +24,11 @@
       in
       super.haskellPackages.override {
         overrides = self: super: {
-          cabal2nix      = darwinStaticExe super.cabal2nix;
-          darcs          = darwinStaticExe super.darcs;
-          stack          = darwinStaticExe super.stack;
-          process-extras = lib.dontCheck super.process-extras;
+          cabal2nix   = darwinStaticExe super.cabal2nix;
+          darcs       = darwinStaticExe super.darcs;
+          lhs2tex     = darwinStaticExe super.lhs2tex;
+          stack       = darwinStaticExe super.stack;
+          threadscope = darwinStaticExe super.threadscope;
         };
       };
 
