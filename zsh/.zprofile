@@ -72,6 +72,12 @@ case $(uname -s) in
             source "$HOME/.nix-profile/etc/profile.d/nix.sh"
         fi
 
+        if [[ -d "/opt/mira-2042-i686-Linux" ]]
+        then
+            export MIRALIB="/opt/mira-2042-i686-Linux/lib/miralib"
+            add_dir_to_path_front "/opt/mira-2042-i686-Linux/bin"
+        fi
+
         RUST_TOOLCHAIN="stable-x86_64-unknown-linux-gnu"
         ;;
 esac
