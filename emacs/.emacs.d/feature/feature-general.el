@@ -114,7 +114,7 @@
   :commands whitespace-mode
   :diminish whitespace-mode
   :init
-  (setq whitespace-style '(face tabs lines-tail trailing empty)
+  (setq whitespace-style '(face tabs lines-tail trailing)
         whitespace-line-column 100)
   (ht/comment
     (defun ht/style-whitespace-mode ()
