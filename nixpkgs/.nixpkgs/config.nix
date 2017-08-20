@@ -14,6 +14,11 @@
               async = self.callHackage "async" "2.0.2" {};
             };
           };
+          ghc802_syb06 = super.haskell.packages.ghc802.override {
+            overrides = self: super: {
+              syb = self.callHackage "syb" "0.6" {};
+            };
+          };
         };
       };
 
