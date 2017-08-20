@@ -9,6 +9,7 @@
     geiser-repl-mode
     haskell-error-mode
     haskell-interactive-mode
+    idris-repl-mode
     inferior-caml-mode
     inferior-emacs-lisp-mode
     inferior-forth-mode
@@ -41,7 +42,8 @@
     ("C-o"     . evil-execute-in-normal-state)))
 
 (defconst ht/evil-normal-state-bindings
-  '(("C-w C-]" . find-tag-other-window)))
+  '(("C-w C-]" . find-tag-other-window)
+    ("g x"     . browse-url-at-point)))
 
 (defun ht/setup-evil-bindings ()
   (dolist (binding ht/evil-emacs-state-bindings)
