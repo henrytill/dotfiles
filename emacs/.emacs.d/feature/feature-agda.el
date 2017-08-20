@@ -4,7 +4,9 @@
 
 (defun ht/agda2-mode ()
   (interactive)
-  (custom-set-variables '(agda2-highlight-face-groups 'default-faces)))
+  (custom-set-variables '(agda2-highlight-face-groups 'default-faces))
+  (define-key evil-normal-state-local-map (kbd "C-]") 'agda2-goto-definition-keyboard)
+  (define-key evil-normal-state-local-map (kbd "C-t") 'agda2-go-back))
 
 (use-package agda2-mode
   :if (executable-find "agda-mode")
