@@ -18,7 +18,7 @@
   :init
   (use-package flycheck-rust
     :ensure t
-    :defer t
+    :commands flycheck-rust-setup
     :init
     (add-hook 'flycheck-mode-hook 'flycheck-rust-setup))
   (add-hook 'rust-mode-hook 'auto-revert-mode)
