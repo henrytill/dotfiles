@@ -90,10 +90,6 @@
   (setq browse-url-browser-function 'browse-url-default-browser
         dired-use-ls-dired nil))
 
-(when (and (is-darwin-p) (window-system))
-  (setq mac-command-modifier 'super
-        mac-option-modifier 'meta))
-
 (load custom-file t)
 
 (put 'dired-find-alternate-file 'disabled nil)
