@@ -55,6 +55,7 @@
                     feature-shell
                     feature-tex
                     feature-yasnippet
+                    feature-whitespace
                     ;; language-specific modes
                     feature-agda
                     feature-c-cpp

@@ -110,19 +110,6 @@
   :config
   (setq uniquify-buffer-name-style 'forward))
 
-(use-package whitespace
-  :commands whitespace-mode
-  :diminish whitespace-mode
-  :init
-  (setq whitespace-style '(face tabs lines-tail trailing)
-        whitespace-line-column 100)
-  (ht/comment
-    (defun ht/style-whitespace-mode ()
-      (set-face-attribute 'whitespace-line nil
-                          :foreground nil
-                          :background "gray90"))
-    (add-hook 'whitespace-mode-hook 'ht/style-whitespace-mode)))
-
 (setq send-mail-function 'sendmail-send-it
       sendmail-program "msmtp"
       mail-specify-envelope-from 't
