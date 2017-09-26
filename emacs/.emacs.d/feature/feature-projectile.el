@@ -1,6 +1,7 @@
 (use-package projectile
   :load-path "site-lisp/projectile"
   :functions (projectile-global-mode projectile-switch-project)
+  :commands (projectile-switch-project)
   :bind ("C-c p p" . projectile-switch-project)
   :diminish projectile-mode
   :config

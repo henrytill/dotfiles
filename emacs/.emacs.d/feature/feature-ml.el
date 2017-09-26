@@ -30,7 +30,7 @@
         :minor-modes (merlin-mode))
       (bind-map-set-keys ht/merlin-leader-map
         "t" 'merlin-type-enclosing)
-      (evil-define-key 'normal merlin-mode-map "gd"  'merlin-locate)
+      (evil-define-key 'normal merlin-mode-map "gd" 'merlin-locate)
       (define-key evil-normal-state-local-map (kbd "C-]") 'merlin-locate)
       (define-key evil-normal-state-local-map (kbd "C-t") 'merlin-pop-stack)
       (merlin-mode 1)
@@ -81,6 +81,7 @@
     :commands merlin-mode
     :defines merlin-command
     :init
+    (add-hook 'caml-mode-hook #'ht/merlin-mode)
     (add-hook 'tuareg-mode-hook #'ht/merlin-mode))
   (use-package utop
     :if (and (executable-find "utop")

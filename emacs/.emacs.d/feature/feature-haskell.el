@@ -32,6 +32,8 @@ haskell-process-args-cabal-repl"
                   haskell-indentation-mode
                   ht/haskell-mode
                   interactive-haskell-mode))
-    (add-hook 'haskell-mode-hook mode)))
+    (add-hook 'haskell-mode-hook mode))
+  :config
+  (setq haskell-interactive-popup-errors nil))
 
 (provide 'feature-haskell)
