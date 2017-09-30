@@ -58,6 +58,7 @@
                     feature-whitespace
                     ;; language-specific modes
                     feature-agda
+                    feature-ats
                     feature-c-cpp
                     feature-coq
                     feature-forth
