@@ -1,5 +1,13 @@
 # .zprofile
 
+export_dir ()
+{
+    if [[ -d $2 ]]
+    then
+        export $1="$2"
+    fi
+}
+
 add_dir_to_path_front ()
 {
     if [[ -d $1 ]]
@@ -50,10 +58,7 @@ case $(uname -s) in
             export JAVA_HOME="$(/usr/libexec/java_home)"
         fi
 
-        if [[ -d "/Volumes/vms/vagrant.d" ]]
-        then
-            export VAGRANT_HOME="/Volumes/vms/vagrant.d"
-        fi
+        export_dir VAGRANT_HOME "/Volumes/vms/vagrant.d"
 
         add_dir_to_path_back "/Library/Frameworks/Mono.framework/Versions/Current/bin"
         add_dir_to_path_front "/opt/protoc-3.0.2-osx-x86_64/bin"
@@ -92,47 +97,49 @@ then
     export LEIN_FAST_TRAMPOLINE=y
 fi
 
-if [[ -d "$HOME/.multirust/toolchains/$RUST_TOOLCHAIN" ]]
-then
-    export RUST_SRC_PATH="$HOME/.multirust/toolchains/$RUST_TOOLCHAIN/lib/rustlib/src/rust/src"
-fi
+# Rust sources
+export_dir RUST_SRC_PATH "$HOME/.multirust/toolchains/$RUST_TOOLCHAIN/lib/rustlib/src/rust/src"
 
-if [[ -d "$HOME/.conscript" ]]
+# Conscript
+export_dir CONSCRIPT_HOME "$HOME/.conscript"
+
+if [[ -n $CONSCRIPT_HOME ]]
 then
-    export CONSCRIPT_HOME="$HOME/.conscript"
-    export CONSCRIPT_OPTS="-XX:MaxPermSize=512M -Dfile.encoding=UTF-8"
     add_dir_to_path_front "$CONSCRIPT_HOME/bin"
+    export CONSCRIPT_OPTS="-XX:MaxPermSize=512M -Dfile.encoding=UTF-8"
 fi
 
-if [[ -d "/opt/go" ]]
+# Go
+export_dir GOROOT "/opt/go"
+export_dir GOPATH "$HOME/opt/go"
+
+if [[ -n $GOROOT ]]
 then
-    export GOROOT="/opt/go"
     add_dir_to_path_front "$GOROOT/bin"
 fi
 
-if [[ -d "$HOME/opt/go" ]]
+if [[ -n $GOPATH ]]
 then
-    export GOPATH="$HOME/opt/go"
     add_dir_to_path_back "$GOPATH/bin"
 fi
 
 # ATS2
+export_dir PATSHOME "/opt/ATS2-Postiats-0.3.6"
+export_dir PATSCONTRIB "$HOME/src/other/ATS-Postiats-contrib"
 
-PATSHOME="/opt/ATS2-Postiats-0.3.6"
-PATSCONTRIB="$HOME/src/other/ATS-Postiats-contrib"
-
-if [[ -d $PATSHOME ]]
+if [[ -n $PATSHOME ]]
 then
-    export PATSHOME
     add_dir_to_path_front "$PATSHOME/bin"
-
-    if [[ -d $PATSCONTRIB ]]
-    then
-        export PATSCONTRIB
-    fi
 fi
 
+# Yarn
 add_dir_to_path_front "/opt/yarn/bin"
+
+# SML
 add_dir_to_path_front "/usr/local/share/smlnj/bin"
+
+# Cargo
 add_dir_to_path_front "$HOME/.cargo/bin"
+
+# scripts
 add_dir_to_path_front "$HOME/bin"
