@@ -116,6 +116,22 @@ then
     add_dir_to_path_back "$GOPATH/bin"
 fi
 
+# ATS2
+
+PATSHOME="/opt/ATS2-Postiats-0.3.6"
+PATSCONTRIB="$HOME/src/other/ATS-Postiats-contrib"
+
+if [[ -d $PATSHOME ]]
+then
+    export PATSHOME
+    add_dir_to_path_front "$PATSHOME/bin"
+
+    if [[ -d $PATSCONTRIB ]]
+    then
+        export PATSCONTRIB
+    fi
+fi
+
 add_dir_to_path_front "/opt/yarn/bin"
 add_dir_to_path_front "/usr/local/share/smlnj/bin"
 add_dir_to_path_front "$HOME/.cargo/bin"
