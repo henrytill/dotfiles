@@ -62,15 +62,17 @@
                     feature-c-cpp
                     feature-coq
                     feature-forth
+                    feature-fsharp
                     feature-haskell
                     feature-idris
                     feature-javascript
                     feature-lisp
-                    feature-ml
+                    feature-ocaml
                     feature-oz
                     feature-purescript
                     feature-rust
                     feature-scala
+                    feature-sml
                     feature-typescript
                     ;; the "postlude"
                     feature-postlude))
