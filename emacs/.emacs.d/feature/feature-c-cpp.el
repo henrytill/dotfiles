@@ -40,6 +40,7 @@
   (setq-local flycheck-highlighting-mode nil))
 
 (defun ht/rtags-mode ()
+  (interactive)
   (rtags-start-process-unless-running)
   (ht/flycheck-rtags-mode))
 
@@ -51,7 +52,6 @@
   :init
   (setq rtags-autostart-diagnostics t
         rtags-completions-enabled t)
-  (add-hook 'c-mode-hook #'ht/rtags-mode)
   (add-hook 'c++-mode-hook #'ht/rtags-mode)
   :config
   (when (not (featurep 'company-rtags))
