@@ -16,11 +16,6 @@
   :ensure t
   :mode "\\.rs\\'"
   :init
-  (use-package flycheck-rust
-    :ensure t
-    :commands flycheck-rust-setup
-    :init
-    (add-hook 'flycheck-mode-hook 'flycheck-rust-setup))
   (add-hook 'rust-mode-hook 'auto-revert-mode)
   (add-hook 'rust-mode-hook 'electric-pair-mode)
   (add-hook 'rust-mode-hook 'flycheck-mode)

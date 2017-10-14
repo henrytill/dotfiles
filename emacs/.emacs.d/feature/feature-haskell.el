@@ -13,14 +13,10 @@ haskell-process-args-cabal-repl"
   :ensure t
   :mode (("\\.hs\\'"      . haskell-mode)
          ("\\.hs-boot\\'" . haskell-mode)
+         ("\\.hsc\\'"     . haskell-mode)
          ("\\.lhs\\'"     . literate-haskell-mode)
          ("\\.cabal\\'"   . haskell-cabal-mode))
   :init
-  (use-package flycheck-haskell
-    :ensure t
-    :defer t
-    :init
-    (add-hook 'flycheck-mode-hook 'flycheck-haskell-setup))
   (use-package company-ghci
     :ensure t
     :defer t
