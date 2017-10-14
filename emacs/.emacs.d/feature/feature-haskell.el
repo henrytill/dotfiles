@@ -1,6 +1,7 @@
 (defun ht/haskell-mode ()
   (setq electric-indent-local-mode 0
-        evil-auto-indent nil))
+        evil-auto-indent nil
+        haskell-interactive-popup-errors nil))
 
 (defun ht/haskell-interactive-wrapper (arg)
   "Prompt user to enter an additional argument to add to
@@ -28,8 +29,6 @@ haskell-process-args-cabal-repl"
                   haskell-indentation-mode
                   ht/haskell-mode
                   interactive-haskell-mode))
-    (add-hook 'haskell-mode-hook mode))
-  :config
-  (setq haskell-interactive-popup-errors nil))
+    (add-hook 'haskell-mode-hook mode)))
 
 (provide 'feature-haskell)
