@@ -47,6 +47,7 @@
                     feature-flycheck
                     feature-ido
                     feature-magit
+                    feature-mmm
                     feature-misc-editing
                     feature-notmuch
                     feature-org
