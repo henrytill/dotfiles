@@ -19,7 +19,7 @@
     (set-frame-height (selected-frame) height)
     (set-frame-width  (selected-frame) (* 2 width))))
 
-(defun ht/darwin-frame-setup (frame)
+(defun ht/frame-setup (frame)
   (with-selected-frame frame
     (if (display-graphic-p frame)
         (progn
@@ -29,9 +29,25 @@
         (set-face-foreground 'default "unspecified-fg" frame)
         (set-face-background 'default "unspecified-bg" frame)))))
 
-(when (and (is-linux-p) (window-system))
-  (set-face-foreground 'fringe (face-attribute 'default :foreground))
-  (set-face-background 'fringe (face-attribute 'default :background)))
+(when (and (is-linux-p))
+  (add-hook 'after-make-frame-functions 'ht/frame-setup))
+
+(when (and (is-darwin-p))
+  (add-to-list 'default-frame-alist '(height . 60))
+  (add-to-list 'default-frame-alist '(width . 100))
+  (add-hook 'after-make-frame-functions 'ht/frame-setup))
+
+(when (and (is-darwin-p) (string-equal (window-system) "ns"))
+  (let ((fg-color "#bbbbbb")
+        (bg-color "#222222"))
+    (add-to-list 'default-frame-alist '(internal-border-width . 14))
+    (add-to-list 'default-frame-alist `(foreground-color . ,fg-color))
+    (add-to-list 'default-frame-alist `(background-color . ,bg-color))
+    (set-face-attribute 'fringe nil :foreground fg-color)
+    (set-face-attribute 'fringe nil :background bg-color)
+    (when (member "Fira Mono" (font-family-list))
+      (set-face-attribute 'default nil :font "Fira Mono 12")
+      (setq-default line-spacing 2))))
 
 (when (and (is-windows-p) (window-system))
   (let ((fg-color "#bbbbbb")
@@ -49,23 +65,6 @@
                           :foundry 'outline
                           :width 'normal
                           :height 98))))
-
-(when (and (is-darwin-p))
-  (add-to-list 'default-frame-alist '(height . 60))
-  (add-to-list 'default-frame-alist '(width . 100))
-  (add-hook 'after-make-frame-functions 'ht/darwin-frame-setup))
-
-(when (and (is-darwin-p) (string-equal (window-system) "ns"))
-  (let ((fg-color "#bbbbbb")
-        (bg-color "#222222"))
-    (add-to-list 'default-frame-alist '(internal-border-width . 14))
-    (add-to-list 'default-frame-alist `(foreground-color . ,fg-color))
-    (add-to-list 'default-frame-alist `(background-color . ,bg-color))
-    (set-face-attribute 'fringe nil :foreground fg-color)
-    (set-face-attribute 'fringe nil :background bg-color)
-    (when (member "Fira Mono" (font-family-list))
-      (set-face-attribute 'default nil :font "Fira Mono 12")
-      (setq-default line-spacing 2))))
 
 (when (window-system)
   (set-face-attribute 'region nil :background "lightgoldenrod2")
