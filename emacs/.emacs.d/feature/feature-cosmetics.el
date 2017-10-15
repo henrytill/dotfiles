@@ -41,9 +41,8 @@
   (add-to-list 'default-frame-alist '(internal-border-width . 14))
   (set-face-foreground 'fringe (face-attribute 'default :foreground))
   (set-face-background 'fringe (face-attribute 'default :background))
-  (when (member "Fira Mono" (font-family-list))
-    (set-face-attribute 'default nil :font "Fira Mono 12")
-    (setq-default line-spacing 2)))
+  (when (member "Go Mono" (font-family-list))
+    (set-face-attribute 'default nil :font "Go Mono 12")))
 
 (when (and (is-windows-p) (window-system))
   (add-to-list 'default-frame-alist '(internal-border-width . 14))
