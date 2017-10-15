@@ -3,7 +3,7 @@
   (scroll-bar-mode -1)
   (tool-bar-mode -1))
 
-(setq frame-background-mode 'dark)
+(setq frame-background-mode 'light)
 
 (defun ht/reset-frame ()
   (interactive)
@@ -21,50 +21,42 @@
 
 (defun ht/frame-setup (frame)
   (with-selected-frame frame
-    (if (display-graphic-p frame)
-        (progn
-          (set-face-foreground 'fringe (face-attribute 'default :foreground))
-          (set-face-background 'fringe (face-attribute 'default :background)))
-      (progn
-        (set-face-foreground 'default "unspecified-fg" frame)
-        (set-face-background 'default "unspecified-bg" frame)))))
+    (when (display-graphic-p frame)
+      (set-face-foreground 'fringe (face-attribute 'default :foreground))
+      (set-face-background 'fringe (face-attribute 'default :background)))))
 
-(when (and (is-linux-p))
+(when (is-linux-p)
   (add-hook 'after-make-frame-functions 'ht/frame-setup))
 
-(when (and (is-darwin-p))
+(when (and (is-linux-p) (string-equal (window-system) "x"))
+  (set-face-foreground 'fringe (face-attribute 'default :foreground))
+  (set-face-background 'fringe (face-attribute 'default :background)))
+
+(when (is-darwin-p)
   (add-to-list 'default-frame-alist '(height . 60))
   (add-to-list 'default-frame-alist '(width . 100))
   (add-hook 'after-make-frame-functions 'ht/frame-setup))
 
 (when (and (is-darwin-p) (string-equal (window-system) "ns"))
-  (let ((fg-color "#bbbbbb")
-        (bg-color "#222222"))
-    (add-to-list 'default-frame-alist '(internal-border-width . 14))
-    (add-to-list 'default-frame-alist `(foreground-color . ,fg-color))
-    (add-to-list 'default-frame-alist `(background-color . ,bg-color))
-    (set-face-attribute 'fringe nil :foreground fg-color)
-    (set-face-attribute 'fringe nil :background bg-color)
-    (when (member "Fira Mono" (font-family-list))
-      (set-face-attribute 'default nil :font "Fira Mono 12")
-      (setq-default line-spacing 2))))
+  (add-to-list 'default-frame-alist '(internal-border-width . 14))
+  (set-face-foreground 'fringe (face-attribute 'default :foreground))
+  (set-face-background 'fringe (face-attribute 'default :background))
+  (when (member "Fira Mono" (font-family-list))
+    (set-face-attribute 'default nil :font "Fira Mono 12")
+    (setq-default line-spacing 2)))
 
 (when (and (is-windows-p) (window-system))
-  (let ((fg-color "#bbbbbb")
-        (bg-color "#222222"))
-    (add-to-list 'default-frame-alist '(internal-border-width . 14))
-    (add-to-list 'default-frame-alist '(height . 60))
-    (add-to-list 'default-frame-alist '(width . 100))
-    (add-to-list 'default-frame-alist `(foreground-color . ,fg-color))
-    (add-to-list 'default-frame-alist `(background-color . ,bg-color))
-    (set-face-attribute 'fringe nil :foreground fg-color)
-    (set-face-attribute 'fringe nil :background bg-color)
-    (when (member "Consolas" (font-family-list))
-      (set-face-attribute 'default nil
-                          :family "Consolas"
-                          :foundry 'outline
-                          :width 'normal
-                          :height 98))))
+  (add-to-list 'default-frame-alist '(internal-border-width . 14))
+  (add-to-list 'default-frame-alist '(height . 60))
+  (add-to-list 'default-frame-alist '(width . 100))
+  (set-face-foreground 'fringe (face-attribute 'default :foreground))
+  (set-face-background 'fringe (face-attribute 'default :background))
+  (when (member "Consolas" (font-family-list))
+    (set-face-attribute 'default nil
+                        :family "Consolas"
+                        :foundry 'outline
+                        :width 'normal
+                        :height 98)))
 
 (when (window-system)
   (set-face-attribute 'region nil :background "lightgoldenrod2")
@@ -72,13 +64,13 @@
 
 (defconst ht/fixed-font
   (cond
-   ((is-linux-p)  '(:font "Fira Mono"))
-   ((is-darwin-p) '(:font "Fira Mono"))))
+   ((is-linux-p)  '(:font "Go Mono"))
+   ((is-darwin-p) '(:font "Go Mono"))))
 
 (defconst ht/variable-font
   (cond
-   ((is-linux-p)  '(:font "Fira Sans"))
-   ((is-darwin-p) '(:font "Fira Sans"))))
+   ((is-linux-p)  '(:font "Go"))
+   ((is-darwin-p) '(:font "Go"))))
 
 (defun ht/custom-set-faces ()
   (custom-set-faces `(fixed-pitch    ((t ,ht/fixed-font)))
@@ -120,7 +112,9 @@
 ;;; hl-line
 (defun ht/select-line-mode ()
   (hl-line-mode 1)
-  (setq cursor-type 'nil))
+  (set-face-attribute 'hl-line nil :background "lightgoldenrod2")
+  (set-face-attribute 'hl-line nil :foreground "black")
+  (setq cursor-type nil))
 
 (add-hook 'dired-mode-hook        'ht/select-line-mode)
 (add-hook 'ibuffer-mode-hook      'ht/select-line-mode)
