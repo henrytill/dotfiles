@@ -22,7 +22,7 @@ Plug 'lyuts/vim-rtags',         { 'for': 'cpp' }
 call plug#end()
 
 syntax on
-set background=dark
+set background=light
 
 set expandtab
 set ignorecase
