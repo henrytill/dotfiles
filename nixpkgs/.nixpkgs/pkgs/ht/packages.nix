@@ -10,12 +10,11 @@ let
       nix
       nix-prefetch-scripts
       nix-repl
-      # pandoc
-      pijul
+      pandoc
     ];
 
   pkgsLinux = with pkgs;
-    [ racket ];
+    [];
 
   pkgsDarwin = with pkgs;
     [ aspell
