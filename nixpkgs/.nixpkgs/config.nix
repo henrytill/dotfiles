@@ -9,14 +9,19 @@
       in
       super.haskell // {
         packages = super.haskell.packages // {
-          ghc7103_async202 = super.haskell.packages.ghc7103.override {
+          ghc7103_async_2_0_2 = super.haskell.packages.ghc7103.override {
             overrides = self: super: {
-              async = self.callHackage "async" "2.0.2" {};
+              async = super.callHackage "async" "2.0.2" {};
             };
           };
-          ghc802_syb06 = super.haskell.packages.ghc802.override {
+          ghc802_optparse-applicative_0_14_0_0 = super.haskell.packages.ghc802.override {
             overrides = self: super: {
-              syb = self.callHackage "syb" "0.6" {};
+              optparse-applicative = super.optparse-applicative_0_14_0_0;
+            };
+          };
+          ghc802_syb_0_6 = super.haskell.packages.ghc802.override {
+            overrides = self: super: {
+              syb = super.callHackage "syb" "0.6" {};
             };
           };
         };
