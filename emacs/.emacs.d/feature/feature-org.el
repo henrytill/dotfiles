@@ -59,7 +59,6 @@
                                                            (js         . t)
                                                            (ocaml      . t)
                                                            (oz         . t)
-                                                           (scala      . t)
                                                            (scheme     . t)
                                                            (shell      . t)))
   (with-eval-after-load 'ob-scheme
