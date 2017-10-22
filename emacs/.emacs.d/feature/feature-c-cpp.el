@@ -33,6 +33,7 @@
                                (file-name-directory rdm-executable))))))
 
 (defun ht/flycheck-rtags-mode ()
+  (interactive)
   (flycheck-mode 1)
   (when (not (featurep 'flycheck-rtags))
     (require 'flycheck-rtags))
@@ -40,9 +41,9 @@
   (setq-local flycheck-highlighting-mode nil))
 
 (defun ht/rtags-mode ()
-  (interactive)
-  (rtags-start-process-unless-running)
-  (ht/flycheck-rtags-mode))
+  (setq rtags-autostart-diagnostics t
+        rtags-completions-enabled t)
+  (rtags-start-process-unless-running))
 
 (use-package rtags
   :if (executable-find "rdm")
@@ -50,8 +51,7 @@
   :commands rtags-start-process-unless-running
   :load-path (lambda () (ht/rtags-load-path))
   :init
-  (setq rtags-autostart-diagnostics t
-        rtags-completions-enabled t)
+  (add-hook 'c-mode-hook   #'ht/rtags-mode)
   (add-hook 'c++-mode-hook #'ht/rtags-mode)
   :config
   (when (not (featurep 'company-rtags))
