@@ -18,7 +18,7 @@ Plug 'let-def/ocp-indent-vim',  { 'for': 'ocaml' }
 Plug 'LnL7/vim-nix',            { 'for': 'nix' }
 Plug 'rust-lang/rust.vim',      { 'for': 'rust' }
 Plug 'racer-rust/vim-racer',    { 'for': 'rust' }
-Plug 'lyuts/vim-rtags',         { 'for': 'cpp' }
+Plug 'lyuts/vim-rtags',         { 'for': ['cpp', 'c'] }
 call plug#end()
 
 syntax on
@@ -136,11 +136,14 @@ if has("autocmd")
   execute "au BufWritePre " . s:strippable . " silent call StripTrailingWhitespace()"
 
   " run clang-format on save
-  let s:clang_formattable = '*.cpp,*.cc,*.hpp,*.hh,*.h'
+  let s:clang_formattable = '*.cpp,*.cc,*.c,*.hpp,*.hh,*.h'
   execute "au BufWritePre " . s:clang_formattable .  " silent call RunClangFormat()"
 
   au BufWritePost *.go    silent call RunCtags("-R", "--languages=go")
   au BufWritePost *.scala silent call RunCtags("-R", "--languages=scala,java", "--exclude=target")
+
+  " use c syntax for *.h files
+  let g:c_syntax_for_h = 1
 endif
 
 highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
