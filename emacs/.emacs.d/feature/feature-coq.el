@@ -8,9 +8,6 @@
       ("; "  . " AND ")
       ("'"   . "’"))))
 
-(with-eval-after-load 'proof-faces
-  (set-face-attribute 'proof-locked-face nil :background "#222232"))
-
 (use-package proof-site
   :load-path "site-lisp/PG/generic"
   :mode ("\\.v\\'" . coq-mode)
