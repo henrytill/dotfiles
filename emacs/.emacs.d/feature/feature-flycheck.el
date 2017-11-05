@@ -12,10 +12,13 @@
   :ensure t
   :commands flycheck-mode
   :init
-  (add-hook 'flycheck-mode-hook 'flycheck-haskell-setup)
+  (ht/comment
+    (add-hook 'flycheck-mode-hook 'flycheck-haskell-setup)
+    nil)
   (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
   :config
-  (setq flycheck-completion-system 'ido)
+  (setq flycheck-check-syntax-automatically '(mode-enabled save)
+        flycheck-completion-system 'ido)
   (setq-default flycheck-disabled-checkers '(haskell-ghc
                                              haskell-hlint
                                              haskell-stack-ghc
