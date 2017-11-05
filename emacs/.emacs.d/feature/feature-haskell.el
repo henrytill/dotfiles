@@ -16,7 +16,9 @@ haskell-process-args-cabal-repl"
 
 (use-package dante
   :ensure t
-  :defines dante-repl-command-line dante-project-root
+  :defines (dante-project-root
+            dante-repl-command-line
+            dante-target)
   :commands dante-mode)
 
 (use-package company-ghci
