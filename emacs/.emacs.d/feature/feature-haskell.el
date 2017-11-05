@@ -1,7 +1,11 @@
 (defun ht/haskell-mode ()
   (setq electric-indent-local-mode 0
         evil-auto-indent nil
-        haskell-interactive-popup-errors nil))
+        haskell-doc-prettify-types nil
+        haskell-interactive-popup-errors nil)
+  (define-key evil-normal-state-local-map (kbd "C-]") 'xref-find-definitions)
+  (define-key evil-normal-state-local-map (kbd "C-t") 'xref-pop-marker-stack)
+  nil)
 
 (defun ht/haskell-interactive-wrapper (arg)
   "Prompt user to enter an additional argument to add to
@@ -9,6 +13,18 @@ haskell-process-args-cabal-repl"
   (interactive "sEnter argument: ")
   (add-to-list 'haskell-process-args-cabal-repl arg)
   (haskell-interactive-bring))
+
+(use-package dante
+  :ensure t
+  :defines dante-repl-command-line dante-project-root
+  :commands dante-mode)
+
+(use-package company-ghci
+  :ensure t
+  :disabled t
+  :defer t
+  :config
+  (add-to-list 'company-backends 'company-ghci))
 
 (use-package haskell-mode
   :ensure t
@@ -18,14 +34,10 @@ haskell-process-args-cabal-repl"
          ("\\.lhs\\'"     . literate-haskell-mode)
          ("\\.cabal\\'"   . haskell-cabal-mode))
   :init
-  (use-package company-ghci
-    :ensure t
-    :defer t
-    :init
-    (add-hook 'haskell-mode-hook 'company-mode)
-    :config
-    (add-to-list 'company-backends 'company-ghci))
-  (dolist (mode '(electric-pair-mode
+  (add-hook 'haskell-mode-local-vars-hook 'dante-mode)
+  (dolist (mode '(company-mode
+                  electric-pair-mode
+                  flycheck-mode
                   haskell-indentation-mode
                   ht/haskell-mode
                   interactive-haskell-mode))
