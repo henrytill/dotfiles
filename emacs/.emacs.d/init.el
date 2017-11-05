@@ -46,6 +46,7 @@
                     feature-erc
                     feature-flycheck
                     feature-ido
+                    feature-lsp
                     feature-magit
                     feature-mmm
                     feature-misc-editing
