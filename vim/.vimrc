@@ -146,8 +146,11 @@ if has("autocmd")
   let g:c_syntax_for_h = 1
 endif
 
-highlight LineNr        term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
-highlight CursorLineNr  term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+highlight LineNr       term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
+highlight CursorLineNr term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
+highlight StatusLine   term=bold,reverse cterm=bold ctermfg=White    ctermbg=DarkGray gui=bold guifg=White    guibg=DarkGray
+highlight StatusLineNc term=reverse      cterm=NONE ctermfg=White    ctermbg=DarkGray gui=NONE guifg=White    guibg=DarkGray
+highlight VertSplit    term=reverse      cterm=NONE ctermfg=White    ctermbg=DarkGray gui=NONE guifg=White    guibg=DarkGray
 
 map <space> <leader>
 
