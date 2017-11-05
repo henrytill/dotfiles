@@ -3,18 +3,27 @@
 let
 
   pkgsShared = with pkgs;
-    [ haskellPackages.cabal-install
+    [ haskellPackages.Agda
+      haskellPackages.cabal-install
       haskellPackages.cabal2nix
       haskellPackages.darcs
       haskellPackages.ghc
+      haskellPackages.ghc-mod
+      haskellPackages.hasktags
+      haskellPackages.idris
+      haskellPackages.lhs2tex
+      haskellPackages.stack
+      haskellPackages.threadscope
       nix
       nix-prefetch-scripts
       nix-repl
       pandoc
+      youtube-dl
     ];
 
   pkgsLinux = with pkgs;
-    [];
+    [ rtags
+    ];
 
   pkgsDarwin = with pkgs;
     [ aspell
@@ -31,7 +40,6 @@ let
       socat
       tree
       wget
-      youtube-dl
     ];
 
   ps =
