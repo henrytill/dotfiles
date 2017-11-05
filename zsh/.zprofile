@@ -132,6 +132,9 @@ then
     add_dir_to_path_front "$PATSHOME/bin"
 fi
 
+# ~/.local/bin
+add_dir_to_path_front "$HOME/.local/bin"
+
 # Yarn
 add_dir_to_path_front "/opt/yarn/bin"
 
