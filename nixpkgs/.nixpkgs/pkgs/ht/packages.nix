@@ -8,7 +8,6 @@ let
       haskellPackages.cabal2nix
       haskellPackages.darcs
       haskellPackages.ghc
-      haskellPackages.ghc-mod
       haskellPackages.hasktags
       haskellPackages.idris
       haskellPackages.lhs2tex
