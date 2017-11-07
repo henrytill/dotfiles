@@ -69,8 +69,6 @@ case $(uname -s) in
 
         export LANG="en_US.UTF-8"
 
-        export EDITOR="emacsclient -t --alternate-editor=vim"
-
         RUST_TOOLCHAIN="stable-x86_64-apple-darwin"
         ;;
 
@@ -86,11 +84,15 @@ case $(uname -s) in
             add_dir_to_path_front "/opt/mira-2042-i686-Linux/bin"
         fi
 
-        export EDITOR="emacsclient -t --alternate-editor="
-
         RUST_TOOLCHAIN="stable-x86_64-unknown-linux-gnu"
         ;;
 esac
+
+if [[ -n "$(command -v vim)" ]]
+then
+    export EDITOR=vim
+fi
+
 
 if [[ -n "$(command -v lein)" ]]
 then
