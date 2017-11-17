@@ -2,11 +2,14 @@
   :load-path "site-lisp/projectile"
   :functions (projectile-global-mode
               projectile-switch-project
-              projectile-find-file)
+              projectile-find-file
+              projectile-kill-buffers)
   :commands (projectile-switch-project
-             projectile-find-file)
+             projectile-find-file
+             projectile-kill-buffers)
   :bind (("C-c p p" . projectile-switch-project)
-         ("C-c p f" . projectile-find-file))
+         ("C-c p f" . projectile-find-file)
+         ("C-c p k" . projectile-kill-buffers))
   :diminish projectile-mode
   :config
   (projectile-global-mode)
