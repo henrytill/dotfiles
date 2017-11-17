@@ -18,7 +18,9 @@
 
 (use-package c++-mode
   :mode (("\\.cc\\'"  . c++-mode)
-         ("\\.cpp\\'" . c++-mode))
+         ("\\.hh\\'"  . c++-mode)
+         ("\\.cpp\\'" . c++-mode)
+         ("\\.hpp\\'" . c++-mode))
   :init
   (add-hook 'c++-mode-hook #'electric-pair-mode))
 
@@ -77,9 +79,6 @@
   :ensure t
   :commands (clang-format
              clang-format-buffer
-             clang-format-region)
-  :config
-  (when (string-equal "nereus" (ht/hostname))
-    (setq clang-format-executable "/opt/clang+llvm-3.9.0-x86_64-apple-darwin/bin/clang-format")))
+             clang-format-region))
 
 (provide 'feature-c-cpp)
