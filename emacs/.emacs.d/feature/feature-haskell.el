@@ -8,11 +8,31 @@
   nil)
 
 (defun ht/haskell-interactive-wrapper (arg)
-  "Prompt user to enter an additional argument to add to
-haskell-process-args-cabal-repl"
+  "Prompt user to enter an additional argument to add to haskell-process-args-*"
   (interactive "sEnter argument: ")
-  (add-to-list 'haskell-process-args-cabal-repl arg)
+  (dolist (args '(haskell-process-args-cabal-repl
+                  haskell-process-args-cabal-new-repl
+                  haskell-process-args-ghci
+                  haskell-process-args-stack-ghci))
+    (custom-reevaluate-setting args)
+    (add-to-list args arg))
   (haskell-interactive-bring))
+
+(defun ht/haskell-toggle-dante-mode ()
+  (interactive)
+  (let ((enable-dante-mode (lambda (x)
+                             (if (bound-and-true-p dante-mode)
+                                 (dante-mode x)
+                               (with-current-buffer (current-buffer)
+                                 (when (eq major-mode 'haskell-mode)
+                                   (dante-mode x)))))))
+    (if (member 'dante-mode haskell-mode-local-vars-hook)
+        (progn
+          (remove-hook 'haskell-mode-local-vars-hook 'dante-mode)
+          (funcall enable-dante-mode 0))
+      (progn
+        (add-hook 'haskell-mode-local-vars-hook 'dante-mode)
+        (funcall enable-dante-mode 1)))))
 
 (use-package dante
   :ensure t
@@ -36,7 +56,6 @@ haskell-process-args-cabal-repl"
          ("\\.lhs\\'"     . literate-haskell-mode)
          ("\\.cabal\\'"   . haskell-cabal-mode))
   :init
-  (add-hook 'haskell-mode-local-vars-hook 'dante-mode)
   (dolist (mode '(company-mode
                   electric-pair-mode
                   flycheck-mode
