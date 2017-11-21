@@ -56,6 +56,7 @@
          ("\\.lhs\\'"     . literate-haskell-mode)
          ("\\.cabal\\'"   . haskell-cabal-mode))
   :init
+  (add-hook 'haskell-mode-local-vars-hook 'dante-mode)
   (dolist (mode '(company-mode
                   electric-pair-mode
                   flycheck-mode

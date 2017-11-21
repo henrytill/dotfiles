@@ -1,7 +1,6 @@
 
 (use-package flycheck-haskell
   :ensure t
-  :disabled t
   :commands flycheck-haskell-setup)
 
 (use-package flycheck-rust
