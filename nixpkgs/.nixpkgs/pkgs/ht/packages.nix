@@ -12,6 +12,7 @@ let
       haskellPackages.idris
       haskellPackages.lhs2tex
       haskellPackages.stack
+      haskellPackages.stylish-haskell
       haskellPackages.threadscope
       nix
       nix-prefetch-scripts
