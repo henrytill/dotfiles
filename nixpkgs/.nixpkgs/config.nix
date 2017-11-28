@@ -50,13 +50,16 @@
           lib              = self.haskell.lib;
       in super.haskellPackages.override {
         overrides = self: super: {
+          Agda                               = darwinStaticExe super.Agda;
           cabal2nix                          = darwinStaticExe super.cabal2nix;
           darcs                              = darwinStaticExe super.darcs;
           distributed-process-simplelocalnet = super.callPackage distProcSimpPath {};
+          idris                              = darwinStaticExe super.idris;
           network-transport                  = super.network-transport_0_5_2;
           network-transport-tcp              = super.network-transport-tcp_0_6_0;
           lhs2tex                            = darwinStaticExe super.lhs2tex;
           stack                              = darwinStaticExe super.stack;
+          stylish-haskell                    = darwinStaticExe super.stylish-haskell;
           threadscope                        = darwinStaticExe super.threadscope;
         };
       };

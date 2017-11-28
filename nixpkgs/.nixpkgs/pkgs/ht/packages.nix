@@ -3,17 +3,13 @@
 let
 
   pkgsShared = with pkgs;
-    [ haskellPackages.Agda
-      haskellPackages.cabal-install
+    [ haskellPackages.cabal-install
       haskellPackages.cabal2nix
       haskellPackages.darcs
       haskellPackages.ghc
-      haskellPackages.hasktags
-      haskellPackages.idris
       haskellPackages.lhs2tex
       haskellPackages.stack
       haskellPackages.stylish-haskell
-      haskellPackages.threadscope
       nix
       nix-prefetch-scripts
       nix-repl
@@ -22,7 +18,10 @@ let
     ];
 
   pkgsLinux = with pkgs;
-    [ rtags
+    [ haskellPackages.Agda
+      haskellPackages.idris
+      haskellPackages.threadscope
+      rtags
     ];
 
   pkgsDarwin = with pkgs;
