@@ -60,12 +60,7 @@ case $(uname -s) in
 
         export_dir VAGRANT_HOME "/Volumes/vms/vagrant.d"
 
-        add_dir_to_path_back "/Library/Frameworks/Mono.framework/Versions/Current/bin"
-        add_dir_to_path_front "/opt/protoc-3.4.0-osx-x86_64/bin"
-        add_dir_to_path_front "/opt/apache-maven-3.5.0/bin"
-        add_dir_to_path_front "$HOME/.gem/ruby/2.0.0/bin"
         add_dir_to_path_front "$HOME/Library/Python/2.7/bin"
-        add_dir_to_path_front "/opt/ghc-8.0.2/bin"
 
         export LANG="en_US.UTF-8"
 
