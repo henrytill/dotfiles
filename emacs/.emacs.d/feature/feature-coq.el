@@ -23,8 +23,9 @@
       :init
       (setq company-coq-disabled-features '(prettify-symbols
                                             smart-subscripts)))
-    (add-hook 'coq-mode-hook #'company-coq-mode)
-    (add-hook 'coq-mode-hook #'electric-pair-mode)
-    (add-hook 'coq-mode-hook #'whitespace-mode)))
+    (dolist (mode '(company-coq-mode
+                    electric-pair-mode
+                    whitespace-mode))
+      (add-hook 'coq-mode-hook mode))))
 
 (provide 'feature-coq)
