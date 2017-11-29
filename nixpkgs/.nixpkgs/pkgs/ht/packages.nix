@@ -31,11 +31,12 @@ let
       ctags
       ht.texliveEnv
       jshon
-      # mercurial
       msmtp
+      mutt
       nixopsUnstable
-      # notmuch
+      notmuch
       offlineimap
+      postgresql
       socat
       tree
       wget
