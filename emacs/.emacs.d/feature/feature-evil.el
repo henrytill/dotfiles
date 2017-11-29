@@ -30,6 +30,8 @@
   (dolist (mode ht/evil-emacs-state-modes)
     (progn (when (member mode evil-insert-state-modes)
              (delete mode evil-insert-state-modes))
+           (when (member mode evil-normal-state-modes)
+             (delete mode evil-normal-state-modes))
            (add-to-list 'evil-emacs-state-modes mode))))
 
 (defconst ht/evil-emacs-state-bindings
@@ -99,6 +101,8 @@
 
 (use-package evil
   :ensure t
+  :init
+  (setq evil-want-abbrev-expand-on-insert-exit nil)
   :config
   (use-package evil-surround
     :ensure t
