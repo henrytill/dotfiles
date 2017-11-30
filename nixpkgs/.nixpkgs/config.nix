@@ -61,7 +61,7 @@
                               sha256          = "122bdaszr9nl1nilslc1kxb954v34b72xasqvsplkgby1hzlzgfi";
                               fetchSubmodules = true;
                             };
-         mgt              = super.haskellPackages.callCabal2nix "multi-ghc-travis" multiGHCTravis {};
+          mgt             = super.haskellPackages.callCabal2nix "multi-ghc-travis" multiGHCTravis {};
       in super.haskellPackages.override {
         overrides = self: super: {
           Agda                               = darwinStaticExe super.Agda;
