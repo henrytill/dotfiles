@@ -44,17 +44,32 @@
       };
 
     haskellPackages =
-      let darwinStaticExe  = p: if self.stdenv.isDarwin then lib.justStaticExecutables p else p;
-          distProcSimpPath = home + "/src/study-haskell/parconc/distributed-process-simplelocalnet";
-          home             = builtins.getEnv "HOME";
-          lib              = self.haskell.lib;
+      let darwinStaticExe = p: if self.stdenv.isDarwin then lib.justStaticExecutables p else p;
+          home            = builtins.getEnv "HOME";
+          lib             = self.haskell.lib;
+          distProcSimp    = super.pkgs.fetchFromGitHub {
+                              owner           = "haskell-distributed";
+                              repo            = "distributed-process-simplelocalnet";
+                              rev             = "3e1660fdbd82995ebb05f3c37991597728f622c6";
+                              sha256          = "1yg72lksdqwiy80l71z0xrdzjgnmppa29lzfk16bss6rh51xj4jy";
+                              fetchSubmodules = true;
+                            };
+          multiGHCTravis  = super.pkgs.fetchFromGitHub {
+                              owner           = "hvr";
+                              repo            = "multi-ghc-travis";
+                              rev             = "a76b3e96a796936b750efbd555cce5714e752f97";
+                              sha256          = "122bdaszr9nl1nilslc1kxb954v34b72xasqvsplkgby1hzlzgfi";
+                              fetchSubmodules = true;
+                            };
+         mgt              = super.haskellPackages.callCabal2nix "multi-ghc-travis" multiGHCTravis {};
       in super.haskellPackages.override {
         overrides = self: super: {
           Agda                               = darwinStaticExe super.Agda;
           cabal2nix                          = darwinStaticExe super.cabal2nix;
           darcs                              = darwinStaticExe super.darcs;
-          distributed-process-simplelocalnet = super.callPackage distProcSimpPath {};
+          distributed-process-simplelocalnet = super.callCabal2nix "distributed-process-simplelocalnet" distProcSimp {};
           idris                              = darwinStaticExe super.idris;
+          multi-ghc-travis                   = darwinStaticExe mgt;
           network-transport                  = super.network-transport_0_5_2;
           network-transport-tcp              = super.network-transport-tcp_0_6_0;
           lhs2tex                            = darwinStaticExe super.lhs2tex;
@@ -65,11 +80,11 @@
       };
 
     ht = {
-      packages   = self.callPackage ./pkgs/ht/packages.nix {};
-      scripts    = self.recurseIntoAttrs (self.callPackage ./pkgs/ht/scripts.nix {});
-      shells     = self.recurseIntoAttrs (self.callPackage ./pkgs/ht/shells.nix  {});
-      texliveEnv = self.texlive.combine {
-        inherit (self.texlive)
+      packages   = super.callPackage ./pkgs/ht/packages.nix {};
+      scripts    = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/scripts.nix {});
+      shells     = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/shells.nix  {});
+      texliveEnv = super.texlive.combine {
+        inherit (super.texlive)
         scheme-medium
         collection-fontsextra
         collection-fontsrecommended
