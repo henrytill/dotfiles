@@ -33,7 +33,7 @@ let
       jshon
       msmtp
       mutt
-      nixopsUnstable
+      nixops
       notmuch
       offlineimap
       postgresql
