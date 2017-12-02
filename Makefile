@@ -3,10 +3,10 @@ MY_HOSTS = glaucus nereus thalassa thaumas
 
 # hosts and their package sets
 glaucus  = emacs git nixpkgs tmux vim zsh
-nereus   = ctags emacs git ideavim leiningen \
+nereus   = ctags emacs git ideavim \
            nixpkgs npm ocaml tmux vim zsh \
            x11-osx
-thaumas  = ctags emacs git ideavim leiningen \
+thaumas  = ctags emacs git ideavim \
            nixpkgs npm ocaml tmux vim zsh \
            dunst x11 xdg
 
@@ -29,11 +29,6 @@ endif
 # ghc
 ifneq (,$(findstring ghc,$(PKG_SET)))
   TARG_DIRS += ../.ghc
-endif
-
-# leiningen
-ifneq (,$(findstring leiningen,$(PKG_SET)))
-  TARG_DIRS += ../.lein
 endif
 
 # sbt
