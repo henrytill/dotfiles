@@ -3,10 +3,10 @@ MY_HOSTS = glaucus nereus thalassa thaumas
 
 # hosts and their package sets
 glaucus  = emacs git nixpkgs tmux vim zsh
-nereus   = boot ctags emacs git ideavim leiningen \
+nereus   = ctags emacs git ideavim leiningen \
            nixpkgs npm ocaml tmux vim zsh \
            x11-osx
-thaumas  = boot ctags emacs git ideavim leiningen \
+thaumas  = ctags emacs git ideavim leiningen \
            nixpkgs npm ocaml tmux vim zsh \
            dunst x11 xdg
 
@@ -24,11 +24,6 @@ ifneq (,$(findstring $(HOST),$(MY_HOSTS)))
   PKG_SET = $($(HOST))
 else
   PKG_SET = $(BASE_PKGS)
-endif
-
-# boot
-ifneq (,$(findstring boot,$(PKG_SET)))
-  TARG_DIRS += ../.boot
 endif
 
 # ghc
