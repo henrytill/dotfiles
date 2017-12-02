@@ -28,6 +28,7 @@
 /emacs/.emacs.d/places
 /emacs/.emacs.d/projectile*
 /emacs/.emacs.d/recentf
+/emacs/.emacs.d/session.*
 /emacs/.emacs.d/server
 /emacs/.emacs.d/tramp
 /emacs/.emacs.d/url

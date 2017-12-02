@@ -24,6 +24,11 @@ add_dir_to_path_back ()
     fi
 }
 
+is_nix_machine ()
+{
+    $HOST == "thaumas" || $HOST == "proteus"
+}
+
 case $(uname -s) in
     "Darwin")
         if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]
@@ -68,7 +73,7 @@ case $(uname -s) in
         ;;
 
     "Linux")
-        if [[ $HOST == "thaumas" && -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]
+        if [[ is_nix_machine && -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]
         then
             source "$HOME/.nix-profile/etc/profile.d/nix.sh"
         fi

@@ -3,7 +3,8 @@
 let
 
   pkgsShared = with pkgs;
-    [ haskellPackages.cabal-install
+    [ aspcud
+      haskellPackages.cabal-install
       haskellPackages.cabal2nix
       haskellPackages.darcs
       haskellPackages.ghc
@@ -21,7 +22,6 @@ let
     [ haskellPackages.Agda
       haskellPackages.idris
       haskellPackages.threadscope
-      rtags
     ];
 
   pkgsDarwin = with pkgs;

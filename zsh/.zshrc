@@ -33,7 +33,7 @@ create_prompt ()
         PROMPT2=$inDocker$nixshellMode'> '
         RPROMPT=''
     else
-        local firstLine='%F{6}%B%n@%m:%~%f%b'
+        local firstLine='%F{0}%B%n@%m:%~%f%b'
         local retStatus='%(?.[%?].%F{1}[%?]%f)'
         PROMPT=$'\n'$firstLine$'\n'$retStatus$inDocker$inNixShell'> '
         PROMPT2=$inDocker$nixshellMode'> '
@@ -106,11 +106,6 @@ then
 else
     alias l="clear && ls -lh"
     alias la="clear && ls -lah"
-fi
-
-if [[ -n "$(command -v htop)" ]]
-then
-    alias htop="TERM=xterm htop"
 fi
 
 if [[ -n "$(command -v nix-shell)" ]]
