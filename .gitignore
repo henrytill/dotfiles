@@ -24,6 +24,7 @@
 /emacs/.emacs.d/irony
 /emacs/.emacs.d/mail
 /emacs/.emacs.d/news
+/emacs/.emacs.d/nix-buffer
 /emacs/.emacs.d/org-clock-save.el
 /emacs/.emacs.d/places
 /emacs/.emacs.d/projectile*

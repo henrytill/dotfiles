@@ -69,6 +69,7 @@
                     feature-idris
                     feature-javascript
                     feature-lisp
+                    feature-nix
                     feature-ocaml
                     feature-oz
                     feature-purescript

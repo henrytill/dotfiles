@@ -15,10 +15,6 @@
   (add-hook 'markdown-mode-hook 'pandoc-mode)
   (add-hook 'markdown-mode-hook 'whitespace-mode))
 
-(use-package nix-mode
-  :ensure t
-  :mode "\\.nix\\'")
-
 (use-package powershell
   :ensure t
   :mode ("\\.ps1\\'" . powershell-mode))
