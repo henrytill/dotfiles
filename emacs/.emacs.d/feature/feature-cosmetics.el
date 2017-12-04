@@ -5,6 +5,10 @@
 
 (setq frame-background-mode 'light)
 
+(defun ht/remove-fringe ()
+  (set-face-foreground 'fringe (face-attribute 'default :foreground))
+  (set-face-background 'fringe (face-attribute 'default :background)))
+
 (defun ht/reset-frame ()
   (interactive)
   (let ((height (cdr (assq 'height default-frame-alist)))
@@ -19,37 +23,32 @@
     (set-frame-height (selected-frame) height)
     (set-frame-width  (selected-frame) (* 2 width))))
 
+(defun ht/adjust-frame ()
+  (add-to-list 'default-frame-alist '(internal-border-width . 14))
+  (add-to-list 'default-frame-alist '(height . 60))
+  (add-to-list 'default-frame-alist '(width . 100)))
+
 (defun ht/frame-setup (frame)
   (with-selected-frame frame
     (when (display-graphic-p frame)
-      (set-face-foreground 'fringe (face-attribute 'default :foreground))
-      (set-face-background 'fringe (face-attribute 'default :background)))))
+      (ht/remove-fringe))))
 
 (when (is-linux-p)
   (add-hook 'after-make-frame-functions 'ht/frame-setup))
 
 (when (and (is-linux-p) (string-equal (window-system) "x"))
-  (set-face-foreground 'fringe (face-attribute 'default :foreground))
-  (set-face-background 'fringe (face-attribute 'default :background)))
+  (ht/remove-fringe))
 
 (when (is-darwin-p)
-  (add-to-list 'default-frame-alist '(height . 60))
-  (add-to-list 'default-frame-alist '(width . 100))
   (add-hook 'after-make-frame-functions 'ht/frame-setup))
 
 (when (and (is-darwin-p) (string-equal (window-system) "ns"))
-  (add-to-list 'default-frame-alist '(internal-border-width . 14))
-  (set-face-foreground 'fringe (face-attribute 'default :foreground))
-  (set-face-background 'fringe (face-attribute 'default :background))
-  (when (member "Go Mono" (font-family-list))
-    (set-face-attribute 'default nil :font "Go Mono 12")))
+  (ht/adjust-frame)
+  (ht/remove-fringe))
 
 (when (and (is-windows-p) (window-system))
-  (add-to-list 'default-frame-alist '(internal-border-width . 14))
-  (add-to-list 'default-frame-alist '(height . 60))
-  (add-to-list 'default-frame-alist '(width . 100))
-  (set-face-foreground 'fringe (face-attribute 'default :foreground))
-  (set-face-background 'fringe (face-attribute 'default :background))
+  (ht/adjust-frame)
+  (ht/remove-fringe)
   (when (member "Consolas" (font-family-list))
     (set-face-attribute 'default nil
                         :family "Consolas"
@@ -63,13 +62,13 @@
 
 (defconst ht/fixed-font
   (cond
-   ((is-linux-p)  '(:font "Go Mono"))
-   ((is-darwin-p) '(:font "Go Mono"))))
+   ((is-linux-p)  '(:font "DejaVu Sans Mono"))
+   ((is-darwin-p) '(:font "Menlo"))))
 
 (defconst ht/variable-font
   (cond
-   ((is-linux-p)  '(:font "Go"))
-   ((is-darwin-p) '(:font "Go"))))
+   ((is-linux-p)  '(:font "DejaVu Sans"))
+   ((is-darwin-p) '(:font "Verdana"))))
 
 (defun ht/custom-set-faces ()
   (custom-set-faces `(fixed-pitch    ((t ,ht/fixed-font)))
