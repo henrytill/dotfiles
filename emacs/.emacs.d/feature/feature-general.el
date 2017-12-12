@@ -34,6 +34,20 @@
              avy-goto-line
              avy-isearch))
 
+(defhydra ht/hydra-avy (:idle 1.0)
+  "
+avy
+---
+_;_: evil-avy-goto-char
+_'_: evil-avy-goto-char-2
+_w_: evil-avy-goto-word-1
+_l_: evil-avy-goto-line
+"
+  (";" evil-avy-goto-char   nil :exit t)
+  ("'" evil-avy-goto-char-2 nil :exit t)
+  ("w" evil-avy-goto-word-1 nil :exit t)
+  ("l" evil-avy-goto-line   nil :exit t))
+
 (use-package exec-path-from-shell
   :if (or (is-darwin-p) (is-linux-p))
   :ensure t

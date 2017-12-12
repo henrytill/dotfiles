@@ -5,11 +5,12 @@
   (put 'magit-clean 'disabled nil)
   (setq magit-last-seen-setup-instructions "1.4.0"))
 
-(bind-map ht/magit-leader-map
-  :keys ("M-m m")
-  :evil-keys ("SPC m"))
-
-(bind-map-set-keys ht/magit-leader-map
-  "s" 'magit-status)
+(defhydra ht/hydra-magit (:idle 1.0)
+  "
+magit
+-----
+_s_: magit-status
+"
+  ("s" magit-status nil :exit t))
 
 (provide 'feature-magit)

@@ -22,13 +22,4 @@
   (add-hook 'ido-setup-hook            #'flx-ido-mode)
   (ido-mode t))
 
-(bind-map ht/ido-leader-map
-  :keys ("M-m b")
-  :evil-keys ("SPC b"))
-
-(bind-map-set-keys ht/ido-leader-map
-  "b" 'ido-switch-buffer
-  "f" 'ido-find-file
-  "k" 'ido-kill-buffer)
-
 (provide 'feature-ido)

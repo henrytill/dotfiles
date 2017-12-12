@@ -99,6 +99,45 @@
   (evil-ex-define-cmd "tn[ext]"     'tnext)
   (evil-ex-define-cmd "tp[revious]" 'tprevious))
 
+(use-package hydra
+  :ensure t)
+
+(defvar ht/hydra-mode-specific)
+
+(defun ht/call-hydra-mode-specific ()
+  (interactive)
+  (when (boundp 'ht/hydra-mode-specific)
+    (funcall ht/hydra-mode-specific)))
+
+(defhydra ht/hydra-base (:idle 1.0)
+  "
+base
+----
+_w_: ace-window           _p_: projectile
+_x_: smex                 _a_: avy
+_b_: ido-switch-buffer    _g_: magit
+_f_: ido-find-file        _c_: flycheck
+_k_: ido-kill-buffer      _m_: mode-specific
+_l_: evil-paredit-state
+"
+  ("w" ace-window                  nil :exit t)
+  ("x" smex                        nil :exit t)
+  ("b" ido-switch-buffer           nil :exit t)
+  ("f" ido-find-file               nil :exit t)
+  ("k" ido-kill-buffer             nil :exit t)
+  ("l" evil-paredit-state          nil :exit t)
+  ("p" ht/hydra-projectile/body    nil :exit t)
+  ("a" ht/hydra-avy/body           nil :exit t)
+  ("g" ht/hydra-magit/body         nil :exit t)
+  ("c" ht/hydra-flycheck/body      nil :exit t)
+  ("m" ht/call-hydra-mode-specific nil :exit t))
+
+(with-eval-after-load 'compile
+  (define-key compilation-mode-map (kbd "SPC") nil))
+
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "SPC") nil))
+
 (use-package evil
   :ensure t
   :init
@@ -111,40 +150,9 @@
   (ht/setup-evil-bindings)
   (ht/setup-evil-paredit-state)
   (ht/setup-evil-ex-commands)
+  (define-key evil-normal-state-map (kbd "SPC") 'ht/hydra-base/body)
+  (define-key evil-emacs-state-map  (kbd "M-m") 'ht/hydra-base/body)
   (evil-mode 1)
   (global-evil-surround-mode 1))
-
-(use-package bind-map
-  :ensure t
-  :config
-  (with-eval-after-load 'compile
-    (define-key compilation-mode-map (kbd "SPC") nil))
-  (bind-map ht/base-leader-map
-    :keys ("M-m")
-    :evil-keys ("SPC")
-    :evil-states (motion normal visual paredit))
-  (bind-map-set-keys ht/base-leader-map
-    "]" 'forward-page
-    "[" 'backward-page
-    "w" 'ace-window
-    "x" 'smex
-    "l" 'evil-paredit-state)
-  (ht/comment
-    (bind-map ht/avy-leader-map
-      :keys ("M-m g")
-      :evil-keys ("SPC g"))
-    (bind-map-set-keys ht/avy-leader-map
-      ";" 'evil-avy-goto-char
-      "'" 'evil-avy-goto-char-2
-      "w" 'evil-avy-goto-word-1
-      "l" 'evil-avy-goto-line)
-    (bind-map ht/flycheck-leader-map
-      :keys ("M-m f")
-      :evil-keys ("SPC f"))
-    (bind-map-set-keys ht/flycheck-leader-map
-      "l" 'flycheck-list-errors
-      "j" 'flycheck-next-error
-      "k" 'flycheck-previous-error)
-    nil))
 
 (provide 'feature-evil)

@@ -59,18 +59,19 @@
   (when (not (featurep 'company-rtags))
     (require 'company-rtags)
     (add-to-list 'company-backends 'company-rtags))
-  (bind-map ht/rtags-leader-map
-    :keys ("M-m")
-    :evil-keys ("SPC")
-    :evil-states (motion normal visual paredit)
-    :major-modes (c++-mode))
-  (bind-map-set-keys ht/rtags-leader-map
-    "t" 'rtags-symbol-type)
   (dolist (map '(c-mode-map c++-mode-map))
     (dolist (binding '(("C-c C-a" . ff-find-other-file)
                        ("C-]"     . rtags-find-symbol-at-point)
                        ("C-t"     . rtags-location-stack-back)))
       (eval `(evil-define-key 'normal ,map (kbd (car binding)) (cdr binding))))))
+
+(defhydra ht/hydra-rtags (:idle 1)
+  "
+rtags
+-----
+_t_: rtags-symbol-type
+"
+  ("t" rtags-symbol-type nil :exit t))
 
 
 ;;; clang-format

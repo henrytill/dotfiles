@@ -1,3 +1,15 @@
+(defhydra ht/hydra-ocaml (:idle 1)
+  "
+ocaml
+-----
+_a_ : tuareg-find-alternate-file
+_t_ : merlin-type-enclosing
+_gd_: merlin-locate
+"
+  ("a"  tuareg-find-alternate-file nil :exit t)
+  ("t"  merlin-type-enclosing      nil :exit t)
+  ("gd" merlin-locate              nil :exit t))
+
 (defun ht/setup-tuareg ()
   (when (executable-find "opam")
     (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
@@ -23,13 +35,6 @@
   (let ((extension (file-name-extension buffer-file-name)))
     (when (not (or (string-equal "mll" extension)
                    (string-equal "mly" extension)))
-      (bind-map ht/merlin-leader-map
-        :keys ("M-m")
-        :evil-keys ("SPC")
-        :evil-states (motion normal visual paredit)
-        :minor-modes (merlin-mode))
-      (bind-map-set-keys ht/merlin-leader-map
-        "t" 'merlin-type-enclosing)
       (evil-define-key 'normal merlin-mode-map "gd" 'merlin-locate)
       (define-key evil-normal-state-local-map (kbd "C-]") 'merlin-locate)
       (define-key evil-normal-state-local-map (kbd "C-t") 'merlin-pop-stack)
@@ -48,13 +53,7 @@
       (set (make-local-variable 'compile-command) "./build"))))
 
 (defun ht/tuareg-mode ()
-  (bind-map ht/tuareg-leader-map
-    :keys ("M-m c")
-    :evil-keys ("SPC c")
-    :evil-states (motion normal visual paredit)
-    :major-modes (tuareg-mode))
-  (bind-map-set-keys ht/tuareg-leader-map
-    "a" 'tuareg-find-alternate-file)
+  (setq-local ht/hydra-mode-specific 'ht/hydra-ocaml/body)
   (electric-indent-local-mode 0)
   (setq evil-auto-indent nil))
 
