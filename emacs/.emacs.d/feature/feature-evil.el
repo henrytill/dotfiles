@@ -106,8 +106,9 @@
 
 (defun ht/call-hydra-mode-specific ()
   (interactive)
-  (when (boundp 'ht/hydra-mode-specific)
-    (funcall ht/hydra-mode-specific)))
+  (if (boundp 'ht/hydra-mode-specific)
+      (funcall ht/hydra-mode-specific)
+    (message "no mode-specific hydra specified")))
 
 (defhydra ht/hydra-base (:idle 1.0)
   "
@@ -131,6 +132,29 @@ _l_: evil-paredit-state
   ("g" ht/hydra-magit/body         nil :exit t)
   ("c" ht/hydra-flycheck/body      nil :exit t)
   ("m" ht/call-hydra-mode-specific nil :exit t))
+
+(use-package avy
+  :ensure t
+  :bind (:map isearch-mode-map ("C-c '" . avy-isearch))
+  :commands (avy-goto-char
+             avy-goto-char-2
+             avy-goto-word-1
+             avy-goto-line
+             avy-isearch))
+
+(defhydra ht/hydra-avy (:idle 1.0)
+  "
+avy
+---
+_;_: evil-avy-goto-char
+_'_: evil-avy-goto-char-2
+_w_: evil-avy-goto-word-1
+_l_: evil-avy-goto-line
+"
+  (";" evil-avy-goto-char   nil :exit t)
+  ("'" evil-avy-goto-char-2 nil :exit t)
+  ("w" evil-avy-goto-word-1 nil :exit t)
+  ("l" evil-avy-goto-line   nil :exit t))
 
 (with-eval-after-load 'compile
   (define-key compilation-mode-map (kbd "SPC") nil))
