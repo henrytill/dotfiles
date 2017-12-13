@@ -1,10 +1,10 @@
-Emacs.font:                 Go Mono:style=Regular:pixelsize=12
+Emacs.font:                 DejaVu Sans Mono:pixelsize=12
 Emacs.internalBorder:       12
 Emacs.menuBar:              off
 Emacs.toolBar:              off
 Emacs.verticalScrollBars:   off
 
-XTerm*faceName:             xft:Go Mono:style=Regular:pixelsize=12
+XTerm*faceName:             xft:DejaVu Sans Mono:pixelsize=12
 XTerm*renderFont:           true
 XTerm*internalBorder:       12
 XTerm*termName:             xterm-256color
