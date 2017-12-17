@@ -1,13 +1,7 @@
-(unless (and (is-linux-p) (window-system))
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1))
-
-(setq frame-background-mode 'light)
-
 (defun ht/remove-fringe ()
   (set-face-foreground 'fringe (face-attribute 'default :foreground))
-  (set-face-background 'fringe (face-attribute 'default :background)))
+  (set-face-background 'fringe (face-attribute 'default :background))
+  (fringe-mode 0))
 
 (defun ht/reset-frame ()
   (interactive)
@@ -33,6 +27,18 @@
     (when (display-graphic-p frame)
       (ht/remove-fringe))))
 
+(unless (and (is-linux-p) (window-system))
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1))
+
+(setq frame-background-mode 'dark)
+
+(use-package doom-themes
+  :ensure t
+  :config
+  (load-theme 'doom-one))
+
 (when (is-linux-p)
   (add-hook 'after-make-frame-functions 'ht/frame-setup))
 
@@ -44,7 +50,9 @@
 
 (when (and (is-darwin-p) (string-equal (window-system) "ns"))
   (ht/adjust-frame)
-  (ht/remove-fringe))
+  (ht/remove-fringe)
+  (when (member "Fira Mono" (font-family-list))
+    (set-frame-font "Fira Mono-12" nil t)))
 
 (when (and (is-windows-p) (window-system))
   (ht/adjust-frame)
@@ -56,18 +64,14 @@
                         :width 'normal
                         :height 98)))
 
-(when (window-system)
-  (set-face-attribute 'region nil :background "lightgoldenrod2")
-  (set-face-attribute 'region nil :foreground "black"))
-
 (defconst ht/fixed-font
   (cond
-   ((is-linux-p)  '(:font "DejaVu Sans Mono"))
+   ((is-linux-p)  '(:font "Fira Mono"))
    ((is-darwin-p) '(:font "Menlo"))))
 
 (defconst ht/variable-font
   (cond
-   ((is-linux-p)  '(:font "DejaVu Sans"))
+   ((is-linux-p)  '(:font "Fira Sans"))
    ((is-darwin-p) '(:font "Verdana"))))
 
 (defun ht/custom-set-faces ()
@@ -82,44 +86,32 @@
   (defun ht/linum-mode ()
     (setq linum-format "%4d ")
     (setq linum-relative-format "%4s ")
-    (set-face-foreground 'linum "grey30")
-    (set-face-foreground 'linum-relative-current-face "grey30")
-    (set-face-background 'linum-relative-current-face (face-attribute 'default :background))
-    (set-face-attribute 'linum-relative-current-face nil :weight 'normal)
     (linum-relative-on))
-  (add-hook 'linum-mode-hook 'ht/linum-mode))
-
-(show-paren-mode 1)
+  (add-hook 'linum-mode-hook #'ht/linum-mode))
 
 (setq frame-title-format
-      '("" invocation-name ": "
-        (:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
+      '("" invocation-name ": " (:eval (if (buffer-file-name)
+                                           (abbreviate-file-name (buffer-file-name))
+                                         "%b"))))
 
-(set-face-attribute 'mode-line          nil :box nil)
-(set-face-attribute 'mode-line-inactive nil :box nil)
-(set-face-attribute 'header-line        nil :box nil)
+(set-face-attribute 'mode-line
+                    nil
+                    :box `(:line-width 3 :color ,(face-attribute 'mode-line :background)))
+(set-face-attribute 'mode-line-inactive
+                    nil
+                    :box `(:line-width 3 :color ,(face-attribute 'mode-line-inactive :background)))
+(set-face-attribute 'header-line
+                    nil
+                    :box `(:line-width 3 :color ,(face-attribute 'header-line :background)))
 
+(global-hl-line-mode 1)
+(show-paren-mode 1)
 (column-number-mode 1)
 
+;; cursor
 (blink-cursor-mode 0)
 (setq visible-cursor nil)
 (setq-default cursor-type 'box)
-
-;;; hl-line
-(defun ht/select-line-mode ()
-  (hl-line-mode 1)
-  (set-face-attribute 'hl-line nil :background "lightgoldenrod2")
-  (set-face-attribute 'hl-line nil :foreground "black")
-  (setq cursor-type nil))
-
-(add-hook 'dired-mode-hook        'ht/select-line-mode)
-(add-hook 'ibuffer-mode-hook      'ht/select-line-mode)
-(add-hook 'gnus-group-mode-hook   'ht/select-line-mode)
-(add-hook 'gnus-summary-mode-hook 'ht/select-line-mode)
-(add-hook 'gnus-server-mode-hook  'ht/select-line-mode)
-(add-hook 'package-menu-mode-hook 'ht/select-line-mode)
 
 ;;; truncate lines
 (defun ht/truncate-lines ()
