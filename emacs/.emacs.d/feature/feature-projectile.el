@@ -38,7 +38,7 @@ _k_: projectile-kill-buffers
   ("c" projectile-compile-project nil :exit t)
   ("t" projectile-test-project    nil :exit t)
   ("f" projectile-find-file       nil :exit t)
-  ("k" projectile-kill-bufffers   nil :exit t))
+  ("k" projectile-kill-buffers    nil :exit t))
 
 (with-eval-after-load 'projectile
   ;; Redefine to observe projectile-compilation-dir
