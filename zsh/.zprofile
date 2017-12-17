@@ -90,13 +90,7 @@ esac
 
 if [[ -n "$(command -v vim)" ]]
 then
-    export EDITOR=vim
-fi
-
-
-if [[ -n "$(command -v lein)" ]]
-then
-    export LEIN_FAST_TRAMPOLINE=y
+    export EDITOR="emacsclient -t -a vim"
 fi
 
 # Rust sources
