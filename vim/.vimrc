@@ -22,7 +22,7 @@ Plug 'lyuts/vim-rtags',         { 'for': ['cpp', 'c'] }
 call plug#end()
 
 syntax on
-set background=light
+set background=dark
 
 set expandtab
 set ignorecase
@@ -148,9 +148,9 @@ endif
 
 highlight LineNr       term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
 highlight CursorLineNr term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
-highlight StatusLine   term=bold,reverse cterm=bold ctermfg=White    ctermbg=DarkGray gui=bold guifg=White    guibg=DarkGray
-highlight StatusLineNc term=reverse      cterm=NONE ctermfg=White    ctermbg=DarkGray gui=NONE guifg=White    guibg=DarkGray
-highlight VertSplit    term=reverse      cterm=NONE ctermfg=White    ctermbg=DarkGray gui=NONE guifg=White    guibg=DarkGray
+highlight StatusLine   term=bold,reverse cterm=bold ctermfg=Gray     ctermbg=Black    gui=bold guifg=White    guibg=Black
+highlight StatusLineNc term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=White    guibg=Black
+highlight VertSplit    term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=White    guibg=Black
 
 map <space> <leader>
 
