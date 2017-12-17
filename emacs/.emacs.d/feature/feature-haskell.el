@@ -35,12 +35,10 @@
          ("\\.lhs\\'"     . literate-haskell-mode)
          ("\\.cabal\\'"   . haskell-cabal-mode))
   :init
-  (ht/comment
-    (add-hook 'haskell-mode-local-vars-hook 'dante-mode)
-    (add-hook 'haskell-mode-hook 'flycheck-mode)
-    nil)
+  (add-hook 'haskell-mode-local-vars-hook 'dante-mode)
   (dolist (mode '(company-mode
                   electric-pair-mode
+                  flycheck-mode
                   haskell-indentation-mode
                   ht/haskell-mode
                   interactive-haskell-mode))
