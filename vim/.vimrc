@@ -148,9 +148,9 @@ endif
 
 highlight LineNr       term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
 highlight CursorLineNr term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
-highlight StatusLine   term=bold,reverse cterm=bold ctermfg=Gray     ctermbg=Black    gui=bold guifg=White    guibg=Black
-highlight StatusLineNc term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=White    guibg=Black
-highlight VertSplit    term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=White    guibg=Black
+highlight StatusLine   term=bold,reverse cterm=bold ctermfg=Gray     ctermbg=Black    gui=bold guifg=Gray     guibg=Black
+highlight StatusLineNc term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=Gray     guibg=Black
+highlight VertSplit    term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=Gray     guibg=Black
 
 map <space> <leader>
 
