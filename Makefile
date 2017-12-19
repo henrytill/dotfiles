@@ -9,7 +9,7 @@ nereus   = ctags emacs git ideavim \
 proteus  = ctags emacs git nixpkgs ocaml \
            gtk systemd x11-gnome xdg-gnome \
            tmux vim zsh
-thaumas  = ctags emacs git ideavim \
+thaumas  = ctags emacs git \
            nixpkgs npm ocaml tmux vim zsh \
            dunst x11 xdg
 
