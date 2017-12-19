@@ -1,15 +1,18 @@
-Emacs.font:                 DejaVu Sans Mono:pixelsize=12
+Emacs.fontBackend:          xft
+Emacs.font:                 Fira Mono:style=Regular:pixelsize=12
 Emacs.internalBorder:       12
 Emacs.menuBar:              off
 Emacs.toolBar:              off
 Emacs.verticalScrollBars:   off
 
-XTerm*faceName:             xft:DejaVu Sans Mono:pixelsize=12
+XTerm*faceName:             xft:Fira Mono:pixelsize=12
 XTerm*renderFont:           true
 XTerm*internalBorder:       12
 XTerm*termName:             xterm-256color
 XTerm*eightBitInput:        false
 XTerm*eightBitOutput:       true
+XTerm*background:           #282c34
+XTerm*foreground:           #bbc2cf
 
 Xft.antialias:              true
 Xft.autohint:               false
