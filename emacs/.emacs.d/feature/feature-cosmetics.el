@@ -100,9 +100,6 @@
 (set-face-attribute 'mode-line-inactive
                     nil
                     :box `(:line-width 3 :color ,(face-attribute 'mode-line-inactive :background)))
-(set-face-attribute 'header-line
-                    nil
-                    :box `(:line-width 3 :color ,(face-attribute 'header-line :background)))
 
 (global-hl-line-mode 1)
 (show-paren-mode 1)
