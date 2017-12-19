@@ -114,8 +114,8 @@
   "
 base
 ----
-_w_: ace-window           _p_: projectile
-_x_: smex                 _a_: avy
+_w_: ace-window           _p_: projectile    _!_: shell-command
+_x_: smex                 _a_: avy           _&_: async-shell-command
 _b_: ido-switch-buffer    _g_: magit
 _f_: ido-find-file        _c_: flycheck
 _k_: ido-kill-buffer      _m_: mode-specific
@@ -131,7 +131,9 @@ _l_: evil-paredit-state
   ("a" ht/hydra-avy/body           nil :exit t)
   ("g" ht/hydra-magit/body         nil :exit t)
   ("c" ht/hydra-flycheck/body      nil :exit t)
-  ("m" ht/call-hydra-mode-specific nil :exit t))
+  ("m" ht/call-hydra-mode-specific nil :exit t)
+  ("!" shell-command               nil :exit t)
+  ("&" async-shell-command         nil :exit t))
 
 (use-package avy
   :ensure t
