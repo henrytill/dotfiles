@@ -8,7 +8,6 @@ let
       haskellPackages.cabal2nix
       haskellPackages.darcs
       haskellPackages.ghc
-      haskellPackages.lhs2tex
       haskellPackages.stack
       haskellPackages.stylish-haskell
       nix
@@ -20,7 +19,6 @@ let
 
   pkgsLinux = with pkgs;
     [ haskellPackages.Agda
-      haskellPackages.idris
       haskellPackages.threadscope
     ];
 
