@@ -2,6 +2,15 @@
 
 let
 
+  multiGHCTravis =
+    pkgs.haskellPackages.callCabal2nix "multi-ghc-travis" (pkgs.fetchFromGitHub {
+      owner           = "hvr";
+      repo            = "multi-ghc-travis";
+      rev             = "a76b3e96a796936b750efbd555cce5714e752f97";
+      sha256          = "122bdaszr9nl1nilslc1kxb954v34b72xasqvsplkgby1hzlzgfi";
+      fetchSubmodules = true;
+    }) {};
+
   pkgsShared = with pkgs;
     [ aspcud
       haskellPackages.cabal-install
@@ -10,6 +19,7 @@ let
       haskellPackages.ghc
       haskellPackages.stack
       haskellPackages.stylish-haskell
+      multiGHCTravis
       nix
       nix-prefetch-scripts
       nix-repl
