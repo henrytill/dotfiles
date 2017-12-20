@@ -177,6 +177,7 @@ _l_: evil-avy-goto-line
   (ht/setup-evil-paredit-state)
   (ht/setup-evil-ex-commands)
   (define-key evil-normal-state-map (kbd "SPC") 'ht/hydra-base/body)
+  (define-key evil-visual-state-map (kbd "SPC") 'ht/hydra-base/body)
   (define-key evil-emacs-state-map  (kbd "M-m") 'ht/hydra-base/body)
   (evil-mode 1)
   (global-evil-surround-mode 1))
