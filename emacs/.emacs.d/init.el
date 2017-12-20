@@ -36,6 +36,7 @@
 
 (setq ht/features '(feature-cosmetics
                     feature-general
+                    feature-ivy
                     feature-paredit
                     feature-evil
                     ;; general modes

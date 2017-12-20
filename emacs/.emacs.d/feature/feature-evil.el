@@ -115,14 +115,14 @@
 base
 ----
 _w_: ace-window           _p_: projectile    _!_: shell-command
-_x_: smex                 _a_: avy           _&_: async-shell-command
+_x_: counsel-M-x          _a_: avy           _&_: async-shell-command
 _b_: ido-switch-buffer    _g_: magit
 _f_: ido-find-file        _c_: flycheck
 _k_: ido-kill-buffer      _m_: mode-specific
 _l_: evil-paredit-state
 "
   ("w" ace-window                  nil :exit t)
-  ("x" smex                        nil :exit t)
+  ("x" counsel-M-x                 nil :exit t)
   ("b" ido-switch-buffer           nil :exit t)
   ("f" ido-find-file               nil :exit t)
   ("k" ido-kill-buffer             nil :exit t)
