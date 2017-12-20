@@ -102,7 +102,7 @@
 (use-package hydra
   :ensure t)
 
-(defvar ht/hydra-mode-specific)
+(defvar ht/hydra-mode-specific nil "mode-specific hydra")
 
 (defun ht/call-hydra-mode-specific ()
   (interactive)
