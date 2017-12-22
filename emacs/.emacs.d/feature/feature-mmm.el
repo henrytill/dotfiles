@@ -2,17 +2,31 @@
   :ensure t
   :commands mmm-mode
   :config
+  ;; Haskell's inline-c
   (mmm-add-group 'haskell-inline-c
-                 '((inline-c
+                 '((inline-c-block
                     :submode c-mode
                     :face mmm-code-submode-face
                     :front "\\[C\\.block| \\w+ \{"
                     :back "\} |\\]"
                     :include-front nil
-                    :include-back nil
-                    ;; :front-offset 6
-                    ;; :back-offset 2
-                    )))
+                    :include-back nil)
+                   (inline-c-exp
+                    :submode c-mode
+                    :face mmm-code-submode-face
+                    :front "\\[C\\.exp| \\w+ \{"
+                    :back "\} |\\]"
+                    :include-front nil
+                    :include-back nil)
+                   (inline-c-pure
+                    :submode c-mode
+                    :face mmm-code-submode-face
+                    :front "\\[C\\.pure| \\w+ \{"
+                    :back "\} |\\]"
+                    :include-front nil
+                    :include-back nil)))
+  (mmm-add-mode-ext-class 'haskell-mode nil 'haskell-inline-c)
+  ;; javascript in HTML
   (mmm-add-group 'html-js2
                  '((js-script-cdata
                     :submode js2-mode
@@ -26,8 +40,6 @@
                     :back "[ \t]*</script>"
                     :insert ((?j js-tag nil @ "<script type=\"text/javascript\">\n"
                                  @ "" _ "" @ "\n</script>" @)))))
-  (mmm-add-mode-ext-class 'haskell-mode nil 'haskell-inline-c)
-  (mmm-add-mode-ext-class 'html-mode nil 'html-css)
   (mmm-add-mode-ext-class 'html-mode nil 'html-js2))
 
 (provide 'feature-mmm)
