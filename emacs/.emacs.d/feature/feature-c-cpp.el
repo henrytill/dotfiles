@@ -42,9 +42,18 @@
   (flycheck-select-checker 'rtags)
   (setq-local flycheck-highlighting-mode nil))
 
+(defhydra ht/hydra-rtags (:idle 1)
+  "
+rtags
+-----
+_t_: rtags-symbol-type
+"
+  ("t" rtags-symbol-type nil :exit t))
+
 (defun ht/rtags-mode ()
   (setq rtags-autostart-diagnostics t
         rtags-completions-enabled t)
+  (setq-local ht/hydra-mode-specific 'ht/hydra-rtags/body)
   (rtags-start-process-unless-running))
 
 (use-package rtags
@@ -64,14 +73,6 @@
                        ("C-]"     . rtags-find-symbol-at-point)
                        ("C-t"     . rtags-location-stack-back)))
       (eval `(evil-define-key 'normal ,map (kbd (car binding)) (cdr binding))))))
-
-(defhydra ht/hydra-rtags (:idle 1)
-  "
-rtags
------
-_t_: rtags-symbol-type
-"
-  ("t" rtags-symbol-type nil :exit t))
 
 
 ;;; clang-format
