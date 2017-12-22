@@ -36,6 +36,7 @@
          ("\\.cabal\\'"   . haskell-cabal-mode))
   :init
   (add-hook 'haskell-mode-local-vars-hook 'dante-mode)
+  (add-hook 'nix-buffer-after-load-hook 'dante-restart)
   (dolist (mode '(company-mode
                   electric-pair-mode
                   flycheck-mode
