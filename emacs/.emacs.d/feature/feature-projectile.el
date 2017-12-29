@@ -25,6 +25,14 @@
                                     :compile "topkg build"
                                     :test "topkg test"))
 
+(defhydra ht/hydra-projectile-search (:idle 1.5)
+  "
+projectile-search
+-----------------
+_g_: projectile-grep
+"
+  ("g" projectile-grep nil :exit t))
+
 (defhydra ht/hydra-projectile (:idle 1.5)
   "
 projectile
@@ -33,13 +41,18 @@ _p_: projectile-switch-project
 _c_: projectile-compile-project
 _t_: projectile-test-project
 _f_: projectile-find-file
+_s_: ht/hydra-projectile-search/body
+_b_: projectile-switch-to-buffer
 _k_: projectile-kill-buffers
 "
-  ("p" projectile-switch-project  nil :exit t)
-  ("c" projectile-compile-project nil :exit t)
-  ("t" projectile-test-project    nil :exit t)
-  ("f" projectile-find-file       nil :exit t)
-  ("k" projectile-kill-buffers    nil :exit t))
+  ("p" projectile-switch-project       nil :exit t)
+  ("c" projectile-compile-project      nil :exit t)
+  ("t" projectile-test-project         nil :exit t)
+  ("f" projectile-find-file            nil :exit t)
+  ("r" projectile-find-file            nil :exit t)
+  ("s" ht/hydra-projectile-search/body nil :exit t)
+  ("b" projectile-switch-to-buffer     nil :exit t)
+  ("k" projectile-kill-buffers         nil :exit t))
 
 (with-eval-after-load 'projectile
   ;; Redefine to observe projectile-compilation-dir
