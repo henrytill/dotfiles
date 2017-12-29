@@ -3,7 +3,7 @@
 (with-eval-after-load 'cc-styles
   (c-add-style "stevens" '("bsd" (c-basic-offset . 4)))
   (c-add-style "hnf"     '("bsd" (c-basic-offset . 2)))
-  (add-to-list 'c-default-style '(c-mode . "bsd"))
+  (add-to-list 'c-default-style '(c-mode . "stevens"))
   (add-to-list 'c-default-style '(c++-mode . "stroustrup")))
 
 (defun ht/c-mode ()
