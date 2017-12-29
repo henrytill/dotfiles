@@ -17,7 +17,7 @@
   (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
   :config
   (setq flycheck-check-syntax-automatically '(mode-enabled save)
-        flycheck-completion-system 'ido)
+        flycheck-completion-system 'ivy)
   (setq-default flycheck-disabled-checkers '(haskell-ghc
                                              haskell-hlint
                                              haskell-stack-ghc

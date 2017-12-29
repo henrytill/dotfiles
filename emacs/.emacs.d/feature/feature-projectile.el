@@ -9,6 +9,7 @@
              projectile-kill-buffers)
   :diminish projectile-mode
   :config
+  (setq projectile-completion-system 'ivy)
   (projectile-global-mode)
   (add-to-list 'projectile-project-root-files "_tags")
   (projectile-register-project-type 'ocamlbuild-make

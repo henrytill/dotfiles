@@ -3,6 +3,10 @@
   :bind (("C-c C-r" . ivy-resume)
          ("<f6>"    . ivy-resume))
   :init
+  (use-package flx
+    :ensure t)
+  (use-package smex
+    :ensure t)
   (use-package counsel
     :ensure t
     :bind (("M-x"     . counsel-M-x)
@@ -17,9 +21,12 @@
     :bind ("C-s" . swiper))
   :config
   (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  (setq ivy-count-format "(%d/%d) ")
+  (setq enable-recursive-minibuffers t
+        ivy-count-format "(%d/%d) "
+        ivy-use-virtual-buffers t
+        ;; https://oremacs.com/2016/01/06/ivy-flx/
+        ivy-re-builders-alist '((t . ivy--regex-fuzzy))
+        ivy-initial-inputs-alist nil)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 (provide 'feature-ivy)
