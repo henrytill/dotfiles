@@ -28,22 +28,6 @@
   (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
   (add-hook 'clojure-mode-hook 'enable-paredit-mode))
 
-(use-package cider
-  :load-path "site-lisp/cider"
-  :bind (("C-c M-c" . cider-connect)
-         ("C-c M-j" . cider-jack-in))
-  :init
-  (add-hook 'cider-mode-hook      'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook 'eldoc-mode)
-  :config
-  (use-package cider-apropos)
-  (use-package cider-classpath)
-  (use-package cider-macroexpansion)
-  (use-package cider-scratch)
-  (use-package cider-selector)
-  (setq cider-repl-display-help-banner nil
-        cider-show-error-buffer 'except-in-repl))
-
 (use-package geiser
   :load-path "site-lisp/geiser/elisp"
   :defer t
