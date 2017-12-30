@@ -70,31 +70,4 @@
   (when (executable-find "plt-r5rs")
     (setq scheme-program-name "plt-r5rs")))
 
-(use-package slime
-  :load-path "site-lisp/slime"
-  :defer t
-  :commands slime
-  :functions slime-setup
-  :config
-  (use-package slime-autoloads)
-  (slime-setup '(slime-fancy slime-banner))
-  (let ((ccl-loc  (executable-find "ccl64"))
-        (sbcl-loc (executable-find "sbcl")))
-    (when ccl-loc
-      (if (boundp 'slime-lisp-implementations)
-          (setq slime-lisp-implementations
-                (cons `(ccl (,ccl-loc)) slime-lisp-implementations))
-        (setq slime-lisp-implementations `((ccl (,ccl-loc))))
-        (setq slime-default-lisp 'ccl)))
-    (when sbcl-loc
-      (if (boundp 'slime-lisp-implementations)
-          (setq slime-lisp-implementations
-                (cons `(sbcl (,sbcl-loc)) slime-lisp-implementations))
-        (setq slime-lisp-implementations `((sbcl (,sbcl-loc)))))
-      (setq slime-default-lisp 'sbcl)))
-  (let* ((quicklisp-loc  (expand-directory-name "~/quicklisp"))
-         (clhs-use-local (expand-file-name "clhs-use-local.el" quicklisp-loc)))
-    (when (file-exists-p clhs-use-local)
-      (load-file clhs-use-local))))
-
 (provide 'feature-lisp)
