@@ -1,5 +1,5 @@
 (use-package projectile
-  :load-path "site-lisp/projectile"
+  :ensure t
   :functions (projectile-global-mode
               projectile-switch-project
               projectile-find-file

@@ -10,9 +10,6 @@
 [submodule "emacs/.emacs.d/site-lisp/use-package"]
 	path = emacs/.emacs.d/site-lisp/use-package
 	url = https://github.com/jwiegley/use-package.git
-[submodule "emacs/.emacs.d/site-lisp/projectile"]
-	path = emacs/.emacs.d/site-lisp/projectile
-	url = https://github.com/bbatsov/projectile.git
 [submodule "emacs/.emacs.d/site-lisp/PG"]
 	path = emacs/.emacs.d/site-lisp/PG
 	url = https://github.com/ProofGeneral/PG.git
