@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: C++ Header
+# key: #ifndef
+# --
+#ifndef $1_H
+#define $1_H
+
+$2
+
+#endif
+
+// Local Variables:
+// mode: c++
+// End:
+//
+// vim: set filetype=cpp:
