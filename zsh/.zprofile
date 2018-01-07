@@ -63,6 +63,15 @@ case $(uname -s) in
             export JAVA_HOME="$(/usr/libexec/java_home)"
         fi
 
+        if [[ -d "/usr/local/lib/pkgconfig" ]]
+        then
+            export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig"
+        fi
+
+        # Plan 9 from User Space
+        export_dir PLAN9 "/opt/plan9port"
+        add_dir_to_path_back "$PLAN9/bin"
+
         export_dir VAGRANT_HOME "/Volumes/vms/vagrant.d"
 
         add_dir_to_path_front "$HOME/Library/Python/2.7/bin"
