@@ -19,7 +19,6 @@ let
       haskellPackages.ghc
       haskellPackages.stack
       haskellPackages.stylish-haskell
-      multiGHCTravis
       nix
       nix-prefetch-scripts
       nix-repl
@@ -30,6 +29,7 @@ let
   pkgsLinux = with pkgs;
     [ haskellPackages.Agda
       haskellPackages.threadscope
+      multiGHCTravis
     ];
 
   pkgsDarwin = with pkgs;
