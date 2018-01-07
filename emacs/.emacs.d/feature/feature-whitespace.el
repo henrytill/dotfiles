@@ -2,7 +2,7 @@
   :commands whitespace-mode
   :diminish whitespace-mode
   :init
-  (setq whitespace-style '(face lines-tail trailing)
+  (setq whitespace-style '(face lines-tail tabs trailing)
         whitespace-line-column 100)
   :config
   (defun ht/toggle-tabs-display ()
