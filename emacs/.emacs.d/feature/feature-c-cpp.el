@@ -53,7 +53,8 @@ _t_: rtags-symbol-type
 
 (defun ht/rtags-mode ()
   (setq rtags-autostart-diagnostics t
-        rtags-completions-enabled t)
+        rtags-completions-enabled t
+        rtags-display-result-backend 'ivy)
   (setq-local ht/hydra-mode-specific 'ht/hydra-rtags/body)
   (rtags-start-process-unless-running))
 
@@ -69,6 +70,8 @@ _t_: rtags-symbol-type
   (when (not (featurep 'company-rtags))
     (require 'company-rtags)
     (add-to-list 'company-backends 'company-rtags))
+  (when (not (featurep 'ivy-rtags))
+    (require 'ivy-rtags))
   (dolist (map '(c-mode-map c++-mode-map))
     (dolist (binding '(("C-c C-a" . ff-find-other-file)
                        ("C-]"     . rtags-find-symbol-at-point)
