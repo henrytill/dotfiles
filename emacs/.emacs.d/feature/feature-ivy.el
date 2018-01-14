@@ -23,10 +23,12 @@
   (ivy-mode 1)
   (setq enable-recursive-minibuffers t
         ivy-count-format "(%d/%d) "
-        ivy-use-virtual-buffers t
-        ;; https://oremacs.com/2016/01/06/ivy-flx/
-        ivy-re-builders-alist '((t . ivy--regex-fuzzy))
-        ivy-initial-inputs-alist nil)
+        ivy-use-virtual-buffers t)
+  (ht/comment
+    ;; https://oremacs.com/2016/01/06/ivy-flx/
+    (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy))
+          ivy-initial-inputs-alist nil)
+    nil)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 (provide 'feature-ivy)
