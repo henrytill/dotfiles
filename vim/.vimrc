@@ -9,6 +9,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+Plug 'joshdick/onedark.vim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
@@ -21,8 +22,17 @@ Plug 'racer-rust/vim-racer',    { 'for': 'rust' }
 Plug 'lyuts/vim-rtags',         { 'for': ['cpp', 'c'] }
 call plug#end()
 
+if (has("autocmd") && !has("gui_running"))
+  augroup colorset
+    autocmd!
+    let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+    autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white })
+  augroup END
+endif
+
 syntax on
-set background=dark
+colorscheme onedark
+" set background=dark
 
 set expandtab
 set ignorecase
