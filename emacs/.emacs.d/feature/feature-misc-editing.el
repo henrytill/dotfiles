@@ -1,3 +1,11 @@
+(use-package capnp-mode
+  :if (locate-file "capnp-mode.el" load-path)
+  :mode "\\.capnp\\'"
+  :init
+  (defun ht/capnp-mode ()
+    (setq-local tab-width 2))
+  (add-hook 'capnp-mode-hook #'ht/capnp-mode))
+
 (use-package cmake-mode
   :ensure t
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
