@@ -164,6 +164,10 @@ _l_: evil-avy-goto-line
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "SPC") nil))
 
+(with-eval-after-load 'magit
+  (define-key magit-mode-map (kbd "SPC") nil)
+  (define-key magit-mode-map (kbd "x") nil))
+
 (use-package evil
   :ensure t
   :init
