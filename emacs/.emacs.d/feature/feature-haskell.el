@@ -3,7 +3,8 @@
         evil-auto-indent nil
         haskell-doc-prettify-types nil
         haskell-interactive-popup-errors nil
-        haskell-process-log t)
+        haskell-process-log t
+        whitespace-line-column 120)
   (define-key evil-normal-state-local-map (kbd "C-]") 'xref-find-definitions)
   (define-key evil-normal-state-local-map (kbd "C-t") 'xref-pop-marker-stack)
   nil)
