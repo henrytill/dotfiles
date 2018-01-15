@@ -22,17 +22,20 @@ Plug 'racer-rust/vim-racer',    { 'for': 'rust' }
 Plug 'lyuts/vim-rtags',         { 'for': ['cpp', 'c'] }
 call plug#end()
 
-if (has("autocmd") && !has("gui_running"))
-  augroup colorset
-    autocmd!
-    let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
-    autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white })
-  augroup END
-endif
-
 syntax on
-colorscheme onedark
-" set background=dark
+
+if (!empty(glob("~/.vim/plugged/onedark.vim")))
+  if (has("autocmd") && !has("gui_running"))
+    augroup colorset
+      autocmd!
+      let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+      autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white })
+    augroup END
+  endif
+  colorscheme onedark
+else
+  set background=dark
+endif
 
 set expandtab
 set ignorecase
