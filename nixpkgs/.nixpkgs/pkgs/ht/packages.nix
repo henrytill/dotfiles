@@ -11,11 +11,10 @@ let
       fetchSubmodules = true;
     }) {};
 
-  pkgsShared = with pkgs;
+  stableShared = with pkgs;
     [ aspcud
       haskellPackages.cabal-install
       haskellPackages.cabal2nix
-      haskellPackages.darcs
       haskellPackages.ghc
       haskellPackages.stack
       haskellPackages.stylish-haskell
@@ -23,21 +22,27 @@ let
       nix-prefetch-scripts
       nix-repl
       pandoc
+    ];
+
+  unstableShared = with pkgs;
+    [ haskellPackages.darcs
       youtube-dl
     ];
 
-  pkgsLinux = with pkgs;
+  stableLinux = with pkgs;
     [ haskellPackages.Agda
-      haskellPackages.threadscope
-      multiGHCTravis
     ];
 
-  pkgsDarwin = with pkgs;
+  unstableLinux = with pkgs;
+    [ multiGHCTravis
+      haskellPackages.threadscope
+    ];
+
+  stableDarwin = with pkgs;
     [ aspell
       aspellDicts.en
       cacert
       ctags
-      ht.texliveEnv
       jshon
       msmtp
       mutt
@@ -50,9 +55,18 @@ let
       wget
     ];
 
-  ps =
-    pkgsShared
-    ++ stdenv.lib.optional stdenv.isLinux  pkgsLinux
-    ++ stdenv.lib.optional stdenv.isDarwin pkgsDarwin;
+  unstableDarwin = with pkgs; [];
 
-in ps
+in {
+
+  stable =
+    stableShared
+    ++ stdenv.lib.optional stdenv.isLinux  stableLinux
+    ++ stdenv.lib.optional stdenv.isDarwin stableDarwin;
+
+  unstable =
+    unstableShared
+    ++ stdenv.lib.optional stdenv.isLinux  unstableLinux
+    ++ stdenv.lib.optional stdenv.isDarwin unstableDarwin;
+
+}
