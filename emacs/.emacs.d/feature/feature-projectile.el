@@ -12,6 +12,13 @@
   (setq projectile-completion-system 'ivy)
   (projectile-global-mode)
   (add-to-list 'projectile-project-root-files "_tags")
+  (defun projectile-cabal-new-project-p ()
+    "Check if a project contains a cabal.project.local."
+    (projectile-verify-file "cabal.project.local"))
+  (projectile-register-project-type 'haskell-cabal-new
+                                    #'projectile-cabal-new-project-p
+                                    :compile "cabal new-build"
+                                    :test "cabal new-test")
   (projectile-register-project-type 'ocamlbuild-make
                                     '("_tags" "Makefile")
                                     :compile "make"
