@@ -41,6 +41,7 @@ let
       offlineimap
       postgresql
       socat
+      tmux
       tree
       wget
     ];

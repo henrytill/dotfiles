@@ -44,6 +44,7 @@
         super.haskellPackages.override {
           overrides = self: super: {
             Agda            = darwinStaticExe super.Agda;
+            BNFC            = darwinStaticExe super.BNFC;
             cabal2nix       = darwinStaticExe super.cabal2nix;
             darcs           = darwinStaticExe super.darcs;
             idris           = darwinStaticExe super.idris;
