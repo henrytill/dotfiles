@@ -15,7 +15,7 @@
   (mapc #'(lambda (path)
             (when (file-directory-p path)
               (push (expand-file-name path) load-path)))
-        '("~/.nix-profile/share/emacs/site-lisp/")))
+        '("/usr/local/share/emacs/site-lisp" "~/.nix-profile/share/emacs/site-lisp/")))
 
 (require 'ht-prelude)
 (require 'use-package)
