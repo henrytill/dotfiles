@@ -75,8 +75,7 @@ case $(uname -s) in
         export_dir VAGRANT_HOME "/Volumes/vms/vagrant.d"
 
         add_dir_to_path_front "$HOME/Library/Python/2.7/bin"
-
-        export LANG="en_US.UTF-8"
+        add_dir_to_path_front "/opt/apache-maven-3.5.2/bin"
 
         RUST_TOOLCHAIN="stable-x86_64-apple-darwin"
         ;;
