@@ -9,11 +9,15 @@
   (define-key evil-normal-state-local-map (kbd "C-t") 'xref-pop-marker-stack)
   nil)
 
-(defun ht/use-nix-for-haskell-process ()
+(defun ht/haskell-wrapper-function-nix ()
   (interactive)
   (setq haskell-process-wrapper-function
         (lambda (argv) (append (list "nix-shell" "--command" )
                                (list (mapconcat 'identity argv " "))))))
+
+(defun ht/haskell-wrapper-function-identity ()
+  (interactive)
+  (setq haskell-process-wrapper-function 'identity))
 
 (use-package haskell-mode
   :ensure t
