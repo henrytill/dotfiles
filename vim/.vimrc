@@ -10,6 +10,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'joshdick/onedark.vim'
+Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
@@ -24,7 +25,7 @@ call plug#end()
 
 syntax on
 
-if (!empty(glob("~/.vim/plugged/onedark.vim")))
+if !empty(glob("~/.vim/plugged/onedark.vim"))
   if (has("autocmd") && !has("gui_running"))
     augroup colorset
       autocmd!
@@ -33,6 +34,7 @@ if (!empty(glob("~/.vim/plugged/onedark.vim")))
     augroup END
   endif
   colorscheme onedark
+  let g:lightline = { "colorscheme": "onedark" }
 else
   set background=dark
 endif
@@ -80,28 +82,6 @@ function! RunClangFormat()
   endif
 endfunction
 
-function! RunGofmt()
-  if executable('gofmt')
-    let myline = line(".")
-    let mycolumn = col(".")
-    silent! %!gofmt
-    call cursor(myline, mycolumn)
-  else
-    echo 'Could not locate gofmt'
-  endif
-endfunction
-
-function! RunPrettier()
-  if executable('prettier')
-    let myline = line(".")
-    let mycolumn = col(".")
-    silent! %!prettier --stdin --single-quote
-    call cursor(myline, mycolumn)
-  else
-    echo 'Could not locate prettier'
-  endif
-endfunction
-
 function! RunCtags(...)
   if executable('ctags')
     if len(a:000) == 0
@@ -144,18 +124,14 @@ if has("autocmd")
   let g:opamshare = substitute($OCAML_TOPLEVEL_PATH, 'lib/toplevel', 'share', "")
   execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
-  au BufWritePost *.go    silent call RunCtags("-R", "--languages=go")
   au BufWritePost *.scala silent call RunCtags("-R", "--languages=scala,java", "--exclude=target")
 
   " use c syntax for *.h files
   let g:c_syntax_for_h = 1
 endif
 
-highlight LineNr       term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
-highlight CursorLineNr term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
-highlight StatusLine   term=bold,reverse cterm=bold ctermfg=Gray     ctermbg=Black    gui=bold guifg=Gray     guibg=Black
-highlight StatusLineNc term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=Gray     guibg=Black
-highlight VertSplit    term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=Gray     guibg=Black
+highlight LineNr       term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE gui=NONE guifg=DarkGray guibg=NONE
+highlight CursorLineNr term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE gui=NONE guifg=DarkGray guibg=NONE
 
 map <space> <leader>
 
