@@ -1,6 +1,7 @@
 " Some Haskell customizations
 
 set wildignore+=**/dist/**
+set wildignore+=**/dist-newstyle/**
 
 if executable('cabal')
   set makeprg=cabal\ build\ -v0
