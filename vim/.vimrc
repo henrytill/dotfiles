@@ -10,20 +10,24 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'joshdick/onedark.vim'
-Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/vim-easy-align'
-Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
-Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
-Plug 'derekwyatt/vim-scala',    { 'for': ['scala', 'sbt.scala'] }
-Plug 'let-def/ocp-indent-vim',  { 'for': 'ocaml' }
-Plug 'LnL7/vim-nix',            { 'for': 'nix' }
-Plug 'rust-lang/rust.vim',      { 'for': 'rust' }
-Plug 'racer-rust/vim-racer',    { 'for': 'rust' }
-Plug 'lyuts/vim-rtags',         { 'for': ['cpp', 'c'] }
+Plug 'idris-hackers/idris-vim',   { 'for': 'idris' }
+Plug 'raichoo/purescript-vim',    { 'for': 'purescript' }
+Plug 'derekwyatt/vim-scala',      { 'for': ['scala', 'sbt.scala'] }
+Plug 'let-def/ocp-indent-vim',    { 'for': 'ocaml' }
+Plug 'LnL7/vim-nix',              { 'for': 'nix' }
+Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
+Plug 'rust-lang/rust.vim',        { 'for': 'rust' }
+Plug 'racer-rust/vim-racer',      { 'for': 'rust' }
+Plug 'lyuts/vim-rtags',           { 'for': ['cpp', 'c'] }
 call plug#end()
 
 syntax on
+
+if (empty($TMUX) && has("termguicolors"))
+  set termguicolors
+endif
 
 if !empty(glob("~/.vim/plugged/onedark.vim"))
   if (has("autocmd") && !has("gui_running"))
@@ -34,11 +38,11 @@ if !empty(glob("~/.vim/plugged/onedark.vim"))
     augroup END
   endif
   colorscheme onedark
-  let g:lightline = { "colorscheme": "onedark" }
 else
   set background=dark
 endif
 
+set cursorline
 set expandtab
 set ignorecase
 set incsearch
@@ -61,6 +65,8 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set textwidth=80
+
+set wildignore+=*/.git/*
 
 setglobal tags=./tags;
 
@@ -124,14 +130,18 @@ if has("autocmd")
   let g:opamshare = substitute($OCAML_TOPLEVEL_PATH, 'lib/toplevel', 'share', "")
   execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
+  au BufWritePost *.go    silent call RunCtags("-R", "--languages=go")
   au BufWritePost *.scala silent call RunCtags("-R", "--languages=scala,java", "--exclude=target")
 
   " use c syntax for *.h files
   let g:c_syntax_for_h = 1
 endif
 
-highlight LineNr       term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE gui=NONE guifg=DarkGray guibg=NONE
-highlight CursorLineNr term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE gui=NONE guifg=DarkGray guibg=NONE
+highlight LineNr       term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
+highlight CursorLineNr term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
+highlight StatusLine   term=bold,reverse cterm=bold ctermfg=Gray     ctermbg=Black    gui=bold guifg=Gray     guibg=Black
+highlight StatusLineNc term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=Gray     guibg=Black
+highlight VertSplit    term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=Gray     guibg=Black
 
 map <space> <leader>
 
