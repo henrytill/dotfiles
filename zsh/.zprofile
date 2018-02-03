@@ -76,6 +76,7 @@ case $(uname -s) in
 
         add_dir_to_path_front "$HOME/Library/Python/2.7/bin"
         add_dir_to_path_front "/opt/apache-maven-3.5.2/bin"
+        add_dir_to_path_front "/opt/jflex-1.6.1/bin"
 
         RUST_TOOLCHAIN="stable-x86_64-apple-darwin"
         ;;
@@ -98,7 +99,7 @@ esac
 
 if [[ -n "$(command -v vim)" ]]
 then
-    export EDITOR="emacsclient -t -a vim"
+    export EDITOR="vim"
 fi
 
 # Rust sources
