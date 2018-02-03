@@ -40,11 +40,13 @@
         darwinStaticExe = p: if self.stdenv.isDarwin then lib.justStaticExecutables p else p;
         home            = builtins.getEnv "HOME";
         lib             = self.haskell.lib;
+        bnfcPath        = home + "/src/other/bnfc/source/BNFC.nix";
       in
         super.haskellPackages.override {
           overrides = self: super: {
             Agda            = darwinStaticExe super.Agda;
-            BNFC            = darwinStaticExe super.BNFC;
+            BNFC            = darwinStaticExe (super.callPackage bnfcPath {});
+            brittany        = darwinStaticExe super.brittany;
             cabal2nix       = darwinStaticExe super.cabal2nix;
             darcs           = darwinStaticExe super.darcs;
             idris           = darwinStaticExe super.idris;
