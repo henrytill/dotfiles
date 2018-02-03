@@ -42,7 +42,6 @@ else
   set background=dark
 endif
 
-set cursorline
 set expandtab
 set ignorecase
 set incsearch
@@ -137,11 +136,11 @@ if has("autocmd")
   let g:c_syntax_for_h = 1
 endif
 
-highlight LineNr       term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
-highlight CursorLineNr term=bold         cterm=NONE ctermfg=DarkGray ctermbg=NONE     gui=NONE guifg=DarkGray guibg=NONE
-highlight StatusLine   term=bold,reverse cterm=bold ctermfg=Gray     ctermbg=Black    gui=bold guifg=Gray     guibg=Black
-highlight StatusLineNc term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=Gray     guibg=Black
-highlight VertSplit    term=reverse      cterm=NONE ctermfg=Gray     ctermbg=Black    gui=NONE guifg=Gray     guibg=Black
+highlight LineNr       term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE  gui=NONE guifg=DarkGray guibg=NONE
+highlight CursorLineNr term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE  gui=NONE guifg=DarkGray guibg=NONE
+highlight StatusLine   term=bold cterm=bold ctermfg=Gray     ctermbg=Black gui=bold guifg=Gray     guibg=Black
+highlight StatusLineNc term=NONE cterm=NONE ctermfg=Gray     ctermbg=Black gui=NONE guifg=Gray     guibg=Black
+highlight VertSplit    term=NONE cterm=NONE ctermfg=Gray     ctermbg=Black gui=NONE guifg=Gray     guibg=Black
 
 map <space> <leader>
 
