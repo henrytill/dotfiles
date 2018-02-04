@@ -4,10 +4,7 @@
         haskell-doc-prettify-types nil
         haskell-interactive-popup-errors nil
         haskell-process-log t
-        whitespace-line-column 120)
-  (define-key evil-normal-state-local-map (kbd "C-]") 'xref-find-definitions)
-  (define-key evil-normal-state-local-map (kbd "C-t") 'xref-pop-marker-stack)
-  nil)
+        whitespace-line-column 120))
 
 (defun ht/haskell-wrapper-function-nix ()
   (interactive)
@@ -54,7 +51,11 @@
   :init
   (add-hook 'haskell-mode-local-vars-hook 'dante-mode)
   (add-hook 'nix-buffer-after-load-hook 'dante-restart)
-  (add-hook 'haskell-mode-hook 'flycheck-mode))
+  (add-hook 'haskell-mode-hook 'flycheck-mode)
+  (add-hook 'haskell-mode-hook
+            (lambda ()
+              (define-key evil-normal-state-local-map (kbd "C-]") 'xref-find-definitions)
+              (define-key evil-normal-state-local-map (kbd "C-t") 'xref-pop-marker-stack))))
 
 (use-package company-ghci
   :ensure t
