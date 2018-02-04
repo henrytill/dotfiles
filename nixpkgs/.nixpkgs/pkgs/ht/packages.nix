@@ -37,7 +37,6 @@ let
       msmtp
       mutt
       nixops
-      notmuch
       offlineimap
       postgresql
       socat
@@ -46,7 +45,9 @@ let
       wget
     ];
 
-  unstableDarwin = with pkgs; [];
+  unstableDarwin = with pkgs;
+    [ notmuch
+    ];
 
 in {
 
