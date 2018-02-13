@@ -80,14 +80,12 @@
 
 (ht/custom-set-faces)
 
-(use-package linum
-  :init
-  (use-package linum-relative :ensure t)
-  (defun ht/linum-mode ()
-    (setq linum-format "%4d ")
-    (setq linum-relative-format "%4s ")
-    (linum-relative-on))
-  (add-hook 'linum-mode-hook #'ht/linum-mode))
+(use-package linum-relative
+  :ensure t
+  :config
+  (setq linum-format "%4d "
+        linum-relative-format "%4s ")
+  (linum-relative-on))
 
 (setq frame-title-format
       '("" invocation-name ": " (:eval (if (buffer-file-name)
