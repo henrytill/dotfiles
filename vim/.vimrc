@@ -25,6 +25,14 @@ call plug#end()
 
 syntax on
 
+let hostname = substitute(system('hostname -s'), '\n', '', '')
+
+let termguicolors_hosts = ['proteus']
+
+if (index(termguicolors_hosts, hostname) >= 0 && empty($TMUX) && has('termguicolors'))
+  set termguicolors
+endif
+
 if !empty(glob("~/.vim/plugged/onedark.vim"))
   if (has("autocmd") && !has("gui_running"))
     augroup colorset
