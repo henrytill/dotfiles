@@ -13,6 +13,7 @@ let
       nix
       nix-prefetch-scripts
       nix-repl
+      nixops
       pandoc
     ];
 
@@ -35,7 +36,6 @@ let
       jshon
       msmtp
       mutt
-      nixops
       offlineimap
       postgresql
       qemu
