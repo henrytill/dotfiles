@@ -4,6 +4,7 @@ let
 
   stableShared = with pkgs;
     [ aspcud
+      haskellPackages.Agda
       haskellPackages.cabal-install
       haskellPackages.cabal2nix
       haskellPackages.ghc
@@ -20,9 +21,7 @@ let
       youtube-dl
     ];
 
-  stableLinux = with pkgs;
-    [ haskellPackages.Agda
-    ];
+  stableLinux = with pkgs; [];
 
   unstableLinux = with pkgs;
     [ haskellPackages.threadscope
@@ -39,6 +38,7 @@ let
       nixops
       offlineimap
       postgresql
+      qemu
       socat
       tmux
       tree
