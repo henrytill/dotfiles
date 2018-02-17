@@ -25,10 +25,6 @@ call plug#end()
 
 syntax on
 
-if (empty($TMUX) && has("termguicolors"))
-  set termguicolors
-endif
-
 if !empty(glob("~/.vim/plugged/onedark.vim"))
   if (has("autocmd") && !has("gui_running"))
     augroup colorset
@@ -69,14 +65,14 @@ set wildignore+=*/.git/*
 
 setglobal tags=./tags;
 
-function! StripTrailingWhitespace()
+function StripTrailingWhitespace()
   let myline = line(".")
   let mycolumn = col(".")
   silent! %s/\s\+$//
   call cursor(myline, mycolumn)
 endfunction
 
-function! RunClangFormat()
+function RunClangFormat()
   if executable('clang-format')
     let myline = line(".")
     let mycolumn = col(".")
@@ -84,19 +80,6 @@ function! RunClangFormat()
     call cursor(myline, mycolumn)
   else
     echo 'Could not locate clang-format'
-  endif
-endfunction
-
-function! RunCtags(...)
-  if executable('ctags')
-    if len(a:000) == 0
-      let optionString = ""
-    else
-      let optionString = join(a:000, " ")
-    endif
-    execute "silent! !ctags " . optionString . " 2>/dev/null &"
-  else
-    echo 'Could not locate ctags'
   endif
 endfunction
 
@@ -129,9 +112,6 @@ if has("autocmd")
   let g:opamshare = substitute($OCAML_TOPLEVEL_PATH, 'lib/toplevel', 'share', "")
   execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
-  au BufWritePost *.go    silent call RunCtags("-R", "--languages=go")
-  au BufWritePost *.scala silent call RunCtags("-R", "--languages=scala,java", "--exclude=target")
-
   " use c syntax for *.h files
   let g:c_syntax_for_h = 1
 endif
@@ -152,3 +132,6 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+set exrc
+set secure
