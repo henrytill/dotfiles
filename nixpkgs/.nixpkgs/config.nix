@@ -46,7 +46,7 @@
                             url = "http://darcs.net/reviewed/reviewed.zip";
                             sha256 = "0mdjcmfjbms1dikbqbdk9p10452pwkrj7jyxkq08yzx3fv2v5sii";
                           };
-        darcsReviewed   = (callCabal2nix "darcs" darcsSrc { inherit (self) curl; }).overrideDerivation (oldAttrs: {
+        darcsReviewed   = (callCabal2nix "darcs" darcsSrc { inherit (self) curl; }).overrideAttrs (oldAttrs: {
                             patches = [ ./patches/reviewed.patch ];
                           });
       in
