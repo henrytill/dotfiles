@@ -11,7 +11,7 @@ proteus  = ctags emacs git nixpkgs ocaml \
            tmux vim zsh
 thaumas  = ctags emacs git \
            nixpkgs npm ocaml tmux vim zsh \
-           dunst x11 xdg
+           dunst xdg
 
 # base package set for undefined hosts
 BASE_PKGS = emacs git tmux vim zsh
