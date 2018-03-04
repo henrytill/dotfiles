@@ -8,7 +8,6 @@ let
       haskellPackages.cabal-install
       haskellPackages.cabal2nix
       haskellPackages.ghc
-      haskellPackages.stack
       haskellPackages.stylish-haskell
       nix
       nix-prefetch-scripts
@@ -33,11 +32,15 @@ let
       aspellDicts.en
       cacert
       ctags
+      doxygen
       jshon
+      mercurial
       msmtp
       mutt
+      nodejs
       offlineimap
       postgresql
+      python3
       qemu
       socat
       tmux
@@ -60,5 +63,4 @@ in {
     unstableShared
     ++ stdenv.lib.optional stdenv.isLinux  unstableLinux
     ++ stdenv.lib.optional stdenv.isDarwin unstableDarwin;
-
 }
