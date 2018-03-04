@@ -37,10 +37,18 @@
 
     haskellPackages =
       let
+        callCabal2nix   = self.haskellPackages.callCabal2nix;
         darwinStaticExe = p: if self.stdenv.isDarwin then lib.justStaticExecutables p else p;
         home            = builtins.getEnv "HOME";
         lib             = self.haskell.lib;
         bnfcPath        = home + "/src/other/bnfc/source/BNFC.nix";
+        darcsSrc        = self.fetchzip {
+                            url = "http://darcs.net/reviewed/reviewed.zip";
+                            sha256 = "0mdjcmfjbms1dikbqbdk9p10452pwkrj7jyxkq08yzx3fv2v5sii";
+                          };
+        darcsReviewed   = (callCabal2nix "darcs" darcsSrc { inherit (self) curl; }).overrideDerivation (oldAttrs: {
+                            patches = [ ./patches/reviewed.patch ];
+                          });
       in
         super.haskellPackages.override {
           overrides = self: super: {
@@ -48,7 +56,7 @@
             BNFC            = darwinStaticExe (super.callPackage bnfcPath {});
             brittany        = darwinStaticExe super.brittany;
             cabal2nix       = darwinStaticExe super.cabal2nix;
-            darcs           = darwinStaticExe super.darcs;
+            darcs           = darwinStaticExe darcsReviewed;
             idris           = darwinStaticExe super.idris;
             lhs2tex         = darwinStaticExe super.lhs2tex;
             stack           = darwinStaticExe super.stack;
