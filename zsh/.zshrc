@@ -33,7 +33,7 @@ create_prompt ()
         PROMPT2=$inDocker$nixshellMode'> '
         RPROMPT=''
     else
-        local firstLine='%F{2}%B%n@%m:%~%f%b'
+        local firstLine='%B%n@%m:%~%b'
         local retStatus='%(?.[%?].%F{1}[%?]%f)'
         PROMPT=$'\n'$firstLine$'\n'$retStatus$inDocker$inNixShell'> '
         PROMPT2=$inDocker$nixshellMode'> '
