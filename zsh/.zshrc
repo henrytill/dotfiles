@@ -67,14 +67,6 @@ fi
 if [[ "$(uname -s)" == "Darwin" ]]
 then
     alias ls="ls -G"
-
-    if [[ -d /Applications/Emacs.app/ ]]
-    then
-        alias Emacs.app="open -n -a /Applications/Emacs.app"
-    elif [[ -d ~/.nix-profile/Applications/Emacs.app/ ]]
-    then
-        alias Emacs.app="open -n -a ~/.nix-profile/Applications/Emacs.app"
-    fi
 fi
 
 # Linux-specific config

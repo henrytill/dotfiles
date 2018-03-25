@@ -1,9 +1,0 @@
-alias d cd $*; l
-alias l clear; pwd; ls -l $*
-alias la clear; pwd; ls -la $*
-alias lc clear; pwd; ls -a $*
-alias ll ls -la $*
-alias llt ls -lat $*
-alias lt ls -lt $*
-alias u cd ..; l
-alias emacs find-file $1
