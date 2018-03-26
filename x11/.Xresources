@@ -1,18 +1,31 @@
-Emacs.fontBackend:          xft
-Emacs.font:                 Fira Mono:style=Regular:pixelsize=12
-Emacs.internalBorder:       12
-Emacs.menuBar:              off
-Emacs.toolBar:              off
-Emacs.verticalScrollBars:   off
-
-XTerm*faceName:             xft:Fira Mono:pixelsize=12
+XTerm*faceName:             xft:LiberationMono:pixelsize=12
 XTerm*renderFont:           true
 XTerm*internalBorder:       12
 XTerm*termName:             xterm-256color
 XTerm*eightBitInput:        false
 XTerm*eightBitOutput:       true
-XTerm*background:           #282c34
-XTerm*foreground:           #bbc2cf
+
+XTerm*background:           #dfdbc3
+XTerm*foreground:           #593534
+XTerm*color0:               #000000
+XTerm*color1:               #990000
+XTerm*color2:               #00a600
+XTerm*color3:               #999900
+XTerm*color4:               #0000b2
+XTerm*color5:               #b200b2
+XTerm*color6:               #00a6b2
+XTerm*color7:               #bfbfbf
+XTerm*color8:               #666666
+XTerm*color9:               #e50000
+XTerm*color10:              #00d900
+XTerm*color11:              #e5e500
+XTerm*color12:              #0000ff
+XTerm*color13:              #e500e5
+XTerm*color14:              #00e5e5
+XTerm*color15:              #e5e5e5
+XTerm*cursorColor:          #3a2322
+XTerm*colorBD:              #7f2a19
+XTerm*colorBDMode:          true
 
 Xft.antialias:              true
 Xft.autohint:               false
