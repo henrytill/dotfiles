@@ -1,4 +1,5 @@
 XTerm*faceName:             xft:LiberationMono:pixelsize=12
+XTerm*boldFont:             xft:LiberationMono:style=Bold:pixelsize=12
 XTerm*renderFont:           true
 XTerm*internalBorder:       12
 XTerm*termName:             xterm-256color
@@ -25,7 +26,7 @@ XTerm*color14:              #00e5e5
 XTerm*color15:              #e5e5e5
 XTerm*cursorColor:          #3a2322
 XTerm*colorBD:              #7f2a19
-XTerm*colorBDMode:          true
+XTerm*colorBDMode:          false
 
 Xft.antialias:              true
 Xft.autohint:               false
