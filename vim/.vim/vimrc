@@ -23,14 +23,6 @@ call plug#end()
 
 syntax on
 
-let hostname = substitute(system('hostname -s'), '\n', '', '')
-
-let termguicolors_hosts = ['proteus']
-
-if (index(termguicolors_hosts, hostname) >= 0 && empty($TMUX) && has('termguicolors'))
-  set termguicolors
-endif
-
 set expandtab
 set ignorecase
 set incsearch
