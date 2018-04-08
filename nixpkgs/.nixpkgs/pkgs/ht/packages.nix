@@ -4,16 +4,13 @@ let
 
   stableShared = with pkgs;
     [ aspcud
-      haskellPackages.Agda
       haskellPackages.cabal-install
       haskellPackages.cabal2nix
       haskellPackages.ghc
       haskellPackages.stylish-haskell
       nix
       nix-prefetch-scripts
-      nix-repl
       nixops
-      pandoc
     ];
 
   unstableShared = with pkgs;

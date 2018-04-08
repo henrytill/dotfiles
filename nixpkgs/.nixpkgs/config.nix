@@ -12,7 +12,7 @@
             ghc7103_async_2_0_2 =
               super.haskell.packages.ghc7103.override {
                 overrides = self: super: {
-                  async = super.callHackage "async" "2.0.2" {};
+                  async = self.callHackage "async" "2.0.2" {};
                 };
               };
             ghc802_parconc =
@@ -41,22 +41,13 @@
         darwinStaticExe = p: if self.stdenv.isDarwin then lib.justStaticExecutables p else p;
         home            = builtins.getEnv "HOME";
         lib             = self.haskell.lib;
-        bnfcPath        = home + "/src/other/bnfc/source/BNFC.nix";
-        darcsSrc        = self.fetchzip {
-                            url = "http://darcs.net/reviewed/reviewed.zip";
-                            sha256 = "0mdjcmfjbms1dikbqbdk9p10452pwkrj7jyxkq08yzx3fv2v5sii";
-                          };
-        darcsReviewed   = (callCabal2nix "darcs" darcsSrc { inherit (self) curl; }).overrideAttrs (oldAttrs: {
-                            patches = [ ./patches/reviewed.patch ];
-                          });
       in
         super.haskellPackages.override {
           overrides = self: super: {
             Agda            = darwinStaticExe super.Agda;
-            BNFC            = darwinStaticExe (super.callPackage bnfcPath {});
             brittany        = darwinStaticExe super.brittany;
             cabal2nix       = darwinStaticExe super.cabal2nix;
-            darcs           = darwinStaticExe darcsReviewed;
+            darcs           = darwinStaticExe super.darcs;
             idris           = darwinStaticExe super.idris;
             lhs2tex         = darwinStaticExe super.lhs2tex;
             stack           = darwinStaticExe super.stack;
@@ -66,10 +57,10 @@
         };
 
     ht = {
-      packages   = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/packages.nix {});
-      scripts    = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/scripts.nix  {});
-      shells     = super.recurseIntoAttrs (super.callPackage ./pkgs/ht/shells.nix   {});
-      texliveEnv = super.texlive.combine {
+      packages   = self.recurseIntoAttrs (self.callPackage ./pkgs/ht/packages.nix {});
+      scripts    = self.recurseIntoAttrs (self.callPackage ./pkgs/ht/scripts.nix  {});
+      shells     = self.recurseIntoAttrs (self.callPackage ./pkgs/ht/shells.nix   {});
+      texliveEnv = self.texlive.combine {
         inherit (super.texlive)
         scheme-medium
         collection-fontsextra
