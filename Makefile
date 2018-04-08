@@ -39,6 +39,11 @@ ifneq (,$(findstring sbt,$(PKG_SET)))
   TARG_DIRS += ../.sbt/0.13/plugins
 endif
 
+# systemd
+ifneq (,$(findstring systemd,$(PKG_SET)))
+  TARG_DIRS += ../.config/systemd/user/default.target.wants
+endif
+
 # vim
 ifneq (,$(findstring vim,$(PKG_SET)))
   TARG_DIRS += ../.vim
@@ -51,18 +56,18 @@ list:
 	@echo $(PKG_SET)
 
 $(TARG_DIRS):
-	@mkdir -p $@
+	mkdir -p $@
 
 install: $(TARG_DIRS)
-	@stow -v $(PKG_SET)
-	@$(INSTALL_HOOK)
+	stow -v $(PKG_SET)
+	$(INSTALL_HOOK)
 
 reinstall: $(TARG_DIRS)
-	@stow -Rv $(PKG_SET)
-	@$(REINSTALL_HOOK)
+	stow -Rv $(PKG_SET)
+	$(REINSTALL_HOOK)
 
 clean:
-	@$(CLEAN_HOOK)
-	@stow -Dv $(PKG_SET)
+	$(CLEAN_HOOK)
+	stow -Dv $(PKG_SET)
 
 .PHONY: all list install reinstall clean
