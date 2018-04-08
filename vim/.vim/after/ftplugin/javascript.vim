@@ -12,5 +12,3 @@ endif
 if filereadable('webpack.config.js')
   set backupcopy=yes
 endif
-
-nnoremap <leader>gp :silent call RunPrettier()<CR>
