@@ -1,31 +1,27 @@
 # .zprofile
 
-export_dir ()
-{
+export_dir () {
     if [[ -d $2 ]]
     then
         export $1="$2"
     fi
 }
 
-add_dir_to_path_front ()
-{
+add_dir_to_path_front () {
     if [[ -d $1 ]]
     then
         export PATH="$1:$PATH"
     fi
 }
 
-add_dir_to_path_back ()
-{
+add_dir_to_path_back () {
     if [[ -d $1 ]]
     then
         export PATH="$PATH:$1"
     fi
 }
 
-is_nix_machine ()
-{
+is_nix_machine () {
     $HOST == "thaumas" || $HOST == "proteus"
 }
 
@@ -114,20 +110,6 @@ then
     export CONSCRIPT_OPTS="-XX:MaxPermSize=512M -Dfile.encoding=UTF-8"
 fi
 
-# Go
-export_dir GOROOT "/opt/go"
-export_dir GOPATH "$HOME/opt/go"
-
-if [[ -n $GOROOT ]]
-then
-    add_dir_to_path_front "$GOROOT/bin"
-fi
-
-if [[ -n $GOPATH ]]
-then
-    add_dir_to_path_back "$GOPATH/bin"
-fi
-
 # ATS2
 export_dir PATSHOME "/opt/ATS2-Postiats-0.3.6"
 export_dir PATSCONTRIB "$HOME/src/other/ATS-Postiats-contrib"
@@ -136,15 +118,6 @@ if [[ -n $PATSHOME ]]
 then
     add_dir_to_path_front "$PATSHOME/bin"
 fi
-
-# ~/.local/bin
-add_dir_to_path_front "$HOME/.local/bin"
-
-# Yarn
-add_dir_to_path_front "/opt/yarn/bin"
-
-# SML
-add_dir_to_path_front "/usr/local/share/smlnj/bin"
 
 # Cargo
 add_dir_to_path_front "$HOME/.cargo/bin"

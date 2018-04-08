@@ -20,8 +20,7 @@ then
 fi
 
 # prompt
-create_prompt ()
-{
+create_prompt () {
     local inDocker=${IN_DOCKER_CONTAINER/1/"[docker]"}
     local inNixShell=${IN_NIX_SHELL/1/"[$name]"}
 
@@ -30,13 +29,13 @@ create_prompt ()
         unsetopt zle
         local retStatus='[%?]'
         PROMPT=$'\n'$retStatus$inDocker$inNixShell'> '
-        PROMPT2=$inDocker$nixshellMode'> '
+        PROMPT2=$inDocker$inNixShell'> '
         RPROMPT=''
     else
         local firstLine='%B%n@%m:%~%b'
         local retStatus='%(?.[%?].%F{1}[%?]%f)'
         PROMPT=$'\n'$firstLine$'\n'$retStatus$inDocker$inNixShell'> '
-        PROMPT2=$inDocker$nixshellMode'> '
+        PROMPT2=$inDocker$inNixShell'> '
         RPROMPT=''
     fi
 }
@@ -104,16 +103,14 @@ if [[ -n "$(command -v nix-shell)" ]]
 then
     alias nix-zshell="nix-shell --command zsh"
 
-    nix-default-shell ()
-    {
+    nix-default-shell () {
         nix-shell -E "(import <nixpkgs> {}).callPackage ./default.nix {}" $*
     }
 fi
 
 if [[ -n "$(command -v npm)" ]]
 then
-    npm-exec ()
-    {
+    npm-exec () {
         PATH=$(npm bin):$PATH $*
     }
 fi
