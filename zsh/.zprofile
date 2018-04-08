@@ -68,13 +68,7 @@ case $(uname -s) in
         export_dir PLAN9 "/opt/plan9port"
         add_dir_to_path_back "$PLAN9/bin"
 
-        export_dir VAGRANT_HOME "/Volumes/vms/vagrant.d"
-
         add_dir_to_path_front "$HOME/Library/Python/2.7/bin"
-        add_dir_to_path_front "/opt/apache-maven-3.5.2/bin"
-        add_dir_to_path_front "/opt/jflex-1.6.1/bin"
-
-        RUST_TOOLCHAIN="stable-x86_64-apple-darwin"
         ;;
 
     "Linux")
@@ -82,14 +76,6 @@ case $(uname -s) in
         then
             source "$HOME/.nix-profile/etc/profile.d/nix.sh"
         fi
-
-        if [[ -d "/opt/mira-2042-i686-Linux" ]]
-        then
-            export MIRALIB="/opt/mira-2042-i686-Linux/lib/miralib"
-            add_dir_to_path_front "/opt/mira-2042-i686-Linux/bin"
-        fi
-
-        RUST_TOOLCHAIN="stable-x86_64-unknown-linux-gnu"
         ;;
 esac
 
@@ -97,9 +83,6 @@ if [[ -n "$(command -v vim)" ]]
 then
     export EDITOR="vim"
 fi
-
-# Rust sources
-export_dir RUST_SRC_PATH "$HOME/.multirust/toolchains/$RUST_TOOLCHAIN/lib/rustlib/src/rust/src"
 
 # Conscript
 export_dir CONSCRIPT_HOME "$HOME/.conscript"

@@ -102,17 +102,6 @@ fi
 if [[ -n "$(command -v nix-shell)" ]]
 then
     alias nix-zshell="nix-shell --command zsh"
-
-    nix-default-shell () {
-        nix-shell -E "(import <nixpkgs> {}).callPackage ./default.nix {}" $*
-    }
-fi
-
-if [[ -n "$(command -v npm)" ]]
-then
-    npm-exec () {
-        PATH=$(npm bin):$PATH $*
-    }
 fi
 
 if [[ -n "$(command -v opam)" && -d "$HOME/.opam" ]]
