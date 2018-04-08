@@ -34,11 +34,6 @@ ifneq (,$(findstring ghc,$(PKG_SET)))
   TARG_DIRS += ../.ghc
 endif
 
-# sbt
-ifneq (,$(findstring sbt,$(PKG_SET)))
-  TARG_DIRS += ../.sbt/0.13/plugins
-endif
-
 # systemd
 ifneq (,$(findstring systemd,$(PKG_SET)))
   TARG_DIRS += ../.config/systemd/user/default.target.wants
