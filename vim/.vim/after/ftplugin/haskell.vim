@@ -1,7 +1,7 @@
 " Some Haskell customizations
 
-set wildignore+=**/dist/**
-set wildignore+=**/dist-newstyle/**
+set wildignore+=*/dist/*
+set wildignore+=*/dist-newstyle/*
 
 if executable('cabal')
   set makeprg=cabal\ build\ -v0
@@ -10,4 +10,3 @@ if executable('cabal')
   nnoremap <F6> :CabalTest<CR>
   nnoremap <F7> :CabalHaddock<CR>
 endif
-

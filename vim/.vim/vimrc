@@ -38,6 +38,7 @@ set wildmenu
 
 set backspace=indent,eol,start
 set clipboard=unnamed
+set history=1000
 set path=.,,$PWD/**
 set shiftwidth=2
 set softtabstop=2
@@ -45,6 +46,7 @@ set tabstop=2
 set textwidth=80
 
 set wildignore+=*/.git/*
+set wildignore+=*/result/*
 
 setglobal tags=./tags;
 
