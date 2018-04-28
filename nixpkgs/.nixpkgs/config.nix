@@ -6,30 +6,25 @@
     haskell =
       let
         lib = self.haskell.lib;
+        home = builtins.getEnv "HOME";
       in
         super.haskell // {
           packages = super.haskell.packages // {
-            ghc7103_async_2_0_2 =
-              super.haskell.packages.ghc7103.override {
-                overrides = self: super: {
-                  async = self.callHackage "async" "2.0.2" {};
-                };
-              };
             ghc802_parconc =
               let
                 dpsSrc = super.pkgs.fetchFromGitHub {
-                           owner           = "haskell-distributed";
-                           repo            = "distributed-process-simplelocalnet";
-                           rev             = "3e1660fdbd82995ebb05f3c37991597728f622c6";
-                           sha256          = "1yg72lksdqwiy80l71z0xrdzjgnmppa29lzfk16bss6rh51xj4jy";
-                           fetchSubmodules = true;
-                         };
+                  owner           = "haskell-distributed";
+                  repo            = "distributed-process-simplelocalnet";
+                  rev             = "3e1660fdbd82995ebb05f3c37991597728f622c6";
+                  sha256          = "1yg72lksdqwiy80l71z0xrdzjgnmppa29lzfk16bss6rh51xj4jy";
+                  fetchSubmodules = true;
+                };
               in
                 super.haskell.packages.ghc802.override {
                   overrides = self: super: {
                     network-transport                  = super.network-transport_0_5_2;
                     network-transport-tcp              = super.network-transport-tcp_0_6_0;
-                    distributed-process-simplelocalnet = super.callCabal2nix "distributed-process-simplelocalnet" dpsSrc {};
+                    distributed-process-simplelocalnet = self.callCabal2nix "distributed-process-simplelocalnet" dpsSrc {};
                   };
                 };
           };
