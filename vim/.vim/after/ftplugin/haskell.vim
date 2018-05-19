@@ -4,9 +4,16 @@ set wildignore+=*/dist/*
 set wildignore+=*/dist-newstyle/*
 
 if executable('cabal')
-  set makeprg=cabal\ build\ -v0
-  command! CabalTest    !cabal test --show-details=streaming
+  if filereadable("cabal.project.local")
+    set makeprg=cabal\ new-build\ -v0
+    command! CabalTest !cabal new-test
+  else
+    set makeprg=cabal\ build\ -v0
+    command! CabalTest !cabal test --show-details=streaming
+  endif
+
   command! CabalHaddock !cabal haddock
+
   nnoremap <F6> :CabalTest<CR>
   nnoremap <F7> :CabalHaddock<CR>
 endif
