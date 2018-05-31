@@ -116,8 +116,9 @@ then
     add_dir_to_path_front "$PATSHOME/bin"
 fi
 
-# Cargo
+# Rust
 add_dir_to_path_front "$HOME/.cargo/bin"
+export_dir RUST_SRC_PATH "$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # scripts
 add_dir_to_path_front "$HOME/bin"
