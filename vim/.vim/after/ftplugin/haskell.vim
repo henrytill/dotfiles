@@ -19,7 +19,7 @@ if executable('cabal')
 endif
 
 function! RunHasktags(...)
-  if executable('hasktags')
+  if executable('hasktags') && filereadable('tags')
     if len(a:000) == 0
       let optionString = ""
     else
