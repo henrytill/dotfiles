@@ -11,14 +11,15 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'junegunn/vim-easy-align'
-Plug 'idris-hackers/idris-vim',   { 'for': 'idris' }
-Plug 'raichoo/purescript-vim',    { 'for': 'purescript' }
-Plug 'derekwyatt/vim-scala',      { 'for': ['scala', 'sbt.scala'] }
-Plug 'let-def/ocp-indent-vim',    { 'for': 'ocaml' }
-Plug 'LnL7/vim-nix',              { 'for': 'nix' }
-Plug 'rust-lang/rust.vim',        { 'for': 'rust' }
-Plug 'racer-rust/vim-racer',      { 'for': 'rust' }
-Plug 'lyuts/vim-rtags',           { 'for': ['cpp', 'c'] }
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
+Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
+Plug 'derekwyatt/vim-scala',    { 'for': ['scala', 'sbt.scala'] }
+Plug 'let-def/ocp-indent-vim',  { 'for': 'ocaml' }
+Plug 'LnL7/vim-nix',            { 'for': 'nix' }
+Plug 'rust-lang/rust.vim',      { 'for': 'rust' }
+Plug 'lyuts/vim-rtags',         { 'for': ['cpp', 'c'] }
 call plug#end()
 
 syntax on
@@ -99,6 +100,16 @@ if has("autocmd")
 
   " use c syntax for *.h files
   let g:c_syntax_for_h = 1
+
+  " rls
+  if executable('rls')
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'rls',
+      \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+      \ 'whitelist': ['rust'],
+      \ })
+    au FileType rust setlocal omnifunc=lsp#complete
+  endif
 endif
 
 map <space> <leader>
