@@ -76,6 +76,8 @@ case $(uname -s) in
         then
             source "$HOME/.nix-profile/etc/profile.d/nix.sh"
         fi
+
+        add_dir_to_path_front "$HOME/.local/bin"
         ;;
 esac
 
