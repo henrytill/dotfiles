@@ -8,15 +8,16 @@ let
       haskellPackages.cabal2nix
       haskellPackages.ghc
       haskellPackages.ghcid
-      haskellPackages.hasktags
       haskellPackages.stylish-haskell
       nix
       nix-prefetch-scripts
       nixops
+      rustup
     ];
 
   unstableShared = with pkgs;
     [ haskellPackages.darcs
+      haskellPackages.hasktags
       youtube-dl
     ];
 
