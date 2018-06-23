@@ -36,6 +36,14 @@
         darwinStaticExe = p: if self.stdenv.isDarwin then lib.justStaticExecutables p else p;
         home            = builtins.getEnv "HOME";
         lib             = self.haskell.lib;
+        haskellCISrc    = super.pkgs.fetchFromGitHub {
+                            owner           = "haskell-CI";
+                            repo            = "haskell-ci";
+                            rev             = "b592d290cff68c7abcbd7f99f41aac998e7b7916";
+                            sha256          = "0jwaifp9wx6lb27qj191hjm125kq3vndh5lf7ibd86x19h5zmy4c";
+                            fetchSubmodules = true;
+                          };
+        haskellCI       = callCabal2nix "haskell-ci" haskellCISrc {};
       in
         super.haskellPackages.override {
           overrides = self: super: {
@@ -44,6 +52,7 @@
             cabal2nix       = darwinStaticExe super.cabal2nix;
             darcs           = darwinStaticExe super.darcs;
             ghcid           = darwinStaticExe super.ghcid;
+            haskell-ci      = darwinStaticExe haskellCI;
             hasktags        = darwinStaticExe super.hasktags;
             idris           = darwinStaticExe super.idris;
             lhs2tex         = darwinStaticExe super.lhs2tex;
