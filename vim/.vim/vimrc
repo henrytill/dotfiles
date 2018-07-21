@@ -29,6 +29,7 @@ set ignorecase
 set incsearch
 set modeline
 set nowrap
+set number
 set ruler
 set showcmd
 set showmatch
