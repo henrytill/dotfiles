@@ -109,6 +109,11 @@ then
     . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi
 
+if [[ -n "$(command -v rustc)" ]]
+then
+    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
+
 if [[ -n "$(command -v hecate)" && -d "$HOME/.hecate" ]]
 then
     source <(hecate --bash-completion-script `which hecate`)

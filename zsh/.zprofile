@@ -123,10 +123,5 @@ fi
 # Rust
 add_dir_to_path_front "$HOME/.cargo/bin"
 
-if [[ -n "$(command -v rustc)" ]]
-then
-    export_dir RUST_SRC_PATH "$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-fi
-
 # scripts
 add_dir_to_path_front "$HOME/bin"
