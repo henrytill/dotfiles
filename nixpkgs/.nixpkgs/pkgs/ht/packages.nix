@@ -12,7 +12,6 @@ let
       nix
       nix-prefetch-scripts
       nixops
-      rustup
     ];
 
   unstableShared = with pkgs;
