@@ -1,9 +1,8 @@
 " Vim color file
 " Maintainer:	Henry Till <henrytill@gmail.com>
 
-highlight clear Normal
-
 " Remove all existing highlighting and set the defaults.
+highlight clear Normal
 highlight clear
 
 " Load the syntax highlighting defaults, if it's enabled.
@@ -15,8 +14,8 @@ let colors_name = "inl"
 
 highlight Comment       term=NONE           cterm=NONE          ctermfg=DarkGray    ctermbg=NONE        gui=NONE            guifg=DarkGray      guibg=NONE
 highlight Constant      term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
-highlight CursorLine    term=NONE           cterm=NONE          ctermfg=DarkGray    ctermbg=NONE        gui=NONE            guifg=DarkGray      guibg=NONE
-highlight CursorLineNr  term=NONE           cterm=NONE          ctermfg=DarkGray    ctermbg=NONE        gui=NONE            guifg=DarkGray      guibg=NONE
+highlight CursorLine    term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=LightGray   gui=NONE            guifg=NONE          guibg=LightGray
+highlight CursorLineNr  term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=LightGray   gui=NONE            guifg=NONE          guibg=LightGray
 highlight Error         term=reverse        cterm=NONE          ctermfg=Red         ctermbg=NONE        gui=NONE            guifg=Red           guibg=NONE
 highlight Identifier    term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight Keyword       term=bold           cterm=bold          ctermfg=NONE        ctermbg=NONE        gui=bold            guifg=NONE          guibg=NONE
