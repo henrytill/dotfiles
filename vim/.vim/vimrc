@@ -19,6 +19,7 @@ Plug 'LnL7/vim-nix',            { 'for': 'nix' }
 Plug 'rust-lang/rust.vim',      { 'for': 'rust' }
 Plug 'racer-rust/vim-racer',    { 'for': 'rust' }
 Plug 'lyuts/vim-rtags',         { 'for': ['cpp', 'c'] }
+Plug 'davidhalter/jedi-vim',    { 'for': 'python' }
 call plug#end()
 
 syntax on
@@ -54,14 +55,14 @@ set completeopt-=preview
 
 setglobal tags=./tags;
 
-function StripTrailingWhitespace()
+function! StripTrailingWhitespace()
   let myline = line(".")
   let mycolumn = col(".")
   silent! %s/\s\+$//
   call cursor(myline, mycolumn)
 endfunction
 
-function RunClangFormat()
+function! RunClangFormat()
   if executable('clang-format')
     let myline = line(".")
     let mycolumn = col(".")
