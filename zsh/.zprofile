@@ -120,6 +120,10 @@ then
     add_dir_to_path_front "$PATSHOME/bin"
 fi
 
+# Haskell
+add_dir_to_path_front "/opt/ghc/bin"
+add_dir_to_path_front "/opt/cabal/bin"
+
 # Rust
 add_dir_to_path_front "$HOME/.cargo/bin"
 
