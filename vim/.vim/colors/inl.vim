@@ -28,4 +28,6 @@ highlight Statement     term=bold           cterm=bold          ctermfg=NONE    
 highlight Type          term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight Visual        term=reverse        cterm=NONE          ctermfg=Black       ctermbg=Cyan        gui=NONE            guifg=Black         guibg=Cyan
 
+highlight link rustCommentLineDoc Comment
+
 " vim: sw=2 nowrap
