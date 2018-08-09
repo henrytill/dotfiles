@@ -11,6 +11,7 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'junegunn/vim-easy-align'
+Plug 'airblade/vim-gitgutter'
 Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
 Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
 Plug 'derekwyatt/vim-scala',    { 'for': ['scala', 'sbt.scala'] }
@@ -26,7 +27,7 @@ syntax on
 colorscheme inl
 
 set expandtab
-set ignorecase
+set hlsearch
 set incsearch
 set modeline
 set nowrap
@@ -124,3 +125,5 @@ set secure
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
   \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
   \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+map <Leader>/ :nohlsearch<CR>
