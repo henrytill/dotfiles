@@ -118,3 +118,8 @@ if [[ -n "$(command -v hecate)" && -d "$HOME/.hecate" ]]
 then
     source <(hecate --bash-completion-script `which hecate`)
 fi
+
+if [[ -n "$(command -v direnv)" ]]
+then
+    eval "$(direnv hook zsh)"
+fi
