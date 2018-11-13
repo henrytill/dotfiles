@@ -5,4 +5,5 @@ TAGS
 .DS_Store
 errors.err
 *.orig
+.vimrc
 .envrc
