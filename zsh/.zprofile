@@ -127,5 +127,9 @@ add_dir_to_path_front "/opt/cabal/bin"
 # Rust
 add_dir_to_path_front "$HOME/.cargo/bin"
 
+# Hashicorp
+add_dir_to_path_front "/opt/packer/bin"
+add_dir_to_path_front "/opt/terraform/bin"
+
 # scripts
 add_dir_to_path_front "$HOME/bin"
