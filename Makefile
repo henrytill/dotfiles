@@ -4,13 +4,13 @@ MY_HOSTS = glaucus nereus proteus thaumas
 # hosts and their package sets
 glaucus  = git nixpkgs tmux vim zsh
 nereus   = ctags git ideavim \
-           nixpkgs npm ocaml tmux vim zsh \
+           nixpkgs ocaml tmux vim zsh \
            x11-osx
 proteus  = ctags git nixpkgs ocaml \
            gtk systemd x11-gnome xdg-gnome \
            tmux vim zsh
 thaumas  = ctags git \
-           nixpkgs npm ocaml tmux vim zsh \
+           nixpkgs ocaml tmux vim zsh \
            dunst xdg
 
 # base package set for undefined hosts
