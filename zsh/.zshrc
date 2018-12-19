@@ -89,6 +89,7 @@ alias ll="ls -la"
 alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
+alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 
 if [[ -n "$(command -v view)" ]]
 then

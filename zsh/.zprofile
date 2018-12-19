@@ -112,7 +112,7 @@ then
 fi
 
 # ATS2
-export_dir PATSHOME "/opt/ATS2-Postiats-0.3.6"
+export_dir PATSHOME "/opt/ats"
 export_dir PATSCONTRIB "$HOME/src/other/ATS-Postiats-contrib"
 
 if [[ -n $PATSHOME ]]
@@ -123,6 +123,7 @@ fi
 # Haskell
 add_dir_to_path_front "/opt/ghc/bin"
 add_dir_to_path_front "/opt/cabal/bin"
+add_dir_to_path_front "$HOME/.cabal/bin"
 
 # Rust
 add_dir_to_path_front "$HOME/.cargo/bin"
