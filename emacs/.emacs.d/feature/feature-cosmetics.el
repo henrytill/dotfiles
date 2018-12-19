@@ -32,12 +32,7 @@
   (scroll-bar-mode -1)
   (tool-bar-mode -1))
 
-(setq frame-background-mode 'dark)
-
-(use-package doom-themes
-  :ensure t
-  :config
-  (load-theme 'doom-one))
+(setq frame-background-mode 'light)
 
 (when (is-linux-p)
   (add-hook 'after-make-frame-functions 'ht/frame-setup))
@@ -66,12 +61,12 @@
 
 (defconst ht/fixed-font
   (cond
-   ((is-linux-p)  '(:font "Fira Mono"))
+   ((is-linux-p)  '(:font "Mono"))
    ((is-darwin-p) '(:font "Menlo"))))
 
 (defconst ht/variable-font
   (cond
-   ((is-linux-p)  '(:font "Fira Sans"))
+   ((is-linux-p)  '(:font "Sans"))
    ((is-darwin-p) '(:font "Verdana"))))
 
 (defun ht/custom-set-faces ()
@@ -80,12 +75,10 @@
 
 (ht/custom-set-faces)
 
-(use-package linum-relative
-  :ensure t
+(use-package linum
   :config
-  (setq linum-format "%4d "
-        linum-relative-format "%4s ")
-  (linum-relative-on))
+  (setq linum-format "%4d ")
+  (linum-on))
 
 (setq frame-title-format
       '("" invocation-name ": " (:eval (if (buffer-file-name)
@@ -99,7 +92,6 @@
                     nil
                     :box `(:line-width 3 :color ,(face-attribute 'mode-line-inactive :background)))
 
-(global-hl-line-mode 1)
 (show-paren-mode 1)
 (column-number-mode 1)
 
