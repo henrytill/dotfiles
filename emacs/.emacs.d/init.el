@@ -77,6 +77,7 @@
                     feature-rust
                     feature-scala
                     feature-sml
+                    feature-terraform
                     feature-typescript
                     ;; the "postlude"
                     feature-postlude))
