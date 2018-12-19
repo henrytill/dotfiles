@@ -22,6 +22,8 @@ Plug 'racer-rust/vim-racer',    { 'for': 'rust' }
 Plug 'lyuts/vim-rtags',         { 'for': ['cpp', 'c'] }
 Plug 'davidhalter/jedi-vim',    { 'for': 'python' }
 Plug 'b4b4r07/vim-hcl'
+Plug 'leafgarland/typescript-vim'
+Plug 'hauleth/asyncdo.vim'
 call plug#end()
 
 syntax on
@@ -131,6 +133,8 @@ if has("autocmd")
   let g:c_syntax_for_h = 1
 
   au BufWritePost *.go silent call RunCtags("-R", "--languages=go")
+
+  command! -bang -nargs=* -complete=file Make call asyncdo#run(<bang>0, &makeprg, <f-args>)
 endif
 
 map <space> <leader>
