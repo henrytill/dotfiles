@@ -30,6 +30,8 @@
   :ensure t
   :config
   (setq exec-path-from-shell-check-startup-files nil)
+  (dolist (var '("PLAN9" "GOROOT" "GOPATH" "PATSHOME" "PATSCONTRIB"))
+    (add-to-list 'exec-path-from-shell-variables var))
   (exec-path-from-shell-initialize)
   (setq exec-path (remove-duplicates exec-path :test 'string=)))
 
