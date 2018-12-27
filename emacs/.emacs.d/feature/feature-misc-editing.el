@@ -11,6 +11,10 @@
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'"         . cmake-mode)))
 
+(use-package dockerfile-mode
+  :ensure t
+  :mode "Dockerfile\\(?:\\..*\\)?\\'")
+
 (use-package pandoc-mode
   :ensure t
   :commands pandoc-mode)
