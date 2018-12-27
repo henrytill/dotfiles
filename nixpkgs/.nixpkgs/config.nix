@@ -52,7 +52,6 @@
             cabal2nix       = darwinStaticExe super.cabal2nix;
             darcs           = darwinStaticExe super.darcs;
             ghcid           = darwinStaticExe super.ghcid;
-            haskell-ci      = darwinStaticExe haskellCI;
             hasktags        = darwinStaticExe super.hasktags;
             idris           = darwinStaticExe super.idris;
             lhs2tex         = darwinStaticExe super.lhs2tex;
