@@ -29,11 +29,13 @@
               (add-to-list 'eshell-visual-commands "ssh")
               (add-to-list 'eshell-visual-commands "bash"))))
 
+(defun ht/shell ()
+  (toggle-truncate-lines 1)
+  (add-to-list 'mode-line-buffer-identification '("" default-directory "  ")))
+
 (use-package shell
   :commands shell
   :init
-  (defun ht/mode-line-dirtrack ()
-    (add-to-list 'mode-line-buffer-identification '("" default-directory "  ")))
-  (add-hook 'shell-mode-hook 'ht/mode-line-dirtrack))
+  (add-hook 'shell-mode-hook 'ht/shell))
 
 (provide 'feature-shell)
