@@ -7,3 +7,6 @@ errors.err
 *.orig
 .vimrc
 .envrc
+.projectile
+.dir-locals.el
+compile_commands.json
