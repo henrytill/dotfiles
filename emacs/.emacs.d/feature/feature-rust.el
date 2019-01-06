@@ -7,9 +7,11 @@ _gd_: racer-find-definition
   ("gd" racer-find-definition nil :exit t))
 
 (defun ht/racer-mode ()
-  (let ((cmd (executable-find "racer")))
-    (when cmd
-      (setq racer-cmd cmd))))
+  (progn
+    (exec-path-from-shell-copy-env "RUST_SRC_PATH")
+    (let ((cmd (executable-find "racer")))
+      (when cmd
+        (setq racer-cmd cmd)))))
 
 (use-package racer
   :ensure t

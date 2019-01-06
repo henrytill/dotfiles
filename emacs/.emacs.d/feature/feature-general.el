@@ -28,12 +28,9 @@
 (use-package exec-path-from-shell
   :if (or (is-darwin-p) (is-linux-p))
   :ensure t
-  :config
-  (setq exec-path-from-shell-check-startup-files nil)
-  (dolist (var '("PLAN9" "GOROOT" "GOPATH" "PATSHOME" "PATSCONTRIB"))
-    (add-to-list 'exec-path-from-shell-variables var))
-  (exec-path-from-shell-initialize)
-  (setq exec-path (remove-duplicates exec-path :test 'string=)))
+  :commands exec-path-from-shell-copy-env
+  :init
+  (setq exec-path-from-shell-check-startup-files nil))
 
 (use-package grep
   :commands (grep find-grep find-grep-dired)
