@@ -30,7 +30,6 @@
               (add-to-list 'eshell-visual-commands "bash"))))
 
 (defun ht/shell ()
-  (toggle-truncate-lines 1)
   (add-to-list 'mode-line-buffer-identification '("" default-directory "  ")))
 
 (use-package shell
