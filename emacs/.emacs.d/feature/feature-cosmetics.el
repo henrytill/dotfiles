@@ -76,9 +76,18 @@
 (ht/custom-set-faces)
 
 (use-package linum
-  :config
+  :if (version< emacs-version "26.1")
+  :after (prog-mode)
+  :init
   (setq linum-format "%4d ")
-  (linum-on))
+  (add-hook 'prog-mode-hook 'linum-on))
+
+(use-package display-line-numbers
+  :if (version<= "26.1" emacs-version)
+  :after (prog-mode)
+  :init
+  (setq display-line-numbers-width 4)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 
 (setq frame-title-format
       '("" invocation-name ": " (:eval (if (buffer-file-name)
