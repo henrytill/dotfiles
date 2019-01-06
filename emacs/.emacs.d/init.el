@@ -27,7 +27,8 @@
                    ("org"   . "http://orgmode.org/elpa/")))
   (add-to-list 'package-archives archive))
 
-(package-initialize)
+(unless (eval-when-compile package--initialized)
+  (package-initialize))
 
 (when (null package-archive-contents)
   (package-refresh-contents))
