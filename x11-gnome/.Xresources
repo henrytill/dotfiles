@@ -1,5 +1,4 @@
-Emacs.fontBackend:          xft
-Emacs.font:                 Inconsolata:style=Regular:pixelsize=16
+Emacs.font:                 Iosevka:style=Regular:pixelsize=14
 Emacs.internalBorder:       14
 Emacs.menuBar:              off
 Emacs.toolBar:              off
