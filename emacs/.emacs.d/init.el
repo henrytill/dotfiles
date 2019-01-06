@@ -67,6 +67,7 @@
                     feature-coq
                     feature-forth
                     feature-fsharp
+                    feature-go
                     feature-haskell
                     feature-idris
                     feature-javascript
