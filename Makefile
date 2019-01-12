@@ -1,5 +1,5 @@
 # defined hosts
-MY_HOSTS = glaucus nereus proteus thaumas
+MY_HOSTS = glaucus nereus proteus thalassa thaumas
 
 # hosts and their package sets
 glaucus  = git nixpkgs tmux vim zsh
@@ -8,6 +8,9 @@ nereus   = ctags git ideavim \
            x11-osx
 proteus  = ctags git nixpkgs ocaml \
            gtk systemd x11-gnome xdg-gnome \
+           tmux vim zsh
+thalassa = ctags git nixpkgs ocaml \
+           gtk x11-gnome xdg-gnome \
            tmux vim zsh
 thaumas  = ctags git \
            nixpkgs ocaml tmux vim zsh \
