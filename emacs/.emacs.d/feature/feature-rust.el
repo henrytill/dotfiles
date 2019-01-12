@@ -14,6 +14,7 @@ _gd_: racer-find-definition
         (setq racer-cmd cmd)))))
 
 (use-package racer
+  :disabled t
   :ensure t
   :if (executable-find "racer")
   :commands racer-mode
@@ -29,10 +30,7 @@ _gd_: racer-find-definition
   :ensure t
   :mode "\\.rs\\'"
   :init
-  (add-hook 'rust-mode-hook 'ht/rust-mode)
   (add-hook 'rust-mode-hook 'auto-revert-mode)
-  (add-hook 'rust-mode-hook 'electric-pair-mode)
-  (add-hook 'rust-mode-hook 'flycheck-mode)
-  (add-hook 'rust-mode-hook 'racer-mode))
+  (add-hook 'rust-mode-hook 'electric-pair-mode))
 
 (provide 'feature-rust)
