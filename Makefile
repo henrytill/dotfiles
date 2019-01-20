@@ -1,20 +1,16 @@
 # defined hosts
-MY_HOSTS = glaucus nereus proteus thalassa thaumas
+MY_HOSTS = nereus proteus thalassa
 
 # hosts and their package sets
-glaucus  = git nixpkgs tmux vim zsh
 nereus   = ctags git ideavim \
            nixpkgs ocaml tmux vim zsh \
            x11-osx
 proteus  = ctags emacs git nixpkgs ocaml \
            gtk x11-gnome xdg-gnome \
            tmux vim zsh
-thalassa = ctags git nixpkgs ocaml \
+thalassa = ctags emacs git nixpkgs ocaml \
            gtk x11-gnome xdg-gnome \
            tmux vim zsh
-thaumas  = ctags git \
-           nixpkgs ocaml tmux vim zsh \
-           dunst xdg
 
 # base package set for undefined hosts
 BASE_PKGS = git tmux vim zsh
