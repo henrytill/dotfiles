@@ -1,7 +1,6 @@
-(defun ht/remove-fringe ()
+(defun ht/style-fringe ()
   (set-face-foreground 'fringe (face-attribute 'default :foreground))
-  (set-face-background 'fringe (face-attribute 'default :background))
-  (fringe-mode 0))
+  (set-face-background 'fringe (face-attribute 'default :background)))
 
 (defun ht/reset-frame ()
   (interactive)
@@ -22,10 +21,20 @@
   (add-to-list 'default-frame-alist '(height . 60))
   (add-to-list 'default-frame-alist '(width . 100)))
 
+(defun ht/style-mode-line ()
+  (set-face-attribute 'mode-line
+                      nil
+                      :box `(:line-width 3 :color ,(face-attribute 'mode-line :background)))
+  (set-face-attribute 'mode-line-inactive
+                      nil
+                      :box `(:line-width 3 :color ,(face-attribute 'mode-line-inactive :background))))
+
+
 (defun ht/frame-setup (frame)
   (with-selected-frame frame
     (when (display-graphic-p frame)
-      (ht/remove-fringe))))
+      (ht/style-fringe)
+      (ht/style-mode-line))))
 
 (unless (and (is-linux-p) (window-system))
   (menu-bar-mode -1)
@@ -38,42 +47,26 @@
   (add-hook 'after-make-frame-functions 'ht/frame-setup))
 
 (when (and (is-linux-p) (string-equal (window-system) "x"))
-  (ht/remove-fringe))
+  (ht/style-fringe))
 
 (when (is-darwin-p)
   (add-hook 'after-make-frame-functions 'ht/frame-setup))
 
 (when (and (is-darwin-p) (string-equal (window-system) "ns"))
   (ht/adjust-frame)
-  (ht/remove-fringe)
+  (ht/style-fringe)
   (when (member "Fira Mono" (font-family-list))
     (set-frame-font "Fira Mono-12" nil t)))
 
 (when (and (is-windows-p) (window-system))
   (ht/adjust-frame)
-  (ht/remove-fringe)
+  (ht/style-fringe)
   (when (member "Consolas" (font-family-list))
     (set-face-attribute 'default nil
                         :family "Consolas"
                         :foundry 'outline
                         :width 'normal
                         :height 98)))
-
-(defconst ht/fixed-font
-  (cond
-   ((is-linux-p)  '(:font "Mono"))
-   ((is-darwin-p) '(:font "Menlo"))))
-
-(defconst ht/variable-font
-  (cond
-   ((is-linux-p)  '(:font "Sans"))
-   ((is-darwin-p) '(:font "Verdana"))))
-
-(defun ht/custom-set-faces ()
-  (custom-set-faces `(fixed-pitch    ((t ,ht/fixed-font)))
-                    `(variable-pitch ((t ,ht/variable-font)))))
-
-(ht/custom-set-faces)
 
 (use-package linum
   :if (version< emacs-version "26.1")
@@ -94,12 +87,7 @@
                                            (abbreviate-file-name (buffer-file-name))
                                          "%b"))))
 
-(set-face-attribute 'mode-line
-                    nil
-                    :box `(:line-width 3 :color ,(face-attribute 'mode-line :background)))
-(set-face-attribute 'mode-line-inactive
-                    nil
-                    :box `(:line-width 3 :color ,(face-attribute 'mode-line-inactive :background)))
+(ht/style-mode-line)
 
 (show-paren-mode 1)
 (column-number-mode 1)
