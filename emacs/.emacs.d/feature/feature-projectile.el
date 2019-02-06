@@ -10,11 +10,15 @@
   :diminish projectile-mode
   :config
   (setq projectile-completion-system 'ivy)
+
   (projectile-global-mode)
+
   (add-to-list 'projectile-project-root-files "_tags")
+
   (defun projectile-cabal-new-project-p ()
     "Check if a project contains a cabal.project.local."
     (projectile-verify-file "cabal.project.local"))
+
   (projectile-register-project-type 'haskell-cabal-new
                                     #'projectile-cabal-new-project-p
                                     :compile "cabal new-build"
@@ -30,7 +34,15 @@
   (projectile-register-project-type 'topkg
                                     '("_tags" "opam" "pkg")
                                     :compile "topkg build"
-                                    :test "topkg test"))
+                                    :test "topkg test")
+
+  ;; https://github.com/joaotavora/eglot/issues/129
+  (defun ht/projectile-project-find-function (dir)
+    (let ((projectile-root (projectile-project-root dir)))
+      (and projectile-root (cons 'transient projectile-root))))
+
+  (with-eval-after-load 'project
+    (add-to-list 'project-find-functions 'ht/projectile-project-find-function)))
 
 (defhydra ht/hydra-projectile-search (:idle 1.5)
   "
