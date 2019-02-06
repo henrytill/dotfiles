@@ -7,14 +7,15 @@
 
 (defun ht/erc-sesh ()
   (interactive)
-  (let ((erc-sesh (expand-file-name "erc-sesh.el.gpg" "~/Dropbox/doc")))
+  (let ((erc-sesh (expand-file-name "erc-sesh.el.gpg" "~/prv/emacs")))
     (when (file-exists-p erc-sesh)
       (load-file erc-sesh))))
 
 (use-package erc
   :defer t
   :config
-  (setq erc-fill-function 'erc-fill-static
+  (setq erc-rename-buffers t
+        erc-fill-function 'erc-fill-static
         erc-fill-static-center 19
         erc-hide-list '("JOIN" "PART" "QUIT")
         erc-keywords '("henrytill" "musnix")
