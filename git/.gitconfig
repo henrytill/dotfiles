@@ -16,11 +16,7 @@
     fsckObjects = true
 [receive]
     fsckObjects = true
-[diff]
-    tool = vimdiff
-[merge]
-    tool = vimdiff
-[difftool]
-    prompt = false
 [commit]
     gpgsign = true
+[merge]
+    conflictStyle = diff3
