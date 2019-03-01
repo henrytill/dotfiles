@@ -47,6 +47,7 @@
   (add-hook 'after-make-frame-functions 'ht/frame-setup))
 
 (when (and (is-linux-p) (string-equal (window-system) "x"))
+  (set-face-attribute 'region nil :background "lightgoldenrod2")
   (ht/style-fringe))
 
 (when (is-darwin-p)
