@@ -4,6 +4,7 @@
         haskell-doc-prettify-types nil
         haskell-interactive-popup-errors nil
         haskell-process-log t
+        haskell-process-type 'cabal-new-repl
         whitespace-line-column 120))
 
 (defun ht/haskell-wrapper-function-nix ()
@@ -31,37 +32,12 @@
                   interactive-haskell-mode))
     (add-hook 'haskell-mode-hook mode)))
 
-;; https://github.com/haskell/haskell-mode/pull/1573
-(with-eval-after-load 'haskell-load
-  (defun haskell-process-extract-modules (buffer)
-    "Extract the modules from the process buffer. (fixed)"
-    (let* ((modules-string (match-string 1 buffer))
-           (modules (and modules-string (split-string modules-string ", "))))
-      (cons modules modules-string)))
-  nil)
-
 (use-package dante
   :ensure t
-  :disabled t
-  :defines (dante-project-root
-            dante-repl-command-line
-            dante-target)
-  :commands dante-mode
-  :requires (haskell-mode)
+  :after haskell-mode
+  :commands 'dante-mode
   :init
-  (add-hook 'haskell-mode-local-vars-hook 'dante-mode)
-  (add-hook 'nix-buffer-after-load-hook 'dante-restart)
-  (add-hook 'haskell-mode-hook 'flycheck-mode)
-  (add-hook 'haskell-mode-hook
-            (lambda ()
-              (define-key evil-normal-state-local-map (kbd "C-]") 'xref-find-definitions)
-              (define-key evil-normal-state-local-map (kbd "C-t") 'xref-pop-marker-stack))))
-
-(use-package company-ghci
-  :ensure t
-  :disabled t
-  :defer t
-  :config
-  (add-to-list 'company-backends 'company-ghci))
+  (add-hook 'haskell-mode-hook 'flymake-mode)
+  (add-hook 'haskell-mode-hook 'dante-mode))
 
 (provide 'feature-haskell)
