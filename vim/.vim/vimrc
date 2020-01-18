@@ -3,7 +3,8 @@
 set nocompatible
 
 syntax on
-colorscheme inl
+colorscheme default
+set background=light
 
 set expandtab
 set hlsearch
