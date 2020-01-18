@@ -38,4 +38,6 @@
 /emacs/.emacs.d/network-security.data
 /emacs/.emacs.d/todo
 
+/vim/.vim/.netrwhist
+
 *.swp
