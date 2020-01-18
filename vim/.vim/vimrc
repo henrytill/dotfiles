@@ -93,6 +93,14 @@ if has("autocmd")
   " prevent colorscheme from overriding these highlights
   au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 
+  " highlight tabs
+  highlight Tab ctermbg=LightYellow guibg=LightYellow
+  match Tab /\t/
+  au BufWinEnter,InsertLeave * match Tab /\t/
+  au InsertEnter * match Tab /\t/
+  " prevent colorscheme from overriding these highlights
+  au ColorScheme * highlight Tab ctermbg=LightYellow guibg=LightYellow
+
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
