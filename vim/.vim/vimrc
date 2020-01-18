@@ -113,8 +113,6 @@ if has("autocmd")
 
   " use c syntax for *.h files
   let g:c_syntax_for_h = 1
-
-  au BufWritePost *.go silent call RunCtags("-R", "--languages=go")
 endif
 
 map <space> <leader>
@@ -124,10 +122,5 @@ nnoremap <F5> :make<CR>
 
 set exrc
 set secure
-
-" http://vim.wikia.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-  \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-  \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 map <Leader>/ :nohlsearch<CR>
