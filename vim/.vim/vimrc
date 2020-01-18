@@ -2,30 +2,6 @@
 
 set nocompatible
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
-
-call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-surround'
-Plug 'junegunn/vim-easy-align'
-Plug 'airblade/vim-gitgutter'
-Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
-Plug 'raichoo/purescript-vim',  { 'for': 'purescript' }
-Plug 'derekwyatt/vim-scala',    { 'for': ['scala', 'sbt.scala'] }
-Plug 'let-def/ocp-indent-vim',  { 'for': 'ocaml' }
-Plug 'LnL7/vim-nix',            { 'for': 'nix' }
-Plug 'rust-lang/rust.vim',      { 'for': 'rust' }
-Plug 'racer-rust/vim-racer',    { 'for': 'rust' }
-Plug 'lyuts/vim-rtags',         { 'for': ['cpp', 'c'] }
-Plug 'davidhalter/jedi-vim',    { 'for': 'python' }
-Plug 'b4b4r07/vim-hcl'
-Plug 'leafgarland/typescript-vim'
-Plug 'hauleth/asyncdo.vim'
-call plug#end()
-
 syntax on
 colorscheme inl
 
@@ -125,28 +101,16 @@ if has("autocmd")
     \   exe "normal! g`\"" |
     \ endif
 
-  " merlin
-  let g:opamshare = substitute($OCAML_TOPLEVEL_PATH, 'lib/toplevel', 'share', "")
-  execute "set rtp+=" . g:opamshare . "/merlin/vim"
-
   " use c syntax for *.h files
   let g:c_syntax_for_h = 1
 
   au BufWritePost *.go silent call RunCtags("-R", "--languages=go")
-
-  command! -bang -nargs=* -complete=file Make call asyncdo#run(<bang>0, &makeprg, <f-args>)
 endif
 
 map <space> <leader>
 
 nnoremap - :e %:h<CR>
 nnoremap <F5> :make<CR>
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
 
 set exrc
 set secure
