@@ -119,8 +119,7 @@ map <space> <leader>
 
 nnoremap - :e %:h<CR>
 nnoremap <F5> :make<CR>
+map <Leader>/ :nohlsearch<CR>
 
 set exrc
 set secure
-
-map <Leader>/ :nohlsearch<CR>
