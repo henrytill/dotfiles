@@ -10,7 +10,7 @@
         doc-view-scale-internally nil))
 
 (when (is-windows-p)
-  (let ((home (getenv "HOME")))
+  (let ((home (directory-file-name (getenv "USERPROFILE"))))
     (when home
       (setq default-directory home))))
 
