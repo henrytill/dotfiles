@@ -44,38 +44,38 @@ function! StripTrailingWhitespace()
 endfunction
 
 function! RunClangFormat()
-  if executable('clang-format')
-    let myline = line(".")
-    let mycolumn = col(".")
-    silent! %!clang-format
-    call cursor(myline, mycolumn)
-  else
+  if !executable('clang-format')
     echo 'Could not locate clang-format'
+    return
   endif
+  let myline = line(".")
+  let mycolumn = col(".")
+  silent! %!clang-format
+  call cursor(myline, mycolumn)
 endfunction
 
 function! RunGofmt()
-  if executable('gofmt')
-    let myline = line(".")
-    let mycolumn = col(".")
-    silent! %!gofmt
-    call cursor(myline, mycolumn)
-  else
+  if !executable('gofmt')
     echo 'Could not locate gofmt'
+    return
   endif
+  let myline = line(".")
+  let mycolumn = col(".")
+  silent! %!gofmt
+  call cursor(myline, mycolumn)
 endfunction
 
 function! RunCtags(...)
-  if executable('ctags')
-    if len(a:000) == 0
-      let optionString = ""
-    else
-      let optionString = join(a:000, " ")
-    endif
-    execute "silent! !ctags " . optionString . " 2>/dev/null &"
-  else
+  if !executable('ctags')
     echo 'Could not locate ctags'
+    return
   endif
+  if len(a:000) == 0
+    let optionString = ""
+  else
+    let optionString = join(a:000, " ")
+  endif
+  execute "silent! !ctags " . optionString . " 2>/dev/null &"
 endfunction
 
 if has("autocmd")
