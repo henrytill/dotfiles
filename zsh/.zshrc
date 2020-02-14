@@ -84,7 +84,6 @@ fi
 
 # aliases
 alias e="$EDITOR"
-alias vim="$EDITOR"
 alias lf="ls -aF"
 alias ll="ls -la"
 alias llt="ls -lat"
