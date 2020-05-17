@@ -113,9 +113,14 @@ then
     alias nix-zshell="nix-shell --command zsh"
 fi
 
+if
+then
+    source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
+fi
+
 if [[ -n "$(command -v opam)" && -d "$HOME/.opam" ]]
 then
-    . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+    source $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi
 
 if [[ -n "$(command -v rustc)" ]]
