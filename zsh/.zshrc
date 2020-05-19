@@ -113,7 +113,7 @@ then
     alias nix-zshell="nix-shell --command zsh"
 fi
 
-if
+if [[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ]]
 then
     source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
 fi
