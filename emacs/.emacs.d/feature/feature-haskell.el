@@ -37,7 +37,9 @@
   :after haskell-mode
   :commands 'dante-mode
   :init
-  (add-hook 'haskell-mode-hook 'flymake-mode)
-  (add-hook 'haskell-mode-hook 'dante-mode))
+  (ht/comment
+    (add-hook 'haskell-mode-hook 'flymake-mode)
+    (add-hook 'haskell-mode-hook 'dante-mode)
+    nil))
 
 (provide 'feature-haskell)
