@@ -11,3 +11,5 @@ errors.err
 .dir-locals.el
 compile_commands.json
 .ccls-cache
+.vscode
+.idea
