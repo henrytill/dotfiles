@@ -125,12 +125,21 @@ add_dir_to_path_front "/opt/ghc/bin"
 add_dir_to_path_front "/opt/cabal/bin"
 add_dir_to_path_front "$HOME/.cabal/bin"
 
+# SML/NJ
+add_dir_to_path_front "/opt/smlnj-110.97/bin"
+
 # Rust
 add_dir_to_path_front "$HOME/.cargo/bin"
 
 # Hashicorp
 add_dir_to_path_front "/opt/packer/bin"
 add_dir_to_path_front "/opt/terraform/bin"
+
+# jetbrains toolbox
+add_dir_to_path_front "$HOME/.local/share/JetBrains/Toolbox/bin"
+
+# vomit
+add_dir_to_path_front "$HOME/.npm-packages/bin"
 
 # scripts
 add_dir_to_path_front "$HOME/bin"
