@@ -8,9 +8,9 @@ nereus   = ctags git ideavim \
 proteus  = ctags emacs git nixpkgs ocaml \
            gtk x11-gnome xdg-gnome \
            tmux vim zsh
-thalassa = ctags emacs git nixpkgs ocaml \
-           gtk x11-gnome xdg-gnome \
-           tmux vim zsh
+thalassa = ctags emacs git gtk ideavim \
+           nixpkgs ocaml tmux vim zsh \
+           x11-gnome xdg-gnome \
 
 # base package set for undefined hosts
 BASE_PKGS = git tmux vim zsh
