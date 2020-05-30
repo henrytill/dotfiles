@@ -83,9 +83,9 @@ case $(uname -s) in
         ;;
 esac
 
-if [[ -n "$(command -v emacsclient)" ]]
+if [[ -n "$(command -v vim)" ]]
 then
-    export EDITOR="emacsclient -t -a=''"
+    export EDITOR="vim"
 fi
 
 # Conscript
