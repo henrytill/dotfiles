@@ -94,12 +94,12 @@ if has("autocmd")
   au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 
   " highlight tabs
-  highlight Tab ctermbg=LightYellow guibg=LightYellow
+  highlight Tab ctermbg=LightGray guibg=LightGray
   match Tab /\t/
   au BufWinEnter,InsertLeave * match Tab /\t/
   au InsertEnter * match Tab /\t/
   " prevent colorscheme from overriding these highlights
-  au ColorScheme * highlight Tab ctermbg=LightYellow guibg=LightYellow
+  au ColorScheme * highlight Tab ctermbg=LightGray guibg=LightGray
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
