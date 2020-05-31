@@ -64,10 +64,6 @@ case $(uname -s) in
             export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig"
         fi
 
-        # Plan 9 from User Space
-        export_dir PLAN9 "/opt/plan9port"
-        add_dir_to_path_back "$PLAN9/bin"
-
         add_dir_to_path_front "$HOME/Library/Python/2.7/bin"
         add_dir_to_path_front "/opt/apache-maven-3.5.4/bin"
         add_dir_to_path_front "/opt/protoc-3.6.0-osx-x86_64/bin"
@@ -96,6 +92,10 @@ then
     add_dir_to_path_front "$CONSCRIPT_HOME/bin"
     export CONSCRIPT_OPTS="-XX:MaxPermSize=512M -Dfile.encoding=UTF-8"
 fi
+
+# Plan 9 from User Space
+export_dir PLAN9 "/opt/plan9port"
+add_dir_to_path_back "$PLAN9/bin"
 
 # Go
 export_dir GOROOT "/opt/go"
