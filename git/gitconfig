@@ -10,7 +10,6 @@
     autosquash = true
 [core]
     excludesfile = ~/.gitignore_global
-    autocrlf = true
 [transfer]
     fsckObjects = true
 [fetch]
