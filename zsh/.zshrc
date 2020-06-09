@@ -84,7 +84,7 @@ fi
 
 # aliases
 alias e="$EDITOR"
-alias ec="emacsclient -c"
+alias ec="emacsclient -c -a="
 alias et="emacsclient -t -a="
 alias lf="ls -aF"
 alias ll="ls -la"

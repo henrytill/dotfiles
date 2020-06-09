@@ -75,6 +75,11 @@ case $(uname -s) in
             source "$HOME/.nix-profile/etc/profile.d/nix.sh"
         fi
 
+        # Haskell
+        add_dir_to_path_front "/opt/ghc/bin"
+        add_dir_to_path_front "/opt/cabal/bin"
+        add_dir_to_path_front "$HOME/.cabal/bin"
+
         add_dir_to_path_front "$HOME/.local/bin"
         ;;
 esac
@@ -119,11 +124,6 @@ if [[ -n $PATSHOME ]]
 then
     add_dir_to_path_front "$PATSHOME/bin"
 fi
-
-# Haskell
-add_dir_to_path_front "/opt/ghc/bin"
-add_dir_to_path_front "/opt/cabal/bin"
-add_dir_to_path_front "$HOME/.cabal/bin"
 
 # SML/NJ
 add_dir_to_path_front "/opt/smlnj-110.97/bin"
