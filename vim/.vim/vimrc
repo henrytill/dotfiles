@@ -127,6 +127,8 @@ if has("autocmd")
   let g:c_syntax_for_h = 1
 endif
 
+runtime! ftplugin/man.vim
+
 map <space> <leader>
 
 nnoremap - :e %:h<CR>
