@@ -5,6 +5,8 @@
         haskell-interactive-popup-errors nil
         haskell-process-log t
         haskell-process-type 'cabal-new-repl
+        haskell-stylish-on-save t
+        haskell-tags-on-save t
         whitespace-line-column 120))
 
 (defun ht/haskell-wrapper-function-nix ()
