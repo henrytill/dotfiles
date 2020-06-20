@@ -28,6 +28,7 @@
 /emacs/.emacs.d/org-clock-save.el
 /emacs/.emacs.d/places
 /emacs/.emacs.d/projectile*
+/emacs/.emacs.d/projects
 /emacs/.emacs.d/recentf
 /emacs/.emacs.d/session.*
 /emacs/.emacs.d/smex-items
