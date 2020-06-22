@@ -78,6 +78,7 @@
       save-interprogram-paste-before-kill t
       save-place-file (concat user-emacs-directory "places")
       scroll-conservatively 1
+      tags-revert-without-query 1
       visible-bell t
       x-select-enable-primary t
       x-select-enable-clipboard t)
