@@ -24,7 +24,8 @@
     slime-repl-mode
     term-mode
     tuareg-interactive-mode
-    utop-mode))
+    utop-mode
+    xref--xref-buffer-mode))
 
 (defun ht/setup-evil-emacs-state-modes ()
   (dolist (mode ht/evil-emacs-state-modes)

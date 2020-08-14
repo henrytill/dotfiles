@@ -93,6 +93,12 @@
   :config
   (setq uniquify-buffer-name-style 'forward))
 
+(defun ht/bind-xref-navigation-keys ()
+  (bind-key "j" 'xref-next-line xref--xref-buffer-mode-map)
+  (bind-key "k" 'xref-prev-line xref--xref-buffer-mode-map))
+
+(add-hook 'xref--xref-buffer-mode-hook 'ht/bind-xref-navigation-keys)
+
 (setq send-mail-function 'sendmail-send-it
       sendmail-program "msmtp"
       mail-specify-envelope-from 't
