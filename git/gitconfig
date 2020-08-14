@@ -6,6 +6,7 @@
     default = simple
 [alias]
     allpush = ! git remote | xargs -L1 git push
+    flog = log --all --decorate --oneline --graph
 [rebase]
     autosquash = true
 [core]
