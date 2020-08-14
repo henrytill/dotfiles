@@ -72,6 +72,7 @@
                     feature-idris
                     feature-javascript
                     feature-lisp
+                    feature-lua
                     feature-nix
                     feature-ocaml
                     feature-oz
