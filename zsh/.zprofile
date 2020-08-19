@@ -135,6 +135,12 @@ add_dir_to_path_front "$HOME/.cargo/bin"
 add_dir_to_path_front "/opt/packer/bin"
 add_dir_to_path_front "/opt/terraform/bin"
 
+# casync
+add_dir_to_path_front "/opt/casync/bin"
+
+# adom
+add_dir_to_path_front "/opt/adom/bin"
+
 # jetbrains toolbox
 add_dir_to_path_front "$HOME/.local/share/JetBrains/Toolbox/bin"
 
