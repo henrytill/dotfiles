@@ -16,6 +16,8 @@
 
 (add-hook 'c-mode-hook   #'electric-pair-mode)
 (add-hook 'c++-mode-hook #'electric-pair-mode)
+(add-hook 'c-mode-hook   #'auto-revert-mode)
+(add-hook 'c++-mode-hook #'auto-revert-mode)
 
 
 ;;; clang-format
@@ -27,3 +29,13 @@
              clang-format-region))
 
 (provide 'feature-c-cpp)
+
+
+;;; ctags
+
+(setq path-to-ctags "ctags")
+
+(defun create-tags (dir-name)
+  "Create tags file"
+  (interactive "Ddirectory: ")
+  (shell-command (format "%s -e -R %s" path-to-ctags (directory-file-name dir-name))))
