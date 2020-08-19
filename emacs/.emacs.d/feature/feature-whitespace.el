@@ -2,7 +2,7 @@
   :commands whitespace-mode
 
   :init
-  (setq whitespace-style '(face lines-tail tabs trailing)
+  (setq whitespace-style '(face lines-tail trailing)
         whitespace-line-column 100)
 
   (defun ht/whitespace-mode ()
