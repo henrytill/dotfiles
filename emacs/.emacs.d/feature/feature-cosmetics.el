@@ -38,7 +38,7 @@
 
 (unless (and (is-linux-p) (window-system))
   (menu-bar-mode -1)
-  (scroll-bar-mode -1)
+  (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
   (tool-bar-mode -1))
 
 (setq frame-background-mode 'light)
