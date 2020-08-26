@@ -172,7 +172,8 @@ _l_: evil-avy-goto-line
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-abbrev-expand-on-insert-exit nil)
+  (setq evil-want-abbrev-expand-on-insert-exit nil
+        evil-ex-search-case 'sensitive)
   :config
   (use-package evil-surround
     :ensure t
