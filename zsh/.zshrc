@@ -140,3 +140,5 @@ if [[ -n "$(command -v direnv)" ]]
 then
     eval "$(direnv hook zsh)"
 fi
+
+export GPG_TTY=$(tty)
