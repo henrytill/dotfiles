@@ -9,10 +9,6 @@ set visualbell
 
 let mapleader = " "
 nnoremap <leader>b     :action GotoDeclaration<CR>
-nnoremap <leader><a-b> :action GotoImplementation<CR>
 nnoremap <leader>B     :action GotoTypeDeclaration<CR>
-nnoremap <leader>h     :action TypeHierarchy<CR>
-nnoremap <leader>p     :action ParameterInfo<CR>
-nnoremap <leader>s     :action GotoSuperMethod<CR>
 nnoremap <leader>u     :action FindUsages<CR>
-nnoremap <leader>q     :action QuickJavaDoc<CR>
+nnoremap <leader>t     :action ExpressionTypeInfo<CR>
