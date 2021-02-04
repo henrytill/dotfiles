@@ -11,3 +11,10 @@ Xft.hinting:              true
 Xft.hintstyle:            hintslight
 Xft.lcdfilter:            lcddefault
 Xft.rgba:                 rgb
+
+XTerm*termName:           xterm-256color
+XTerm*BorderWidth:        14
+XTerm*loginShell:         true
+XTerm*selectToClipboard:  true
+XTerm*geometry:           140x50
+XTerm*metaSendsEscape:    true
