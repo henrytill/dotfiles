@@ -18,3 +18,4 @@ XTerm*loginShell:         true
 XTerm*selectToClipboard:  true
 XTerm*geometry:           140x50
 XTerm*metaSendsEscape:    true
+XTerm*saveLines:          500000
