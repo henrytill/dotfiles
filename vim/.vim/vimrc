@@ -75,7 +75,7 @@ function! RunCtags(...)
   else
     let optionString = join(a:000, " ")
   endif
-  execute "silent! !ctags " . optionString . " 2>/dev/null &"
+  execute "silent! !ctags " . optionString
 endfunction
 
 function! HiTabs()
