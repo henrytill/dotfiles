@@ -75,11 +75,10 @@ case $(uname -s) in
             source "$HOME/.nix-profile/etc/profile.d/nix.sh"
         fi
 
-        # Haskell
-        add_dir_to_path_front "/opt/ghc/bin"
-        add_dir_to_path_front "/opt/cabal/bin"
+        # Haskell Binaries
         add_dir_to_path_front "$HOME/.cabal/bin"
 
+        # Local Binaries
         add_dir_to_path_front "$HOME/.local/bin"
         ;;
 esac
