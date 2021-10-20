@@ -87,6 +87,9 @@ esac
 if [[ -n "$(command -v emacsclient)" ]]
 then
     export EDITOR="emacsclient -t -a="
+elif [[ -n "$(command -v vim)" ]]
+then
+    export EDITOR="vim"
 fi
 
 # Conscript
