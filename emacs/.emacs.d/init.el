@@ -20,7 +20,7 @@
 (require 'ht-prelude)
 (require 'use-package)
 (require 'bind-key)
-(require 'diminish "diminish-0.44.el")
+(require 'diminish "diminish-0.45.el")
 (require 'package)
 
 (dolist (archive '(("melpa" . "https://melpa.org/packages/")
