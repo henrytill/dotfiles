@@ -118,6 +118,14 @@ then
     add_dir_to_path_back "$GOPATH/bin"
 fi
 
+# SBCL
+export_dir SBCL_HOME "/opt/sbcl-2.1.10-x86-64-linux/lib/sbcl"
+
+if [[ -n $SBCL_HOME ]]
+then
+    add_dir_to_path_front "/opt/sbcl-2.1.10-x86-64-linux/bin"
+fi
+
 # ATS2
 export_dir PATSHOME "/opt/ats"
 export_dir PATSCONTRIB "$HOME/src/other/ATS-Postiats-contrib"
