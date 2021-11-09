@@ -37,4 +37,8 @@
   (add-hook 'scheme-mode-hook 'ht/scheme-mode)
   (add-hook 'scheme-mode-hook 'enable-paredit-mode))
 
+(use-package sly
+  :ensure t
+  :defer t)
+
 (provide 'feature-lisp)
