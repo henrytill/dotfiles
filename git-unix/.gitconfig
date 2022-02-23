@@ -3,6 +3,3 @@
 
 [core]
     autocrlf = input
-
-[pull]
-    ff = only

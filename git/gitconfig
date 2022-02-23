@@ -4,6 +4,8 @@
     signingkey = 67D03863B46657BC4CE57C4DF1CE276596CE0D8A
 [push]
     default = simple
+[pull]
+    ff = only
 [alias]
     allpush = ! git remote | xargs -L1 git push
     flog = log --all --decorate --oneline --graph
@@ -17,7 +19,12 @@
     fsckObjects = true
 [receive]
     fsckObjects = true
-[commit]
-    gpgsign = true
 [merge]
     conflictStyle = diff3
+[init]
+    defaultBranch = master
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
