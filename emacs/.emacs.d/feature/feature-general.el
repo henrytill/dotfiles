@@ -105,4 +105,11 @@
       message-sendmail-envelope-from 'header
       mail-envelope-from 'header)
 
+(defun ht/hex-to-decimal (start end)
+  (interactive "r")
+  (let ((input (if (use-region-p)
+                   (buffer-substring start end)
+                 (string (char-after)))))
+    (message (number-to-string (string-to-number input 16)))))
+
 (provide 'feature-general)
