@@ -62,20 +62,6 @@ then
     add-zsh-hook preexec set-title
 fi
 
-# Darwin-specific config
-if [[ "$(uname -s)" == "Darwin" ]]
-then
-    alias ls="ls -G"
-
-    if [[ -d /Applications/Emacs.app/ ]]
-    then
-        alias Emacs.app="open -n -a /Applications/Emacs.app"
-    elif [[ -d ~/.nix-profile/Applications/Emacs.app/ ]]
-    then
-        alias Emacs.app="open -n -a ~/.nix-profile/Applications/Emacs.app"
-    fi
-fi
-
 # Linux-specific config
 if [[ "$(uname -s)" == "Linux" ]]
 then
@@ -125,11 +111,6 @@ fi
 if [[ -n "$(command -v opam)" && -d "$HOME/.opam" ]]
 then
     source $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-fi
-
-if [[ -n "$(command -v rustc)" ]]
-then
-    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 fi
 
 if [[ -n "$(command -v hecate)" && -d "$HOME/.hecate" ]]

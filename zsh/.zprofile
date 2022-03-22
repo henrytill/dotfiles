@@ -27,46 +27,6 @@ is_nix_machine () {
 
 case $(uname -s) in
     "Darwin")
-        if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]
-        then
-            source "$HOME/.nix-profile/etc/profile.d/nix.sh"
-
-            local nixpkgs="$HOME/src/nixpkgs"
-
-            if [[ -d $nixpkgs && ! -h "$HOME/.nix-defexpr/channels" ]]
-            then
-                export NIX_PATH="nixpkgs=$nixpkgs"
-            fi
-        fi
-
-        if [[ -n $NIX_LINK && -d "$NIX_LINK/share/man" ]]
-        then
-            export MANPATH="$NIX_LINK/share/man:$MANPATH"
-        fi
-
-        if [[ -n $NIX_LINK && -f "$NIX_LINK/etc/X11/fonts.conf" ]]
-        then
-            export FONTCONFIG_FILE="$NIX_LINK/etc/X11/fonts.conf"
-        fi
-
-        if [[ -n $NIX_LINK && -d "$NIX_LINK/lib/aspell" ]]
-        then
-            export ASPELL_CONF="dict-dir $NIX_LINK/lib/aspell"
-        fi
-
-        if [[ -e "/usr/libexec/java_home" ]]
-        then
-            export JAVA_HOME="$(/usr/libexec/java_home)"
-        fi
-
-        if [[ -d "/usr/local/lib/pkgconfig" ]]
-        then
-            export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig"
-        fi
-
-        add_dir_to_path_front "$HOME/Library/Python/2.7/bin"
-        add_dir_to_path_front "/opt/apache-maven-3.5.4/bin"
-        add_dir_to_path_front "/opt/protoc-3.6.0-osx-x86_64/bin"
         ;;
 
     "Linux")
@@ -89,15 +49,6 @@ then
 elif [[ -n "$(command -v vim)" ]]
 then
     export EDITOR="vim"
-fi
-
-# Conscript
-export_dir CONSCRIPT_HOME "$HOME/.conscript"
-
-if [[ -n $CONSCRIPT_HOME ]]
-then
-    add_dir_to_path_front "$CONSCRIPT_HOME/bin"
-    export CONSCRIPT_OPTS="-XX:MaxPermSize=512M -Dfile.encoding=UTF-8"
 fi
 
 # Plan 9 from User Space
@@ -126,36 +77,11 @@ then
     add_dir_to_path_front "/opt/sbcl-2.1.10-x86-64-linux/bin"
 fi
 
-# ATS2
-export_dir PATSHOME "/opt/ats"
-export_dir PATSCONTRIB "$HOME/src/other/ATS-Postiats-contrib"
-
-if [[ -n $PATSHOME ]]
-then
-    add_dir_to_path_front "$PATSHOME/bin"
-fi
-
-# SML/NJ
-add_dir_to_path_front "/opt/smlnj-110.97/bin"
-
 # Rust
 add_dir_to_path_front "$HOME/.cargo/bin"
 
-# Hashicorp
-add_dir_to_path_front "/opt/packer/bin"
-add_dir_to_path_front "/opt/terraform/bin"
-
-# casync
-add_dir_to_path_front "/opt/casync/bin"
-
-# adom
-add_dir_to_path_front "/opt/adom/bin"
-
 # jetbrains toolbox
 add_dir_to_path_front "$HOME/.local/share/JetBrains/Toolbox/bin"
-
-# vomit
-add_dir_to_path_front "$HOME/.npm-packages/bin"
 
 # scripts
 add_dir_to_path_front "$HOME/bin"
