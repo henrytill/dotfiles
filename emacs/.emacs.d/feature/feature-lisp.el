@@ -37,6 +37,13 @@
   (add-hook 'scheme-mode-hook 'ht/scheme-mode)
   (add-hook 'scheme-mode-hook 'enable-paredit-mode))
 
+(use-package racket-mode
+  :ensure t
+  :mode (("\\.rkt\\'" . racket-mode))
+  :init
+  (add-hook 'racket-mode-hook 'enable-paredit-mode)
+  (add-hook 'racket-mode-hook 'racket-xp-mode))
+
 (use-package sly
   :ensure t
   :defer t)
