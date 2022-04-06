@@ -20,6 +20,14 @@
       (add-to-list 'whitespace-style 'tabs))
     (whitespace-mode 1))
 
+  (defun ht/hide-lines-tail-display ()
+    (interactive)
+    (whitespace-mode -1)
+    (if (memq 'lines-tail whitespace-style)
+        (setq whitespace-style (remove 'lines-tail whitespace-style))
+      nil)
+    (whitespace-mode 1))
+
   (defun ht/toggle-lines-tail-display ()
     (interactive)
     (whitespace-mode -1)

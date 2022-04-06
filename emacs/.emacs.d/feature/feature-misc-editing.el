@@ -25,7 +25,9 @@
          ("\\.markdown\\'" . markdown-mode))
   :init
   (add-hook 'markdown-mode-hook 'pandoc-mode)
-  (add-hook 'markdown-mode-hook 'whitespace-mode))
+  (add-hook 'markdown-mode-hook 'whitespace-mode)
+  (add-hook 'markdown-mode-hook 'toggle-truncate-lines)
+  (add-hook 'markdown-mode-hook 'ht/hide-lines-tail-display))
 
 (use-package powershell
   :ensure t
