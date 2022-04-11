@@ -59,14 +59,12 @@
                     feature-yasnippet
                     feature-whitespace
                     ;; language-specific modes
-                    feature-agda
                     feature-ats
                     feature-c-cpp
                     feature-forth
                     feature-fsharp
                     feature-go
                     feature-haskell
-                    feature-idris
                     feature-javascript
                     feature-lisp
                     feature-lua

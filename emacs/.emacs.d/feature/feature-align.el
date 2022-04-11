@@ -16,12 +16,6 @@
                  '((ocaml-types       . "\\(\\s-+\\):\\s-+")
                    (ocaml-assignment  . "\\(\\s-+\\)=\\s-+")
                    (ocaml-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-                   (ocaml-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+"))))
-  ;; alignment of agda forms
-  (nconc align-rules-list
-         (mapcar (lambda (x)
-                   `(,(car x) (regexp . ,(cdr x)) (modes quote (agda2-mode))))
-                 '((agda-types        . "\\(\\s-+\\):\\s-+")
-                   (agda-assignment   . "\\(\\s-+\\)=\\s-+")))))
+                   (ocaml-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
 
 (provide 'feature-align)
