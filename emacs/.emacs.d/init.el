@@ -62,7 +62,6 @@
                     feature-agda
                     feature-ats
                     feature-c-cpp
-                    feature-coq
                     feature-forth
                     feature-fsharp
                     feature-go
