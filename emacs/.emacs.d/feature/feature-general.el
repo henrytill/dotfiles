@@ -86,7 +86,9 @@
 (use-package undo-tree
   :ensure t
   :commands undo-tree-mode
-  :diminish undo-tree-mode)
+  :diminish undo-tree-mode
+  :init
+  (setq undo-tree-auto-save-history nil))
 
 (use-package uniquify
   :defer t
