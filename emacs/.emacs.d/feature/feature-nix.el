@@ -3,6 +3,7 @@
   :mode "\\.nix\\'")
 
 (use-package nix-buffer
-  :ensure t)
+  :ensure t
+  :disabled t)
 
 (provide 'feature-nix)
