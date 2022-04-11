@@ -6,6 +6,10 @@ syntax on
 colorscheme default
 set background=light
 
+if has("gui_running")
+  set guioptions=
+endif
+
 if has("gui_running") && has("gui_win32")
   set guifont=Consolas:h10:cANSI
 endif
