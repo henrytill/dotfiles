@@ -15,6 +15,9 @@
 
   (add-to-list 'projectile-project-root-files "_tags")
 
+  (when (is-windows-p)
+    (setq projectile-use-git-grep t))
+
   (defun projectile-cabal-new-project-p ()
     "Check if a project contains a cabal.project.local."
     (projectile-verify-file "cabal.project.local"))
