@@ -71,7 +71,6 @@
                     feature-nix
                     feature-ocaml
                     feature-oz
-                    feature-purescript
                     feature-rust
                     feature-scala
                     feature-sml
