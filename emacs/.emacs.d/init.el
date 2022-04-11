@@ -23,8 +23,7 @@
 (require 'diminish "diminish-0.45.el")
 (require 'package)
 
-(dolist (archive '(("melpa" . "https://melpa.org/packages/")
-                   ("org"   . "http://orgmode.org/elpa/")))
+(dolist (archive '(("melpa" . "https://melpa.org/packages/")))
   (add-to-list 'package-archives archive))
 
 (unless (eval-when-compile package--initialized)
@@ -53,7 +52,6 @@
                     feature-mmm
                     feature-misc-editing
                     feature-notmuch
-                    feature-org
                     feature-prog-mode
                     feature-projectile
                     feature-shell
