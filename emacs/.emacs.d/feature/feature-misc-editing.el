@@ -19,15 +19,19 @@
   :ensure t
   :commands pandoc-mode)
 
+(defun ht/truncate-lines ()
+  (interactive)
+  (toggle-truncate-lines 1))
+
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md\\'"       . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init
+  (add-hook 'markdown-mode-hook #'ht/truncate-lines)
+  (add-hook 'markdown-mode-hook #'ht/hide-lines-tail-display)
   (add-hook 'markdown-mode-hook 'pandoc-mode)
-  (add-hook 'markdown-mode-hook 'whitespace-mode)
-  (add-hook 'markdown-mode-hook 'toggle-truncate-lines)
-  (add-hook 'markdown-mode-hook 'ht/hide-lines-tail-display))
+  (add-hook 'markdown-mode-hook 'whitespace-mode))
 
 (use-package powershell
   :ensure t
