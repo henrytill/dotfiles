@@ -498,7 +498,8 @@ _s_: magit-status
 
 (use-package yaml-mode
   :ensure t
-  :mode "\\.yml'")
+  :mode (("\\.yml\\'"  . yaml-mode)
+         ("\\.yaml\\'" . yaml-mode)))
 
 ;;; PROG-MODE ;;;
 
