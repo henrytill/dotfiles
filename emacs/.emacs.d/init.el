@@ -103,6 +103,10 @@
   :config
   (setq uniquify-buffer-name-style 'forward))
 
+(use-package paredit
+  :load-path "site-lisp/paredit"
+  :commands enable-paredit-mode)
+
 (defun ht/bind-xref-navigation-keys ()
   (bind-key "j" 'xref-next-line xref--xref-buffer-mode-map)
   (bind-key "k" 'xref-prev-line xref--xref-buffer-mode-map))
@@ -345,6 +349,7 @@ _l_: evil-avy-goto-line
         evil-ex-search-case 'sensitive)
   (ht/setup-evil-emacs-state-modes)
   (ht/setup-evil-bindings)
+  (ht/setup-evil-paredit-state)
   (ht/setup-evil-ex-commands)
   (define-key evil-normal-state-map (kbd "SPC") 'ht/hydra-base/body)
   (define-key evil-visual-state-map (kbd "SPC") 'ht/hydra-base/body)
@@ -729,12 +734,13 @@ _s_: magit-status
          ("\\.edn\\'"  . clojure-mode)
          ("\\.boot\\'" . clojure-mode))
   :init
-  (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode)))
+  (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
+  (add-hook 'clojure-mode-hook 'enable-paredit-mode))
 
 (use-package lisp-mode
   :defer t
   :init
-  (dolist (mode '(eldoc-mode))
+  (dolist (mode '(eldoc-mode enable-paredit-mode))
     (add-hook 'lisp-mode-hook mode)
     (add-hook 'emacs-lisp-mode-hook mode))
   (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
@@ -751,7 +757,8 @@ _s_: magit-status
   :mode (("\\.scm\\'" . scheme-mode)
          ("\\.ss\\'"  . scheme-mode))
   :init
-  (add-hook 'scheme-mode-hook 'ht/scheme-mode))
+  (add-hook 'scheme-mode-hook 'ht/scheme-mode)
+  (add-hook 'scheme-mode-hook 'enable-paredit-mode))
 
 (use-package sly
   :ensure t
