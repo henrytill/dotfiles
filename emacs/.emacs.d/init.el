@@ -420,26 +420,6 @@ _l_: evil-avy-goto-line
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "-") #'dired-up-directory))
 
-;;; IDO ;;;
-
-(defun ht/ido-define-keys ()
-  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
-
-(defun ht/ido-disable-line-truncation ()
-  (set (make-local-variable 'truncate-lines) nil))
-
-(use-package ido
-  :config
-  ;; Vertical Ido Results
-  (setq ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
-                          " [No match]" " [Matched]" " [Not readable]"
-                          " [Too big]" " [Confirm]")
-        ido-enable-flex-matching t)
-  (add-hook 'ido-minibuffer-setup-hook #'ht/ido-disable-line-truncation)
-  (add-hook 'ido-setup-hook            #'ht/ido-define-keys)
-  (ido-mode t))
-
 ;;; LSP ;;;
 
 (when (version<= "26.1" emacs-version)
