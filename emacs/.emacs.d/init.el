@@ -707,7 +707,7 @@ _s_: magit-status
                   interactive-haskell-mode))
     (add-hook 'haskell-mode-hook mode)))
 
-;;; LISP ;;;
+;;; CLOJURE ;;;
 
 (use-package clojure-mode
   :ensure t
@@ -718,14 +718,7 @@ _s_: magit-status
   (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
   (add-hook 'clojure-mode-hook 'enable-paredit-mode))
 
-(use-package lisp-mode
-  :defer t
-  :init
-  (dolist (mode '(eldoc-mode enable-paredit-mode))
-    (add-hook 'lisp-mode-hook mode)
-    (add-hook 'emacs-lisp-mode-hook mode))
-  (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
-  (add-to-list 'magic-mode-alist '("#! emacs --script" . emacs-lisp-mode)))
+;;; SCHEME ;;;
 
 (defun ht/scheme-mode ()
   (dolist (form+n '((conde . 0)
@@ -741,9 +734,24 @@ _s_: magit-status
   (add-hook 'scheme-mode-hook 'ht/scheme-mode)
   (add-hook 'scheme-mode-hook 'enable-paredit-mode))
 
+;;; "LISP" (COMMON LISP & ELISP) ;;;
+
+(when (executable-find "sbcl")
+  (setq inferior-lisp-program "sbcl"))
+
+(use-package lisp-mode
+  :defer t
+  :init
+  (dolist (mode '(eldoc-mode enable-paredit-mode))
+    (add-hook 'lisp-mode-hook mode)
+    (add-hook 'emacs-lisp-mode-hook mode))
+  (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
+  (add-to-list 'magic-mode-alist '("#! emacs --script" . emacs-lisp-mode)))
+
 (use-package sly
   :ensure t
-  :defer t)
+  :mode (("\\.lisp\\'" . sly-mode))
+  :commands sly)
 
 ;;; LUA ;;;
 
