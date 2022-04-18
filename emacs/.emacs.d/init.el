@@ -107,12 +107,6 @@
   :load-path "site-lisp/paredit"
   :commands enable-paredit-mode)
 
-(defun ht/bind-xref-navigation-keys ()
-  (bind-key "j" 'xref-next-line xref--xref-buffer-mode-map)
-  (bind-key "k" 'xref-prev-line xref--xref-buffer-mode-map))
-
-(add-hook 'xref--xref-buffer-mode-hook 'ht/bind-xref-navigation-keys)
-
 (setq send-mail-function 'sendmail-send-it
       sendmail-program "msmtp"
       mail-specify-envelope-from 't
@@ -341,6 +335,12 @@ _l_: evil-avy-goto-line
 (with-eval-after-load 'magit
   (define-key magit-mode-map (kbd "SPC") nil)
   (define-key magit-mode-map (kbd "x") nil))
+
+(defun ht/bind-xref-navigation-keys ()
+  (bind-key "j" 'xref-next-line xref--xref-buffer-mode-map)
+  (bind-key "k" 'xref-prev-line xref--xref-buffer-mode-map))
+
+(add-hook 'xref--xref-buffer-mode-hook 'ht/bind-xref-navigation-keys)
 
 (use-package evil
   :ensure t
@@ -637,10 +637,10 @@ _s_: magit-status
   (add-to-list 'c-default-style '(c-mode   . "hcpp"))
   (add-to-list 'c-default-style '(c++-mode . "hcpp")))
 
-(add-hook 'c-mode-hook   #'electric-pair-mode)
-(add-hook 'c++-mode-hook #'electric-pair-mode)
 (add-hook 'c-mode-hook   #'auto-revert-mode)
+(add-hook 'c-mode-hook   #'electric-pair-mode)
 (add-hook 'c++-mode-hook #'auto-revert-mode)
+(add-hook 'c++-mode-hook #'electric-pair-mode)
 
 (setq path-to-ctags "ctags")
 
