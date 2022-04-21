@@ -189,7 +189,7 @@
     ("C-w v"   . split-window-right)
     ("C-w o"   . delete-other-windows)
     ("C-w c"   . delete-window)
-    ("C-w q"   . ido-kill-buffer)
+    ("C-w q"   . kill-buffer)
     ("C-o"     . evil-execute-in-normal-state)))
 
 (defconst ht/evil-normal-state-bindings
@@ -241,7 +241,7 @@
       (define-key evil-paredit-state-map (kbd key) cmd))))
 
 (defun ht/setup-evil-ex-commands ()
-  (evil-define-command cfile     () (flycheck-buffer))
+  (evil-define-command cfile     () (flymake-show-buffer-diagnostics))
   (evil-define-command tnext     () (find-tag nil t))
   (evil-define-command tprevious () (find-tag nil '-))
   (evil-ex-define-cmd "cf[ile]"     'cfile)
@@ -359,12 +359,11 @@ _l_: evil-avy-goto-line
 ;;; ALIGN ;;;
 
 (with-eval-after-load 'align
-  ;; alignment of haskell & purescript forms
+  ;; alignment of haskell forms
   (nconc align-rules-list
          (mapcar (lambda (x)
                    `(,(car x) (regexp . ,(cdr x)) (modes quote (haskell-mode
-                                                                literate-haskell-mode
-                                                                purescript-mode))))
+                                                                literate-haskell-mode))))
                  '((haskell-types       . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
                    (haskell-assignment  . "\\(\\s-+\\)=\\s-+")
                    (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
@@ -634,7 +633,7 @@ _s_: magit-status
 (when (is-windows-p)
   (let ((clang-format-path (executable-find "clang-format")))
     (when clang-format-path
-      (let* ((clang-bin-path (file-name-directory clang-format-path))
+      (let* ((clang-bin-path         (file-name-directory clang-format-path))
              (clang-format-load-path (expand-directory-name "../share/clang" clang-bin-path)))
         (push clang-format-load-path load-path)))))
 
