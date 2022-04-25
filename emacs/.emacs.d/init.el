@@ -644,7 +644,8 @@ _s_: magit-status
         (push clang-format-load-path load-path)))))
 
 (use-package clang-format
-  :if (executable-find "clang-format")
+  :if (and (executable-find "clang-format")
+           (locate-file "clang-format.el" load-path))
   :commands (clang-format clang-format-region clang-format-buffer))
 
 ;;; CMAKE ;;;
@@ -657,7 +658,7 @@ _s_: magit-status
         (push cmake-load-path load-path)))))
 
 (use-package cmake-mode
-  :if (executable-find "cmake")
+  :if (locate-file "cmake-mode.el" load-path)
   :mode "\\.cmake\\'")
 
 ;;; FORTH ;;;
