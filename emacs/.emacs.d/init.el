@@ -647,6 +647,19 @@ _s_: magit-status
   :if (executable-find "clang-format")
   :commands (clang-format clang-format-region clang-format-buffer))
 
+;;; CMAKE ;;;
+
+(when (is-windows-p)
+  (let ((cmake-path (executable-find "cmake")))
+    (when cmake-path
+      (let* ((cmake-bin-path (file-name-directory cmake-path))
+             (cmake-load-path (expand-directory-name "../share/emacs/site-lisp" cmake-bin-path)))
+        (push cmake-load-path load-path)))))
+
+(use-package cmake-mode
+  :if (executable-find "cmake")
+  :mode "\\.cmake\\'")
+
 ;;; FORTH ;;;
 
 (defun ht/forth-mode ()
