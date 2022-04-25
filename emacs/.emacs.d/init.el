@@ -1,12 +1,19 @@
 ;;; init.el
 
-(defconst emacs-start-time (current-time))
+;; Reduce the frequency of garbage collection during startup
+(setq gc-cons-threshold  (* 50 1000 1000))
 
-(defun ht/elapsed-msg ()
-  (let ((elapsed (float-time (time-subtract (current-time) emacs-start-time))))
-    (message "Load time: %.3fs"  elapsed)))
+;; Resets gc-cons-threshold to default
+(defun ht/reset-gc-cons-threshold ()
+  (custom-reevaluate-setting 'gc-cons-threshold))
 
-(add-hook 'after-init-hook 'ht/elapsed-msg)
+(defun ht/emacs-ready-msg ()
+  (message "Emacs ready in %s with %d garbage collections."
+           (format "%.2f seconds" (float-time (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook 'ht/reset-gc-cons-threshold)
+(add-hook 'emacs-startup-hook 'ht/emacs-ready-msg)
 
 (eval-and-compile
   (mapc #'(lambda (path)
