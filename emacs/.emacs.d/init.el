@@ -84,7 +84,6 @@
 (add-hook 'compilation-mode-hook     'ht/truncate-lines)
 (add-hook 'dired-mode-hook           'ht/truncate-lines)
 (add-hook 'prog-mode-hook            'ht/truncate-lines)
-(add-hook 'rtags-mode-hook           'ht/truncate-lines)
 (add-hook 'shell-mode-hook           'ht/truncate-lines)
 (add-hook 'sql-interactive-mode-hook 'ht/truncate-lines)
 
