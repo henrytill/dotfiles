@@ -1,9 +1,7 @@
 # defined hosts
-MY_HOSTS = nereus proteus thalassa
+MY_HOSTS = proteus thalassa
 
 # hosts and their package sets
-nereus   = emacs git git-unix ideavim nixpkgs ocaml tmux vim zsh \
-           x11-osx
 proteus  = emacs git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
            x11-gnome xdg-gnome
 thalassa = emacs git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
