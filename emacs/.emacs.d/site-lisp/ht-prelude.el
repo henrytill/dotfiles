@@ -67,8 +67,6 @@
       custom-file (expand-file-name "custom.el" user-emacs-directory)
       epa-armor t
       gnutls-min-prime-bits 1024
-      ido-handle-duplicate-virtual-buffers 2
-      ido-use-virtual-buffers t
       inhibit-startup-message t
       initial-scratch-message nil
       load-prefer-newer t
