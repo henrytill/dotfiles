@@ -96,14 +96,7 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (defconst ht/global-bindings
-  '(("M-/"     . hippie-expand)
-    ("C-x C-b" . ibuffer)
-    ("C-s"     . isearch-forward-regexp)
-    ("C-r"     . isearch-backward-regexp)
-    ("C-M-s"   . isearch-forward)
-    ("C-M-r"   . isearch-backward)
-    ("M-%"     . query-replace-regexp)
-    ("C-M-%"   . query-replace)))
+  '(("C-x C-b" . ibuffer)))
 
 (dolist (binding ht/global-bindings)
   (let ((key (car binding))
