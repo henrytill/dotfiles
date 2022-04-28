@@ -1,9 +1,0 @@
-keycode 66 = Meta_L
-keycode 69 = Meta_R
-keycode 63 = Super_L
-keycode 71 = Super_R
-
-clear mod1
-clear mod2
-add mod1 = Meta_L Meta_R
-add mod2 = Super_L Super_R
