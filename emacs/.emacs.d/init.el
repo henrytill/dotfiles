@@ -273,7 +273,7 @@ _w_: ace-window           _a_: avy           _!_: shell-command
 _x_: counsel-M-x          _g_: magit         _&_: async-shell-command
 _b_: ivy-switch-buffer    _p_: project
 _f_: counsel-find-file    _m_: mode-specific
-_k_: kill-buffer
+_k_: kill-buffer          _i_: ibuffer
 _l_: evil-paredit-state
 "
   ("w" ace-window                  nil :exit t)
@@ -286,6 +286,7 @@ _l_: evil-paredit-state
   ("g" ht/hydra-magit/body         nil :exit t)
   ("p" ht/hydra-project/body       nil :exit t)
   ("m" ht/call-hydra-mode-specific nil :exit t)
+  ("i" ibuffer                     nil :exit t)
   ("!" shell-command               nil :exit t)
   ("&" async-shell-command         nil :exit t))
 
