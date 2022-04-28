@@ -2,11 +2,11 @@
 MY_HOSTS = nereus proteus thalassa
 
 # hosts and their package sets
-nereus   = ctags emacs git git-unix ideavim nixpkgs ocaml tmux vim zsh \
+nereus   = emacs git git-unix ideavim nixpkgs ocaml tmux vim zsh \
            x11-osx
-proteus  = ctags emacs git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
+proteus  = emacs git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
            x11-gnome xdg-gnome
-thalassa = ctags emacs git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
+thalassa = emacs git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
            x11-gnome xdg-gnome
 
 # base package set for undefined hosts
