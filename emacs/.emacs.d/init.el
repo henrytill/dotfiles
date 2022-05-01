@@ -242,9 +242,12 @@
     ("C-o"   . evil-execute-in-normal-state)))
 
 (defun ht/setup-evil-paredit-state ()
-  (evil-define-state paredit "Paredit state." :tag " <PAR> "
+  (evil-define-state paredit "Paredit state."
+    :tag " <PAR> "
     :enable (paredit normal)
-    :intercept-esc nil)
+    :intercept-esc nil
+    :entry-hook (enable-paredit-mode)
+    :exit-hook (disable-paredit-mode))
   (dolist (binding evil-paredit-state-bindings)
     (let ((key (car binding))
           (cmd (cdr binding)))
@@ -740,8 +743,7 @@ _s_: magit-status
          ("\\.edn\\'"  . clojure-mode)
          ("\\.boot\\'" . clojure-mode))
   :init
-  (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
-  (add-hook 'clojure-mode-hook 'enable-paredit-mode))
+  (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode)))
 
 ;;; SCHEME ;;;
 
@@ -756,8 +758,7 @@ _s_: magit-status
   :mode (("\\.scm\\'" . scheme-mode)
          ("\\.ss\\'"  . scheme-mode))
   :init
-  (add-hook 'scheme-mode-hook 'ht/scheme-mode)
-  (add-hook 'scheme-mode-hook 'enable-paredit-mode))
+  (add-hook 'scheme-mode-hook 'ht/scheme-mode))
 
 ;;; "LISP" (COMMON LISP & ELISP) ;;;
 
@@ -767,7 +768,7 @@ _s_: magit-status
 (use-package lisp-mode
   :defer t
   :init
-  (dolist (mode '(eldoc-mode enable-paredit-mode))
+  (dolist (mode '(eldoc-mode))
     (add-hook 'lisp-mode-hook mode)
     (add-hook 'emacs-lisp-mode-hook mode))
   (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
