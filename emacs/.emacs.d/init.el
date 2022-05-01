@@ -485,8 +485,8 @@ _s_: magit-status
   :mode (("\\.md\\'"       . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init
-  (add-hook 'markdown-mode-hook #'ht/truncate-lines)
-  (add-hook 'markdown-mode-hook #'ht/hide-lines-tail-display)
+  (add-hook 'markdown-mode-hook 'ht/truncate-lines)
+  (add-hook 'markdown-mode-hook 'ht/hide-lines-tail-display)
   (add-hook 'markdown-mode-hook 'whitespace-mode))
 
 (use-package yaml-mode
@@ -742,8 +742,7 @@ _s_: magit-status
   :mode (("\\.clj\\'"  . clojure-mode)
          ("\\.edn\\'"  . clojure-mode)
          ("\\.boot\\'" . clojure-mode))
-  :init
-  (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode)))
+  :interpreter ("boot" . clojure-mode))
 
 ;;; SCHEME ;;;
 
@@ -768,11 +767,9 @@ _s_: magit-status
 (use-package lisp-mode
   :defer t
   :init
-  (dolist (mode '(eldoc-mode))
-    (add-hook 'lisp-mode-hook mode)
-    (add-hook 'emacs-lisp-mode-hook mode))
-  (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
-  (add-to-list 'magic-mode-alist '("#! emacs --script" . emacs-lisp-mode)))
+  (add-hook 'lisp-mode-hook             'eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook       'eldoc-mode)
+  (add-hook 'lisp-interaction-mode-hook 'eldoc-mode))
 
 (use-package sly
   :ensure t
