@@ -81,11 +81,15 @@
 (defun ht/truncate-lines ()
   (setq truncate-lines t))
 
-(add-hook 'compilation-mode-hook     'ht/truncate-lines)
-(add-hook 'dired-mode-hook           'ht/truncate-lines)
-(add-hook 'prog-mode-hook            'ht/truncate-lines)
-(add-hook 'shell-mode-hook           'ht/truncate-lines)
-(add-hook 'sql-interactive-mode-hook 'ht/truncate-lines)
+(defconst ht/truncate-lines-mode-hooks
+  '(compilation-mode-hook
+    dired-mode-hook
+    prog-mode-hook
+    shell-mode-hook
+    sql-interactive-mode-hook))
+
+(dolist (mode-hook ht/truncate-lines-mode-hooks)
+  (add-hook mode-hook 'ht/truncate-lines))
 
 (defun ht/add-watchwords ()
   (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
