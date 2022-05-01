@@ -660,7 +660,8 @@ _s_: magit-status
 
 (use-package cmake-mode
   :if (locate-file "cmake-mode.el" load-path)
-  :mode "\\.cmake\\'")
+  :mode (("\\.cmake\\'"       . cmake-mode)
+         ("CMakeLists.txt\\'" . cmake-mode)))
 
 ;;; FORTH ;;;
 
