@@ -81,14 +81,11 @@
 (defun ht/truncate-lines ()
   (setq truncate-lines t))
 
-(defconst ht/truncate-lines-mode-hooks
-  '(compilation-mode-hook
-    dired-mode-hook
-    prog-mode-hook
-    shell-mode-hook
-    sql-interactive-mode-hook))
-
-(dolist (mode-hook ht/truncate-lines-mode-hooks)
+(dolist (mode-hook '(compilation-mode-hook
+                     dired-mode-hook
+                     prog-mode-hook
+                     shell-mode-hook
+                     sql-interactive-mode-hook))
   (add-hook mode-hook 'ht/truncate-lines))
 
 (defun ht/add-watchwords ()
@@ -485,9 +482,10 @@ _s_: magit-status
   :mode (("\\.md\\'"       . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init
-  (add-hook 'markdown-mode-hook 'ht/truncate-lines)
-  (add-hook 'markdown-mode-hook 'ht/hide-lines-tail-display)
-  (add-hook 'markdown-mode-hook 'whitespace-mode))
+  (dolist (mode '(ht/truncate-lines
+                  ht/hide-lines-tail-display
+                  whitespace-mode))
+    (add-hook 'markdown-mode-hook mode)))
 
 (use-package yaml-mode
   :ensure t
@@ -499,8 +497,9 @@ _s_: magit-status
 (use-package prog-mode
   :defer t
   :init
-  (add-hook 'prog-mode-hook 'electric-pair-local-mode)
-  (add-hook 'prog-mode-hook 'undo-tree-mode))
+  (dolist (mode '(electric-pair-local-mode
+                  undo-tree-mode))
+    (add-hook 'prog-mode-hook mode)))
 
 ;;; SHELL ;;;
 
@@ -630,14 +629,14 @@ _s_: magit-status
   (add-to-list 'c-default-style '(c-mode   . "hcpp"))
   (add-to-list 'c-default-style '(c++-mode . "hcpp")))
 
-(add-hook 'c-mode-hook   #'auto-revert-mode)
-(add-hook 'c-mode-hook   #'electric-pair-mode)
-(add-hook 'c++-mode-hook #'auto-revert-mode)
-(add-hook 'c++-mode-hook #'electric-pair-mode)
+(dolist (mode '(auto-revert-mode
+                electric-pair-mode))
+  (add-hook 'c-mode-hook   mode)
+  (add-hook 'c++-mode-hook mode))
 
 (setq path-to-ctags "ctags")
 
-(defun create-tags (dir-name)
+(defun ht/create-tags (dir-name)
   "Create tags file"
   (interactive "Ddirectory: ")
   (shell-command (format "%s -e -R %s" path-to-ctags (directory-file-name dir-name))))
@@ -767,9 +766,10 @@ _s_: magit-status
 (use-package lisp-mode
   :defer t
   :init
-  (add-hook 'lisp-mode-hook             'eldoc-mode)
-  (add-hook 'emacs-lisp-mode-hook       'eldoc-mode)
-  (add-hook 'lisp-interaction-mode-hook 'eldoc-mode))
+  (dolist (mode-hook '(lisp-mode-hook
+                       emacs-lisp-mode-hook
+                       lisp-interaction-mode-hook))
+    (add-hook mode-hook 'eldoc-mode)))
 
 (use-package sly
   :ensure t
@@ -924,8 +924,9 @@ _gd_: merlin-locate
   :ensure t
   :mode "\\.rs\\'"
   :init
-  (add-hook 'rust-mode-hook 'auto-revert-mode)
-  (add-hook 'rust-mode-hook 'electric-pair-mode))
+  (dolist (mode '(auto-revert-mode
+                  electric-pair-mode))
+    (add-hook 'rust-mode-hook mode)))
 
 ;;; SCALA ;;;
 
@@ -938,9 +939,10 @@ _gd_: merlin-locate
   :mode (("\\.scala\\'" . scala-mode)
          ("\\.sbt\\'"   . scala-mode))
   :init
-  (add-hook 'scala-mode-hook 'ht/scala-mode)
-  (add-hook 'scala-mode-hook 'auto-revert-mode)
-  (add-hook 'scala-mode-hook 'electric-pair-mode))
+  (dolist (mode '(ht/scala-mode
+                  auto-revert-mode
+                  electric-pair-mode))
+    (add-hook 'scala-mode-hook mode)))
 
 ;;; SML ;;;
 
