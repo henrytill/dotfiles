@@ -872,10 +872,12 @@ _s_: magit-status
 (use-package lisp-mode
   :defer t
   :init
-  (dolist (mode-hook '(lisp-mode-hook
-                       emacs-lisp-mode-hook
-                       lisp-interaction-mode-hook))
-    (add-hook mode-hook 'eldoc-mode)))
+  (ht/comment
+    (dolist (mode-hook '(lisp-mode-hook
+                         emacs-lisp-mode-hook
+                         lisp-interaction-mode-hook))
+      (add-hook mode-hook 'eldoc-mode))
+    nil))
 
 (use-package sly
   :ensure t
@@ -1020,9 +1022,11 @@ _gd_: merlin-locate
   :commands run-oz
   :init
   (setenv "OZHOME" (ht/oz-home))
-  (add-hook 'oz-mode-hook 'electric-pair-mode)
-  (add-hook 'oz-mode-hook 'undo-tree-mode)
-  (add-hook 'oz-mode-hook 'whitespace-mode))
+  (ht/comment
+    (add-hook 'oz-mode-hook 'electric-pair-mode)
+    (add-hook 'oz-mode-hook 'undo-tree-mode)
+    (add-hook 'oz-mode-hook 'whitespace-mode)
+    nil))
 
 ;;; RUST ;;;
 
