@@ -98,7 +98,7 @@
       x-select-enable-primary t
       x-select-enable-clipboard t)
 
-(setq-default fill-column 80
+(setq-default fill-column 100
               indent-tabs-mode nil
               ispell-program-name "aspell")
 
