@@ -82,6 +82,7 @@
 (setq apropos-do-all t
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
       custom-file (expand-file-name "custom.el" user-emacs-directory)
+      eldoc-echo-area-use-multiline-p nil
       epa-armor t
       gnutls-min-prime-bits 1024
       inhibit-startup-message t
@@ -547,8 +548,6 @@ _l_: evil-avy-goto-line
   (use-package eglot
     :ensure t
     :commands eglot
-    :init
-    (setq eldoc-echo-area-use-multiline-p nil)
     :config
     (setq eglot-server-programs
           (ht/replace-item-in-alist eglot-server-programs 'rust-mode '("rust-analyzer")))))
