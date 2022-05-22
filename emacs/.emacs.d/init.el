@@ -79,6 +79,13 @@
             (setq dirs (append (cons file (ht/list-subdirs file exclude)) dirs))))))
     dirs))
 
+(defun ht/hex-to-decimal (start end)
+  (interactive "r")
+  (let ((input (if (use-region-p)
+                   (buffer-substring start end)
+                 (string (char-after)))))
+    (message (number-to-string (string-to-number input 16)))))
+
 (setq apropos-do-all t
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
       custom-file (expand-file-name "custom.el" user-emacs-directory)
@@ -88,18 +95,23 @@
       inhibit-startup-message t
       initial-scratch-message nil
       load-prefer-newer t
+      mail-envelope-from 'header
+      mail-specify-envelope-from 't
+      message-sendmail-envelope-from 'header
       mouse-yank-at-point t
       require-final-newline t
       ring-bell-function 'ignore
       save-interprogram-paste-before-kill t
       save-place-file (concat user-emacs-directory "places")
       scroll-conservatively 1
+      send-mail-function 'sendmail-send-it
+      sendmail-program "msmtp"
       tags-revert-without-query 1
       visible-bell t
       x-select-enable-primary t
       x-select-enable-clipboard t)
 
-(setq-default fill-column 100
+(setq-default fill-column 80
               indent-tabs-mode nil
               ispell-program-name "aspell")
 
@@ -225,19 +237,6 @@
 (use-package paredit
   :load-path "site-lisp/paredit"
   :commands enable-paredit-mode)
-
-(setq send-mail-function 'sendmail-send-it
-      sendmail-program "msmtp"
-      mail-specify-envelope-from 't
-      message-sendmail-envelope-from 'header
-      mail-envelope-from 'header)
-
-(defun ht/hex-to-decimal (start end)
-  (interactive "r")
-  (let ((input (if (use-region-p)
-                   (buffer-substring start end)
-                 (string (char-after)))))
-    (message (number-to-string (string-to-number input 16)))))
 
 ;;; IVY ;;;
 
