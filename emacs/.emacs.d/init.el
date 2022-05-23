@@ -753,16 +753,20 @@ _s_: magit-status
 ;;; CLANG-FORMAT ;;;
 
 (when (is-windows-p)
-  (let ((clang-format-path (executable-find "clang-format")))
+  (let ((clang-format-path (or (getenv "CLANG_FORMAT_PATH")
+                               (executable-find "clang-format"))))
     (when clang-format-path
       (let* ((clang-bin-path         (file-name-directory clang-format-path))
              (clang-format-load-path (expand-directory-name "../share/clang" clang-bin-path)))
         (push clang-format-load-path load-path)))))
 
 (use-package clang-format
-  :if (and (executable-find "clang-format")
-           (locate-file "clang-format.el" load-path))
-  :commands (clang-format clang-format-region clang-format-buffer))
+  :if (locate-file "clang-format.el" load-path)
+  :commands (clang-format clang-format-region clang-format-buffer)
+  :init
+  (let ((clang-format-path (getenv "CLANG_FORMAT_PATH")))
+    (when clang-format-path
+      (setq clang-format-executable clang-format-path))))
 
 ;;; CMAKE ;;;
 
