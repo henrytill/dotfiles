@@ -606,7 +606,8 @@ _s_: magit-status
 (use-package prog-mode
   :defer t
   :init
-  (dolist (mode '(electric-pair-local-mode
+  (dolist (mode '(auto-revert-mode
+                  electric-pair-local-mode
                   undo-tree-mode))
     (add-hook 'prog-mode-hook mode)))
 
@@ -738,8 +739,7 @@ _s_: magit-status
   (add-to-list 'c-default-style '(c-mode   . "hcpp"))
   (add-to-list 'c-default-style '(c++-mode . "hcpp")))
 
-(dolist (mode '(auto-revert-mode
-                electric-pair-mode))
+(dolist (mode '(electric-pair-mode))
   (add-hook 'c-mode-hook   mode)
   (add-hook 'c++-mode-hook mode))
 
@@ -1041,8 +1041,7 @@ _gd_: merlin-locate
   :ensure t
   :mode "\\.rs\\'"
   :init
-  (dolist (mode '(auto-revert-mode
-                  electric-pair-mode))
+  (dolist (mode '(electric-pair-mode))
     (add-hook 'rust-mode-hook mode)))
 
 ;;; SCALA ;;;
@@ -1057,7 +1056,6 @@ _gd_: merlin-locate
          ("\\.sbt\\'"   . scala-mode))
   :init
   (dolist (mode '(ht/scala-mode
-                  auto-revert-mode
                   electric-pair-mode))
     (add-hook 'scala-mode-hook mode)))
 
