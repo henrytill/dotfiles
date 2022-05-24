@@ -1079,7 +1079,7 @@ _gd_: merlin-locate
   :init
   (add-hook 'js-mode-hook 'electric-pair-mode)
   :config
-  (setq js-indent-level 2))
+  (setq js-indent-level 4))
 
 (use-package typescript-mode
   :ensure t
