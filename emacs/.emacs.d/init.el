@@ -94,6 +94,7 @@
       gnutls-min-prime-bits 1024
       inhibit-startup-message t
       initial-scratch-message nil
+      ispell-program-name "aspell"
       load-prefer-newer t
       mail-envelope-from 'header
       mail-specify-envelope-from 't
@@ -112,8 +113,7 @@
       x-select-enable-clipboard t)
 
 (setq-default fill-column 80
-              indent-tabs-mode nil
-              ispell-program-name "aspell")
+              indent-tabs-mode nil)
 
 (when (is-darwin-p)
   (setq browse-url-browser-function 'browse-url-default-browser
@@ -180,6 +180,8 @@
   (setq display-line-numbers-width 4)
   (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 
+(set-face-attribute 'font-lock-comment-face nil :foreground "brightblack")
+
 (setq frame-background-mode 'light)
 
 (unless (and (is-linux-p) (window-system))
@@ -216,6 +218,17 @@
   (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
 
 (add-hook 'prog-mode-hook 'ht/add-watchwords)
+
+;;; GREPPING ;;;
+
+(use-package grep
+  :config
+  (ht/comment
+    ;; Some experiments with ripgrep
+    (defvar ht/rg-template "rg -nH --sort path --no-heading -e <R> -- <F>")
+    (grep-apply-setting 'grep-command "rg -nH --sort path --no-heading -e")
+    (grep-apply-setting 'grep-template ht/rg-template)
+    nil))
 
 ;;; GENERAL ;;;
 
@@ -412,18 +425,20 @@ project
 _p_: project-switch-project
 _f_: project-find-file
 _g_: project-find-regexp
+_r_: project-query-replace-regexp
 _d_: project-find-dir
 _c_: project-compile
 _s_: project-shell
 _k_: project-kill-buffers
 "
-  ("p" project-switch-project nil :exit t)
-  ("f" project-find-file      nil :exit t)
-  ("g" project-find-regexp    nil :exit t)
-  ("d" project-find-dir       nil :exit t)
-  ("c" project-compile        nil :exit t)
-  ("s" project-shell          nil :exit t)
-  ("k" project-kill-buffers   nil :exit t))
+  ("p" project-switch-project       nil :exit t)
+  ("f" project-find-file            nil :exit t)
+  ("g" project-find-regexp          nil :exit t)
+  ("r" project-query-replace-regexp nil :exit t)
+  ("d" project-find-dir             nil :exit t)
+  ("c" project-compile              nil :exit t)
+  ("s" project-shell                nil :exit t)
+  ("k" project-kill-buffers         nil :exit t))
 
 (use-package avy
   :ensure t
@@ -674,7 +689,7 @@ _s_: magit-status
   :commands whitespace-mode
 
   :init
-  (setq whitespace-style '(face lines-tail trailing)
+  (setq whitespace-style '(face trailing)
         whitespace-line-column 100)
 
   (defun ht/whitespace-mode ()
