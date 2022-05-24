@@ -77,6 +77,9 @@ then
     add_dir_to_path_front "/opt/sbcl-2.1.10-x86-64-linux/bin"
 fi
 
+# MLton
+add_dir_to_path_front "/opt/mlton-20210117/bin"
+
 # Rust
 add_dir_to_path_front "$HOME/.cargo/bin"
 
