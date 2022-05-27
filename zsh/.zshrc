@@ -72,7 +72,7 @@ fi
 alias e="$EDITOR"
 alias ec="emacsclient -c -a="
 alias et="emacsclient -t -a="
-alias kill-emacs="emacsclient -e '(kill-emacs)'"
+alias kill-emacs-server="emacsclient -e '(kill-emacs)'"
 alias lf="ls -aF"
 alias ll="ls -la"
 alias llt="ls -lat"
