@@ -64,7 +64,7 @@
   (when (executable-find "hostname")
     (ht/s-trim (shell-command-to-string "hostname -s"))))
 
-;;; https://www.emacswiki.org/emacs/ElispCookbook
+;; https://www.emacswiki.org/emacs/ElispCookbook
 (defun ht/list-subdirs (dir exclude)
   "Find all directories in DIR."
   (unless (file-directory-p dir)
@@ -131,7 +131,7 @@
         (cmd (cdr binding)))
     (global-set-key (kbd key) cmd)))
 
-;;; https://stackoverflow.com/questions/5147060/how-can-i-access-directory-local-variables-in-my-major-mode-hooks
+;; https://stackoverflow.com/questions/5147060/how-can-i-access-directory-local-variables-in-my-major-mode-hooks
 (defun ht/run-local-vars-mode-hook ()
   "Run a hook for the major-mode after the local variables have been processed."
   (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
