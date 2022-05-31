@@ -180,7 +180,7 @@
   (setq display-line-numbers-width 4)
   (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 
-(set-face-attribute 'font-lock-comment-face nil :foreground "brightblack")
+(set-face-attribute 'font-lock-comment-face nil :foreground "#7f7f7f")
 
 (setq frame-background-mode 'light)
 
