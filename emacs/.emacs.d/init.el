@@ -430,6 +430,7 @@ _d_: project-find-dir
 _c_: project-compile
 _s_: project-shell
 _k_: project-kill-buffers
+_t_: ht/project-generate-tags
 "
   ("p" project-switch-project       nil :exit t)
   ("f" project-find-file            nil :exit t)
@@ -438,7 +439,8 @@ _k_: project-kill-buffers
   ("d" project-find-dir             nil :exit t)
   ("c" project-compile              nil :exit t)
   ("s" project-shell                nil :exit t)
-  ("k" project-kill-buffers         nil :exit t))
+  ("k" project-kill-buffers         nil :exit t)
+  ("t" ht/project-generate-tags     nil :exit t))
 
 (use-package avy
   :ensure t
@@ -760,10 +762,17 @@ _s_: magit-status
 
 (setq path-to-ctags "ctags")
 
-(defun ht/create-tags (dir-name)
-  "Create tags file"
+(defun ht/generate-tags (dir-name)
+  "Generate TAGS file."
   (interactive "Ddirectory: ")
   (shell-command (format "%s -e -R %s" path-to-ctags (directory-file-name dir-name))))
+
+(defun ht/project-generate-tags ()
+  "Generate TAGS file in the current project's root."
+  (interactive)
+  (let* ((project-dir (project-root (project-current t)))
+         (default-directory project-dir))
+    (ht/generate-tags project-dir)))
 
 ;;; CLANG-FORMAT ;;;
 
