@@ -251,6 +251,10 @@
   :load-path "site-lisp/paredit"
   :commands enable-paredit-mode)
 
+(use-package compile-commands
+  :load-path "site-lisp/compile-commands"
+  :commands compile-commands-get-include-directories)
+
 ;;; IVY ;;;
 
 (use-package ivy
