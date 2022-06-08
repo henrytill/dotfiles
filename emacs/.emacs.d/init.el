@@ -766,17 +766,24 @@ _s_: magit-status
 
 (setq path-to-ctags "ctags")
 
+(defun ht/run-ctags (files)
+  (let* ((args '("-e" "--langmap=c:.c.h" "--c-kinds=+fp" "-R"))
+         (arg-string (mapconcat 'identity args " "))
+         (cmd-string (format "%s %s %s" path-to-ctags arg-string files)))
+    (message "Running: %s" cmd-string)
+    (shell-command cmd-string)))
+
 (defun ht/generate-tags (dir-name)
   "Generate TAGS file."
   (interactive "Ddirectory: ")
-  (shell-command (format "%s -e -R %s" path-to-ctags (directory-file-name dir-name))))
+  (ht/run-ctags (directory-file-name dir-name)))
 
 (defun ht/project-generate-tags ()
   "Generate TAGS file in the current project's root."
   (interactive)
-  (let* ((project-dir (project-root (project-current t)))
-         (default-directory project-dir))
-    (ht/generate-tags project-dir)))
+  (let* ((default-directory (project-root (project-current t)))
+         (includes (compile-commands-get-include-directories)))
+    (ht/run-ctags (mapconcat 'identity includes " "))))
 
 ;;; CLANG-FORMAT ;;;
 
