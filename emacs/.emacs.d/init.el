@@ -12,8 +12,8 @@
            (format "%.2f seconds" (float-time (time-subtract after-init-time before-init-time)))
            gcs-done))
 
-(add-hook 'emacs-startup-hook 'ht/reset-gc-cons-threshold)
-(add-hook 'emacs-startup-hook 'ht/emacs-ready-msg)
+(add-hook 'emacs-startup-hook #'ht/reset-gc-cons-threshold)
+(add-hook 'emacs-startup-hook #'ht/emacs-ready-msg)
 
 ;;; PRELUDE ;;;
 
@@ -212,12 +212,7 @@
                      prog-mode-hook
                      shell-mode-hook
                      sql-interactive-mode-hook))
-  (add-hook mode-hook 'ht/truncate-lines))
-
-(defun ht/add-watchwords ()
-  (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
-
-(add-hook 'prog-mode-hook 'ht/add-watchwords)
+  (add-hook mode-hook #'ht/truncate-lines))
 
 ;;; GREPPING ;;;
 
@@ -483,7 +478,7 @@ _l_: evil-avy-goto-line
   (bind-key "j" 'xref-next-line xref--xref-buffer-mode-map)
   (bind-key "k" 'xref-prev-line xref--xref-buffer-mode-map))
 
-(add-hook 'xref--xref-buffer-mode-hook 'ht/bind-xref-navigation-keys)
+(add-hook 'xref--xref-buffer-mode-hook #'ht/bind-xref-navigation-keys)
 
 (use-package evil
   :ensure t
@@ -547,7 +542,7 @@ _l_: evil-avy-goto-line
     "Colorize from `compilation-filter-start' to `point'."
     (let ((inhibit-read-only t))
       (ansi-color-apply-on-region compilation-filter-start (point))))
-  (add-hook 'compilation-filter-hook 'ht/colorize-compilation-buffer))
+  (add-hook 'compilation-filter-hook #'ht/colorize-compilation-buffer))
 
 (bind-key "<f6>" 'recompile)
 
@@ -627,6 +622,9 @@ _s_: magit-status
 (use-package prog-mode
   :defer t
   :init
+  (defun ht/add-watchwords ()
+    (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
+  (add-hook 'prog-mode-hook #'ht/add-watchwords)
   (dolist (mode '(auto-revert-mode
                   electric-pair-local-mode
                   undo-tree-mode))
@@ -671,7 +669,7 @@ _s_: magit-status
 (use-package shell
   :commands shell
   :init
-  (add-hook 'shell-mode-hook 'ht/shell))
+  (add-hook 'shell-mode-hook #'ht/shell))
 
 ;;; TEX ;;;
 
@@ -702,7 +700,7 @@ _s_: magit-status
     (when (derived-mode-p 'prog-mode)
       (whitespace-mode 1)))
 
-  (add-hook 'hack-local-variables-hook 'ht/whitespace-mode)
+  (add-hook 'hack-local-variables-hook #'ht/whitespace-mode)
 
   :config
   (defun ht/toggle-tabs-display ()
@@ -830,7 +828,7 @@ _s_: magit-status
   :defines (forth-indent-level forth-minor-indent-level forth-hilight-level)
   :init
   (autoload 'forth-mode "gforth.el")
-  (add-hook 'forth-mode-hook 'ht/forth-mode))
+  (add-hook 'forth-mode-hook #'ht/forth-mode))
 
 (use-package forth-block-mode
   :if (executable-find "gforth")
@@ -904,7 +902,7 @@ _s_: magit-status
   :mode (("\\.scm\\'" . scheme-mode)
          ("\\.ss\\'"  . scheme-mode))
   :init
-  (add-hook 'scheme-mode-hook 'ht/scheme-mode))
+  (add-hook 'scheme-mode-hook #'ht/scheme-mode))
 
 ;;; "LISP" (COMMON LISP & ELISP) ;;;
 
