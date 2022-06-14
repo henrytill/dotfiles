@@ -969,7 +969,6 @@ _gd_: merlin-locate
         (add-to-list 'load-path utop-site-lisp))
       (when ocamlinit
         (setq tuareg-opam                nil
-              org-babel-ocaml-command    (format "ocaml -init %s"       ocamlinit)
               tuareg-interactive-program (format "ocaml -init %s"       ocamlinit)
               utop-command               (format "utop -emacs -init %s" ocamlinit))))))
 
