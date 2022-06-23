@@ -169,16 +169,16 @@
 (use-package linum
   :if (version< emacs-version "26.1")
   :after (prog-mode)
+  :hook (prog-mode . linum-on)
   :init
-  (setq linum-format "%4d ")
-  (add-hook 'prog-mode-hook 'linum-on))
+  (setq linum-format "%4d "))
 
 (use-package display-line-numbers
   :if (version<= "26.1" emacs-version)
   :after (prog-mode)
+  :hook (prog-mode . display-line-numbers-mode)
   :init
-  (setq display-line-numbers-width 4)
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+  (setq display-line-numbers-width 4))
 
 (set-face-attribute 'font-lock-comment-face nil :foreground "#7f7f7f")
 
@@ -520,11 +520,10 @@ _l_: evil-avy-goto-line
 (use-package company
   :ensure t
   :commands (company-mode global-company-mode)
+  :hook (after-init-hook . global-company-mode)
   :config
   (setq company-backends (remove 'company-clang company-backends)
         company-global-modes '(not eshell-mode)))
-
-(add-hook 'after-init-hook 'global-company-mode)
 
 ;;; COMPILE ;;;
 
@@ -1020,21 +1019,18 @@ _gd_: merlin-locate
              (locate-file "merlin.el" load-path))
     :commands merlin-mode
     :defines merlin-command
-    :init
-    (add-hook 'caml-mode-hook #'ht/merlin-mode)
-    (add-hook 'tuareg-mode-hook #'ht/merlin-mode))
+    :hook ((caml-mode-hook   . ht/merlin-mode)
+           (tuareg-mode-hook . ht/merlin-mode)))
   (use-package utop
     :if (and (executable-find "utop")
              (locate-file "utop.el" load-path))
     :commands (utop utop-minor-mode)
-    :init
-    (add-hook 'tuareg-mode-hook 'utop-minor-mode))
+    :hook (tuareg-mode-hook . utop-minor-mode))
   (use-package ocp-indent
     :if (and (executable-find "ocp-indent")
              (locate-file "ocp-indent.el" load-path))
     :commands ocp-setup-indent
-    :init
-    (add-hook 'tuareg-mode-hook 'ocp-setup-indent))
+    :hook (tuareg-mode-hook . ocp-setup-indent))
   (dolist (mode '(electric-pair-mode
                   ht/tuareg-mode))
     (add-hook 'tuareg-mode-hook mode)))
