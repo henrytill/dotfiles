@@ -1,14 +1,15 @@
 # defined hosts
-MY_HOSTS = proteus thalassa
+MY_HOSTS = proteus thalassa tethys
 
 # hosts and their package sets
-proteus  = emacs git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
+proteus  = emacs gdb git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
            x11-gnome xdg-gnome
-thalassa = emacs git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
+thalassa = emacs gdb git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
            x11-gnome xdg-gnome
+tethys   = emacs gdb git git-unix tmux vim zsh
 
 # base package set for undefined hosts
-BASE_PKGS = git git-unix tmux vim zsh
+BASE_PKGS = gdb git git-unix tmux vim zsh
 
 # target directories
 TARG_DIRS = ../.config
