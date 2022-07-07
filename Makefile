@@ -6,10 +6,10 @@ proteus  = emacs gdb git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
            x11-gnome xdg-gnome
 thalassa = emacs gdb git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
            x11-gnome xdg-gnome
-tethys   = emacs gdb git git-unix tmux vim zsh
+tethys   = bash emacs gdb git git-unix tmux vim
 
 # base package set for undefined hosts
-BASE_PKGS = gdb git git-unix tmux vim zsh
+BASE_PKGS = bash gdb git git-unix tmux vim
 
 # target directories
 TARG_DIRS = ../.config
