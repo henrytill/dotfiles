@@ -763,10 +763,11 @@ _s_: magit-status
 
 (setq path-to-ctags "ctags")
 
-(defun ht/run-ctags (files)
+(defun ht/run-ctags (paths)
   (let* ((args '("-e" "--langmap=c:.c.h" "--c-kinds=+fp" "-R"))
          (arg-string (mapconcat 'identity args " "))
-         (cmd-string (format "%s %s %s" path-to-ctags arg-string files)))
+         (paths-string (mapconcat 'identity paths " "))
+         (cmd-string (format "%s %s %s" path-to-ctags arg-string paths-string)))
     (message "Running: %s" cmd-string)
     (shell-command cmd-string)))
 
@@ -780,7 +781,7 @@ _s_: magit-status
   (interactive)
   (let* ((default-directory (project-root (project-current t)))
          (includes (compile-commands-get-include-directories)))
-    (ht/run-ctags (mapconcat 'identity includes " "))))
+    (ht/run-ctags includes)))
 
 ;;; CLANG-FORMAT ;;;
 
