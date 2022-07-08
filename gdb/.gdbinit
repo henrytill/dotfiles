@@ -31,5 +31,3 @@ define et
     set $x = (void **)$x[0]
   end
 end
-
-layout src
