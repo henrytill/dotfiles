@@ -4,7 +4,7 @@ MY_HOSTS = proteus thalassa tethys
 # hosts and their package sets
 proteus  = emacs gdb git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
            x11-gnome xdg-gnome
-thalassa = emacs gdb git git-unix gtk ideavim nixpkgs ocaml tmux vim zsh \
+thalassa = bash emacs gdb git git-unix gtk ideavim nixpkgs ocaml tmux vim \
            x11-gnome xdg-gnome
 tethys   = bash emacs gdb git git-unix tmux vim
 
