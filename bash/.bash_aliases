@@ -1,5 +1,3 @@
-# -*- mode: sh; -*-
-
 alias e="$EDITOR"
 alias ec="emacsclient -c -a="
 alias et="emacsclient -t -a="
@@ -26,3 +24,9 @@ else
     alias l="clear && ls -lh"
     alias la="clear && ls -lah"
 fi
+
+# Local Variables:
+# mode: sh
+# End:
+#
+# vim: set filetype=sh:

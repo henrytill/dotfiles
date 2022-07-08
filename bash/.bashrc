@@ -25,10 +25,10 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # # set variable identifying the chroot you work in (used in the prompt below)
 # if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -58,19 +58,12 @@ fi
 
 if [ "$color_prompt" = yes ]; then
     PS1="\n\[\e[1m\]\u@\h:\w\[\e[0m\]\n[\$?]> "
+    PS2="> "
 else
     PS1="\n[\$?]> "
+    PS2="> "
 fi
 unset color_prompt force_color_prompt
-
-# # If this is an xterm set the title to user@host:dir
-# case "$TERM" in
-# xterm*|rxvt*)
-#     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-#     ;;
-# *)
-#     ;;
-# esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -113,13 +106,13 @@ if ! shopt -oq posix; then
 fi
 
 if [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ]; then
-    source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
+    . "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
 fi
 
 if [ -n "$(command -v opam)" -a -d "$HOME/.opam" ]; then
-    source $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+    . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 fi
 
 if [ -n "$(command -v hecate)" -a -d "$HOME/.hecate" ]; then
-    source <(hecate --bash-completion-script `which hecate`)
+    . <(hecate --bash-completion-script `which hecate`)
 fi
