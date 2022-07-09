@@ -26,6 +26,10 @@ if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+if [ -d "$HOME/.cargo/bin" ]; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+
 if [ -n "$(command -v emacsclient)" ]; then
     export EDITOR="emacsclient -t -a="
 elif [ -n "$(command -v vim)" ]; then
