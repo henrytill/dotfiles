@@ -11,7 +11,7 @@ if has("gui_running")
 endif
 
 if has("gui_running") && has("gui_win32")
-  set guifont=Consolas:h10:cANSI
+  set guifont=Dina:h8:cANSI
 endif
 
 set expandtab

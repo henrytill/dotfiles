@@ -190,12 +190,12 @@
   (tool-bar-mode -1))
 
 (when (and (is-windows-p) (window-system))
-  (when (member "Consolas" (font-family-list))
+  (when (member "Dina" (font-family-list))
     (set-face-attribute 'default nil
-                        :family "Consolas"
+                        :family "Dina"
                         :foundry 'outline
                         :width 'normal
-                        :height 98)))
+                        :height 75)))
 
 (show-paren-mode 1)
 (column-number-mode 1)
