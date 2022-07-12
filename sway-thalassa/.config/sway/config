@@ -33,9 +33,9 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
-output DP-4 pos 0,0 resolution 1920x1200 transform 270
-output DP-3 pos 1200,0 resolution 1920x1080@144Hz 
-output DP-3 adaptive_sync off
+output 'Dell Inc. DELL U2415 PVJVW547182L' pos 0,0 resolution 1920x1200 transform 270
+output 'Unknown VG279 K8LMQS147029' pos 1200,0 resolution 1920x1080@144Hz
+output 'Unknown VG279 K8LMQS147029' adaptive_sync off
 
 ### Idle configuration
 #
