@@ -39,3 +39,5 @@ fi
 export PLAN9=/usr/local/plan9port
 
 PATH="$PATH:$PLAN9/bin"
+
+PATH="$PATH:/usr/local/go/bin"
