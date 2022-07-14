@@ -1139,6 +1139,12 @@ _gd_: merlin-locate
   :ensure t
   :mode "\\.tsx\\'")
 
+;;; GOPHER ;;;
+
+(use-package elpher
+  :ensure t
+  :commands (elpher-browse-url-elpher elpher elpher-go))
+
 ;;; POSTLUDE ;;;
 
 (with-eval-after-load 'tramp-sh
