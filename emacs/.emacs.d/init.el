@@ -536,8 +536,9 @@ _l_: evil-avy-goto-line
 
 (use-package company
   :ensure t
-  :commands (company-mode global-company-mode)
-  :hook (after-init-hook . global-company-mode)
+  :commands (company-mode)
+  :init
+  (add-hook 'prog-mode-hook 'company-mode)
   :config
   (setq company-backends (remove 'company-clang company-backends)
         company-global-modes '(not eshell-mode)))
