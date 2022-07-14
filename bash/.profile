@@ -35,3 +35,7 @@ if [ -n "$(command -v emacsclient)" ]; then
 elif [ -n "$(command -v vim)" ]; then
     export EDITOR="vim"
 fi
+
+export PLAN9=/usr/local/plan9port
+
+PATH="$PATH:$PLAN9/bin"
