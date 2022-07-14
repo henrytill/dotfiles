@@ -169,5 +169,3 @@ bar {
 }
 
 include /etc/sway/config.d/*
-
-exec mako
