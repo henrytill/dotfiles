@@ -180,9 +180,26 @@
   :init
   (setq display-line-numbers-width 4))
 
-(set-face-attribute 'font-lock-comment-face nil :foreground "#7f7f7f")
+(global-font-lock-mode 0)
 
 (setq frame-background-mode 'light)
+
+(defun ht/set-font-lock-face-attributes ()
+  (set-face-attribute 'font-lock-comment-face nil :foreground "#7f7f7f"))
+
+(add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
+
+(defun ht/set-face-attributes ()
+  (when (and (is-linux-p) (display-graphic-p))
+    (set-face-attribute 'region nil :background "lightgoldenrod2")))
+
+(defun ht/update-frame (frame)
+  (select-frame frame)
+  (ht/set-face-attributes))
+
+(add-to-list 'after-make-frame-functions 'ht/update-frame)
+
+(ht/update-frame (selected-frame))
 
 (unless (and (is-linux-p) (window-system))
   (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -571,6 +588,8 @@ _l_: evil-avy-goto-line
 (use-package magit
   :ensure t
   :commands magit-status
+  :hook ((magit-status-mode . font-lock-mode)
+         (magit-diff-mode   . font-lock-mode))
   :config
   (put 'magit-clean 'disabled nil)
   (setq magit-last-seen-setup-instructions "1.4.0"))
@@ -705,9 +724,10 @@ _s_: magit-status
   (defun ht/toggle-tabs-display ()
     (interactive)
     (whitespace-mode -1)
-    (if (memq 'tabs whitespace-style)
-        (setq whitespace-style (remove 'tabs whitespace-style))
-      (add-to-list 'whitespace-style 'tabs))
+    (let ((tab-mode (if font-lock-mode 'tabs 'tab-mark)))
+      (if (memq tab-mode whitespace-style)
+          (setq whitespace-style (remove tab-mode whitespace-style))
+        (add-to-list 'whitespace-style tab-mode)))
     (whitespace-mode 1))
 
   (defun ht/hide-lines-tail-display ()
