@@ -2,7 +2,7 @@
 
 set nocompatible
 
-syntax on
+syntax off
 colorscheme default
 set background=light
 
