@@ -775,7 +775,7 @@ _s_: magit-status
                                              (label . 0)
                                              (statement-cont . +)
                                              (innamespace . 0))))
-  (add-to-list 'c-default-style '(c-mode   . "hcpp"))
+  (add-to-list 'c-default-style '(c-mode   . "bsd-tabs"))
   (add-to-list 'c-default-style '(c++-mode . "hcpp")))
 
 (dolist (mode '(electric-pair-mode))
