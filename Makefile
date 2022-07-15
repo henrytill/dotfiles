@@ -48,8 +48,14 @@ list:
 $(TARG_DIRS):
 	mkdir -p $@
 
-install: $(TARG_DIRS)
-	stow -v $(PKG_SET)
+sway::
+	install --b -S .old -C sway/sway.desktop /usr/local/share/wayland-sessions
+	install --b -S .old -C sway/sway-session /usr/local/bin
+
+$(PKG_SET)::
+	stow -v $@
+
+install: $(PKG_SET) $(TARG_DIRS)
 	$(INSTALL_HOOK)
 
 reinstall: $(TARG_DIRS)
@@ -60,4 +66,4 @@ clean:
 	$(CLEAN_HOOK)
 	stow -Dv $(PKG_SET)
 
-.PHONY: all list install reinstall clean
+.PHONY: all list install reinstall clean $(PKG_SET)

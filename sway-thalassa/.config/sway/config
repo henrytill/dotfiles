@@ -21,3 +21,6 @@ input type:pointer {
     accel_profile flat
     pointer_accel 0
 }
+
+# https://github.com/swaywm/sway/wiki/Systemd-integration
+exec systemctl --user start sway-session.target
