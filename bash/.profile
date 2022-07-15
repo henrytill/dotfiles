@@ -30,14 +30,18 @@ if [ -d "$HOME/.cargo/bin" ]; then
     PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+if [ -n "$(command -v opam)" -a -d "$HOME/.opam" ]; then
+    . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+fi
+
+export PLAN9=/usr/local/plan9
+
+PATH="$PATH:$PLAN9/bin"
+
+PATH="$PATH:/usr/local/go/bin"
+
 if [ -n "$(command -v emacsclient)" ]; then
     export EDITOR="emacsclient -t -a="
 elif [ -n "$(command -v vim)" ]; then
     export EDITOR="vim"
 fi
-
-export PLAN9=/usr/local/plan9port
-
-PATH="$PATH:$PLAN9/bin"
-
-PATH="$PATH:/usr/local/go/bin"

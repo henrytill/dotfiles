@@ -72,12 +72,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ]; then
+if [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] \
+       && ! [[ "${PATH}" =~ "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/bin" ]]; then
     . "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
-fi
-
-if [ -n "$(command -v opam)" -a -d "$HOME/.opam" ]; then
-    . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 fi
 
 if [ -n "$(command -v hecate)" -a -d "$HOME/.hecate" ]; then
