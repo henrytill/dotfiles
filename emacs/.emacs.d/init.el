@@ -499,9 +499,11 @@ _l_: evil-avy-goto-line
 
 (use-package evil
   :ensure t
-  :config
+  :init
   (setq evil-want-abbrev-expand-on-insert-exit nil
+        evil-search-module 'evil-search
         evil-ex-search-case 'sensitive)
+  :config
   (ht/setup-evil-emacs-state-modes)
   (ht/setup-evil-bindings)
   (ht/setup-evil-paredit-state)
@@ -763,6 +765,11 @@ _s_: magit-status
          ("\\.sats\\'" . ats-mode)))
 
 ;;; C/C++ ;;;
+
+(defun ht/modify-c-syntax-entries ()
+  (modify-syntax-entry ?_ "w"))
+
+(add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
 
 (with-eval-after-load 'cc-styles
   (c-add-style "bsd-tabs" '("bsd" (indent-tabs-mode . t)))
