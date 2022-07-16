@@ -829,6 +829,15 @@ _s_: magit-status
     (when clang-format-path
       (setq clang-format-executable clang-format-path))))
 
+(defvar ht/clang-format-on-save nil)
+
+(defun ht/finalize-buffer ()
+  (when (and c-buffer-is-cc-mode ht/clang-format-on-save)
+    (message "Running clang-format...")
+    (clang-format-buffer)))
+
+(add-hook 'before-save-hook #'ht/finalize-buffer)
+
 ;;; CMAKE ;;;
 
 (when (is-windows-p)
