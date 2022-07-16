@@ -118,6 +118,8 @@ if has("autocmd")
   let g:c_syntax_for_h = 1
 endif
 
+autocmd BufWritePre *.h,*.c :call RunClangFormat()
+
 runtime! ftplugin/man.vim
 
 map <space> <leader>
