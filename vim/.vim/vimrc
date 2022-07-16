@@ -3,7 +3,7 @@
 set nocompatible
 
 syntax off
-colorscheme default
+colorscheme inl
 set background=light
 
 if has("gui_running")
