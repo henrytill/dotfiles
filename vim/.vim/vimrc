@@ -41,10 +41,9 @@ set completeopt-=preview
 setglobal tags=./tags;
 
 function! StripTrailingWhitespace()
-  let myline = line(".")
-  let mycolumn = col(".")
+  let pos = getpos('.')
   silent! %s/\s\+$//
-  call cursor(myline, mycolumn)
+  call setpos('.', pos)
 endfunction
 
 function! RunClangFormat()
@@ -52,10 +51,12 @@ function! RunClangFormat()
     echo 'Could not locate clang-format'
     return
   endif
-  let myline = line(".")
-  let mycolumn = col(".")
+  if !&modified || empty(findfile('.clang-format', expand('%:p:h') . ';'))
+    return
+  endif
+  let pos = getpos('.')
   silent! %!clang-format
-  call cursor(myline, mycolumn)
+  call setpos('.', pos)
 endfunction
 
 function! RunGofmt()
@@ -63,23 +64,9 @@ function! RunGofmt()
     echo 'Could not locate gofmt'
     return
   endif
-  let myline = line(".")
-  let mycolumn = col(".")
+  let pos = getpos('.')
   silent! %!gofmt
-  call cursor(myline, mycolumn)
-endfunction
-
-function! RunCtags(...)
-  if !executable('ctags')
-    echo 'Could not locate ctags'
-    return
-  endif
-  if len(a:000) == 0
-    let optionString = ""
-  else
-    let optionString = join(a:000, " ")
-  endif
-  execute "silent! !ctags " . optionString
+  call setpos('.', pos)
 endfunction
 
 function! HiTabs()
