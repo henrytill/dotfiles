@@ -3,9 +3,9 @@ MY_HOSTS = proteus thalassa tethys
 
 # hosts and their package sets
 proteus  = bash emacs gdb git git-unix gtk ideavim nixpkgs ocaml \
-           sway sway-proteus tmux vim x11-gnome xdg-gnome
+           sway sway-proteus tmux vim x11-gnome xdg
 thalassa = bash emacs gdb git git-unix gtk ideavim nixpkgs ocaml \
-           sway sway-thalassa tmux vim x11-gnome xdg-gnome
+           sway sway-thalassa tmux vim x11-gnome xdg
 tethys   = bash emacs gdb git git-unix tmux vim
 
 # base package set for undefined hosts
