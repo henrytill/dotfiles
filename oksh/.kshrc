@@ -4,7 +4,7 @@ HISTFILE=~/.ksh_history
 
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\n\u@\h:\w:\j\n[\$?]> "
+    PS1="\n\u@\h:\w\n[\$?]> "
     PS2="> "
     ;;
 dumb)
