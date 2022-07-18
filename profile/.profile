@@ -40,8 +40,8 @@ PATH="$PATH:$PLAN9/bin"
 
 PATH="$PATH:/usr/local/go/bin"
 
-if [ -n "$(command -v emacsclient)" ]; then
-    export EDITOR="emacsclient -t -a="
-elif [ -n "$(command -v vim)" ]; then
+if [ -n "$(command -v vim)" ]; then
     export EDITOR="vim"
+elif [ -n "$(command -v emacsclient)" ]; then
+    export EDITOR="emacsclient -t -a="
 fi
