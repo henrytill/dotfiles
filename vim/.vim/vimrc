@@ -17,69 +17,19 @@ endif
 set expandtab
 set hlsearch
 set incsearch
-set modeline
 set nowrap
 set number
 set ruler
 set showcmd
 set showmatch
-set smartcase
-set smartindent
-set smarttab
 set wildmenu
 
 set backspace=indent,eol,start
-set clipboard=unnamed
-set history=1000
 set path=.,,$PWD/**
 
 set wildignore+=*/.git/*
-set wildignore+=*/result/*
-
-set completeopt-=preview
 
 setglobal tags=./tags;
-
-function! StripTrailingWhitespace()
-  let pos = getpos('.')
-  silent! %s/\s\+$//
-  call setpos('.', pos)
-endfunction
-
-function! RunClangFormat()
-  if !executable('clang-format')
-    echo 'Could not locate clang-format'
-    return
-  endif
-  if !&modified || empty(findfile('.clang-format', expand('%:p:h') . ';'))
-    return
-  endif
-  let pos = getpos('.')
-  silent! %!clang-format
-  call setpos('.', pos)
-endfunction
-
-function! RunGofmt()
-  if !executable('gofmt')
-    echo 'Could not locate gofmt'
-    return
-  endif
-  let pos = getpos('.')
-  silent! %!gofmt
-  call setpos('.', pos)
-endfunction
-
-function! HiTabs()
-  if has("autocmd")
-    " highlight tabs
-    highlight Tab ctermbg=LightGray guibg=LightGray
-    match Tab /\t/
-    au BufWinEnter,InsertLeave * match Tab /\t/
-    au InsertEnter * match Tab /\t/
-    " prevent colorscheme from overriding these highlights
-    au ColorScheme * highlight Tab ctermbg=LightGray guibg=LightGray
-  endif
-endfunction
 
 if has("autocmd")
   " Enable file type detection.
@@ -104,23 +54,11 @@ if has("autocmd")
   " " prevent colorscheme from overriding these highlights
   " au ColorScheme * highlight Tab ctermbg=LightGray guibg=LightGray
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  " Also don't do it when the mark is in the first line, that is the default
-  " position when opening a file.
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-
   " use c syntax for *.h files
   let g:c_syntax_for_h = 1
 endif
 
-autocmd BufWritePre *.h,*.c :call RunClangFormat()
-
-runtime! ftplugin/man.vim
+runtime functions.vim
 
 map <space> <leader>
 
