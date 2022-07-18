@@ -1,0 +1,13 @@
+acme() {
+    tabstop=8 $PLAN9/bin/acme -f $PLAN9/font/lucm/unicode.9.font
+}
+
+stripwhitespace() {
+    sed -i 's/[[:space:]]\+$//' "$@"
+}
+
+# Local Variables:
+# mode: sh
+# End:
+#
+# vim: set filetype=sh:
