@@ -9,7 +9,7 @@ thalassa = emacs foot gdb git git-unix gtk nixpkgs ocaml oksh \
 tethys   = bash emacs gdb git git-unix profile tmux vim
 
 # base package set for undefined hosts
-BASE_PKGS = bash gdb git git-unix tmux vim
+BASE_PKGS = git git-unix oksh profile tmux vim
 
 # target directories
 TARG_DIRS = ../.config
