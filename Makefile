@@ -5,7 +5,7 @@ MY_HOSTS = proteus thalassa tethys
 proteus  = bash emacs gdb git git-unix gtk ideavim nixpkgs ocaml \
            profile sway sway-proteus tmux vim x11 xdg
 thalassa = emacs gdb git git-unix gtk ideavim nixpkgs ocaml oksh \
-           profile sway sway-thalassa tmux vim x11 xdg
+           profile sway sway-thalassa systemd tmux vim x11 xdg
 tethys   = bash emacs gdb git git-unix profile tmux vim
 
 # base package set for undefined hosts
@@ -48,7 +48,7 @@ list:
 $(TARG_DIRS):
 	mkdir -p $@
 
-sway::
+sway-thalassa::
 	install --b -S .old -C sway/sway.desktop /usr/local/share/wayland-sessions
 	install --b -S .old -C sway/sway-session /usr/local/bin
 

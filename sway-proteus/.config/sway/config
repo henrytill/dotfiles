@@ -16,6 +16,3 @@ include common
 input type:keyboard {
     xkb_options ctrl:nocaps
 }
-
-# https://github.com/swaywm/sway/wiki/Systemd-integration
-exec systemctl --user start sway-session.target
