@@ -1,8 +1,7 @@
 alias e="$EDITOR"
-alias ec="emacsclient -cn -a="
-alias et="emacsclient -t -a="
+alias ec="emacsclient -a= -cn"
+alias et="emacsclient -a= -t"
 alias kill-emacs-server="emacsclient -e '(kill-emacs)'"
-alias ls="ls -1"
 alias lc="ls -C"
 alias lf="ls -aF"
 alias ll="ls -la"
@@ -25,6 +24,8 @@ else
     alias l="clear && ls -lh"
     alias la="clear && ls -lah"
 fi
+
+alias ls="ls -1"
 
 # Local Variables:
 # mode: sh
