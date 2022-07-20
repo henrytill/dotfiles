@@ -49,8 +49,7 @@ $(TARG_DIRS):
 	mkdir -p $@
 
 sway-thalassa::
-	install --b -S .old -C sway/sway.desktop /usr/local/share/wayland-sessions
-	install --b -S .old -C sway/sway-session /usr/local/bin
+	install --b -S .old -C sway-thalassa/sway-session /usr/local/bin
 
 $(PKG_SET)::
 	stow -v $@
