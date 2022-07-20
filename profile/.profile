@@ -34,6 +34,10 @@ if [ -d "$HOME/.cargo/bin" ]; then
     PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+if [ -d "$HOME/.cabal/bin" ]; then
+    PATH="$HOME/.cabal/bin:$PATH"
+fi
+
 if [ -n "$(command -v opam)" -a -d "$HOME/.opam" ]; then
     . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 fi
