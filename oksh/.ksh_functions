@@ -1,7 +1,3 @@
-acme() {
-    tabstop=8 $PLAN9/bin/acme -f $PLAN9/font/lucm/unicode.9.font
-}
-
 stripwhitespace() {
     sed -i 's/[[:space:]]\+$//' "$@"
 }
