@@ -21,6 +21,7 @@ if [ -f ~/.ksh_functions ]; then
     . ~/.ksh_functions
 fi
 
+export GPG_TTY="$(tty)"
 
 # Local Variables:
 # mode: sh
