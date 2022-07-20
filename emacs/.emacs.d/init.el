@@ -760,9 +760,12 @@ _s_: magit-status
 (defvar ht/clang-format-on-save nil)
 
 (defun ht/finalize-buffer ()
-  (when (and c-buffer-is-cc-mode ht/clang-format-on-save)
+  (when (and (derived-mode-p 'c-mode) ht/clang-format-on-save)
     (message "Running clang-format...")
-    (clang-format-buffer)))
+    (clang-format-buffer))
+  (when (derived-mode-p 'go-mode)
+    (message "Running gofmt...")
+    (gofmt-before-save)))
 
 (add-hook 'before-save-hook #'ht/finalize-buffer)
 
