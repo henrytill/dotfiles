@@ -168,4 +168,6 @@ bar {
     status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
 }
 
+default_border pixel
+
 include /etc/sway/config.d/*
