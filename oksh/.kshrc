@@ -22,6 +22,7 @@ if [ -f ~/.ksh_functions ]; then
 fi
 
 export GPG_TTY="$(tty)"
+export LIBVIRT_DEFAULT_URI="qemu:///system"
 
 # Local Variables:
 # mode: sh
