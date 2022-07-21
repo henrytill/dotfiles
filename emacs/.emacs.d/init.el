@@ -86,7 +86,8 @@
                  (string (char-after)))))
     (message (number-to-string (string-to-number input 16)))))
 
-(setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
+(setq apropos-do-all t
+      backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
       custom-file (expand-file-name "custom.el" user-emacs-directory)
       eldoc-echo-area-use-multiline-p nil
       epa-armor t
@@ -243,6 +244,10 @@
 
 ;;; GENERAL ;;;
 
+(use-package ace-window
+  :ensure t
+  :defer t)
+
 (use-package undo-tree
   :ensure t
   :commands undo-tree-mode
@@ -261,6 +266,32 @@
 (use-package compile-commands
   :load-path "site-lisp/compile-commands"
   :commands compile-commands-get-include-directories)
+
+;;; IVY ;;;
+
+(use-package ivy
+  :ensure t
+  :bind (("C-c C-r" . ivy-resume)
+         ("<f6>"    . ivy-resume))
+  :init
+  (use-package counsel
+    :ensure t
+    :bind (("M-x"     . counsel-M-x)
+           ("C-x C-f" . counsel-find-file)
+           ("<f1> f"  . counsel-describe-function)
+           ("<f1> v"  . counsel-describe-variable)
+           ("<f1> l"  . counsel-find-library)
+           ("<f2> i"  . counsel-info-lookup-symbol)
+           ("<f2> u"  . counsel-unicode-char)))
+  (use-package swiper
+    :ensure t
+    :bind ("C-s" . swiper))
+  :config
+  (ivy-mode 1)
+  (setq enable-recursive-minibuffers t
+        ivy-count-format "(%d/%d) "
+        ivy-use-virtual-buffers t)
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 ;;; EVIL-MODE ;;;
 
@@ -382,18 +413,20 @@
   "
 base
 ----
-_x_: M-x                  _g_: magit         _!_: shell-command
-_b_: switch-to-buffer     _p_: project       _&_: async-shell-command
-_f_: find-file            _m_: mode-specific
+_w_: ace-window           _a_: avy           _!_: shell-command
+_x_: counsel-M-x          _g_: magit         _&_: async-shell-command
+_b_: ivy-switch-buffer    _p_: project
+_f_: counsel-find-file    _m_: mode-specific
 _k_: kill-buffer          _i_: ibuffer
 _l_: evil-paredit-state
 "
   ("w" ace-window                  nil :exit t)
-  ("x" execute-extended-command    nil :exit t)
-  ("b" switch-to-buffer            nil :exit t)
-  ("f" find-file                   nil :exit t)
+  ("x" counsel-M-x                 nil :exit t)
+  ("b" ivy-switch-buffer           nil :exit t)
+  ("f" counsel-find-file           nil :exit t)
   ("k" kill-buffer                 nil :exit t)
   ("l" evil-paredit-state          nil :exit t)
+  ("a" ht/hydra-avy/body           nil :exit t)
   ("g" ht/hydra-magit/body         nil :exit t)
   ("p" ht/hydra-project/body       nil :exit t)
   ("m" ht/call-hydra-mode-specific nil :exit t)
@@ -424,6 +457,29 @@ _t_: ht/project-generate-tags
   ("s" project-shell                nil :exit t)
   ("k" project-kill-buffers         nil :exit t)
   ("t" ht/project-generate-tags     nil :exit t))
+
+(use-package avy
+  :ensure t
+  :bind (:map isearch-mode-map ("C-c '" . avy-isearch))
+  :commands (avy-goto-char
+             avy-goto-char-2
+             avy-goto-word-1
+             avy-goto-line
+             avy-isearch))
+
+(defhydra ht/hydra-avy (:idle 1.0)
+  "
+avy
+---
+_;_: evil-avy-goto-char
+_'_: evil-avy-goto-char-2
+_w_: evil-avy-goto-word-1
+_l_: evil-avy-goto-line
+"
+  (";" evil-avy-goto-char   nil :exit t)
+  ("'" evil-avy-goto-char-2 nil :exit t)
+  ("w" evil-avy-goto-word-1 nil :exit t)
+  ("l" evil-avy-goto-line   nil :exit t))
 
 (with-eval-after-load 'compile
   (define-key compilation-mode-map (kbd "SPC") nil))
@@ -491,7 +547,23 @@ _t_: ht/project-generate-tags
 
 ;;; COMPILE ;;;
 
-(bind-key "<f5>" 'recompile)
+(use-package compile
+  :commands compile
+  :init
+  (ht/comment
+    ;; https://stackoverflow.com/questions/4556368/compiling-c-with-emacs-on-windows-system
+    (add-to-list 'compilation-error-regexp-alist
+                 '(msvc "^[ \t]*\\([A-Za-z0-9\\.][^(]*\\.\\(cpp\\|c\\|h\\|hpp\\)\\)(\\([0-9]+\\)) *: +\\(error\\|fatal error\\|warning\\) C[0-9]+:" 1 3))
+    nil)
+  ;; http://endlessparentheses.com/ansi-colors-in-the-compilation-buffer-output.html
+  (require 'ansi-color)
+  (defun ht/colorize-compilation-buffer ()
+    "Colorize from `compilation-filter-start' to `point'."
+    (let ((inhibit-read-only t))
+      (ansi-color-apply-on-region compilation-filter-start (point))))
+  (add-hook 'compilation-filter-hook #'ht/colorize-compilation-buffer))
+
+(bind-key "<f6>" 'recompile)
 
 ;;; DIRED ;;;
 
