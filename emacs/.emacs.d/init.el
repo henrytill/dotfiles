@@ -878,7 +878,27 @@ _s_: magit-status
 
 (use-package go-mode
   :ensure t
-  :mode "\\.go\\'")
+  :mode "\\.go\\'"
+  :config
+  ;; Redefine buggy gofmt defun in go-mode.el
+  (defun gofmt ()
+    (interactive)
+    (let ((pos        (point))
+          (out-buffer (get-buffer-create "*gofmt*"))
+          (temp-file  (make-temp-file "gofmt")))
+      (unwind-protect
+          (progn
+            (write-region (point-min) (point-max) temp-file)
+            (let ((result (call-process "gofmt" temp-file out-buffer)))
+              (if (eql result 0)
+                  (progn
+                    (erase-buffer)
+                    (insert-buffer out-buffer))
+                (message "gofmt failed"))))
+        (delete-file temp-file)
+        (kill-buffer out-buffer)
+        (goto-char pos))))
+    nil)
 
 ;;; HASKELL ;;;
 
