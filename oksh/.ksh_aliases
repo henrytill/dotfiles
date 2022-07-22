@@ -10,11 +10,13 @@ alias lt="ls -lt"
 alias u="cd .. && l"
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 
-if [ -n "$(command -v view)" ]; then
+if [ -n "$(command -v view)" ]
+then
     alias v="view"
 fi
 
-if [ $TERM = "dumb" ]; then
+if [ $TERM = "dumb" ]
+then
     alias less="cat"
     alias more="cat"
     alias l="ls -lh"

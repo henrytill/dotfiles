@@ -13,16 +13,20 @@ dumb)
     ;;
 esac
 
-if [ -f ~/.ksh_aliases ]; then
+if [ -f ~/.ksh_aliases ]
+then
     . ~/.ksh_aliases
 fi
 
-if [ -f ~/.ksh_functions ]; then
+if [ -f ~/.ksh_functions ]
+then
     . ~/.ksh_functions
 fi
 
-if [ -z "$SSH_AGENT_PID" ] && [ -z "$SSH_AUTH_SOCK" ]; then
-    if ! [ -e /tmp/ssh-agent-$USER ]; then
+if [ -z "$SSH_AGENT_PID" -a -z "$SSH_AUTH_SOCK" ]
+then
+    if ! [ -e /tmp/ssh-agent-$USER ]
+    then
         ssh-agent 2>/dev/null >/tmp/ssh-agent-$USER
     fi
     . /tmp/ssh-agent-$USER >/dev/null
