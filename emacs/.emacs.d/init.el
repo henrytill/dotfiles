@@ -884,21 +884,35 @@ _s_: magit-status
   (defun gofmt ()
     (interactive)
     (let ((pos        (point))
-          (out-buffer (get-buffer-create "*gofmt*"))
-          (temp-file  (make-temp-file "gofmt")))
+          (in-file    buffer-file-name)
+          (out-buffer (get-buffer-create "*gofmt-out*"))
+          (err-buffer (get-buffer-create "*gofmt-err*"))
+          (temp-file  (make-temp-file "gofmtout"))
+          (err-file   (make-temp-file "gofmterr")))
       (unwind-protect
           (progn
             (write-region (point-min) (point-max) temp-file)
-            (let ((result (call-process "gofmt" temp-file out-buffer)))
+            (let ((result (call-process "gofmt" nil (list out-buffer err-file) nil temp-file)))
               (if (eql result 0)
                   (progn
                     (erase-buffer)
-                    (insert-buffer out-buffer))
-                (message "gofmt failed"))))
+                    (insert-buffer out-buffer)
+                    (delete-window (get-buffer-window err-buffer))
+                    (kill-buffer err-buffer))
+                (with-temp-buffer-window err-buffer 'display-buffer-pop-up-window nil
+                  (with-current-buffer err-buffer
+                    (erase-buffer)
+                    (insert "gofmt found errors:\n")
+                    (insert-file-contents err-file)
+                    (while (re-search-forward temp-file nil t)
+                      (replace-match in-file))
+                    (compilation-mode)))))
+            nil)
+        (delete-file err-file)
         (delete-file temp-file)
         (kill-buffer out-buffer)
         (goto-char pos))))
-    nil)
+  nil)
 
 ;;; HASKELL ;;;
 
