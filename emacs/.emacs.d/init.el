@@ -872,7 +872,7 @@ _s_: magit-status
           (in-file    buffer-file-name)
           (out-buffer (get-buffer-create "*gofmt-out*"))
           (err-buffer (get-buffer-create "*gofmt-err*"))
-          (temp-file  (make-temp-file "gofmtout"))
+          (temp-file  (make-temp-file "gofmttmp"))
           (err-file   (make-temp-file "gofmterr")))
       (unwind-protect
           (progn
