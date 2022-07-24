@@ -1,3 +1,1 @@
-[Default Applications]
-x-scheme-handler/gopher=elpher.desktop
-x-scheme-handler/gemini=elpher.desktop
+../../../.config/mimeapps.list
