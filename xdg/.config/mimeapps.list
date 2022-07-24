@@ -1,3 +1,4 @@
 [Default Applications]
+application/pdf=chromium.desktop
 x-scheme-handler/gopher=elpher.desktop
 x-scheme-handler/gemini=elpher.desktop
