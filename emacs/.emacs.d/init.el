@@ -882,8 +882,11 @@ _s_: magit-status
                   (progn
                     (erase-buffer)
                     (insert-buffer out-buffer)
-                    (delete-window (get-buffer-window err-buffer))
-                    (kill-buffer err-buffer))
+                    (let ((window (get-buffer-window err-buffer 'visible)))
+                      (when window
+                        (delete-window window)))
+                    (kill-buffer err-buffer)
+                    t)
                 (with-temp-buffer-window err-buffer 'display-buffer-pop-up-window nil
                   (with-current-buffer err-buffer
                     (erase-buffer)
@@ -891,8 +894,8 @@ _s_: magit-status
                     (insert-file-contents err-file)
                     (while (re-search-forward temp-file nil t)
                       (replace-match in-file))
-                    (compilation-mode)))))
-            nil)
+                    (compilation-mode)
+                    nil)))))
         (delete-file err-file)
         (delete-file temp-file)
         (kill-buffer out-buffer)
