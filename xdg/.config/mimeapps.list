@@ -2,3 +2,5 @@
 application/pdf=chromium.desktop
 x-scheme-handler/gopher=elpher.desktop
 x-scheme-handler/gemini=elpher.desktop
+x-scheme-handler/irc=chromium.desktop
+x-scheme-handler/ircs=chromium.desktop
