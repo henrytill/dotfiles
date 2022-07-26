@@ -16,3 +16,5 @@ include common
 input type:keyboard {
     xkb_options ctrl:nocaps
 }
+
+exec /usr/libexec/pipewire-launcher 2>&1 | logger -t pipewire
