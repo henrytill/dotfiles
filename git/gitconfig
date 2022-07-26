@@ -7,7 +7,7 @@
 [pull]
     ff = only
 [alias]
-    allpush = ! git remote | xargs -L1 git push
+    allpush = ! git remote | xargs -n1 git push
     flog = log --all --decorate --oneline --graph
 [rebase]
     autosquash = true
