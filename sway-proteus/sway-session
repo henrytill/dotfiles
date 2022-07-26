@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if [ "$(tty)" = "/dev/tty1" ]; then
+    dbus-run-session sway 2>&1 | logger -t sway-session
+fi

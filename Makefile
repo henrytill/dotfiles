@@ -48,6 +48,9 @@ list:
 $(TARG_DIRS):
 	mkdir -p $@
 
+sway-proteus::
+	install --b -S .old -C sway-proteus/sway-session /usr/local/bin
+
 sway-thalassa::
 	install --b -S .old -C sway-thalassa/sway-session /usr/local/bin
 
