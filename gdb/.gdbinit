@@ -31,3 +31,11 @@ define et
     set $x = (void **)$x[0]
   end
 end
+
+define hook-next
+  refresh
+end
+
+define hook-continue
+  refresh
+end
