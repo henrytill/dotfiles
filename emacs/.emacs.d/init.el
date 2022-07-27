@@ -631,6 +631,7 @@ _s_: magit-status
     (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
   (add-hook 'prog-mode-hook #'ht/add-watchwords)
   (dolist (mode '(auto-revert-mode
+                  display-fill-column-indicator-mode
                   electric-pair-local-mode
                   undo-tree-mode))
     (add-hook 'prog-mode-hook mode)))
