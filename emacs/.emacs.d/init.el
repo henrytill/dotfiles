@@ -547,7 +547,7 @@ _l_: evil-avy-goto-line
 
 ;;; COMPILE ;;;
 
-(with-eval-after-load 'compilation
+(with-eval-after-load 'compile
   (bind-key "<f5>" 'recompile))
 
 ;;; DIRED ;;;
