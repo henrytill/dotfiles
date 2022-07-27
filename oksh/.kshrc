@@ -8,7 +8,7 @@ xterm*|rxvt*)
     PS2="> "
     ;;
 dumb)
-    PS1="[\$?]> "
+    PS1="\n[\$?]> "
     PS2="> "
     ;;
 esac
