@@ -271,8 +271,7 @@
 
 (use-package ivy
   :ensure t
-  :bind (("C-c C-r" . ivy-resume)
-         ("<f6>"    . ivy-resume))
+  :bind (("C-c C-r" . ivy-resume))
   :init
   (use-package counsel
     :ensure t
@@ -809,6 +808,7 @@ _s_: magit-status
 (use-package clang-format
   :if (locate-file "clang-format.el" load-path)
   :commands (clang-format clang-format-region clang-format-buffer)
+  :bind ("<f6>" . clang-format-buffer)
   :init
   (let ((clang-format-path (getenv "CLANG_FORMAT_PATH")))
     (when clang-format-path
