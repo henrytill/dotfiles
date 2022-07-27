@@ -44,11 +44,3 @@ if [ -d "/usr/local/go" ]
 then
     PATH="$PATH:/usr/local/go/bin"
 fi
-
-if [ -n "$(command -v emacsclient)" ]
-then
-    export EDITOR="emacsclient -t -a="
-elif [ -n "$(command -v vim)" ]
-then
-    export EDITOR="vim"
-fi
