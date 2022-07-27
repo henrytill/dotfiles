@@ -45,10 +45,10 @@ then
     PATH="$PATH:/usr/local/go/bin"
 fi
 
-if [ -n "$(command -v vim)" ]
-then
-    export EDITOR="vim"
-elif [ -n "$(command -v emacsclient)" ]
+if [ -n "$(command -v emacsclient)" ]
 then
     export EDITOR="emacsclient -t -a="
+elif [ -n "$(command -v vim)" ]
+then
+    export EDITOR="vim"
 fi
