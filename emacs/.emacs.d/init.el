@@ -64,21 +64,6 @@
   (when (executable-find "hostname")
     (ht/s-trim (shell-command-to-string "hostname -s"))))
 
-;; https://www.emacswiki.org/emacs/ElispCookbook
-(defun ht/list-subdirs (dir exclude)
-  "Find all directories in DIR."
-  (unless (file-directory-p dir)
-    (error "Not a directory `%s'" dir))
-  (let ((dir   (directory-file-name dir))
-        (files (directory-files dir nil nil t))
-        (dirs  '()))
-    (dolist (file files)
-      (unless (member file (append '("." "..") exclude))
-        (let ((file (concat (file-name-as-directory dir) file)))
-          (when (file-directory-p file)
-            (setq dirs (append (cons file (ht/list-subdirs file exclude)) dirs))))))
-    dirs))
-
 (defun ht/hex-to-decimal (start end)
   (interactive "r")
   (let ((input (if (use-region-p)
@@ -166,13 +151,6 @@
 
 ;;; COSMETICS ;;;
 
-(use-package linum
-  :if (version< emacs-version "26.1")
-  :after (prog-mode)
-  :hook (prog-mode . linum-on)
-  :init
-  (setq linum-format "%4d "))
-
 (use-package display-line-numbers
   :if (version<= "26.1" emacs-version)
   :after (prog-mode)
@@ -231,22 +209,7 @@
                      sql-interactive-mode-hook))
   (add-hook mode-hook #'ht/truncate-lines))
 
-;;; GREPPING ;;;
-
-(use-package grep
-  :config
-  (ht/comment
-    ;; Some experiments with ripgrep
-    (defvar ht/rg-template "rg -nH --sort path --no-heading -e <R> -- <F>")
-    (grep-apply-setting 'grep-command "rg -nH --sort path --no-heading -e")
-    (grep-apply-setting 'grep-template ht/rg-template)
-    nil))
-
 ;;; GENERAL ;;;
-
-(use-package ace-window
-  :ensure t
-  :defer t)
 
 (use-package undo-tree
   :ensure t
@@ -334,9 +297,6 @@
 (defun ht/dired-pwd ()
   (interactive)
   (dired default-directory))
-
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "-") #'dired-up-directory))
 
 ;;; LSP ;;;
 
@@ -732,6 +692,7 @@
   :mode (("\\.scm\\'" . scheme-mode)
          ("\\.ss\\'"  . scheme-mode))
   :init
+  (add-hook 'scheme-mode-hook 'enable-paredit-mode)
   (add-hook 'scheme-mode-hook #'ht/scheme-mode))
 
 ;;; "LISP" (COMMON LISP & ELISP) ;;;
@@ -742,12 +703,11 @@
 (use-package lisp-mode
   :defer t
   :init
-  (ht/comment
-    (dolist (mode-hook '(lisp-mode-hook
-                         emacs-lisp-mode-hook
-                         lisp-interaction-mode-hook))
-      (add-hook mode-hook 'eldoc-mode))
-    nil))
+  (dolist (mode-hook '(lisp-mode-hook
+                       emacs-lisp-mode-hook
+                       lisp-interaction-mode-hook))
+    (ht/comment (add-hook mode-hook 'eldoc-mode))
+    (add-hook mode-hook 'enable-paredit-mode)))
 
 (use-package sly
   :ensure t
