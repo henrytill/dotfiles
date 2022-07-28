@@ -178,7 +178,7 @@
   :after (prog-mode)
   :hook (prog-mode . display-line-numbers-mode)
   :init
-  (setq display-line-numbers-width 4))
+  (setq-default display-line-numbers-width 4))
 
 (global-font-lock-mode 0)
 
