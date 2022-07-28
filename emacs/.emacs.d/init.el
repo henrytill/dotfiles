@@ -72,6 +72,7 @@
     (message (number-to-string (string-to-number input 16)))))
 
 (setq apropos-do-all t
+      backup-by-copying t
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
       custom-file (expand-file-name "custom.el" user-emacs-directory)
       eldoc-echo-area-use-multiline-p nil
@@ -109,7 +110,8 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (defconst ht/global-bindings
-  '(("C-x C-b" . ibuffer)))
+  '(("C-x C-b" . ibuffer)
+    ("M-/"     . hippie-expand)))
 
 (dolist (binding ht/global-bindings)
   (let ((key (car binding))
