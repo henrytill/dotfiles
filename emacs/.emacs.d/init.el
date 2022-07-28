@@ -204,6 +204,7 @@
 
 (dolist (mode-hook '(compilation-mode-hook
                      dired-mode-hook
+                     markdown-mode-hook
                      prog-mode-hook
                      shell-mode-hook
                      sql-interactive-mode-hook))
@@ -292,12 +293,6 @@
 (with-eval-after-load 'compile
   (bind-key "<f5>" 'recompile))
 
-;;; DIRED ;;;
-
-(defun ht/dired-pwd ()
-  (interactive)
-  (dired default-directory))
-
 ;;; LSP ;;;
 
 (when (version<= "26.1" emacs-version)
@@ -333,17 +328,12 @@
   :ensure t
   :mode "Dockerfile\\(?:\\..*\\)?\\'")
 
-(defun ht/truncate-lines ()
-  (interactive)
-  (toggle-truncate-lines 1))
-
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md\\'"       . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init
-  (dolist (mode '(ht/truncate-lines
-                  ht/hide-lines-tail-display
+  (dolist (mode '(ht/hide-lines-tail-display
                   whitespace-mode))
     (add-hook 'markdown-mode-hook mode)))
 
@@ -465,19 +455,6 @@
     (whitespace-mode 1))
 
   nil)
-
-;;; ATS ;;;
-
-(defun ht/ats-load-path ()
-  (expand-directory-name "utils/emacs" (getenv "PATSHOME")))
-
-(use-package ats2-mode
-  :if (file-directory-p (ht/ats-load-path))
-  :load-path (lambda () (list (ht/ats-load-path)))
-  :mode (("\\.cats\\'" . c-mode)
-         ("\\.dats\\'" . ats-mode)
-         ("\\.hats\\'" . ats-mode)
-         ("\\.sats\\'" . ats-mode)))
 
 ;;; C/C++ ;;;
 
@@ -670,15 +647,6 @@
                   interactive-haskell-mode))
     (add-hook 'haskell-mode-hook mode)))
 
-;;; CLOJURE ;;;
-
-(use-package clojure-mode
-  :ensure t
-  :mode (("\\.clj\\'"  . clojure-mode)
-         ("\\.edn\\'"  . clojure-mode)
-         ("\\.boot\\'" . clojure-mode))
-  :interpreter ("boot" . clojure-mode))
-
 ;;; SCHEME ;;;
 
 (defun ht/scheme-mode ()
@@ -809,34 +777,6 @@
                   ht/tuareg-mode))
     (add-hook 'tuareg-mode-hook mode)))
 
-;;; OZ ;;;
-
-(eval-and-compile
-  (defun ht/oz-home ()
-    (cond ((is-darwin-p) (let ((oz-app-path "/Applications/Mozart2.app"))
-                           (when (file-directory-p oz-app-path)
-                             (concat oz-app-path "/Contents/Resources"))))
-          ((is-linux-p)  (let ((oz-binary-path (executable-find "oz")))
-                           (when oz-binary-path
-                             (car (split-string oz-binary-path "/bin/oz")))))))
-  (defun ht/oz-load-path ()
-    (cond ((is-darwin-p) "~/src/other/mozart-elisp")
-          ((is-linux-p)  (expand-directory-name "share/mozart/elisp" (ht/oz-home))))))
-
-(use-package oz
-  :disabled t
-  :if (executable-find "oz")
-  :load-path (lambda () (list (ht/oz-load-path)))
-  :mode ("\\.oz\\'" . oz-mode)
-  :commands run-oz
-  :init
-  (setenv "OZHOME" (ht/oz-home))
-  (ht/comment
-    (add-hook 'oz-mode-hook 'electric-pair-mode)
-    (add-hook 'oz-mode-hook 'undo-tree-mode)
-    (add-hook 'oz-mode-hook 'whitespace-mode)
-    nil))
-
 ;;; RUST ;;;
 
 (use-package rust-mode
@@ -846,21 +786,6 @@
   (dolist (mode '(electric-pair-mode))
     (add-hook 'rust-mode-hook mode)))
 
-;;; SCALA ;;;
-
-(defun ht/scala-mode ()
-  (setq scala-font-lock:var-face 'font-lock-variable-name-face
-        scala-indent:align-parameters t))
-
-(use-package scala-mode
-  :ensure t
-  :mode (("\\.scala\\'" . scala-mode)
-         ("\\.sbt\\'"   . scala-mode))
-  :init
-  (dolist (mode '(ht/scala-mode
-                  electric-pair-mode))
-    (add-hook 'scala-mode-hook mode)))
-
 ;;; SML ;;;
 
 (use-package sml-mode
@@ -868,11 +793,6 @@
   :mode "\\.sml\\'")
 
 ;;; JAVASCRIPT/TYPESCRIPT ;;;
-
-(defun ht/npm-local-executable-path (name)
-  (let* ((npm-bin-path (string-trim (shell-command-to-string "npm bin")))
-         (npm-exe-path (expand-file-name name npm-bin-path)))
-    (when (file-executable-p npm-exe-path) npm-exe-path)))
 
 (use-package js
   :mode (("\\.json\\'" . js-mode)
@@ -886,10 +806,6 @@
 (use-package typescript-mode
   :ensure t
   :mode "\\.ts\\'")
-
-(use-package web-mode
-  :ensure t
-  :mode "\\.tsx\\'")
 
 ;;; GOPHER ;;;
 
@@ -905,10 +821,6 @@
 (when (and (is-darwin-p) (window-system))
   (setq mac-command-modifier 'super
         mac-option-modifier 'meta))
-
-(when (string-equal "thaumas" (ht/hostname))
-  (setq doc-view-resolution 150
-        doc-view-scale-internally nil))
 
 (when (is-windows-p)
   (let ((home (directory-file-name (getenv "USERPROFILE"))))
