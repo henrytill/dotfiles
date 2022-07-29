@@ -3,13 +3,13 @@ MY_HOSTS = proteus thalassa tethys
 
 # hosts and their package sets
 proteus  = emacs foot gdb git git-unix oksh \
-           profile sway sway-proteus tmux vim
+           profile sway sway-proteus tmux
 thalassa = emacs foot gdb git git-unix gtk nixpkgs ocaml oksh \
-           profile sway sway-thalassa systemd tmux vim x11 xdg
-tethys   = bash emacs gdb git git-unix profile tmux vim
+           profile sway sway-thalassa systemd tmux x11 xdg
+tethys   = bash emacs gdb git git-unix profile tmux
 
 # base package set for undefined hosts
-BASE_PKGS = git git-unix oksh profile tmux vim
+BASE_PKGS = git git-unix oksh profile tmux
 
 # target directories
 TARG_DIRS = ../.config
@@ -32,11 +32,6 @@ endif
 # systemd
 ifneq (,$(findstring systemd,$(PKG_SET)))
   TARG_DIRS += ../.config/systemd/user/default.target.wants
-endif
-
-# vim
-ifneq (,$(findstring vim,$(PKG_SET)))
-  TARG_DIRS += ../.vim
 endif
 
 all: install
