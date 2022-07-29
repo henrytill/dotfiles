@@ -1,6 +1,7 @@
 set -o emacs
 
 HISTFILE=~/.ksh_history
+HISTSIZE=5000
 
 case "$TERM" in
 xterm*|rxvt*)
