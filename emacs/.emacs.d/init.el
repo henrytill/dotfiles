@@ -71,8 +71,18 @@
                  (string (char-after)))))
     (message (number-to-string (string-to-number input 16)))))
 
-(require 'ido)
-(ido-mode t)
+(if (version< emacs-version "27.1")
+    (progn
+      (require 'ido)
+      (ido-mode t)
+      (setq ido-default-buffer-method 'selected-window
+            ido-default-file-method 'selected-window
+            ido-enable-flex-matching t
+            ido-use-filename-at-point t
+            ido-use-virtual-buffers t))
+  (progn
+    (require 'icomplete)
+    (fido-mode 1)))
 
 (require 'uniquify)
 
@@ -83,9 +93,6 @@
       eldoc-echo-area-use-multiline-p nil
       epa-armor t
       gnutls-min-prime-bits 1024
-      ido-enable-flex-matching t
-      ido-use-filename-at-point t
-      ido-use-virtual-buffers t
       inhibit-startup-message t
       initial-scratch-message nil
       ispell-program-name "aspell"
