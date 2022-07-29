@@ -71,6 +71,11 @@
                  (string (char-after)))))
     (message (number-to-string (string-to-number input 16)))))
 
+(require 'ido)
+(ido-mode t)
+
+(require 'uniquify)
+
 (setq apropos-do-all t
       backup-by-copying t
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
@@ -78,6 +83,9 @@
       eldoc-echo-area-use-multiline-p nil
       epa-armor t
       gnutls-min-prime-bits 1024
+      ido-enable-flex-matching t
+      ido-use-filename-at-point t
+      ido-use-virtual-buffers t
       inhibit-startup-message t
       initial-scratch-message nil
       ispell-program-name "aspell"
@@ -94,6 +102,7 @@
       send-mail-function 'sendmail-send-it
       sendmail-program "msmtp"
       tags-revert-without-query 1
+      uniquify-buffer-name-style 'forward
       visible-bell t
       x-select-enable-primary t
       x-select-enable-clipboard t)
@@ -111,7 +120,12 @@
 
 (defconst ht/global-bindings
   '(("C-x C-b" . ibuffer)
-    ("M-/"     . hippie-expand)))
+    ("M-/"     . hippie-expand)
+    ("M-z"     . zap-up-to-char)
+    ("C-s"     . isearch-forward-regexp)
+    ("C-r"     . isearch-backward-regexp)
+    ("C-M-s"   . isearch-forward)
+    ("C-M-r"   . isearch-backward)))
 
 (dolist (binding ht/global-bindings)
   (let ((key (car binding))
@@ -153,12 +167,9 @@
 
 ;;; COSMETICS ;;;
 
-(use-package display-line-numbers
-  :if (version<= "26.1" emacs-version)
-  :after (prog-mode)
-  :hook (prog-mode . display-line-numbers-mode)
-  :init
-  (setq-default display-line-numbers-width 4))
+(when (version<= "26.1" emacs-version)
+  (setq-default display-line-numbers-width 4)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 
 (global-font-lock-mode 0)
 
@@ -214,17 +225,6 @@
 
 ;;; GENERAL ;;;
 
-(use-package undo-tree
-  :ensure t
-  :commands undo-tree-mode
-  :init
-  (setq undo-tree-auto-save-history nil))
-
-(use-package uniquify
-  :defer t
-  :config
-  (setq uniquify-buffer-name-style 'forward))
-
 (use-package paredit
   :load-path "site-lisp/paredit"
   :commands enable-paredit-mode)
@@ -232,31 +232,6 @@
 (use-package compile-commands
   :load-path "site-lisp/compile-commands"
   :commands compile-commands-get-include-directories)
-
-;;; IVY ;;;
-
-(use-package ivy
-  :ensure t
-  :bind (("C-c C-r" . ivy-resume))
-  :init
-  (use-package counsel
-    :ensure t
-    :bind (("M-x"     . counsel-M-x)
-           ("C-x C-f" . counsel-find-file)
-           ("<f1> f"  . counsel-describe-function)
-           ("<f1> v"  . counsel-describe-variable)
-           ("<f1> l"  . counsel-find-library)
-           ("<f2> i"  . counsel-info-lookup-symbol)
-           ("<f2> u"  . counsel-unicode-char)))
-  (use-package swiper
-    :ensure t
-    :bind ("C-s" . swiper))
-  :config
-  (ivy-mode 1)
-  (setq enable-recursive-minibuffers t
-        ivy-count-format "(%d/%d) "
-        ivy-use-virtual-buffers t)
-  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 ;;; ALIGN ;;;
 
@@ -346,58 +321,20 @@
 
 ;;; PROG-MODE ;;;
 
-(use-package prog-mode
-  :defer t
-  :init
-  (defun ht/add-watchwords ()
-    (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
-  (add-hook 'prog-mode-hook #'ht/add-watchwords)
-  (dolist (mode '(auto-revert-mode
-                  display-fill-column-indicator-mode
-                  electric-pair-local-mode
-                  undo-tree-mode))
-    (add-hook 'prog-mode-hook mode)))
+(defun ht/add-watchwords ()
+  (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
+
+(dolist (mode '(auto-revert-mode
+                electric-pair-local-mode
+                ht/add-watchwords))
+  (add-hook 'prog-mode-hook mode))
 
 ;;; SHELL ;;;
-
-(defun eshell/clear ()
-  "Clear the Eshell buffer."
-  (interactive)
-  (let ((inhibit-read-only t))
-    (erase-buffer)))
-
-(defun eshell/rgrep (&rest args)
-  "Use Emacs grep facility instead of calling external grep."
-  (eshell-grep "rgrep" args t))
-
-(defalias 'eshell/view 'view-file)
-
-(use-package eshell
-  :commands (eshell eshell-command)
-  :defines eshell-visual-commands
-  :functions (eshell/pwd eshell-grep)
-  :init
-  (setq eshell-prompt-function
-        (lambda nil
-          (concat "\n"
-                  (user-login-name) "@"
-                  (abbreviate-file-name (eshell/pwd)) "> "))
-        eshell-prompt-regexp "^[^>]*> ")
-  (add-hook 'eshell-prompt-load-hook
-            (defun my-color-eshell-prompt ()
-              (set-face-foreground 'eshell-prompt "#2aa198")))
-  (add-hook 'eshell-mode-hook
-            (defun my-eshell-visual-commands ()
-              (add-to-list 'eshell-visual-commands "ssh")
-              (add-to-list 'eshell-visual-commands "bash"))))
 
 (defun ht/shell ()
   (add-to-list 'mode-line-buffer-identification '("" default-directory "  ")))
 
-(use-package shell
-  :commands shell
-  :init
-  (add-hook 'shell-mode-hook #'ht/shell))
+(add-hook 'shell-mode-hook #'ht/shell)
 
 ;;; TEX ;;;
 
@@ -524,16 +461,6 @@
     (when clang-format-path
       (setq clang-format-executable clang-format-path))))
 
-(defvar ht/clang-format-on-save nil)
-
-(defun ht/finalize-buffer ()
-  (when (and (derived-mode-p 'c-mode) ht/clang-format-on-save)
-    (clang-format-buffer))
-  (when (derived-mode-p 'go-mode)
-    (gofmt)))
-
-(add-hook 'before-save-hook #'ht/finalize-buffer)
-
 ;;; CMAKE ;;;
 
 (when (is-windows-p)
@@ -624,16 +551,6 @@
         haskell-tags-on-save t
         whitespace-line-column 120))
 
-(defun ht/haskell-wrapper-function-nix ()
-  (interactive)
-  (setq haskell-process-wrapper-function
-        (lambda (argv) (append (list "nix-shell" "--command" )
-                               (list (mapconcat 'identity argv " "))))))
-
-(defun ht/haskell-wrapper-function-identity ()
-  (interactive)
-  (setq haskell-process-wrapper-function 'identity))
-
 (use-package haskell-mode
   :ensure t
   :mode (("\\.hs\\'"      . haskell-mode)
@@ -658,26 +575,17 @@
                     (run*  . 1)))
     (put (car form+n) 'scheme-indent-function (cdr form+n))))
 
-(use-package scheme
-  :mode (("\\.scm\\'" . scheme-mode)
-         ("\\.ss\\'"  . scheme-mode))
-  :init
-  (add-hook 'scheme-mode-hook 'enable-paredit-mode)
-  (add-hook 'scheme-mode-hook #'ht/scheme-mode))
+(add-hook 'scheme-mode-hook #'ht/scheme-mode)
+
+(add-hook 'scheme-mode-hook 'enable-paredit-mode)
 
 ;;; "LISP" (COMMON LISP & ELISP) ;;;
 
 (when (executable-find "sbcl")
   (setq inferior-lisp-program "sbcl"))
 
-(use-package lisp-mode
-  :defer t
-  :init
-  (dolist (mode-hook '(lisp-mode-hook
-                       emacs-lisp-mode-hook
-                       lisp-interaction-mode-hook))
-    (ht/comment (add-hook mode-hook 'eldoc-mode))
-    (add-hook mode-hook 'enable-paredit-mode)))
+(dolist (mode-hook '(lisp-mode-hook emacs-lisp-mode-hook))
+  (add-hook mode-hook 'enable-paredit-mode))
 
 (use-package sly
   :ensure t
@@ -706,19 +614,7 @@
       (setenv (car var) (cadr var))))
   (let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
     (when ocaml-toplevel-path
-      (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path))))
-  (when (in-nix-shell-p)
-    (let ((merlin-site-lisp (getenv "MERLIN_SITE_LISP"))
-          (utop-site-lisp   (getenv "UTOP_SITE_LISP"))
-          (ocamlinit        (getenv "OCAMLINIT")))
-      (when merlin-site-lisp
-        (add-to-list 'load-path merlin-site-lisp))
-      (when utop-site-lisp
-        (add-to-list 'load-path utop-site-lisp))
-      (when ocamlinit
-        (setq tuareg-opam                nil
-              tuareg-interactive-program (format "ocaml -init %s"       ocamlinit)
-              utop-command               (format "utop -emacs -init %s" ocamlinit))))))
+      (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
 
 (defun ht/merlin-mode ()
   (let ((extension (file-name-extension buffer-file-name)))
@@ -726,20 +622,39 @@
                    (string-equal "mly" extension)))
       (merlin-mode 1)
       (company-mode 1)
-      (when (and (executable-find "opam")
-                 (not (in-nix-shell-p)))
+      (when (executable-find "opam")
         (setq merlin-command 'opam))
       (add-to-list 'company-backends 'merlin-company-backend))))
 
-(defun ht/tuareg-set-compile-command ()
-  (let ((build-dir (and (locate-dominating-file buffer-file-name "build")
-                        (locate-dominating-file buffer-file-name "_tags"))))
-    (when build-dir
-      (setq default-directory build-dir)
-      (set (make-local-variable 'compile-command) "./build"))))
+(use-package tuareg
+  :ensure t
+  :mode (("\\.ml[ilpy]?\\'" . tuareg-mode)
+         ("\\.eliomi?\\'"   . tuareg-mode))
+  :init
+  (ht/setup-tuareg)
+  (dolist (mode '(electric-pair-mode
+                  electric-indent-local-mode))
+    (add-hook 'tuareg-mode-hook mode)))
 
-(defun ht/tuareg-mode ()
-  (electric-indent-local-mode 0))
+(use-package merlin
+  :if (and (executable-find "ocamlmerlin")
+           (locate-file "merlin.el" load-path))
+  :commands merlin-mode
+  :defines merlin-command
+  :hook ((caml-mode-hook   . ht/merlin-mode)
+         (tuareg-mode-hook . ht/merlin-mode)))
+
+(use-package utop
+  :if (and (executable-find "utop")
+           (locate-file "utop.el" load-path))
+  :commands (utop utop-minor-mode)
+  :hook (tuareg-mode-hook . utop-minor-mode))
+
+(use-package ocp-indent
+  :if (and (executable-find "ocp-indent")
+           (locate-file "ocp-indent.el" load-path))
+  :commands ocp-setup-indent
+  :hook (tuareg-mode-hook . ocp-setup-indent))
 
 (with-eval-after-load 'caml-types
   (let ((color (face-attribute 'default :background)))
@@ -751,33 +666,6 @@
 
 (with-eval-after-load 'caml-help
   (set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
-
-(use-package tuareg
-  :ensure t
-  :mode (("\\.ml[ilpy]?\\'" . tuareg-mode)
-         ("\\.eliomi?\\'"   . tuareg-mode))
-  :init
-  (ht/setup-tuareg)
-  (use-package merlin
-    :if (and (executable-find "ocamlmerlin")
-             (locate-file "merlin.el" load-path))
-    :commands merlin-mode
-    :defines merlin-command
-    :hook ((caml-mode-hook   . ht/merlin-mode)
-           (tuareg-mode-hook . ht/merlin-mode)))
-  (use-package utop
-    :if (and (executable-find "utop")
-             (locate-file "utop.el" load-path))
-    :commands (utop utop-minor-mode)
-    :hook (tuareg-mode-hook . utop-minor-mode))
-  (use-package ocp-indent
-    :if (and (executable-find "ocp-indent")
-             (locate-file "ocp-indent.el" load-path))
-    :commands ocp-setup-indent
-    :hook (tuareg-mode-hook . ocp-setup-indent))
-  (dolist (mode '(electric-pair-mode
-                  ht/tuareg-mode))
-    (add-hook 'tuareg-mode-hook mode)))
 
 ;;; RUST ;;;
 
@@ -794,31 +682,25 @@
   :ensure t
   :mode "\\.sml\\'")
 
-;;; JAVASCRIPT/TYPESCRIPT ;;;
-
-(use-package js
-  :mode (("\\.json\\'" . js-mode)
-         ("\\.js\\'"   . js-mode)
-         ("\\.jsx\\'"  . js-mode))
-  :init
-  (add-hook 'js-mode-hook 'electric-pair-mode)
-  :config
-  (setq js-indent-level 4))
-
-(use-package typescript-mode
-  :ensure t
-  :mode "\\.ts\\'")
-
 ;;; GOPHER ;;;
 
 (use-package elpher
   :ensure t
   :commands (elpher-browse-url-elpher elpher elpher-go))
 
-;;; POSTLUDE ;;;
+;;; BUFFER FINALIZATION ;;;
 
-(with-eval-after-load 'tramp-sh
-  (add-to-list 'tramp-remote-path "/run/current-system/sw/bin"))
+(defvar ht/clang-format-on-save nil)
+
+(defun ht/finalize-buffer ()
+  (when (and (derived-mode-p 'c-mode) ht/clang-format-on-save)
+    (clang-format-buffer))
+  (when (derived-mode-p 'go-mode)
+    (gofmt)))
+
+(add-hook 'before-save-hook #'ht/finalize-buffer)
+
+;;; POSTLUDE ;;;
 
 (when (and (is-darwin-p) (window-system))
   (setq mac-command-modifier 'super
