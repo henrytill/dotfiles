@@ -324,12 +324,8 @@
 
 ;;; PROG-MODE ;;;
 
-(defun ht/add-watchwords ()
-  (font-lock-add-keywords nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\)" 1 font-lock-warning-face t))))
-
 (dolist (mode '(auto-revert-mode
-                electric-pair-local-mode
-                ht/add-watchwords))
+                electric-pair-local-mode))
   (add-hook 'prog-mode-hook mode))
 
 ;;; SHELL ;;;
