@@ -4,9 +4,9 @@ MY_HOSTS = proteus thalassa tethys
 # hosts and their package sets
 proteus  = emacs foot gdb git git-unix oksh \
            profile sway sway-proteus tmux
-thalassa = emacs foot gdb git git-unix gtk nixpkgs ocaml oksh \
-           profile sway sway-thalassa systemd tmux x11 xdg
-tethys   = bash emacs gdb git git-unix profile tmux
+thalassa = emacs foot gdb git git-unix oksh \
+           profile sway sway-thalassa tmux x11 xdg
+tethys   = emacs gdb git git-unix oksh profile tmux
 
 # base package set for undefined hosts
 BASE_PKGS = git git-unix oksh profile tmux
@@ -24,16 +24,6 @@ else
   PKG_SET = $(BASE_PKGS)
 endif
 
-# ghc
-ifneq (,$(findstring ghc,$(PKG_SET)))
-  TARG_DIRS += ../.ghc
-endif
-
-# systemd
-ifneq (,$(findstring systemd,$(PKG_SET)))
-  TARG_DIRS += ../.config/systemd/user/default.target.wants
-endif
-
 all: install
 
 list:
@@ -43,11 +33,8 @@ list:
 $(TARG_DIRS):
 	mkdir -p $@
 
-sway-proteus::
-	install --b -S .old -C sway-proteus/sway-session /usr/local/bin
-
-sway-thalassa::
-	install --b -S .old -C sway-thalassa/sway-session /usr/local/bin
+sway-proteus sway-thalassa::
+	install --b -S .old -C $@/sway-session /usr/local/bin
 
 $(PKG_SET)::
 	stow -v $@
