@@ -35,9 +35,9 @@ fi
 if [ -n "$(command -v emacsclient)" ]
 then
     export EDITOR="emacsclient -t -a="
-elif [ -n "$(command -v vim)" ]
+elif [ -n "$(command -v mg)" ]
 then
-    export EDITOR="vim"
+    export EDITOR="mg"
 fi
 
 export GPG_TTY="$(tty)"
