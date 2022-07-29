@@ -627,11 +627,7 @@
   (let ((extension (file-name-extension buffer-file-name)))
     (when (not (or (string-equal "mll" extension)
                    (string-equal "mly" extension)))
-      (merlin-mode 1)
-      (company-mode 1)
-      (when (executable-find "opam")
-        (setq merlin-command 'opam))
-      (add-to-list 'company-backends 'merlin-company-backend))))
+      (merlin-mode 1))))
 
 (use-package tuareg
   :ensure t
@@ -646,22 +642,33 @@
 (use-package merlin
   :if (and (executable-find "ocamlmerlin")
            (locate-file "merlin.el" load-path))
+  :after (tuareg)
   :commands merlin-mode
   :defines merlin-command
-  :hook ((caml-mode-hook   . ht/merlin-mode)
-         (tuareg-mode-hook . ht/merlin-mode)))
+  :hook ((caml-mode   . ht/merlin-mode)
+         (tuareg-mode . ht/merlin-mode)))
+  :init
+  (when (executable-find "opam")
+    (setq merlin-command 'opam))
+
+(use-package merlin-company
+  :if (and (executable-find "ocamlmerlin")
+           (locate-file "merlin-company.el" load-path))
+  :after (merlin))
 
 (use-package utop
   :if (and (executable-find "utop")
            (locate-file "utop.el" load-path))
+  :after (tuareg)
   :commands (utop utop-minor-mode)
-  :hook (tuareg-mode-hook . utop-minor-mode))
+  :hook (tuareg-mode . utop-minor-mode))
 
 (use-package ocp-indent
   :if (and (executable-find "ocp-indent")
            (locate-file "ocp-indent.el" load-path))
+  :after (tuareg)
   :commands ocp-setup-indent
-  :hook (tuareg-mode-hook . ocp-setup-indent))
+  :hook (tuareg-mode . ocp-setup-indent))
 
 (with-eval-after-load 'caml-types
   (let ((color (face-attribute 'default :background)))
