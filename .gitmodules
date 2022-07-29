@@ -6,4 +6,4 @@
 	url = https://github.com/emacsmirror/paredit.git
 [submodule "emacs/.emacs.d/site-lisp/compile-commands"]
 	path = emacs/.emacs.d/site-lisp/compile-commands
-	url = https://github.com/henrytill/compile-commands.git
+	url = https://git.sr.ht/~henrytill/compile-commands
