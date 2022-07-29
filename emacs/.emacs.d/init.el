@@ -195,7 +195,7 @@
   (select-frame frame)
   (ht/set-face-attributes))
 
-(add-to-list 'after-make-frame-functions 'ht/update-frame)
+(add-to-list 'after-make-frame-functions #'ht/update-frame)
 
 (ht/update-frame (selected-frame))
 
@@ -315,11 +315,7 @@
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md\\'"       . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init
-  (dolist (mode '(ht/hide-lines-tail-display
-                  whitespace-mode))
-    (add-hook 'markdown-mode-hook mode)))
+         ("\\.markdown\\'" . markdown-mode)))
 
 (use-package yaml-mode
   :ensure t
@@ -363,44 +359,40 @@
 
 (use-package whitespace
   :commands whitespace-mode
-
   :init
   (setq whitespace-style '(face trailing)
-        whitespace-line-column 100)
+        whitespace-line-column 80))
 
-  (defun ht/whitespace-mode ()
-    (when (derived-mode-p 'prog-mode)
-      (whitespace-mode 1)))
+(defun ht/whitespace-mode ()
+  (when (and font-lock-mode (derived-mode-p 'prog-mode))
+    (whitespace-mode 1)))
 
-  (add-hook 'hack-local-variables-hook #'ht/whitespace-mode)
+(add-hook 'hack-local-variables-hook #'ht/whitespace-mode)
 
-  :config
-  (defun ht/toggle-tabs-display ()
-    (interactive)
-    (whitespace-mode -1)
-    (let ((tab-mode (if font-lock-mode 'tabs 'tab-mark)))
-      (if (memq tab-mode whitespace-style)
-          (setq whitespace-style (remove tab-mode whitespace-style))
-        (add-to-list 'whitespace-style tab-mode)))
-    (whitespace-mode 1))
+(defun ht/toggle-tabs-display ()
+  (interactive)
+  (whitespace-mode -1)
+  (let ((tab-mode (if font-lock-mode 'tabs 'tab-mark)))
+    (if (memq tab-mode whitespace-style)
+        (setq whitespace-style (remove tab-mode whitespace-style))
+      (add-to-list 'whitespace-style tab-mode)))
+  (whitespace-mode 1))
 
-  (defun ht/hide-lines-tail-display ()
-    (interactive)
-    (whitespace-mode -1)
-    (if (memq 'lines-tail whitespace-style)
-        (setq whitespace-style (remove 'lines-tail whitespace-style))
-      nil)
-    (whitespace-mode 1))
+(defun ht/hide-lines-tail-display ()
+  (interactive)
+  (whitespace-mode -1)
+  (if (memq 'lines-tail whitespace-style)
+      (setq whitespace-style (remove 'lines-tail whitespace-style))
+    nil)
+  (whitespace-mode 1))
 
-  (defun ht/toggle-lines-tail-display ()
-    (interactive)
-    (whitespace-mode -1)
-    (if (memq 'lines-tail whitespace-style)
-        (setq whitespace-style (remove 'lines-tail whitespace-style))
-      (add-to-list 'whitespace-style 'lines-tail))
-    (whitespace-mode 1))
-
-  nil)
+(defun ht/toggle-lines-tail-display ()
+  (interactive)
+  (whitespace-mode -1)
+  (if (memq 'lines-tail whitespace-style)
+      (setq whitespace-style (remove 'lines-tail whitespace-style))
+    (add-to-list 'whitespace-style 'lines-tail))
+  (whitespace-mode 1))
 
 ;;; C/C++ ;;;
 
@@ -555,8 +547,7 @@
         haskell-process-log t
         haskell-process-type 'cabal-new-repl
         haskell-stylish-on-save t
-        haskell-tags-on-save t
-        whitespace-line-column 120))
+        haskell-tags-on-save t))
 
 (use-package haskell-mode
   :ensure t
@@ -566,8 +557,7 @@
          ("\\.lhs\\'"     . literate-haskell-mode)
          ("\\.cabal\\'"   . haskell-cabal-mode))
   :init
-  (dolist (mode '(company-mode
-                  electric-pair-mode
+  (dolist (mode '(electric-pair-mode
                   haskell-indentation-mode
                   ht/haskell-mode
                   interactive-haskell-mode))
