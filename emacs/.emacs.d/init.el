@@ -192,9 +192,14 @@
   (when (and (is-linux-p) (display-graphic-p))
     (set-face-attribute 'region nil :background "lightgoldenrod2")))
 
+(defun ht/fix-split-behavior ()
+  (when (and (is-linux-p) (display-graphic-p))
+    (setq split-height-threshold nil)))
+
 (defun ht/update-frame (frame)
   (select-frame frame)
-  (ht/set-face-attributes))
+  (ht/set-face-attributes)
+  (ht/fix-split-behavior))
 
 (add-to-list 'after-make-frame-functions #'ht/update-frame)
 
