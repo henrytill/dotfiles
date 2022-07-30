@@ -269,7 +269,7 @@
 
 (use-package company
   :ensure t
-  :commands (company-mode)
+  :commands company-mode
   :init
   (add-hook 'prog-mode-hook 'company-mode)
   :config
@@ -304,27 +304,17 @@
 
 ;;; MISC EDITING MODES ;;;
 
-(use-package capnp-mode
-  :if (locate-file "capnp-mode.el" load-path)
-  :mode "\\.capnp\\'"
-  :init
-  (defun ht/capnp-mode ()
-    (setq-local tab-width 2))
-  (add-hook 'capnp-mode-hook #'ht/capnp-mode))
-
 (use-package dockerfile-mode
   :ensure t
-  :mode "Dockerfile\\(?:\\..*\\)?\\'")
+  :commands dockerfile-mode)
 
 (use-package markdown-mode
   :ensure t
-  :mode (("\\.md\\'"       . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode)))
+  :commands markdown-mode)
 
 (use-package yaml-mode
   :ensure t
-  :mode (("\\.yml\\'"  . yaml-mode)
-         ("\\.yaml\\'" . yaml-mode)))
+  :commands yaml-mode)
 
 ;;; PROG-MODE ;;;
 
@@ -471,29 +461,17 @@
 
 (use-package cmake-mode
   :if (locate-file "cmake-mode.el" load-path)
-  :mode (("\\.cmake\\'"       . cmake-mode)
-         ("CMakeLists.txt\\'" . cmake-mode)))
+  :commands cmake-mode
+  :mode ("\\.cmake\\'" . cmake-mode))
 
 ;;; FORTH ;;;
 
-(defun ht/forth-mode ()
-  (setq forth-indent-level 4
-        forth-minor-indent-level 2
-        forth-hilight-level 3))
-
 (use-package forth-mode
-  :if (executable-find "gforth")
-  :mode "\\.fs\\'"
-  :defines (forth-indent-level forth-minor-indent-level forth-hilight-level)
-  :init
-  (autoload 'forth-mode "gforth.el")
-  (add-hook 'forth-mode-hook #'ht/forth-mode))
+  :ensure t
+  :commands (forth-mode run-forth))
 
 (use-package forth-block-mode
-  :if (executable-find "gforth")
-  :mode "\\.fb\\'"
-  :init
-  (autoload 'forth-block-mode "gforth.el"))
+  :after (forth-mode))
 
 ;;; GO ;;;
 
@@ -551,11 +529,7 @@
 
 (use-package haskell-mode
   :ensure t
-  :mode (("\\.hs\\'"      . haskell-mode)
-         ("\\.hs-boot\\'" . haskell-mode)
-         ("\\.hsc\\'"     . haskell-mode)
-         ("\\.lhs\\'"     . literate-haskell-mode)
-         ("\\.cabal\\'"   . haskell-cabal-mode))
+  :commands haskell-mode
   :init
   (dolist (mode '(electric-pair-mode
                   haskell-indentation-mode
@@ -586,7 +560,6 @@
 
 (use-package sly
   :ensure t
-  :mode (("\\.lisp\\'" . sly-mode))
   :commands sly)
 
 ;;; LUA ;;;
@@ -613,16 +586,9 @@
     (when ocaml-toplevel-path
       (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
 
-(defun ht/merlin-mode ()
-  (let ((extension (file-name-extension buffer-file-name)))
-    (when (not (or (string-equal "mll" extension)
-                   (string-equal "mly" extension)))
-      (merlin-mode 1))))
-
 (use-package tuareg
   :ensure t
-  :mode (("\\.ml[ilpy]?\\'" . tuareg-mode)
-         ("\\.eliomi?\\'"   . tuareg-mode))
+  :commands (tuareg-mode tuareg-menhir-mode tuareg-jbuild-mode)
   :init
   (ht/setup-tuareg)
   (dolist (mode '(electric-pair-mode
@@ -635,8 +601,8 @@
   :after (tuareg)
   :commands merlin-mode
   :defines merlin-command
-  :hook ((caml-mode   . ht/merlin-mode)
-         (tuareg-mode . ht/merlin-mode)))
+  :hook ((caml-mode   . merlin-mode)
+         (tuareg-mode . merlin-mode)))
   :init
   (when (executable-find "opam")
     (setq merlin-command 'opam))
@@ -684,7 +650,7 @@
 
 (use-package sml-mode
   :ensure t
-  :mode "\\.sml\\'")
+  :commands sml-mode)
 
 ;;; GOPHER ;;;
 
