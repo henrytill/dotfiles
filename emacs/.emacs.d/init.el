@@ -190,7 +190,10 @@
 
 (defun ht/set-face-attributes ()
   (when (and (is-linux-p) (display-graphic-p))
-    (set-face-attribute 'region nil :background "lightgoldenrod2")))
+    (set-face-attribute 'region nil :background "lightgoldenrod2"))
+  (when (display-graphic-p)
+    (set-face-attribute 'mode-line nil :box nil)
+    (set-face-attribute 'mode-line-inactive nil :box nil)))
 
 (defun ht/fix-split-behavior ()
   (when (and (is-linux-p) (display-graphic-p))
