@@ -148,14 +148,16 @@
 
 ;;; PACKAGES ;;;
 
-(eval-and-compile
-  (mapc #'(lambda (path)
-            (push (expand-file-name path user-emacs-directory) load-path))
-        '("site-lisp" "site-lisp/use-package"))
-  (mapc #'(lambda (path)
-            (when (file-directory-p path)
-              (push (expand-file-name path) load-path)))
-        '("/usr/local/share/emacs/site-lisp" "~/.nix-profile/share/emacs/site-lisp/")))
+(defconst ht/site-lisp-directory (expand-file-name "site-lisp" user-emacs-directory))
+
+(mapc #'(lambda (path)
+          (push (expand-file-name path ht/site-lisp-directory) load-path))
+      '("." "use-package"))
+
+(mapc #'(lambda (path)
+          (when (file-directory-p path)
+            (push (expand-file-name path) load-path)))
+      '("/usr/local/share/emacs/site-lisp" "~/.nix-profile/share/emacs/site-lisp/"))
 
 (require 'use-package)
 (require 'bind-key)
@@ -164,8 +166,7 @@
 (dolist (archive '(("nongnu" . "https://elpa.nongnu.org/nongnu/")))
   (add-to-list 'package-archives archive))
 
-(unless (eval-when-compile package--initialized)
-  (package-initialize))
+(package-initialize)
 
 (when (null package-archive-contents)
   (package-refresh-contents))
@@ -230,15 +231,13 @@
                      sql-interactive-mode-hook))
   (add-hook mode-hook #'ht/truncate-lines))
 
-;;; GENERAL ;;;
+;;; SITE-LISP ;;;
 
-(use-package paredit
-  :load-path "site-lisp/paredit"
-  :commands enable-paredit-mode)
+(add-to-list 'load-path (expand-file-name "paredit" ht/site-lisp-directory))
+(autoload 'enable-paredit-mode "paredit.el")
 
-(use-package compile-commands
-  :load-path "site-lisp/compile-commands"
-  :commands compile-commands-get-include-directories)
+(add-to-list 'load-path (expand-file-name "compile-commands" ht/site-lisp-directory))
+(autoload 'compile-commands-get-include-directories "compile-commands.el")
 
 ;;; ALIGN ;;;
 
