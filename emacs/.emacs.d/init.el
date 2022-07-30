@@ -239,6 +239,8 @@
                      sql-interactive-mode-hook))
   (add-hook mode-hook #'ht/truncate-lines))
 
+(winner-mode 1)
+
 ;;; SITE-LISP ;;;
 
 (add-to-list 'load-path (expand-file-name "paredit" ht/site-lisp-directory))
