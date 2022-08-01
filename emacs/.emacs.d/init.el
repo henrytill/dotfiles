@@ -244,7 +244,7 @@
 ;;; SITE-LISP ;;;
 
 (add-to-list 'load-path (expand-file-name "paredit" ht/site-lisp-directory))
-(autoload 'enable-paredit-mode "paredit.el")
+(autoload 'enable-paredit-mode "paredit.el" "Turn on pseudo-structural editing of Lisp code." t)
 
 (add-to-list 'load-path (expand-file-name "compile-commands" ht/site-lisp-directory))
 (autoload 'compile-commands-get-include-directories "compile-commands.el")
