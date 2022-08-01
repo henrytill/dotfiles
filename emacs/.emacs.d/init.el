@@ -553,15 +553,10 @@
 
 (add-hook 'scheme-mode-hook #'ht/scheme-mode)
 
-(add-hook 'scheme-mode-hook 'enable-paredit-mode)
-
 ;;; "LISP" (COMMON LISP & ELISP) ;;;
 
 (when (executable-find "sbcl")
   (setq inferior-lisp-program "sbcl"))
-
-(dolist (mode-hook '(lisp-mode-hook emacs-lisp-mode-hook))
-  (add-hook mode-hook 'enable-paredit-mode))
 
 (use-package sly
   :ensure t
