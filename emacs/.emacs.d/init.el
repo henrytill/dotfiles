@@ -568,6 +568,9 @@
   :ensure t
   :commands sly)
 
+(defun sly-common-lisp-indent-function (indent-point state)
+  (common-lisp-indent-function indent-point state))
+
 ;;; LUA ;;;
 
 (use-package lua-mode
