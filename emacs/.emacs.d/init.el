@@ -3,8 +3,8 @@
 ;; Reduce the frequency of garbage collection during startup
 (setq gc-cons-threshold  (* 50 1000 1000))
 
-;; Resets gc-cons-threshold to default
 (defun ht/reset-gc-cons-threshold ()
+  "Resets gc-cons-threshold to its default setting."
   (custom-reevaluate-setting 'gc-cons-threshold))
 
 (defun ht/emacs-ready-msg ()
