@@ -4,7 +4,7 @@ HISTFILE=~/.ksh_history
 HISTSIZE=5000
 
 case "$TERM" in
-xterm*|rxvt*)
+xterm*|rxvt*|screen*)
     PS1="\n\u@\h:\w\n[\$?]> "
     PS2="> "
     ;;
