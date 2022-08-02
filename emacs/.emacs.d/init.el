@@ -455,6 +455,12 @@
     (when clang-format-path
       (setq clang-format-executable clang-format-path))))
 
+;;; BISON ;;;
+
+(use-package bison-mode
+  :ensure t
+  :commands bison-mode)
+
 ;;; CMAKE ;;;
 
 (when (is-windows-p)
