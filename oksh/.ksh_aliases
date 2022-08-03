@@ -27,8 +27,6 @@ else
     alias la="clear && ls -lah"
 fi
 
-alias ls="ls -1"
-
 # Local Variables:
 # mode: sh
 # End:

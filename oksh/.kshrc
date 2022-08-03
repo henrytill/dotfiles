@@ -3,9 +3,12 @@ set -o emacs
 HISTFILE=~/.ksh_history
 HISTSIZE=5000
 
+BOLD=$(tput bold)
+NORM=$(tput sgr0)
+
 case "$TERM" in
 xterm*|rxvt*|screen*)
-    PS1="\n\u@\h:\w\n[\$?]> "
+    PS1="\n${BOLD}\u@\h:\w${NORM}\n[\$?]> "
     PS2="> "
     ;;
 dumb)
@@ -13,6 +16,18 @@ dumb)
     PS2="> "
     ;;
 esac
+
+if [ -x /usr/bin/dircolors ]
+then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    # alias grep='grep --color=auto'
+    # alias fgrep='fgrep --color=auto'
+    # alias egrep='egrep --color=auto'
+fi
 
 if [ -f ~/.ksh_aliases ]
 then

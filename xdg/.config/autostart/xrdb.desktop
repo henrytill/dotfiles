@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=xrdb
+Type=Application
+Exec=/usr/bin/xrdb -load /home/ht/.Xresources
+Terminal=false
