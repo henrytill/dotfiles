@@ -5,7 +5,7 @@ MY_HOSTS = proteus thalassa tethys
 proteus  = emacs foot gdb git git-unix oksh \
            profile sway sway-proteus tmux
 thalassa = emacs foot gdb git git-unix oksh \
-           profile sway sway-thalassa tmux x11 xdg
+           profile sway sway-thalassa tmux xdg
 tethys   = emacs gdb git git-unix oksh profile tmux
 
 # base package set for undefined hosts

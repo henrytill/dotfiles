@@ -188,12 +188,21 @@
 
 (add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
 
-(defun ht/set-face-attributes ()
+;; acquired with xlsfonts
+(defconst ht/preferred-unix-font "-gnu-unifont-medium-r-normal-sans-16-160-75-75-c-0-iso10646-1")
+
+(defun ht/set-face-attributes (frame)
   (when (and (is-linux-p) (display-graphic-p))
-    (set-face-attribute 'region nil :background "lightgoldenrod2"))
+    (set-fontset-font "fontset-default" 'unicode ht/preferred-unix-font)
+    (set-face-attribute 'default frame :font ht/preferred-unix-font)
+    (set-face-attribute 'region frame :background "lightgoldenrod2"))
   (when (display-graphic-p)
-    (set-face-attribute 'mode-line nil :box nil)
-    (set-face-attribute 'mode-line-inactive nil :box nil)))
+    (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+    (tool-bar-mode -1)
+    (set-face-attribute 'mode-line frame :box nil)
+    (set-face-attribute 'mode-line-inactive frame :box nil))
+  (progn
+    (menu-bar-mode -1)))
 
 (defun ht/fix-split-behavior ()
   (when (and (is-linux-p) (display-graphic-p))
@@ -201,19 +210,14 @@
 
 (defun ht/update-frame (frame)
   (select-frame frame)
-  (ht/set-face-attributes)
+  (ht/set-face-attributes frame)
   (ht/fix-split-behavior))
 
-(add-to-list 'after-make-frame-functions #'ht/update-frame)
+(if (daemonp)
+    (add-to-list 'after-make-frame-functions #'ht/update-frame)
+  (ht/update-frame (selected-frame)))
 
-(ht/update-frame (selected-frame))
-
-(unless (and (is-linux-p) (window-system))
-  (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-  (menu-bar-mode -1)
-  (tool-bar-mode -1))
-
-(when (and (is-windows-p) (window-system))
+(when (and (is-windows-p) (display-graphic-p))
   (when (member "Dina" (font-family-list))
     (set-face-attribute 'default nil
                         :family "Dina"
@@ -681,7 +685,7 @@
 
 ;;; POSTLUDE ;;;
 
-(when (and (is-darwin-p) (window-system))
+(when (and (is-darwin-p) (display-graphic-p))
   (setq mac-command-modifier 'super
         mac-option-modifier 'meta))
 
