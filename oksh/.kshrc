@@ -3,12 +3,9 @@ set -o emacs
 HISTFILE=~/.ksh_history
 HISTSIZE=5000
 
-BOLD=$(tput bold)
-NORM=$(tput sgr0)
-
 case "$TERM" in
 xterm*|rxvt*|screen*)
-    PS1="\n${BOLD}\u@\h:\w${NORM}\n[\$?]> "
+    PS1="\n\033[1m\u@\h:\w\033[m\n[\$?]> "
     PS2="> "
     ;;
 dumb)
