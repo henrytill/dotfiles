@@ -188,7 +188,6 @@
 
 (add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
 
-;; acquired with xlsfonts
 (defconst ht/preferred-unix-font "FreeMono:pixelsize=15")
 
 (defun ht/set-face-attributes (frame)
