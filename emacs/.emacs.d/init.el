@@ -197,10 +197,13 @@
     (set-face-attribute 'default frame :font ht/preferred-unix-font)
     (set-face-attribute 'region frame :background "lightgoldenrod2"))
   (when (display-graphic-p)
-    (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-    (tool-bar-mode -1)
     (set-face-attribute 'mode-line frame :box nil)
-    (set-face-attribute 'mode-line-inactive frame :box nil))
+    (set-face-attribute 'mode-line-inactive frame :box nil)))
+
+(defun ht/remove-decorations ()
+  (when (display-graphic-p)
+    (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+    (tool-bar-mode -1))
   (progn
     (menu-bar-mode -1)))
 
@@ -211,6 +214,7 @@
 (defun ht/update-frame (frame)
   (select-frame frame)
   (ht/set-face-attributes frame)
+  (ht/remove-decorations)
   (ht/fix-split-behavior))
 
 (if (daemonp)
