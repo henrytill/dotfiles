@@ -14,7 +14,8 @@ output 'Unknown VG279 K8LMQS147029' adaptive_sync off
 # Read `man 5 sway-input` for more information about this section.
 
 input type:keyboard {
-    xkb_options ctrl:nocaps
+    xkb_layout us,apl
+    xkb_options ctrl:swapcaps,grp:switch
 }
 
 input type:pointer {
