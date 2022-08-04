@@ -190,21 +190,26 @@
 
 (defconst ht/preferred-unix-font "FreeMono:pixelsize=15")
 
+(defconst ht/preferred-win-font "PragmataPro Mono:size=14")
+
 (defun ht/set-face-attributes (frame)
   (when (and (is-linux-p) (display-graphic-p))
     (set-fontset-font "fontset-default" 'unicode ht/preferred-unix-font)
     (set-face-attribute 'default frame :font ht/preferred-unix-font)
     (set-face-attribute 'region frame :background "lightgoldenrod2"))
+  (when (and (is-windows-p) (display-graphic-p))
+    (set-fontset-font "fontset-default" 'unicode ht/preferred-win-font)
+    (set-face-attribute 'default frame :font ht/preferred-win-font))
   (when (display-graphic-p)
     (set-face-attribute 'mode-line frame :box nil)
     (set-face-attribute 'mode-line-inactive frame :box nil)))
 
 (defun ht/remove-decorations ()
+  (when (is-linux-p)
+    (menu-bar-mode -1))
   (when (display-graphic-p)
     (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-    (tool-bar-mode -1))
-  (progn
-    (menu-bar-mode -1)))
+    (tool-bar-mode -1)))
 
 (defun ht/fix-split-behavior ()
   (when (and (is-linux-p) (display-graphic-p))
@@ -219,14 +224,6 @@
 (if (daemonp)
     (add-to-list 'after-make-frame-functions #'ht/update-frame)
   (ht/update-frame (selected-frame)))
-
-(when (and (is-windows-p) (display-graphic-p))
-  (when (member "Dina" (font-family-list))
-    (set-face-attribute 'default nil
-                        :family "Dina"
-                        :foundry 'outline
-                        :width 'normal
-                        :height 75)))
 
 (show-paren-mode 1)
 (column-number-mode 1)
