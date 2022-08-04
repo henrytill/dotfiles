@@ -479,6 +479,14 @@
   :commands cmake-mode
   :mode ("\\.cmake\\'" . cmake-mode))
 
+;;; APL ;;;
+
+(use-package gnu-apl-mode
+  :ensure t
+  :commands (gnu-apl gnu-apl-mode)
+  :init
+  (setq gnu-apl-show-keymap-on-startup nil))
+
 ;;; FORTH ;;;
 
 (use-package forth-mode

@@ -6,6 +6,7 @@
 
 .DS_Store
 
+/emacs/.emacs.d/.apl.history
 /emacs/.emacs.d/.newsrc-dribble
 /emacs/.emacs.d/.org-id-locations
 /emacs/.emacs.d/.smex-items
