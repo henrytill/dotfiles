@@ -549,7 +549,7 @@
         haskell-doc-prettify-types nil
         haskell-interactive-popup-errors nil
         haskell-process-log t
-        haskell-process-type 'cabal-new-repl
+        haskell-process-type 'cabal-repl
         haskell-stylish-on-save t
         haskell-tags-on-save t))
 
@@ -564,6 +564,9 @@
     (add-hook 'haskell-mode-hook mode)))
 
 ;;; SCHEME ;;;
+
+(when (executable-find "csi")
+  (setq scheme-program-name "csi -:c"))
 
 (defun ht/scheme-mode ()
   (dolist (form+n '((conde . 0)
@@ -660,6 +663,11 @@
 
 (with-eval-after-load 'caml-help
   (set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
+
+;;; PROLOG ;;;
+
+(when (executable-find "swipl")
+  (setq prolog-system 'swi))
 
 ;;; RUST ;;;
 
