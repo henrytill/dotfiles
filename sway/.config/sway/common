@@ -171,3 +171,7 @@ bar {
 default_border pixel
 
 include /etc/sway/config.d/*
+
+# Local Variables:
+# mode: conf
+# End:
