@@ -15,7 +15,8 @@
 (add-hook 'emacs-startup-hook #'ht/reset-gc-cons-threshold)
 (add-hook 'emacs-startup-hook #'ht/emacs-ready-msg)
 
-;;; PRELUDE ;;;
+
+;;; --- PRELUDE --- ;;;
 
 (defun is-darwin-p ()
   (string-equal system-type "darwin"))
@@ -121,12 +122,12 @@
       x-select-enable-primary t
       x-select-enable-clipboard t)
 
-(setq-default fill-column 80
-              indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
 
 (load custom-file t)
 
 (put 'dired-find-alternate-file 'disabled nil)
+(put 'narrow-to-page            'disabled nil)
 
 (defconst ht/global-bindings
   '(("C-x C-b" . ibuffer)
@@ -149,7 +150,8 @@
 
 (add-hook 'hack-local-variables-hook #'ht/run-local-vars-mode-hook)
 
-;;; PACKAGES ;;;
+
+;;; --- PACKAGES --- ;;;
 
 (defconst ht/site-lisp-directory (expand-file-name "site-lisp" user-emacs-directory))
 
@@ -176,10 +178,12 @@
 
 (setq use-package-verbose t)
 
-;;; COSMETICS ;;;
+
+;;; --- COSMETICS --- ;;;
 
 (when (version<= "26.1" emacs-version)
-  (setq-default display-line-numbers-width 4)
+  (setq-default display-line-numbers-width 4
+                display-line-numbers-widen t)
   (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 
 (global-font-lock-mode 0)
@@ -248,7 +252,24 @@
 
 (winner-mode 1)
 
-;;; SITE-LISP ;;;
+
+;;; --- GENERAL --- ;;;
+
+;;; NAVIGATION
+
+(defun ht/next-page ()
+  (interactive)
+  (narrow-to-page 1))
+
+(defun ht/prev-page ()
+  (interactive)
+  (narrow-to-page -1)
+  (beginning-of-buffer))
+
+(bind-key "C-c n n" #'ht/next-page)
+(bind-key "C-c n p" #'ht/prev-page)
+
+;;; SITE-LISP
 
 (add-to-list 'load-path (expand-file-name "paredit" ht/site-lisp-directory))
 (autoload 'enable-paredit-mode "paredit.el" "Turn on pseudo-structural editing of Lisp code." t)
@@ -256,7 +277,7 @@
 (add-to-list 'load-path (expand-file-name "compile-commands" ht/site-lisp-directory))
 (autoload 'compile-commands-get-include-directories "compile-commands.el")
 
-;;; ALIGN ;;;
+;;; ALIGN
 
 (with-eval-after-load 'align
   ;; alignment of haskell forms
@@ -277,7 +298,7 @@
                    (ocaml-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
                    (ocaml-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
 
-;;; COMPANY ;;;
+;;; COMPANY
 
 (use-package company
   :ensure t
@@ -288,12 +309,12 @@
   (setq company-backends (remove 'company-clang company-backends)
         company-global-modes '(not eshell-mode)))
 
-;;; COMPILE ;;;
+;;; COMPILE
 
 (with-eval-after-load 'compile
   (bind-key "<f5>" 'recompile))
 
-;;; LSP ;;;
+;;; LSP
 
 (when (version<= "26.1" emacs-version)
   (use-package eglot
@@ -303,7 +324,7 @@
     (setq eglot-server-programs
           (ht/replace-item-in-alist eglot-server-programs 'rust-mode '("rust-analyzer")))))
 
-;;; MAGIT ;;;
+;;; MAGIT
 
 (use-package magit
   :ensure t
@@ -314,50 +335,20 @@
   (put 'magit-clean 'disabled nil)
   (setq magit-last-seen-setup-instructions "1.4.0"))
 
-;;; MISC EDITING MODES ;;;
-
-(use-package dockerfile-mode
-  :ensure t
-  :commands dockerfile-mode)
-
-(use-package markdown-mode
-  :ensure t
-  :commands markdown-mode)
-
-(use-package yaml-mode
-  :ensure t
-  :commands yaml-mode)
-
-;;; PROG-MODE ;;;
+;;; PROG-MODE
 
 (dolist (mode '(auto-revert-mode
                 electric-pair-local-mode))
   (add-hook 'prog-mode-hook mode))
 
-;;; SHELL ;;;
+;;; SHELL
 
 (defun ht/shell ()
   (add-to-list 'mode-line-buffer-identification '("" default-directory "  ")))
 
 (add-hook 'shell-mode-hook #'ht/shell)
 
-;;; TEX ;;;
-
-(use-package auctex
-  :mode ("\\.tex\\'" . TeX-latex-mode)
-  :config
-  (setq TeX-auto-save t
-        TeX-parse-self t)
-  (setq-default TeX-master nil))
-
-(with-eval-after-load 'tex
-  (when (and (is-linux-p) (executable-find "mupdf-x11"))
-    (add-to-list 'TeX-view-program-list
-                 '("mupdf" ("mupdf-x11" (mode-io-correlate " -p %(outpage)") " %o")))
-    (add-to-list 'TeX-view-program-selection
-                 '(output-pdf "mupdf"))))
-
-;;; WHITESPACE ;;;
+;;; WHITESPACE
 
 (use-package whitespace
   :commands whitespace-mode
@@ -396,7 +387,10 @@
     (add-to-list 'whitespace-style 'lines-tail))
   (whitespace-mode 1))
 
-;;; C/C++ ;;;
+
+;;; --- PROGRAMMING LANGUAGES --- ;;;
+
+;; C/C++
 
 (defun ht/modify-c-syntax-entries ()
   (modify-syntax-entry ?_ "w"))
@@ -443,7 +437,6 @@
          (includes (compile-commands-get-include-directories)))
     (ht/run-ctags includes)))
 
-;;; CLANG-FORMAT ;;;
 
 (when (is-windows-p)
   (let ((clang-format-path (or (getenv "CLANG_FORMAT_PATH")
@@ -462,13 +455,9 @@
     (when clang-format-path
       (setq clang-format-executable clang-format-path))))
 
-;;; BISON ;;;
-
 (use-package bison-mode
   :ensure t
   :commands bison-mode)
-
-;;; CMAKE ;;;
 
 (when (is-windows-p)
   (let ((cmake-path (executable-find "cmake")))
@@ -482,7 +471,7 @@
   :commands cmake-mode
   :mode ("\\.cmake\\'" . cmake-mode))
 
-;;; APL ;;;
+;;; APL
 
 (use-package gnu-apl-mode
   :ensure t
@@ -490,7 +479,7 @@
   :init
   (setq gnu-apl-show-keymap-on-startup nil))
 
-;;; FORTH ;;;
+;;; FORTH
 
 (use-package forth-mode
   :ensure t
@@ -499,7 +488,7 @@
 (use-package forth-block-mode
   :after (forth-mode))
 
-;;; GO ;;;
+;;; GO
 
 (use-package go-mode
   :ensure t
@@ -542,7 +531,7 @@
         (goto-char pos))))
   nil)
 
-;;; HASKELL ;;;
+;;; HASKELL
 
 (defun ht/haskell-mode ()
   (setq electric-indent-local-mode 0
@@ -563,7 +552,7 @@
                   interactive-haskell-mode))
     (add-hook 'haskell-mode-hook mode)))
 
-;;; SCHEME ;;;
+;;; SCHEME
 
 (when (executable-find "csi")
   (setq scheme-program-name "csi -:c"))
@@ -589,7 +578,7 @@
 (defun sly-common-lisp-indent-function (indent-point state)
   (common-lisp-indent-function indent-point state))
 
-;;; LUA ;;;
+;;; LUA
 
 (use-package lua-mode
   :ensure t
@@ -597,13 +586,13 @@
   :init
   (setq lua-indent-level 2))
 
-;;; NIX ;;;
+;;; NIX
 
 (use-package nix-mode
   :ensure t
   :mode "\\.nix\\'")
 
-;;; OCAML ;;;
+;;; OCAML
 
 (defun ht/setup-tuareg ()
   (when (executable-find "opam")
@@ -664,12 +653,12 @@
 (with-eval-after-load 'caml-help
   (set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
 
-;;; PROLOG ;;;
+;;; PROLOG
 
 (when (executable-find "swipl")
   (setq prolog-system 'swi))
 
-;;; RUST ;;;
+;;; RUST
 
 (use-package rust-mode
   :ensure t
@@ -678,19 +667,50 @@
   (dolist (mode '(electric-pair-mode))
     (add-hook 'rust-mode-hook mode)))
 
-;;; SML ;;;
+;;; SML
 
 (use-package sml-mode
   :ensure t
   :commands sml-mode)
 
-;;; GOPHER ;;;
+;;; TEX
+
+(use-package auctex
+  :mode ("\\.tex\\'" . TeX-latex-mode)
+  :config
+  (setq TeX-auto-save t
+        TeX-parse-self t)
+  (setq-default TeX-master nil))
+
+(with-eval-after-load 'tex
+  (when (and (is-linux-p) (executable-find "mupdf-x11"))
+    (add-to-list 'TeX-view-program-list
+                 '("mupdf" ("mupdf-x11" (mode-io-correlate " -p %(outpage)") " %o")))
+    (add-to-list 'TeX-view-program-selection
+                 '(output-pdf "mupdf"))))
+
+;;; MISC
+
+(use-package dockerfile-mode
+  :ensure t
+  :commands dockerfile-mode)
+
+(use-package markdown-mode
+  :ensure t
+  :commands markdown-mode)
+
+(use-package yaml-mode
+  :ensure t
+  :commands yaml-mode)
+
+;;; GOPHER
 
 (use-package elpher
   :ensure t
   :commands (elpher-browse-url-elpher elpher elpher-go))
 
-;;; BUFFER FINALIZATION ;;;
+
+;;; --- POSTLUDE --- ;;;
 
 (defvar ht/clang-format-on-save nil)
 
@@ -702,8 +722,6 @@
 
 (add-hook 'before-save-hook #'ht/finalize-buffer)
 
-;;; POSTLUDE ;;;
-
 (when (and (is-darwin-p) (display-graphic-p))
   (setq mac-command-modifier 'super
         mac-option-modifier 'meta))
@@ -713,6 +731,6 @@
     (when home
       (setq default-directory home))))
 
-;;; REGISTERS ;;;
+;;; REGISTERS
 
 (set-register ?i `(file . ,(concat user-emacs-directory "init.el")))
