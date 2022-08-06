@@ -84,6 +84,13 @@
     (require 'icomplete)
     (fido-mode 1)))
 
+(progn
+  ;; use lisp-based dired
+  (setq dired-use-ls-dired nil
+        ls-lisp-use-insert-directory-program nil
+        ls-lisp-dirs-first t)
+  (require 'ls-lisp))
+
 (require 'uniquify)
 
 (setq apropos-do-all t
@@ -116,10 +123,6 @@
 
 (setq-default fill-column 80
               indent-tabs-mode nil)
-
-(when (is-darwin-p)
-  (setq browse-url-browser-function 'browse-url-default-browser
-        dired-use-ls-dired nil))
 
 (load custom-file t)
 
