@@ -55,6 +55,7 @@ fi
 
 export GPG_TTY="$(tty)"
 export LIBVIRT_DEFAULT_URI="qemu:///system"
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Local Variables:
 # mode: sh
