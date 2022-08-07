@@ -411,10 +411,6 @@
   (add-to-list 'c-default-style '(c-mode   . "bsd-tabs"))
   (add-to-list 'c-default-style '(c++-mode . "hcpp")))
 
-(dolist (mode '(electric-pair-mode))
-  (add-hook 'c-mode-hook   mode)
-  (add-hook 'c++-mode-hook mode))
-
 (setq path-to-ctags "ctags")
 
 (defun ht/run-ctags (paths)
@@ -534,8 +530,7 @@
 ;;; HASKELL
 
 (defun ht/haskell-mode ()
-  (setq electric-indent-local-mode 0
-        haskell-doc-prettify-types nil
+  (setq haskell-doc-prettify-types nil
         haskell-interactive-popup-errors nil
         haskell-process-log t
         haskell-process-type 'cabal-repl
@@ -546,8 +541,7 @@
   :ensure t
   :commands haskell-mode
   :init
-  (dolist (mode '(electric-pair-mode
-                  haskell-indentation-mode
+  (dolist (mode '(haskell-indentation-mode
                   ht/haskell-mode
                   interactive-haskell-mode))
     (add-hook 'haskell-mode-hook mode)))
@@ -607,9 +601,7 @@
   :commands (tuareg-mode tuareg-menhir-mode tuareg-jbuild-mode)
   :init
   (ht/setup-tuareg)
-  (dolist (mode '(electric-pair-mode
-                  electric-indent-local-mode))
-    (add-hook 'tuareg-mode-hook mode)))
+  (add-hook 'tuareg-mode-hook 'electric-indent-local-mode))
 
 (use-package merlin
   :if (and (executable-find "ocamlmerlin")
@@ -662,10 +654,7 @@
 
 (use-package rust-mode
   :ensure t
-  :mode "\\.rs\\'"
-  :init
-  (dolist (mode '(electric-pair-mode))
-    (add-hook 'rust-mode-hook mode)))
+  :mode "\\.rs\\'")
 
 ;;; SML
 

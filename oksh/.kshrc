@@ -57,6 +57,10 @@ export GPG_TTY="$(tty)"
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+# https://github.com/swaywm/sway/issues/5759
+# https://github.com/swaywm/sway/issues/5008
+# export WLR_DRM_NO_MODIFIERS=1
+
 # Local Variables:
 # mode: sh
 # End:
