@@ -433,6 +433,10 @@
          (includes (compile-commands-get-include-directories)))
     (ht/run-ctags includes)))
 
+(defun ht/c-set-tab-width (width)
+  (interactive "nSet tab-width to: ")
+  (setq tab-width width
+        c-basic-offset width))
 
 (when (is-windows-p)
   (let ((clang-format-path (or (getenv "CLANG_FORMAT_PATH")
