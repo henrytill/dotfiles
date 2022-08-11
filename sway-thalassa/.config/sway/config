@@ -15,7 +15,7 @@ output 'Unknown VG279 K8LMQS147029' adaptive_sync off
 
 input type:keyboard {
     xkb_layout us,apl
-    xkb_options ctrl:swapcaps,grp:switch
+    xkb_options ctrl:nocaps,grp:switch
 }
 
 input type:pointer {
