@@ -44,3 +44,9 @@ if [ -d "/usr/local/go" ]
 then
     PATH="$PATH:/usr/local/go/bin"
 fi
+
+SMLNJ=/usr/local/smlnj-110.99.3
+if [ -d "$SMLNJ" ]
+then
+    PATH="$SMLNJ/bin:$PATH"
+fi
