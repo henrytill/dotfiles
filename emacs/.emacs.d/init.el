@@ -395,7 +395,7 @@
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 
-;; C/C++
+;;; C/C++
 
 (defun ht/modify-c-syntax-entries ()
   (modify-syntax-entry ?_ "w"))
@@ -569,7 +569,7 @@
 
 (add-hook 'scheme-mode-hook #'ht/scheme-mode)
 
-;;; "LISP" (COMMON LISP & ELISP) ;;;
+;;; COMMON LISP
 
 (when (executable-find "sbcl")
   (setq inferior-lisp-program "sbcl"))
