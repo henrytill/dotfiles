@@ -8,11 +8,6 @@ then
     . "$HOME/.bashrc"
 fi
 
-if [ -d "$HOME/bin" ]
-then
-    PATH="$HOME/bin:$PATH"
-fi
-
 if [ -d "$HOME/.local/bin" ]
 then
     PATH="$HOME/.local/bin:$PATH"
@@ -49,4 +44,10 @@ SMLNJ=/usr/local/smlnj-110.99.3
 if [ -d "$SMLNJ" ]
 then
     PATH="$SMLNJ/bin:$PATH"
+fi
+
+# $HOME/bin should always come first
+if [ -d "$HOME/bin" ]
+then
+    PATH="$HOME/bin:$PATH"
 fi
