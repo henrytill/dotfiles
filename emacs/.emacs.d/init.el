@@ -698,7 +698,9 @@
 
 (use-package markdown-mode
   :ensure t
-  :commands markdown-mode)
+  :commands markdown-mode
+  :init
+  (add-hook 'markdown-mode-hook 'display-line-numbers-mode))
 
 (use-package yaml-mode
   :ensure t
