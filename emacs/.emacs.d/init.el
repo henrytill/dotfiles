@@ -185,6 +185,9 @@
 
 ;;; --- COSMETICS --- ;;;
 
+;; https://codeberg.org/dnkl/foot/issues/549#issuecomment-201932
+(add-to-list 'term-file-aliases '("foot" . "xterm"))
+
 (when (version<= "26.1" emacs-version)
   (setq-default display-line-numbers-width 4
                 display-line-numbers-widen t)
