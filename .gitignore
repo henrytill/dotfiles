@@ -17,6 +17,7 @@
 /emacs/.emacs.d/bookmarks
 /emacs/.emacs.d/custom.el
 /emacs/.emacs.d/elpa
+/emacs/.emacs.d/eln-cache
 /emacs/.emacs.d/ensime
 /emacs/.emacs.d/eshell/history
 /emacs/.emacs.d/eshell/lastdir
