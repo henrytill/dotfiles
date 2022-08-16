@@ -186,6 +186,7 @@
 ;;; --- COSMETICS --- ;;;
 
 ;; https://codeberg.org/dnkl/foot/issues/549#issuecomment-201932
+;; https://codeberg.org/dnkl/foot/wiki#only-8-colors-in-emacs
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
 
 (when (version<= "26.1" emacs-version)
@@ -193,9 +194,14 @@
                 display-line-numbers-widen t)
   (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 
-(global-font-lock-mode 0)
-
 (setq frame-background-mode 'light)
+
+(when (version< "28.1" emacs-version)
+  (use-package modus-themes :ensure t))
+
+(load-theme 'modus-operandi)
+
+(global-font-lock-mode 0)
 
 (defun ht/set-font-lock-face-attributes ()
   (set-face-attribute 'font-lock-comment-face nil :foreground "#7f7f7f"))
@@ -646,16 +652,19 @@
   :commands ocp-setup-indent
   :hook (tuareg-mode . ocp-setup-indent))
 
-(with-eval-after-load 'caml-types
-  (let ((color (face-attribute 'default :background)))
-    (dolist (face '(caml-types-expr-face
-                    caml-types-occ-face
-                    caml-types-scope-face
-                    caml-types-typed-face))
-      (set-face-foreground face color))))
+(ht/comment
+  (with-eval-after-load 'caml-types
+    (let ((color (face-attribute 'default :background)))
+      (dolist (face '(caml-types-expr-face
+                      caml-types-occ-face
+                      caml-types-scope-face
+                      caml-types-typed-face))
+        (set-face-foreground face color))))
+  (with-eval-after-load 'caml-help
+    (set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
+  nil)
 
-(with-eval-after-load 'caml-help
-  (set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
+
 
 ;;; PROLOG
 
