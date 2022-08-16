@@ -5,11 +5,15 @@ set $down j
 set $up k
 set $right l
 
-set $term foot
+set $term footclient
 
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
 include /etc/sway/config-vars.d/*
+
+### Launch foot server
+
+exec foot --server
 
 ### Idle configuration
 
