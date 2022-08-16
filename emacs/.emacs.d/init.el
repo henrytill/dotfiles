@@ -196,7 +196,7 @@
 
 (setq frame-background-mode 'light)
 
-(when (version< "28.1" emacs-version)
+(when (version< emacs-version "28.1")
   (use-package modus-themes :ensure t))
 
 (load-theme 'modus-operandi)
