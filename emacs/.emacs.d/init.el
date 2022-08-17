@@ -664,8 +664,6 @@
     (set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
   nil)
 
-
-
 ;;; PROLOG
 
 (when (executable-find "swipl")
