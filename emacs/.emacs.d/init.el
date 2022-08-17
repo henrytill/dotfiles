@@ -743,6 +743,9 @@
     (when home
       (setq default-directory home))))
 
+(when (and (is-linux-p) (not (display-graphic-p)))
+  (xterm-mouse-mode))
+
 ;;; REGISTERS
 
 (set-register ?i `(file . ,(concat user-emacs-directory "init.el")))
