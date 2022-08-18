@@ -1,6 +1,6 @@
 alias e="$EDITOR"
-alias ec="emacsclient -a= -cn"
-alias et="emacsclient -a= -t"
+alias ec="emacsclient -cn"
+alias et="emacsclient -t"
 alias kill-emacs-server="emacsclient -e '(kill-emacs)'"
 alias lc="ls -C"
 alias lf="ls -aF"

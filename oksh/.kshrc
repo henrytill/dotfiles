@@ -25,7 +25,8 @@ fi
 
 if [ -n "$(command -v emacsclient)" ]
 then
-    export EDITOR="emacsclient -t -a="
+    export EDITOR="emacsclient -t"
+    export ALTERNATE_EDITOR=""
 elif [ -n "$(command -v mg)" ]
 then
     export EDITOR="mg"
