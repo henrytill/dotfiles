@@ -1,5 +1,7 @@
 ;;; init.el
 
+(message "Loading %s" load-file-name)
+
 ;; Reduce the frequency of garbage collection during startup
 (setq gc-cons-threshold  (* 50 1000 1000))
 
@@ -161,7 +163,14 @@
 (add-hook 'hack-local-variables-hook #'ht/run-local-vars-mode-hook)
 
 
-;;; --- PACKAGES --- ;;;
+;;; --- LOAD-PATH & PACKAGES --- ;;;
+
+(let ((directory (expand-file-name "/usr/share/emacs/site-lisp")))
+  (when (file-directory-p directory)
+    (let ((default-directory directory))
+      (when (not (member default-directory load-path))
+        (push default-directory load-path)
+        (normal-top-level-add-subdirs-to-load-path)))))
 
 (defconst ht/site-lisp-directory (expand-file-name "site-lisp" user-emacs-directory))
 
@@ -329,11 +338,6 @@
   (setq company-backends (remove 'company-clang company-backends)
         company-global-modes '(not eshell-mode)))
 
-;;; COMPILE
-
-(with-eval-after-load 'compile
-  (bind-key "<f5>" 'recompile))
-
 ;;; LSP
 
 (when (version<= "26.1" emacs-version)
@@ -490,6 +494,10 @@
   :if (locate-file "cmake-mode.el" load-path)
   :commands cmake-mode
   :mode ("\\.cmake\\'" . cmake-mode))
+
+(use-package ninja-mode
+  :if (locate-file "ninja-mode.el" load-path)
+  :commands ninja-mode)
 
 ;;; APL
 
@@ -748,7 +756,9 @@
       (setq default-directory home))))
 
 (when (and (is-linux-p) (not (display-graphic-p)))
-  (xterm-mouse-mode))
+  (when (xterm-mouse-mode 1)
+    (bind-key "<mouse-4>" 'previous-line)
+    (bind-key "<mouse-5>" 'next-line)))
 
 ;;; REGISTERS
 
