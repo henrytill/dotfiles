@@ -24,6 +24,12 @@
 (defun is-linux-p ()
   (string-equal system-type "gnu/linux"))
 
+(defun is-bsd-p ()
+  (string-equal system-type "berkeley-unix"))
+
+(defun is-unix-p ()
+  (or (is-linux-p) (is-bsd-p)))
+
 (defun is-windows-p ()
   (or (string-equal system-type "windows-nt")
       (string-equal system-type "cygwin")))
@@ -213,7 +219,7 @@
 (defconst ht/preferred-win-font "PragmataPro Mono:size=14")
 
 (defun ht/set-face-attributes (frame)
-  (when (and (is-linux-p) (display-graphic-p))
+  (when (and (is-unix-p) (display-graphic-p))
     (set-fontset-font "fontset-default" 'unicode ht/preferred-unix-font)
     (set-face-attribute 'default frame :font ht/preferred-unix-font)
     (set-face-attribute 'region frame :background "lightgoldenrod2"))
@@ -225,14 +231,14 @@
     (set-face-attribute 'mode-line-inactive frame :box nil)))
 
 (defun ht/remove-decorations ()
-  (when (is-linux-p)
+  (when (is-unix-p)
     (menu-bar-mode -1))
   (when (display-graphic-p)
     (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
     (tool-bar-mode -1)))
 
 (defun ht/fix-split-behavior ()
-  (when (and (is-linux-p) (display-graphic-p))
+  (when (and (is-unix-p) (display-graphic-p))
     (setq split-height-threshold nil)))
 
 (defun ht/update-frame (frame)
