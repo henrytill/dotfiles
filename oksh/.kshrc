@@ -64,6 +64,7 @@ fi
 
 # Local Variables:
 # mode: sh
+# sh-shell: "oksh"
 # End:
 #
 # vim: set filetype=sh:
