@@ -473,7 +473,6 @@
 (use-package clang-format
   :if (locate-file "clang-format.el" load-path)
   :commands (clang-format clang-format-region clang-format-buffer)
-  :bind ("<f6>" . clang-format-buffer)
   :init
   (let ((clang-format-path (getenv "CLANG_FORMAT_PATH")))
     (when clang-format-path
