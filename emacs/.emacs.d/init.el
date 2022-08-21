@@ -755,7 +755,7 @@
     (when home
       (setq default-directory home))))
 
-(when (and (is-linux-p) (not (display-graphic-p)))
+(when (and (is-unix-p) (not (display-graphic-p)))
   (when (xterm-mouse-mode 1)
     (bind-key "<mouse-4>" 'previous-line)
     (bind-key "<mouse-5>" 'next-line)))
