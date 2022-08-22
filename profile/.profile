@@ -35,11 +35,6 @@ then
     PATH="$PATH:$PLAN9/bin"
 fi
 
-if [ -d "/usr/local/go" ]
-then
-    PATH="$PATH:/usr/local/go/bin"
-fi
-
 SMLNJ=/usr/local/smlnj-110.99.3
 if [ -d "$SMLNJ" ]
 then
