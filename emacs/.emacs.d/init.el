@@ -466,7 +466,12 @@
 
 (use-package bison-mode
   :ensure t
-  :commands bison-mode)
+  :commands bison-mode
+  :init
+  (setq bison-rule-separator-column 2
+        bison-rule-enumeration-column 2
+        bison-decl-type-column 0
+        bison-decl-token-column 0))
 
 (when (is-windows-p)
   (let ((cmake-path (executable-find "cmake")))
