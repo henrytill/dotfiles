@@ -8,11 +8,6 @@ then
     . "$HOME/.bashrc"
 fi
 
-if [ -d "$HOME/.local/bin" ]
-then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
 if [ -d "$HOME/.cargo/bin" ]
 then
     PATH="$HOME/.cargo/bin:$PATH"
@@ -23,22 +18,34 @@ then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
-if [ -n "$(command -v opam)" -a -d "$HOME/.opam" ]
+if [ -d "$HOME/.local/bin" ]
 then
-    . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+    PATH="$HOME/.local/bin:$PATH"
 fi
 
-PLAN9=/usr/local/plan9
+PLAN9="/usr/local/plan9"
 if [ -d "$PLAN9" ]
 then
     export PLAN9
     PATH="$PATH:$PLAN9/bin"
 fi
 
-SMLNJ=/usr/local/smlnj-110.99.3
+SMLNJ="/usr/local/smlnj-110.99.3"
 if [ -d "$SMLNJ" ]
 then
     PATH="$SMLNJ/bin:$PATH"
+fi
+
+OPAMSH="$HOME/.opam/opam-init/init.sh"
+if [ -e "$OPAMSH" ]
+then
+    . "$OPAMSH" > /dev/null 2> /dev/null || true
+fi
+
+NIXSH="$HOME/.nix-profile/etc/profile.d/nix.sh"
+if [ -e "$NIXSH" ]
+then
+    . "$NIXSH"
 fi
 
 # $HOME/bin should always come first
