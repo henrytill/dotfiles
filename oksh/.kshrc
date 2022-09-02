@@ -38,7 +38,10 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 # https://github.com/swaywm/sway/issues/5759
 # https://github.com/swaywm/sway/issues/5008
-# export WLR_DRM_NO_MODIFIERS=1
+if [ "$(hostname)" = "thalassa" ]
+then
+    export WLR_DRM_NO_MODIFIERS=1
+fi
 
 if [ -x /usr/bin/dircolors ]
 then
