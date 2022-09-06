@@ -610,6 +610,13 @@
 
 ;;; OCAML
 
+(defun ht/dune-project-exists-p ()
+  (let* ((project-dir (project-root (project-current t)))
+         (dune-project-file (expand-file-name "dune-project" project-dir)))
+    (if (file-exists-p dune-project-file)
+        dune-project-file
+      nil)))
+
 (defun ht/setup-tuareg ()
   (when (executable-find "opam")
     (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
@@ -618,12 +625,28 @@
     (when ocaml-toplevel-path
       (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
 
+
+
 (use-package tuareg
   :ensure t
   :commands (tuareg-mode tuareg-menhir-mode tuareg-jbuild-mode)
+  :mode (("dune\\'"         . tuareg-jbuild-mode)
+         ("dune-project\\'" . tuareg-jbuild-mode))
   :init
   (ht/setup-tuareg)
-  (add-hook 'tuareg-mode-hook 'electric-indent-local-mode))
+  (add-hook 'tuareg-mode-hook 'electric-indent-local-mode)
+  :config
+  (defvar ht/dune-fmt-command "dune fmt")
+  (defun ht/project-dune-fmt ()
+    (interactive)
+    (when (and (derived-mode-p 'tuareg-mode)
+               (ht/dune-project-exists-p)
+               (assoc 'auto-revert-mode minor-mode-alist))
+      (let ((default-directory (project-root (project-current t)))
+            (out-buffer        (get-buffer-create "*dune-fmt-out*"))
+            (err-buffer        (get-buffer-create "*dune-fmt-err*")))
+        (shell-command ht/dune-fmt-command out-buffer err-buffer))))
+  nil)
 
 (use-package merlin
   :if (and (executable-find "ocamlmerlin")
@@ -642,12 +665,18 @@
            (locate-file "merlin-company.el" load-path))
   :after (merlin))
 
+(defun ht/set-utop-command ()
+  (when (ht/dune-project-exists-p)
+    (setq utop-command "opam config exec -- dune utop . -- -emacs")))
+
 (use-package utop
   :if (and (executable-find "utop")
            (locate-file "utop.el" load-path))
   :after (tuareg)
   :commands (utop utop-minor-mode)
-  :hook (tuareg-mode . utop-minor-mode))
+  :hook (tuareg-mode . utop-minor-mode)
+  :config
+  (ht/set-utop-command))
 
 (use-package ocp-indent
   :if (and (executable-find "ocp-indent")
