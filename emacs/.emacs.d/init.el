@@ -683,7 +683,12 @@
            (locate-file "ocp-indent.el" load-path))
   :after (tuareg)
   :commands ocp-setup-indent
-  :hook (tuareg-mode . ocp-setup-indent))
+  :hook (tuareg-mode . ocp-setup-indent)
+  :config
+  (when (version<= "28.1" emacs-version)
+    (defun ocp-indent-buffer ()
+      (interactive nil)
+      (ocp-indent-region 1 (buffer-size)))))
 
 (ht/comment
   (with-eval-after-load 'caml-types
