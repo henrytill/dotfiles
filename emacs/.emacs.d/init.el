@@ -625,8 +625,6 @@
     (when ocaml-toplevel-path
       (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
 
-
-
 (use-package tuareg
   :ensure t
   :commands (tuareg-mode tuareg-menhir-mode tuareg-jbuild-mode)
