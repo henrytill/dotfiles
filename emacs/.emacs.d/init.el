@@ -617,7 +617,7 @@
         dune-project-file
       nil)))
 
-(defun ht/setup-tuareg ()
+(defun ht/get-ocaml-env ()
   (when (executable-find "opam")
     (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
       (setenv (car var) (cadr var))))
@@ -630,9 +630,9 @@
   :commands (tuareg-mode tuareg-menhir-mode tuareg-jbuild-mode)
   :mode (("dune\\'"         . tuareg-jbuild-mode)
          ("dune-project\\'" . tuareg-jbuild-mode))
+  :hook ((tuareg-mode . electric-indent-local-mode))
   :init
-  (ht/setup-tuareg)
-  (add-hook 'tuareg-mode-hook 'electric-indent-local-mode)
+  (ht/get-ocaml-env)
   :config
   (defvar ht/dune-fmt-command "dune fmt")
   (defun ht/project-dune-fmt ()
@@ -649,7 +649,6 @@
 (use-package merlin
   :if (and (executable-find "ocamlmerlin")
            (locate-file "merlin.el" load-path))
-  :after (tuareg)
   :commands merlin-mode
   :defines merlin-command
   :hook ((caml-mode   . merlin-mode)
@@ -664,22 +663,20 @@
   :after (merlin))
 
 (defun ht/set-utop-command ()
-  (when (ht/dune-project-exists-p)
-    (setq utop-command "opam config exec -- dune utop . -- -emacs")))
+  (when (executable-find "opam")
+    (let ((command (if (ht/dune-project-exists-p) "dune utop . -- -emacs" "utop -emacs")))
+      (setq utop-command (format "opam config exec -- %s" command)))))
 
 (use-package utop
   :if (and (executable-find "utop")
            (locate-file "utop.el" load-path))
-  :after (tuareg)
   :commands (utop utop-minor-mode)
-  :hook (tuareg-mode . utop-minor-mode)
-  :config
-  (ht/set-utop-command))
+  :hook ((tuareg-mode . utop-minor-mode)
+         (tuareg-mode . ht/set-utop-command)))
 
 (use-package ocp-indent
   :if (and (executable-find "ocp-indent")
            (locate-file "ocp-indent.el" load-path))
-  :after (tuareg)
   :commands ocp-setup-indent
   :hook (tuareg-mode . ocp-setup-indent)
   :config
