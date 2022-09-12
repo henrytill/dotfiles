@@ -652,10 +652,10 @@
   :commands merlin-mode
   :defines merlin-command
   :hook ((caml-mode   . merlin-mode)
-         (tuareg-mode . merlin-mode)))
+         (tuareg-mode . merlin-mode))
   :init
   (when (executable-find "opam")
-    (setq merlin-command 'opam))
+    (setq merlin-command 'opam)))
 
 (use-package merlin-company
   :if (and (executable-find "ocamlmerlin")
