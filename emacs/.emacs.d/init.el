@@ -305,6 +305,15 @@
 (add-to-list 'load-path (expand-file-name "compile-commands" ht/site-lisp-directory))
 (autoload 'compile-commands-get-include-directories "compile-commands.el")
 
+;;; XDG
+
+(autoload 'xdg-data-home "xdg.el")
+
+;;; INFO
+
+(when (and (is-linux-p) (fboundp 'xdg-data-home))
+  (add-to-list 'Info-additional-directory-list (expand-file-name "info" (xdg-data-home))))
+
 ;;; ALIGN
 
 (with-eval-after-load 'align
