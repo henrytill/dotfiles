@@ -1,9 +1,9 @@
-if [ -n "$KSH_VERSION" -a -z "$ENV" ]
+if [ -n "$KSH_VERSION" ] && [ -z "$ENV" ]
 then
     export ENV="$HOME/.kshrc"
 fi
 
-if [ -n "$BASH_VERSION" -a -f "$HOME/.bashrc" ]
+if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]
 then
     . "$HOME/.bashrc"
 fi
