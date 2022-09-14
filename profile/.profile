@@ -53,3 +53,10 @@ if [ -d "$HOME/bin" ]
 then
     PATH="$HOME/bin:$PATH"
 fi
+
+# Launch sway automatically
+SWAY_SESSION="/usr/local/bin/sway-session"
+if [ "$(uname)" = Linux ] && [ -e "$SWAY_SESSION" ] && [ "$(tty)" = "/dev/tty1" ]
+then
+    exec sway-session
+fi
