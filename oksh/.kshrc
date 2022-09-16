@@ -14,7 +14,7 @@ dumb)
     ;;
 esac
 
-if [ -z "$SSH_AGENT_PID" -a -z "$SSH_AUTH_SOCK" ]
+if [ -z "$SSH_AGENT_PID" ] && [ -z "$SSH_AUTH_SOCK" ]
 then
     if ! [ -e /tmp/ssh-agent-$USER ]
     then
