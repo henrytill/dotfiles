@@ -1,6 +1,6 @@
 ;;; init.el
 
-(message "Loading %s" load-file-name)
+(message "Loading %s ..." load-file-name)
 
 ;; Reduce the frequency of garbage collection during startup
 (setq gc-cons-threshold  (* 50 1000 1000))
@@ -224,8 +224,7 @@
 (add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
 
 (defconst ht/preferred-unix-font "PragmataPro Mono:size=14")
-
-(defconst ht/preferred-win-font "PragmataPro Mono:size=14")
+(defconst ht/preferred-win-font  "PragmataPro Mono:size=14")
 
 (defun ht/set-face-attributes (frame)
   (when (and (is-unix-p) (display-graphic-p))
