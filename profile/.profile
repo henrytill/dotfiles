@@ -18,6 +18,11 @@ then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
+if [ -d "$HOME/.nimble/bin" ]
+then
+    PATH="$HOME/.nimble/bin:$PATH"
+fi
+
 if [ -d "$HOME/.local/bin" ]
 then
     PATH="$HOME/.local/bin:$PATH"
