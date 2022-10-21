@@ -304,6 +304,8 @@
 (add-to-list 'load-path (expand-file-name "compile-commands" ht/site-lisp-directory))
 (autoload 'compile-commands-get-include-directories "compile-commands.el")
 
+(add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
+
 ;;; XDG
 
 (autoload 'xdg-data-home "xdg.el")
@@ -609,6 +611,11 @@
   :mode "\\.lua\\'"
   :init
   (setq lua-indent-level 2))
+
+;;; NIM
+
+(use-package nim-mode
+  :if (locate-file "nim-mode.el" load-path))
 
 ;;; NIX
 
