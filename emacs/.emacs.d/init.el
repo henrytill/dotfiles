@@ -615,7 +615,8 @@
 ;;; NIM
 
 (use-package nim-mode
-  :if (locate-file "nim-mode.el" load-path))
+  :if (locate-file "nim-mode.el" load-path)
+  :mode "\\.nim\\'")
 
 ;;; NIX
 
