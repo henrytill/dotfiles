@@ -729,6 +729,12 @@
   :ensure t
   :commands sml-mode)
 
+;;; TCL
+
+(with-eval-after-load 'tcl
+  (setq tcl-indent-level 2
+        tcl-continued-indent-level 2))
+
 ;;; TEX
 
 (use-package auctex
