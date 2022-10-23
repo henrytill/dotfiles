@@ -8,7 +8,7 @@ xterm*|screen*|foot*)
     PS1="\n\033[1m\u@\h:\w\033[m\n[\$?]> "
     PS2="> "
     ;;
-dumb)
+eterm*|dumb)
     PS1="\n[\$?]> "
     PS2="> "
     ;;
