@@ -264,7 +264,6 @@
 
 (blink-cursor-mode 0)
 (setq visible-cursor nil)
-(setq-default cursor-type 'bar)
 
 (defun ht/truncate-lines ()
   (setq truncate-lines t))
