@@ -18,11 +18,6 @@ then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
-if [ -d "$HOME/.nimble/bin" ]
-then
-    PATH="$HOME/.nimble/bin:$PATH"
-fi
-
 if [ -d "$HOME/.local/bin" ]
 then
     PATH="$HOME/.local/bin:$PATH"
@@ -33,12 +28,6 @@ if [ -d "$PLAN9" ]
 then
     export PLAN9
     PATH="$PATH:$PLAN9/bin"
-fi
-
-SMLNJ="/usr/local/smlnj-110.99.3"
-if [ -d "$SMLNJ" ]
-then
-    PATH="$SMLNJ/bin:$PATH"
 fi
 
 OPAMSH="$HOME/.opam/opam-init/init.sh"
