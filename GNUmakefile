@@ -2,9 +2,9 @@
 MY_HOSTS = proteus thalassa thaumas
 
 # hosts and their package sets
-proteus  = emacs foot gdb git git-unix oksh \
+proteus  = bash foot gdb git git-unix \
            profile sway sway-proteus tmux
-thalassa = emacs foot gdb git git-unix oksh \
+thalassa = bash emacs foot gdb git git-unix \
            profile sway sway-thalassa tmux xdg
 thaumas  = emacs foot gdb git git-unix oksh \
            profile sway sway-thaumas tmux
