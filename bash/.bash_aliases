@@ -1,20 +1,21 @@
 alias e="$EDITOR"
-alias ec="emacsclient -cn -a="
-alias et="emacsclient -t -a="
-alias kill-emacs-server="emacsclient -e '(kill-emacs)'"
+alias ec="emacsclient -cn"
+alias et="emacsclient -t"
+alias lc="ls -C"
 alias lf="ls -aF"
 alias ll="ls -la"
 alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
-alias cls="tput reset"
 
-if [ -n "$(command -v view)" ]; then
+if [ -n "$(command -v view)" ]
+then
     alias v="view"
 fi
 
-if [ $TERM = "dumb" ]; then
+if [ $TERM = "dumb" ]
+then
     alias less="cat"
     alias more="cat"
     alias l="ls -lh"

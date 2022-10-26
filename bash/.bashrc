@@ -30,59 +30,78 @@ shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# # set variable identifying the chroot you work in (used in the prompt below)
-# if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-#     debian_chroot=$(cat /etc/debian_chroot)
-# fi
-
-# # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-xterm*|rxvt*)
+xterm*|rxvt*|foot*)
     PS1="\n\[\e[1m\]\u@\h:\w\[\e[0m\]\n[\$?]> "
     PS2="> "
     ;;
-dumb)
+eterm*|dumb)
     PS1="\n[\$?]> "
     PS2="> "
     ;;
 esac
 
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
+if [ -z "$SSH_AGENT_PID" ] && [ -z "$SSH_AUTH_SOCK" ]
+then
+    if ! [ -e /tmp/ssh-agent-$USER ]
+    then
+        ssh-agent 2>/dev/null >/tmp/ssh-agent-$USER
+    fi
+    . /tmp/ssh-agent-$USER >/dev/null
+fi
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+if [ -n "$(command -v emacsclient)" ]
+then
+    export EDITOR="emacsclient -t"
+    export ALTERNATE_EDITOR=""
+elif [ -n "$(command -v mg)" ]
+then
+    export EDITOR="mg"
+fi
 
-if [ -f ~/.bash_aliases ]; then
+export GPG_TTY="$(tty)"
+export LIBVIRT_DEFAULT_URI="qemu:///system"
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+# https://github.com/swaywm/sway/issues/5759
+# https://github.com/swaywm/sway/issues/5008
+if [ "$(hostname)" = "thalassa" ]
+then
+    export WLR_DRM_NO_MODIFIERS=1
+fi
+
+if [ -x /usr/bin/dircolors ]
+then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    # alias grep='grep --color=auto'
+    # alias fgrep='fgrep --color=auto'
+    # alias egrep='egrep --color=auto'
+fi
+
+if [ -f ~/.bash_aliases ]
+then
     . ~/.bash_aliases
 fi
 
-# Functions definitions
-
-if [ -f ~/.bash_functions ]; then
+if [ -f ~/.bash_functions ]
+then
     . ~/.bash_functions
 fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-
-if [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] \
-       && ! [[ "${PATH}" =~ "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/bin" ]]; then
-    . "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
-fi
-
-if [ -n "$(command -v hecate)" -a -d "$HOME/.hecate" ]; then
-    . <(hecate --bash-completion-script `which hecate`)
+if ! shopt -oq posix
+then
+    if [ -f /usr/share/bash-completion/bash_completion ]
+    then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]
+    then
+        . /etc/bash_completion
+    fi
 fi
