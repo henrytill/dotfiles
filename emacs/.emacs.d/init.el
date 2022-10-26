@@ -340,8 +340,7 @@
 (use-package company
   :ensure t
   :commands company-mode
-  :init
-  (add-hook 'prog-mode-hook 'company-mode)
+  :hook (prog-mode . company-mode)
   :config
   (define-key company-active-map "\C-h" nil)
   (setq company-backends (remove 'company-clang company-backends)
@@ -571,11 +570,9 @@
 (use-package haskell-mode
   :ensure t
   :commands haskell-mode
-  :init
-  (dolist (mode '(haskell-indentation-mode
-                  ht/haskell-mode
-                  interactive-haskell-mode))
-    (add-hook 'haskell-mode-hook mode)))
+  :hook ((haskell-mode . haskell-indentation-mode)
+         (haskell-mode . ht/haskell-mode)
+         (haskell-mode . interactive-haskell-mode)))
 
 ;;; SCHEME
 
@@ -760,8 +757,7 @@
 (use-package markdown-mode
   :ensure t
   :commands markdown-mode
-  :init
-  (add-hook 'markdown-mode-hook 'display-line-numbers-mode))
+  :hook (markdown-mode . display-line-numbers-mode))
 
 (use-package yaml-mode
   :ensure t
