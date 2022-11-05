@@ -312,6 +312,7 @@
 ;;; INFO
 
 (when (and (is-linux-p) (fboundp 'xdg-data-home))
+  (require 'info)
   (add-to-list 'Info-additional-directory-list (expand-file-name "info" (xdg-data-home))))
 
 ;;; ALIGN
