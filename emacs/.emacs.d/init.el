@@ -576,9 +576,6 @@
 
 ;;; SCHEME
 
-(when (executable-find "csi")
-  (setq scheme-program-name "csi -:c"))
-
 (defun ht/scheme-mode ()
   (dolist (form+n '((conde . 0)
                     (fresh . 1)
@@ -587,6 +584,11 @@
     (put (car form+n) 'scheme-indent-function (cdr form+n))))
 
 (add-hook 'scheme-mode-hook #'ht/scheme-mode)
+
+(use-package geiser-guile
+  :ensure t
+  :if (executable-find "guile")
+  :commands (geiser geiser-mode))
 
 ;;; COMMON LISP
 
