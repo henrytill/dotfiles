@@ -41,25 +41,20 @@ eterm*|dumb)
     ;;
 esac
 
-if [ -z "$SSH_AUTH_SOCK" ]
-then
-    if [ -e $XDG_RUNTIME_DIR/openssh_agent ]
-    then
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    if [ -e $XDG_RUNTIME_DIR/openssh_agent ]; then
         export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/openssh_agent"
-    elif ! [ -e /tmp/ssh-agent-$USER ]
-    then
+    elif ! [ -e /tmp/ssh-agent-$USER ]; then
         ssh-agent 2>/dev/null >/tmp/ssh-agent-$USER
     else
         . /tmp/ssh-agent-$USER >/dev/null
     fi
 fi
 
-if [ -n "$(command -v emacsclient)" ]
-then
+if [ -n "$(command -v emacsclient)" ]; then
     export EDITOR="emacsclient -t"
     export ALTERNATE_EDITOR=""
-elif [ -n "$(command -v mg)" ]
-then
+elif [ -n "$(command -v mg)" ]; then
     export EDITOR="mg"
 fi
 
@@ -74,8 +69,7 @@ then
     export WLR_DRM_NO_MODIFIERS=1
 fi
 
-if [ -x /usr/bin/dircolors ]
-then
+if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
@@ -86,26 +80,21 @@ then
     # alias egrep='egrep --color=auto'
 fi
 
-if [ -f ~/.bash_aliases ]
-then
+if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [ -f ~/.bash_functions ]
-then
+if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if ! shopt -oq posix
-then
-    if [ -f /usr/share/bash-completion/bash_completion ]
-    then
+if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
         . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]
-    then
+    elif [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
     fi
 fi

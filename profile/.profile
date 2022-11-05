@@ -1,57 +1,47 @@
-if [ -n "$KSH_VERSION" ] && [ -z "$ENV" ]
-then
+if [ -n "$KSH_VERSION" ] && [ -z "$ENV" ]; then
     export ENV="$HOME/.kshrc"
 fi
 
-if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]
-then
+if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]; then
     . "$HOME/.bashrc"
 fi
 
-if [ -d "$HOME/.cargo/bin" ]
-then
+if [ -d "$HOME/.cargo/bin" ]; then
     PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-if [ -d "$HOME/.cabal/bin" ]
-then
+if [ -d "$HOME/.cabal/bin" ]; then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
-if [ -d "$HOME/.local/bin" ]
-then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-PLAN9="/usr/local/plan9"
-if [ -d "$PLAN9" ]
-then
-    export PLAN9
-    PATH="$PATH:$PLAN9/bin"
-fi
-
 OPAMSH="$HOME/.opam/opam-init/init.sh"
-if [ -e "$OPAMSH" ]
-then
+if [ -e "$OPAMSH" ]; then
     . "$OPAMSH" > /dev/null 2> /dev/null || true
 fi
 
 NIXSH="$HOME/.nix-profile/etc/profile.d/nix.sh"
-if [ -e "$NIXSH" ]
-then
+if [ -e "$NIXSH" ]; then
     . "$NIXSH"
 fi
 
+PLAN9="/usr/local/plan9"
+if [ -d "$PLAN9" ]; then
+    export PLAN9
+    PATH="$PATH:$PLAN9/bin"
+fi
+
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 # $HOME/bin should always come first
-if [ -d "$HOME/bin" ]
-then
+if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
 fi
 
 # Launch sway automatically
 SWAY_SESSION="/usr/local/bin/sway-session"
-if [ "$(uname)" = "Linux" ] && [ -e "$SWAY_SESSION" ] && [ "$(tty)" = "/dev/tty1" ]
-then
+if [ "$(uname)" = "Linux" ] && [ -e "$SWAY_SESSION" ] && [ "$(tty)" = "/dev/tty1" ]; then
     XDG_CURRENT_DESKTOP=sway
     export XDG_CURRENT_DESKTOP
     exec sway-session

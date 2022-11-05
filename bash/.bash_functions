@@ -3,8 +3,7 @@ stripwhitespace() {
 }
 
 cls() {
-    if [ -n "$(command -v tput)" ]
-    then
+    if [ -n "$(command -v tput)" ]; then
         tput reset
     else
         clear
