@@ -67,6 +67,12 @@ then
     export WLR_DRM_NO_MODIFIERS=1
 fi
 
+# Allows Emacs installed by Guix to use system terminfo dirs
+TERMINFO_DIRS=/usr/share/terminfo/
+if [ -d "$TERMINFO_DIRS" ]; then
+    export TERMINFO_DIRS
+fi
+
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
@@ -94,5 +100,12 @@ if ! shopt -oq posix; then
         . /usr/share/bash-completion/bash_completion
     elif [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
+    fi
+fi
+
+# Automatically added by the Guix install script.
+if [ -n "$GUIX_ENVIRONMENT" ]; then
+    if [[ $PS1 =~ (.*)"\\$" ]]; then
+        PS1="${BASH_REMATCH[1]} [env]\\\$ "
     fi
 fi
