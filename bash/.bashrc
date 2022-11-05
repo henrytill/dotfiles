@@ -31,13 +31,11 @@ shopt -s globstar
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 case "$TERM" in
-xterm*|rxvt*|foot*)
-    PS1="\n\[\e[1m\]\u@\h:\w\[\e[0m\]\n[\$?]> "
-    PS2="> "
+xterm*|rxvt*|foot*|screen*)
+    PS1="\n\[\e[1m\]\u@\h \w\[\e[0m\]\\$ "
     ;;
 eterm*|dumb)
-    PS1="\n[\$?]> "
-    PS2="> "
+    PS1="\n\u@\h \w\\$ "
     ;;
 esac
 
