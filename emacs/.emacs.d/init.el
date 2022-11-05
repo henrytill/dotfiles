@@ -494,6 +494,8 @@
   :commands cmake-mode
   :mode ("\\.cmake\\'" . cmake-mode))
 
+(add-to-list 'auto-mode-alist '("/meson\\(\\.build\\|_options\\.txt\\)\\'" . prog-mode))
+
 (use-package ninja-mode
   :if (locate-file "ninja-mode.el" load-path)
   :commands ninja-mode)
