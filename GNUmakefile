@@ -34,8 +34,8 @@ list:
 $(TARG_DIRS):
 	mkdir -p $@
 
-sway-proteus sway-thalassa::
-	install --b -S .old -C $@/sway-session /usr/local/bin
+sway-proteus sway-thalassa sway-thaumas::
+	install --b -S .old -C sway/sway-session /usr/local/bin
 
 $(PKG_SET)::
 	stow -v $@
