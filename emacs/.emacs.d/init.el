@@ -755,6 +755,9 @@
 
 ;;; MISC
 
+(use-package debbugs
+  :ensure t)
+
 (use-package dockerfile-mode
   :ensure t
   :commands dockerfile-mode)
