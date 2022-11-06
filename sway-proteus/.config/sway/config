@@ -17,4 +17,7 @@ input type:keyboard {
     xkb_options ctrl:nocaps
 }
 
-exec /usr/libexec/pipewire-launcher 2>&1 | logger -t pipewire
+# https://github.com/swaywm/sway/wiki/Systemd-integration
+exec systemctl --user start sway-session.target
+
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
