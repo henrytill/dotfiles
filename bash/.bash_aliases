@@ -1,4 +1,4 @@
-alias e="$EDITOR"
+alias e="emacsclient -t"
 alias ec="emacsclient -cn"
 alias et="emacsclient -t"
 alias lc="ls -C"
@@ -9,16 +9,11 @@ alias lt="ls -lt"
 alias u="cd .. && l"
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 
-if [ -n "$(command -v view)" ]; then
-    alias v="view"
-fi
-
 if [ $TERM = "dumb" ]; then
     alias less="cat"
     alias more="cat"
     alias l="ls -lh"
     alias la="ls -lah"
-    export PAGER="cat"
 else
     alias l="clear && ls -lh"
     alias la="clear && ls -lah"

@@ -1,8 +1,4 @@
-if [ -n "$KSH_VERSION" ] && [ -z "$ENV" ]; then
-    export ENV="$HOME/.kshrc"
-fi
-
-if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]; then
+if [ -f "$HOME/.bashrc" ]; then
     . "$HOME/.bashrc"
 fi
 
@@ -19,11 +15,6 @@ if [ -e "$OPAMSH" ]; then
     . "$OPAMSH" > /dev/null 2> /dev/null || true
 fi
 
-NIXSH="$HOME/.nix-profile/etc/profile.d/nix.sh"
-if [ -e "$NIXSH" ]; then
-    . "$NIXSH"
-fi
-
 PLAN9="/usr/local/plan9"
 if [ -d "$PLAN9" ]; then
     export PLAN9
@@ -38,6 +29,22 @@ fi
 if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
 fi
+
+if [ -n "$(command -v emacsclient)" ]; then
+    export EDITOR="emacsclient -t"
+    export ALTERNATE_EDITOR=""
+elif [ -n "$(command -v mg)" ]; then
+    export EDITOR="mg"
+fi
+
+# Allows Emacs installed by Guix to use system terminfo dirs
+TERMINFO_DIRS=/usr/share/terminfo/
+if [ -d "$TERMINFO_DIRS" ]; then
+    export TERMINFO_DIRS
+fi
+
+export LIBVIRT_DEFAULT_URI="qemu:///system"
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Launch sway automatically
 SWAY_SESSION="/usr/local/bin/sway-session"

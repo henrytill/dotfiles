@@ -1,7 +1,3 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -28,52 +24,18 @@ shopt -s checkwinsize
 shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -n "$(command -v lesspipe)" ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 case "$TERM" in
 xterm*|rxvt*|foot*|screen*)
-    PS1="\n\[\e[1m\]\u@\h \w\[\e[0m\]\\$ "
+    PS1="\n\[\e[1m\]\u@\h\[\e[0m\] \w\\$ "
     ;;
 eterm*|dumb)
     PS1="\n\u@\h \w\\$ "
     ;;
 esac
 
-if [ -z "$SSH_AUTH_SOCK" ]; then
-    if [ -e $XDG_RUNTIME_DIR/openssh_agent ]; then
-        export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/openssh_agent"
-    elif ! [ -e /tmp/ssh-agent-$USER ]; then
-        ssh-agent 2>/dev/null >/tmp/ssh-agent-$USER
-    else
-        . /tmp/ssh-agent-$USER >/dev/null
-    fi
-fi
-
-if [ -n "$(command -v emacsclient)" ]; then
-    export EDITOR="emacsclient -t"
-    export ALTERNATE_EDITOR=""
-elif [ -n "$(command -v mg)" ]; then
-    export EDITOR="mg"
-fi
-
-export GPG_TTY="$(tty)"
-export LIBVIRT_DEFAULT_URI="qemu:///system"
-export _JAVA_AWT_WM_NONREPARENTING=1
-
-# https://github.com/swaywm/sway/issues/5759
-# https://github.com/swaywm/sway/issues/5008
-if [ "$(hostname)" = "thalassa" ]
-then
-    export WLR_DRM_NO_MODIFIERS=1
-fi
-
-# Allows Emacs installed by Guix to use system terminfo dirs
-TERMINFO_DIRS=/usr/share/terminfo/
-if [ -d "$TERMINFO_DIRS" ]; then
-    export TERMINFO_DIRS
-fi
-
-if [ -x /usr/bin/dircolors ]; then
+if [ -n "$(command -v dircolors)" ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
@@ -92,6 +54,10 @@ if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 
+if [ $TERM = "dumb" ]; then
+    export PAGER=cat
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -108,4 +74,18 @@ if [ -n "$GUIX_ENVIRONMENT" ]; then
     if [[ $PS1 =~ (.*)"\\$" ]]; then
         PS1="${BASH_REMATCH[1]} [env]\\\$ "
     fi
+fi
+
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    if [ -e $XDG_RUNTIME_DIR/openssh_agent ]; then
+        export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/openssh_agent"
+    elif ! [ -e /tmp/ssh-agent-$USER ]; then
+        ssh-agent 2>/dev/null >/tmp/ssh-agent-$USER
+    else
+        . /tmp/ssh-agent-$USER >/dev/null
+    fi
+fi
+
+if [ -n "$(command -v tty)" ]; then
+    export GPG_TTY="$(tty)"
 fi

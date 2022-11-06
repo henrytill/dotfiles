@@ -3,11 +3,11 @@ MY_HOSTS = proteus thalassa thaumas
 
 # hosts and their package sets
 proteus  = bash foot gdb git git-unix \
-           profile sway sway-proteus tmux
+           sway sway-proteus tmux
 thalassa = bash emacs foot gdb git git-unix \
-           profile sway sway-thalassa tmux xdg
+           sway sway-thalassa tmux xdg
 thaumas  = emacs foot gdb git git-unix oksh \
-           profile sway sway-thaumas tmux
+           sway sway-thaumas tmux
 
 # base package set for undefined hosts
 BASE_PKGS = git git-unix oksh profile tmux
