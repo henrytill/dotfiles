@@ -29,6 +29,9 @@ exec swayidle -w \
     # Start a terminal
     bindsym $mod+Return exec $term
 
+    # Start emacsclient
+    bindsym $mod+Shift+Return exec $term emacsclient -t
+
     # Kill focused window
     bindsym $mod+Shift+q kill
 
