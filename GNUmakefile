@@ -10,7 +10,7 @@ thaumas  = bash emacs foot gdb git git-unix \
            sway sway-thaumas tmux
 
 # base package set for undefined hosts
-BASE_PKGS = bash git git-unix profile tmux
+BASE_PKGS = bash git git-unix tmux
 
 # target directories
 TARG_DIRS = ../.config
