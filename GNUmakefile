@@ -6,11 +6,11 @@ proteus  = bash foot gdb git git-unix \
            sway sway-proteus tmux
 thalassa = bash emacs foot gdb git git-unix \
            sway sway-thalassa tmux xdg
-thaumas  = emacs foot gdb git git-unix oksh \
+thaumas  = bash emacs foot gdb git git-unix \
            sway sway-thaumas tmux
 
 # base package set for undefined hosts
-BASE_PKGS = git git-unix oksh profile tmux
+BASE_PKGS = bash git git-unix profile tmux
 
 # target directories
 TARG_DIRS = ../.config
