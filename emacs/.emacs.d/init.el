@@ -376,11 +376,11 @@
 
 ;;; WHITESPACE
 
-(use-package whitespace
-  :commands whitespace-mode
-  :init
-  (setq whitespace-style '(face trailing)
+(with-eval-after-load 'whitespace
+  (setq whitespace-style '(face trailing lines-tail)
         whitespace-line-column 80))
+
+(add-hook 'prog-mode-hook #'whitespace-mode)
 
 (defun ht/whitespace-mode ()
   (when (and font-lock-mode (derived-mode-p 'prog-mode))
