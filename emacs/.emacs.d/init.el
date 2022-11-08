@@ -207,7 +207,7 @@
 (when (version<= "26.1" emacs-version)
   (setq-default display-line-numbers-width 4
                 display-line-numbers-widen t)
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+  (add-hook 'prog-mode-hook #'display-line-numbers-mode))
 
 (setq frame-background-mode 'light)
 
@@ -780,7 +780,7 @@
 
 (add-hook 'shell-mode-hook #'font-lock-mode)
 
-(add-hook 'comint-output-filter-functions 'comint-osc-process-output)
+(add-hook 'comint-output-filter-functions #'comint-osc-process-output)
 
 
 ;;; --- POSTLUDE --- ;;;
