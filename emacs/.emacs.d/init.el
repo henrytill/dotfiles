@@ -374,13 +374,6 @@
                 electric-pair-local-mode))
   (add-hook 'prog-mode-hook mode))
 
-;;; SHELL
-
-(defun ht/shell ()
-  (add-to-list 'mode-line-buffer-identification '("" default-directory "  ")))
-
-(add-hook 'shell-mode-hook #'ht/shell)
-
 ;;; WHITESPACE
 
 (use-package whitespace
@@ -776,6 +769,18 @@
 (use-package elpher
   :ensure t
   :commands (elpher-browse-url-elpher elpher elpher-go))
+
+
+;;; --- SHELL --- ;;;
+
+(defun ht/shell ()
+  (add-to-list 'mode-line-buffer-identification '("" default-directory "  ")))
+
+(add-hook 'shell-mode-hook #'ht/shell)
+
+(add-hook 'shell-mode-hook #'font-lock-mode)
+
+(add-hook 'comint-output-filter-functions 'comint-osc-process-output)
 
 
 ;;; --- POSTLUDE --- ;;;
