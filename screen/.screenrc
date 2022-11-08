@@ -3,3 +3,4 @@ term screen-256color
 hardstatus off
 hardstatus alwaysfirstline "%H    %w"
 vbell off
+unsetenv COLORTERM
