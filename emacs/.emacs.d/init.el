@@ -151,10 +151,6 @@
         (cmd (cdr binding)))
     (global-set-key (kbd key) cmd)))
 
-(let ((key (kbd "C-h")))
-  (global-set-key key #'backward-delete-char-untabify)
-  (define-key isearch-mode-map key #'isearch-delete-char))
-
 ;; https://stackoverflow.com/questions/5147060/how-can-i-access-directory-local-variables-in-my-major-mode-hooks
 (defun ht/run-local-vars-mode-hook ()
   "Run a hook for the major-mode after the local variables have been processed."
