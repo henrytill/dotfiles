@@ -793,12 +793,14 @@
 
 ;;; --- SHELL --- ;;;
 
+(setq comint-input-ring-size 100000)
+
 (defun ht/shell ()
   (add-to-list 'mode-line-buffer-identification '("" default-directory "  ")))
 
-(add-hook 'shell-mode-hook #'ht/shell)
-
-(add-hook 'shell-mode-hook #'font-lock-mode)
+(dolist (f '(ht/shell
+             font-lock-mode))
+  (add-hook 'shell-mode-hook f))
 
 (add-hook 'comint-output-filter-functions #'comint-osc-process-output)
 
