@@ -591,14 +591,18 @@
                     (run*  . 1)))
     (put (car form+n) 'scheme-indent-function (cdr form+n))))
 
-(add-hook 'scheme-mode-hook #'ht/scheme-mode)
+(dolist (f '(ht/scheme-mode
+             enable-paredit-mode))
+  (add-hook 'scheme-mode-hook f))
 
 (use-package geiser-guile
   :ensure t
   :if (executable-find "guile")
-  :commands (geiser geiser-mode))
+  :commands (geiser geiser-mode geiser-mode--maybe-activate))
 
 ;;; COMMON LISP
+
+(add-hook 'lisp-mode-hook #'enable-paredit-mode)
 
 (when (executable-find "sbcl")
   (setq inferior-lisp-program "sbcl"))
