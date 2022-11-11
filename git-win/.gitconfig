@@ -1,5 +1,4 @@
 [include]
     path = ~/etc/git/gitconfig
-
 [core]
     autocrlf = true

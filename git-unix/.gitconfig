@@ -1,14 +1,4 @@
 [include]
     path = ~/etc/git/gitconfig
-
 [core]
     autocrlf = input
-
-[diff]
-    tool = vimdiff
-
-[merge]
-    tool = vimdiff
-
-[difftool]
-    prompt = false
