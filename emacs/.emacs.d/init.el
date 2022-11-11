@@ -361,12 +361,24 @@
 
 (use-package magit
   :ensure t
-  :commands magit-status
+  :commands (magit-status magit-project-status)
   :hook ((magit-status-mode . font-lock-mode)
          (magit-diff-mode   . font-lock-mode))
   :config
   (put 'magit-clean 'disabled nil)
   (setq magit-last-seen-setup-instructions "1.4.0"))
+
+;;; PROJECT
+
+(with-eval-after-load 'project
+  (when (boundp 'project-prefix-map)
+    (define-key project-prefix-map "s" #'project-shell)
+    (add-to-list 'project-switch-commands '(project-shell "Shell") t)))
+
+(with-eval-after-load 'project
+  (when (boundp 'project-prefix-map)
+    (define-key project-prefix-map "m" #'magit-project-status)
+    (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)))
 
 ;;; PROG-MODE
 
