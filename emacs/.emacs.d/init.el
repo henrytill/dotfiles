@@ -760,6 +760,10 @@
   :commands markdown-mode
   :hook (markdown-mode . display-line-numbers-mode))
 
+(use-package rec-mode
+  :ensure t
+  :commands rec-mode)
+
 (use-package yaml-mode
   :ensure t
   :commands yaml-mode)
