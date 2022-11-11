@@ -749,7 +749,8 @@
 ;;; MISC
 
 (use-package debbugs
-  :ensure t)
+  :ensure t
+  :commands debbugs-gnu)
 
 (use-package dockerfile-mode
   :ensure t
