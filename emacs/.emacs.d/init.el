@@ -500,7 +500,8 @@
 (use-package cmake-mode
   :if (locate-file "cmake-mode.el" load-path)
   :commands cmake-mode
-  :mode ("\\.cmake\\'" . cmake-mode))
+  :mode (("CMakeLists\\.txt\\'" . cmake-mode)
+         ("\\.cmake\\'"         . cmake-mode)))
 
 (add-to-list 'auto-mode-alist '("/meson\\(\\.build\\|_options\\.txt\\)\\'" . prog-mode))
 
