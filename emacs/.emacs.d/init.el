@@ -367,14 +367,17 @@
 ;;; PROJECT
 
 (with-eval-after-load 'project
-  (when (boundp 'project-prefix-map)
+  (when (and (boundp 'project-prefix-map)
+             (boundp 'project-switch-commands))
+    ;; Delete less useful commands
+    (delete '(project-vc-dir "VC-Dir") project-switch-commands)
+    (delete '(project-eshell "Eshell") project-switch-commands)
+    ;; Add Magit
+    (define-key project-prefix-map "m" #'magit-project-status)
+    (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)
+    ;; Add Shell
     (define-key project-prefix-map "s" #'project-shell)
     (add-to-list 'project-switch-commands '(project-shell "Shell") t)))
-
-(with-eval-after-load 'project
-  (when (boundp 'project-prefix-map)
-    (define-key project-prefix-map "m" #'magit-project-status)
-    (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)))
 
 ;;; PROG-MODE
 
