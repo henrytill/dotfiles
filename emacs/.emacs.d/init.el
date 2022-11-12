@@ -476,7 +476,7 @@
 (use-package clang-format
   :if (locate-file "clang-format.el" load-path)
   :commands (clang-format clang-format-region clang-format-buffer)
-  :init
+  :config
   (let ((clang-format-path (getenv "CLANG_FORMAT_PATH")))
     (when clang-format-path
       (setq clang-format-executable clang-format-path))))
@@ -484,7 +484,7 @@
 (use-package bison-mode
   :ensure t
   :commands bison-mode
-  :init
+  :config
   (setq bison-rule-separator-column 2
         bison-rule-enumeration-column 2
         bison-decl-type-column 0
@@ -571,20 +571,18 @@
 
 ;;; HASKELL
 
-(defun ht/haskell-mode ()
+(use-package haskell-mode
+  :ensure t
+  :commands haskell-mode
+  :hook ((haskell-mode . haskell-indentation-mode)
+         (haskell-mode . interactive-haskell-mode))
+  :config
   (setq haskell-doc-prettify-types nil
         haskell-interactive-popup-errors nil
         haskell-process-log t
         haskell-process-type 'cabal-repl
         haskell-stylish-on-save t
         haskell-tags-on-save t))
-
-(use-package haskell-mode
-  :ensure t
-  :commands haskell-mode
-  :hook ((haskell-mode . haskell-indentation-mode)
-         (haskell-mode . ht/haskell-mode)
-         (haskell-mode . interactive-haskell-mode)))
 
 ;;; SCHEME
 
@@ -623,7 +621,7 @@
 (use-package lua-mode
   :ensure t
   :mode "\\.lua\\'"
-  :init
+  :config
   (setq lua-indent-level 2))
 
 ;;; NIM
@@ -688,7 +686,7 @@
   :defines merlin-command
   :hook ((caml-mode . merlin-mode)
          (tuareg-mode . merlin-mode))
-  :init
+  :config
   (when (executable-find "opam")
     (setq merlin-command 'opam)))
 
