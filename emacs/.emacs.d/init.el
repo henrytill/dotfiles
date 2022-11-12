@@ -667,7 +667,7 @@
 
 (use-package tuareg
   :ensure t
-  :commands (tuareg-mode tuareg-menhir-mode)
+  :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
   :hook ((tuareg-mode . electric-indent-local-mode))
   :init
   (ht/get-ocaml-env))
