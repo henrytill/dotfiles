@@ -337,11 +337,11 @@
 (use-package company
   :ensure t
   :commands company-mode
-  :hook (prog-mode . company-mode)
+  :hook ((prog-mode . company-mode)
+         (shell-mode . company-mode))
   :config
-  (define-key company-active-map "\C-h" nil)
-  (setq company-backends (remove 'company-clang company-backends)
-        company-global-modes '(not eshell-mode)))
+  (delete 'company-clang company-backends)
+  (delete 'company-xcode company-backends))
 
 ;;; LSP
 
