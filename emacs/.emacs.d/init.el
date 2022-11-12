@@ -135,16 +135,16 @@
 (load custom-file t)
 
 (put 'dired-find-alternate-file 'disabled nil)
-(put 'narrow-to-page            'disabled nil)
+(put 'narrow-to-page 'disabled nil)
 
 (defconst ht/global-bindings
   '(("C-x C-b" . ibuffer)
-    ("M-/"     . hippie-expand)
-    ("M-z"     . zap-up-to-char)
-    ("C-s"     . isearch-forward-regexp)
-    ("C-r"     . isearch-backward-regexp)
-    ("C-M-s"   . isearch-forward)
-    ("C-M-r"   . isearch-backward)))
+    ("C-M-s" . isearch-forward)
+    ("C-M-r" . isearch-backward)
+    ("M-/" . hippie-expand)
+    ("M-z" . zap-up-to-char)
+    ("C-s" . isearch-forward-regexp)
+    ("C-r" . isearch-backward-regexp)))
 
 (dolist (binding ht/global-bindings)
   (let ((key (car binding))
@@ -220,7 +220,7 @@
 (add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
 
 (defconst ht/preferred-unix-font "PragmataPro Mono:size=14")
-(defconst ht/preferred-win-font  "PragmataPro Mono:size=14")
+(defconst ht/preferred-win-font "PragmataPro Mono:size=14")
 
 (defun ht/set-face-attributes (frame)
   (when (and (is-unix-p) (display-graphic-p))
@@ -359,7 +359,7 @@
   :ensure t
   :commands (magit-status magit-project-status)
   :hook ((magit-status-mode . font-lock-mode)
-         (magit-diff-mode   . font-lock-mode))
+         (magit-diff-mode . font-lock-mode))
   :config
   (put 'magit-clean 'disabled nil)
   (setq magit-last-seen-setup-instructions "1.4.0"))
@@ -469,7 +469,7 @@
   (let ((clang-format-path (or (getenv "CLANG_FORMAT_PATH")
                                (executable-find "clang-format"))))
     (when clang-format-path
-      (let* ((clang-bin-path         (file-name-directory clang-format-path))
+      (let* ((clang-bin-path (file-name-directory clang-format-path))
              (clang-format-load-path (expand-directory-name "../share/clang" clang-bin-path)))
         (push clang-format-load-path load-path)))))
 
@@ -501,7 +501,7 @@
   :if (locate-file "cmake-mode.el" load-path)
   :commands cmake-mode
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
-         ("\\.cmake\\'"         . cmake-mode)))
+         ("\\.cmake\\'" . cmake-mode)))
 
 (add-to-list 'auto-mode-alist '("/meson\\(\\.build\\|_options\\.txt\\)\\'" . prog-mode))
 
@@ -535,12 +535,12 @@
   ;; Redefine buggy gofmt defun in go-mode.el
   (defun gofmt ()
     (interactive)
-    (let ((pos        (point))
-          (in-file    buffer-file-name)
+    (let ((pos (point))
+          (in-file buffer-file-name)
           (out-buffer (get-buffer-create "*gofmt-out*"))
           (err-buffer (get-buffer-create "*gofmt-err*"))
-          (temp-file  (make-temp-file "gofmttmp"))
-          (err-file   (make-temp-file "gofmterr")))
+          (temp-file (make-temp-file "gofmttmp"))
+          (err-file (make-temp-file "gofmterr")))
       (unwind-protect
           (progn
             (write-region (point-min) (point-max) temp-file)
@@ -591,8 +591,8 @@
 (defun ht/scheme-mode ()
   (dolist (form+n '((conde . 0)
                     (fresh . 1)
-                    (run   . 2)
-                    (run*  . 1)))
+                    (run . 2)
+                    (run* . 1)))
     (put (car form+n) 'scheme-indent-function (cdr form+n))))
 
 (dolist (f '(ht/scheme-mode
@@ -663,8 +663,8 @@
              (ht/dune-project-exists-p)
              (assoc 'auto-revert-mode minor-mode-alist))
     (let ((default-directory (project-root (project-current t)))
-          (out-buffer        (get-buffer-create "*dune-fmt-out*"))
-          (err-buffer        (get-buffer-create "*dune-fmt-err*")))
+          (out-buffer (get-buffer-create "*dune-fmt-out*"))
+          (err-buffer (get-buffer-create "*dune-fmt-err*")))
       (shell-command ht/dune-fmt-command out-buffer err-buffer))))
 
 (use-package tuareg
@@ -677,7 +677,7 @@
 (use-package dune
   :if (and (executable-find "dune")
            (locate-file "dune.el" load-path))
-  :mode (("dune\\'"         . dune-mode)
+  :mode (("dune\\'" . dune-mode)
          ("dune-project\\'" . dune-mode))
   :commands dune-mode)
 
@@ -686,7 +686,7 @@
            (locate-file "merlin.el" load-path))
   :commands merlin-mode
   :defines merlin-command
-  :hook ((caml-mode   . merlin-mode)
+  :hook ((caml-mode . merlin-mode)
          (tuareg-mode . merlin-mode))
   :init
   (when (executable-find "opam")
