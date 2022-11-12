@@ -655,26 +655,31 @@
     (when ocaml-toplevel-path
       (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
 
+(defvar ht/dune-fmt-command "dune fmt")
+
+(defun ht/project-dune-fmt ()
+  (interactive)
+  (when (and (derived-mode-p 'tuareg-mode)
+             (ht/dune-project-exists-p)
+             (assoc 'auto-revert-mode minor-mode-alist))
+    (let ((default-directory (project-root (project-current t)))
+          (out-buffer        (get-buffer-create "*dune-fmt-out*"))
+          (err-buffer        (get-buffer-create "*dune-fmt-err*")))
+      (shell-command ht/dune-fmt-command out-buffer err-buffer))))
+
 (use-package tuareg
   :ensure t
-  :commands (tuareg-mode tuareg-menhir-mode tuareg-jbuild-mode)
-  :mode (("dune\\'"         . tuareg-jbuild-mode)
-         ("dune-project\\'" . tuareg-jbuild-mode))
+  :commands (tuareg-mode tuareg-menhir-mode)
   :hook ((tuareg-mode . electric-indent-local-mode))
   :init
-  (ht/get-ocaml-env)
-  :config
-  (defvar ht/dune-fmt-command "dune fmt")
-  (defun ht/project-dune-fmt ()
-    (interactive)
-    (when (and (derived-mode-p 'tuareg-mode)
-               (ht/dune-project-exists-p)
-               (assoc 'auto-revert-mode minor-mode-alist))
-      (let ((default-directory (project-root (project-current t)))
-            (out-buffer        (get-buffer-create "*dune-fmt-out*"))
-            (err-buffer        (get-buffer-create "*dune-fmt-err*")))
-        (shell-command ht/dune-fmt-command out-buffer err-buffer))))
-  nil)
+  (ht/get-ocaml-env))
+
+(use-package dune
+  :if (and (executable-find "dune")
+           (locate-file "dune.el" load-path))
+  :mode (("dune\\'"         . dune-mode)
+         ("dune-project\\'" . dune-mode))
+  :commands dune-mode)
 
 (use-package merlin
   :if (and (executable-find "ocamlmerlin")
