@@ -2,12 +2,12 @@
 MY_HOSTS = proteus thalassa thaumas
 
 # hosts and their package sets
-proteus  = bash foot gdb git git-unix \
-           sway sway-proteus
+proteus  = bash emacs foot gdb git git-unix \
+           sway sway-proteus xdg
 thalassa = bash emacs foot gdb git git-unix \
            sway sway-thalassa xdg
 thaumas  = bash emacs foot gdb git git-unix \
-           sway sway-thaumas
+           sway sway-thaumas xdg
 
 # base package set for undefined hosts
 BASE_PKGS = bash git git-unix
