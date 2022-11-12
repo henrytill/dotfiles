@@ -427,6 +427,10 @@
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 
+;;; ELISP
+
+(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+
 ;;; C/C++
 
 (defun ht/modify-c-syntax-entries ()
