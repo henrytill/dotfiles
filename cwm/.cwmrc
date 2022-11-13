@@ -1,0 +1,44 @@
+fontname "PragmataProMono:style=Bold:pixelsize=14"
+
+color activeborder goldenrod
+color inactiveborder dimgray
+
+unbind-key all
+unbind-mouse all
+
+bind-key S4-c restart
+bind-key S4-e quit
+
+bind-key 4-Return terminal
+bind-key 4-d menu-exec
+bind-key 4-period menu-ssh
+
+bind-key 4-f window-fullscreen
+bind-key S4-q window-delete
+bind-key 4-Tab window-cycle
+bind-key 4-c window-hide
+bind-key 4-s menu-window
+
+bind-key 4-h window-move-left-big
+bind-key 4-j window-move-down-big
+bind-key 4-k window-move-up-big
+bind-key 4-l window-move-right-big
+
+bind-key 4-Left window-move-left-big
+bind-key 4-Down window-move-down-big
+bind-key 4-Up window-move-up-big
+bind-key 4-Right window-move-right-big
+
+bind-key S4-h window-resize-left
+bind-key S4-j window-resize-down
+bind-key S4-k window-resize-up
+bind-key S4-l window-resize-right
+
+bind-key S4-Left window-resize-left
+bind-key S4-Down window-resize-down
+bind-key S4-Up window-resize-up
+bind-key S4-Right window-resize-right
+
+bind-mouse 4-1 window-move
+bind-mouse 4-2 window-resize
+bind-mouse 4-3 window-lower
