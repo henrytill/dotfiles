@@ -8,6 +8,7 @@ Xft.rgba:               rgb
 XTerm*faceName:         xft:PragmataProMono:pixelsize=14
 XTerm*boldFont:         xft:PragmataProMono:style=Bold:pixelsize=14
 XTerm.termName:         xterm-256color
+XTerm.omitTranslation:  fullscreen
 
 ! https://www.gnu.org/software/emacs/manual/html_node/efaq/Meta-key-does-not-work-in-xterm.html
 XTerm*eightBitInput:    false
