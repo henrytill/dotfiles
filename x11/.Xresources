@@ -5,11 +5,11 @@ Xft.hintstyle:          hintslight
 Xft.lcdfilter:          lcddefault
 Xft.rgba:               rgb
 
-XTerm*faceName:         xft:PragmataProMono:pixelsize=14
-XTerm*boldFont:         xft:PragmataProMono:style=Bold:pixelsize=14
-XTerm.termName:         xterm-256color
-XTerm.omitTranslation:  fullscreen
+UXTerm*faceName:        xft:PragmataProMono:size=14
+UXTerm*boldFont:        xft:PragmataProMono:style=Bold:size=14
+UXTerm.termName:        xterm-256color
+UXTerm.omitTranslation: fullscreen
 
 ! https://www.gnu.org/software/emacs/manual/html_node/efaq/Meta-key-does-not-work-in-xterm.html
-XTerm*eightBitInput:    false
-XTerm*eightBitOutput:   true
+UXTerm*eightBitInput:   false
+UXTerm*eightBitOutput:  true
