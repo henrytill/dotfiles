@@ -29,15 +29,15 @@ bind-key 4-Down window-move-down-big
 bind-key 4-Up window-move-up-big
 bind-key 4-Right window-move-right-big
 
-bind-key S4-h window-resize-left
-bind-key S4-j window-resize-down
-bind-key S4-k window-resize-up
-bind-key S4-l window-resize-right
+bind-key S4-h window-resize-left-big
+bind-key S4-j window-resize-down-big
+bind-key S4-k window-resize-up-big
+bind-key S4-l window-resize-right-big
 
-bind-key S4-Left window-resize-left
-bind-key S4-Down window-resize-down
-bind-key S4-Up window-resize-up
-bind-key S4-Right window-resize-right
+bind-key S4-Left window-resize-left-big
+bind-key S4-Down window-resize-down-big
+bind-key S4-Up window-resize-up-big
+bind-key S4-Right window-resize-right-big
 
 bind-mouse 4-1 window-move
 bind-mouse 4-2 window-resize
