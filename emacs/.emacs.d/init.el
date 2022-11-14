@@ -212,13 +212,6 @@
 
 (load-theme 'modus-operandi)
 
-(global-font-lock-mode 0)
-
-(defun ht/set-font-lock-face-attributes ()
-  (set-face-attribute 'font-lock-comment-face nil :foreground "#7f7f7f"))
-
-(add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
-
 (defconst ht/preferred-unix-font "PragmataPro Mono:size=14")
 (defconst ht/preferred-win-font "PragmataPro Mono:size=14")
 
