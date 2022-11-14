@@ -649,9 +649,10 @@
   (when (executable-find "opam")
     (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
       (setenv (car var) (cadr var))))
-  (let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
-    (when ocaml-toplevel-path
-      (add-to-list 'load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
+  (let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH"))
+         (ocaml-load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))
+    (when ocaml-load-path
+      (add-to-list 'load-path ocaml-load-path))))
 
 (defvar ht/dune-fmt-command "dune fmt")
 
