@@ -1,4 +1,4 @@
-;;; init.el
+;;; init.el  -*- whitespace-line-column: 100; -*-
 
 (message "Loading %s ..." load-file-name)
 
