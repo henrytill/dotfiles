@@ -381,7 +381,7 @@
 ;;; WHITESPACE
 
 (with-eval-after-load 'whitespace
-  (setq whitespace-style '(face trailing lines-tail)
+  (setq whitespace-style '(face tabs trailing lines-tail)
         whitespace-line-column 80))
 
 (add-hook 'prog-mode-hook #'whitespace-mode)
