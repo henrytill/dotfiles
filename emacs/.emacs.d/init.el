@@ -804,6 +804,9 @@
 
 (add-hook 'comint-output-filter-functions #'comint-osc-process-output)
 
+(when (fboundp 'bash-completion-dynamic-complete)
+  (add-hook 'shell-dynamic-complete-functions #'bash-completion-dynamic-complete))
+
 
 ;;; --- WAYLAND COPY/PASTE --- ;;;
 
