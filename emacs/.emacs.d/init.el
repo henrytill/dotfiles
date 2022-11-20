@@ -2,7 +2,7 @@
 
 (message "Loading %s ..." load-file-name)
 
-;; Reduce the frequency of garbage collection during startup
+;;; Reduce the frequency of garbage collection during startup
 (setq gc-cons-threshold  (* 50 1000 1000))
 
 (defun ht/reset-gc-cons-threshold ()
@@ -151,7 +151,7 @@
         (cmd (cdr binding)))
     (global-set-key (kbd key) cmd)))
 
-;; https://stackoverflow.com/questions/5147060/how-can-i-access-directory-local-variables-in-my-major-mode-hooks
+;;; https://stackoverflow.com/questions/5147060/how-can-i-access-directory-local-variables-in-my-major-mode-hooks
 (defun ht/run-local-vars-mode-hook ()
   "Run a hook for the major-mode after the local variables have been processed."
   (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
@@ -196,8 +196,8 @@
 
 ;;; --- COSMETICS --- ;;;
 
-;; https://codeberg.org/dnkl/foot/issues/549#issuecomment-201932
-;; https://codeberg.org/dnkl/foot/wiki#only-8-colors-in-emacs
+;;; https://codeberg.org/dnkl/foot/issues/549#issuecomment-201932
+;;; https://codeberg.org/dnkl/foot/wiki#only-8-colors-in-emacs
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
 
 (when (version<= "26.1" emacs-version)
@@ -216,16 +216,15 @@
 (defconst ht/preferred-win-font "PragmataPro Mono:size=14")
 
 (defun ht/set-face-attributes (frame)
-  (when (and (is-unix-p) (display-graphic-p))
-    (set-fontset-font "fontset-default" 'unicode ht/preferred-unix-font)
-    (set-face-attribute 'default frame :font ht/preferred-unix-font)
-    (set-face-attribute 'region frame :background "lightgoldenrod2"))
-  (when (and (is-windows-p) (display-graphic-p))
-    (set-fontset-font "fontset-default" 'unicode ht/preferred-win-font)
-    (set-face-attribute 'default frame :font ht/preferred-win-font))
   (when (display-graphic-p)
     (set-face-attribute 'mode-line frame :box nil)
-    (set-face-attribute 'mode-line-inactive frame :box nil)))
+    (set-face-attribute 'mode-line-inactive frame :box nil)
+    (cond ((is-unix-p)
+           (progn (set-fontset-font "fontset-default" 'unicode ht/preferred-unix-font)
+                  (set-face-attribute 'default frame :font ht/preferred-unix-font)))
+          ((is-windows-p)
+           (progn (set-fontset-font "fontset-default" 'unicode ht/preferred-win-font)
+                  (set-face-attribute 'default frame :font ht/preferred-win-font))))))
 
 (defun ht/remove-decorations ()
   (when (is-unix-p)
