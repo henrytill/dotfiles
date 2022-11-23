@@ -809,6 +809,7 @@
 
 (use-package rec-mode
   :ensure t
+  :if (not (is-windows-p))
   :commands rec-mode)
 
 (use-package yaml-mode
