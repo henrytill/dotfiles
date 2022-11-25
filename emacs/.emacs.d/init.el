@@ -589,10 +589,17 @@
              enable-paredit-mode))
   (add-hook 'scheme-mode-hook f))
 
+(use-package geiser
+  :ensure t
+  :defer t)
+
 (use-package geiser-guile
   :ensure t
-  :if (executable-find "guile")
-  :commands (geiser geiser-mode geiser-mode--maybe-activate))
+  :defer t)
+
+(use-package geiser-racket
+  :ensure t
+  :defer t)
 
 ;;; COMMON LISP
 
