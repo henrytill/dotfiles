@@ -3,7 +3,7 @@
 	url = https://github.com/jwiegley/use-package.git
 [submodule "emacs/.emacs.d/site-lisp/paredit"]
 	path = emacs/.emacs.d/site-lisp/paredit
-	url = https://github.com/emacsmirror/paredit.git
+	url = http://paredit.org/cgit/paredit/
 [submodule "emacs/.emacs.d/site-lisp/compile-commands"]
 	path = emacs/.emacs.d/site-lisp/compile-commands
 	url = https://git.sr.ht/~henrytill/compile-commands
