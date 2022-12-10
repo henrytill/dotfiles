@@ -419,10 +419,6 @@
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 
-;;; ELISP
-
-(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-
 ;;; C/C++
 
 (defun ht/modify-c-syntax-entries ()
@@ -575,6 +571,16 @@
         haskell-process-type 'cabal-repl
         haskell-stylish-on-save t
         haskell-tags-on-save t))
+
+;;; ELISP
+
+(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+
+(use-package macrostep
+  :ensure t
+  :commands macrostep-expand)
+
+(bind-key "C-c e" #'macrostep-expand emacs-lisp-mode-map)
 
 ;;; SCHEME
 
