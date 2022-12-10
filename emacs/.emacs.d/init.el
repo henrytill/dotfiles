@@ -607,6 +607,8 @@
   :ensure t
   :defer t)
 
+(add-hook 'geiser-repl-mode-hook #'company-mode)
+
 ;;; COMMON LISP
 
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
