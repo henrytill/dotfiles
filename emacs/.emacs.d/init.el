@@ -1,4 +1,4 @@
-;;; init.el  -*- whitespace-line-column: 100; -*-
+;;; -*- whitespace-line-column: 100; -*-
 
 (message "Loading %s ..." load-file-name)
 
@@ -821,7 +821,6 @@
            (executable-find "wl-copy")
            (executable-find "wl-paste"))
   (defvar wl-copy-process nil)
-
   (defun wl-copy (text)
     (setq wl-copy-process (make-process :name "wl-copy"
                                         :buffer nil
@@ -829,12 +828,10 @@
                                         :connection-type 'pipe))
     (process-send-string wl-copy-process text)
     (process-send-eof wl-copy-process))
-
   (defun wl-paste ()
     (if (and wl-copy-process (process-live-p wl-copy-process))
         nil
       (shell-command-to-string "wl-paste -n | tr -d \r")))
-
   (setq interprogram-cut-function 'wl-copy
         interprogram-paste-function 'wl-paste))
 
