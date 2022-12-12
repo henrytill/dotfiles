@@ -756,9 +756,11 @@
 
 ;;; TCL
 
-(with-eval-after-load 'tcl
-  (setq tcl-indent-level 2
-        tcl-continued-indent-level 2))
+(ht/comment
+  (with-eval-after-load 'tcl
+    (setq tcl-indent-level 2
+          tcl-continued-indent-level 2))
+  nil)
 
 ;;; TEX
 
