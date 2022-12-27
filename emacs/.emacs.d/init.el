@@ -595,10 +595,6 @@
              enable-paredit-mode))
   (add-hook 'scheme-mode-hook f))
 
-(use-package geiser
-  :ensure t
-  :defer t)
-
 (use-package geiser-guile
   :ensure t
   :defer t)
