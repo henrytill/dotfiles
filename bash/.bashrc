@@ -69,6 +69,12 @@ if ! shopt -oq posix; then
     fi
 fi
 
+if [ -n "$SSH_CLIENT" ]; then
+    if [[ $PS1 =~ (.*)"\\$" ]]; then
+        PS1="${BASH_REMATCH[1]} [ssh]\\\$ "
+    fi
+fi
+
 # Automatically added by the Guix install script.
 if [ -n "$GUIX_ENVIRONMENT" ]; then
     if [[ $PS1 =~ (.*)"\\$" ]]; then
