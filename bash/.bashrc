@@ -28,10 +28,19 @@ shopt -s globstar
 
 case "$TERM" in
 xterm*|rxvt*|foot*|screen*)
-    PS1="\n\[\e[1m\]\u@\h\[\e[0m\] \w\\$ "
+    PS1="\n${debian_chroot:+($debian_chroot)}\[\e[1m\]\u@\h\[\e[0m\] \w\\$ "
     ;;
 eterm*|dumb)
-    PS1="\n\u@\h \w\\$ "
+    PS1="\n${debian_chroot:+($debian_chroot)}\u@\h \w\\$ "
+    ;;
+esac
+
+# Set the title
+case "$TERM" in
+xterm*|rxvt*|foot*|screen*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h \w\a\]$PS1"
+    ;;
+*)
     ;;
 esac
 
