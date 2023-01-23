@@ -303,6 +303,12 @@
   (require 'info)
   (add-to-list 'Info-additional-directory-list (expand-file-name "info" (xdg-data-home))))
 
+;;; ORG-MODE
+
+(with-eval-after-load 'org
+  (message "Loading org config...")
+  (require 'oc-csl))
+
 ;;; ALIGN
 
 (with-eval-after-load 'align
@@ -330,7 +336,8 @@
   :ensure t
   :commands company-mode
   :hook ((prog-mode . company-mode)
-         (shell-mode . company-mode))
+         (shell-mode . company-mode)
+         (org-mode . company-mode))
   :config
   (delete 'company-clang company-backends)
   (delete 'company-xcode company-backends))
