@@ -781,6 +781,13 @@
     (add-to-list 'TeX-view-program-selection
                  '(output-pdf "mupdf"))))
 
+(defun ht/bibtex-mode ()
+  (ht/truncate-lines)
+  (display-line-numbers-mode 1)
+  (whitespace-mode 1))
+
+(add-hook 'bibtex-mode-hook #'ht/bibtex-mode)
+
 ;;; MISC
 
 (use-package debbugs
