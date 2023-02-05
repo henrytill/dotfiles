@@ -203,7 +203,10 @@
 (setq-default display-line-numbers-width 4
               display-line-numbers-widen t)
 
-(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+(dolist (mode-hook '(prog-mode-hook
+                     conf-mode-hook
+                     org-mode-hook))
+  (add-hook mode-hook #'display-line-numbers-mode))
 
 (setq frame-background-mode 'light)
 
@@ -305,9 +308,6 @@
   (add-to-list 'Info-additional-directory-list (expand-file-name "info" (xdg-data-home))))
 
 ;;; ORG-MODE
-
-(dolist (f '(display-line-numbers-mode))
-  (add-hook 'org-mode-hook f))
 
 (with-eval-after-load 'org
   (message "Loading org config...")
