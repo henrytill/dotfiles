@@ -289,16 +289,16 @@
 
 ;;; SITE-LISP
 
-(add-to-list 'load-path (expand-file-name "paredit" ht/site-lisp-directory))
-(autoload 'enable-paredit-mode "paredit.el" "Turn on pseudo-structural editing of Lisp code." t)
-
 (add-to-list 'load-path (expand-file-name "compile-commands" ht/site-lisp-directory))
 (autoload 'compile-commands-get-include-directories "compile-commands.el")
 
-(add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
-
 (add-to-list 'load-path (expand-file-name "magit-annex" ht/site-lisp-directory))
 (autoload 'magit-annex-dispatch "magit-annex.el")
+
+(add-to-list 'load-path (expand-file-name "paredit" ht/site-lisp-directory))
+(autoload 'enable-paredit-mode "paredit.el" "Turn on pseudo-structural editing of Lisp code." t)
+
+(add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
 
 ;;; XDG
 
