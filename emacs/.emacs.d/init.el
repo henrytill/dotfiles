@@ -380,10 +380,10 @@
     (delete '(project-vc-dir "VC-Dir") project-switch-commands)
     (delete '(project-eshell "Eshell") project-switch-commands)
     ;; Add Magit
-    (define-key project-prefix-map "m" #'magit-project-status)
+    (bind-key "m" #'magit-project-status project-prefix-map)
     (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)
     ;; Add Shell
-    (define-key project-prefix-map "s" #'project-shell)
+    (bind-key "s" #'project-shell project-prefix-map)
     (add-to-list 'project-switch-commands '(project-shell "Shell") t)))
 
 ;;; PROG-MODE
