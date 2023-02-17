@@ -297,6 +297,9 @@
 
 (add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
 
+(add-to-list 'load-path (expand-file-name "magit-annex" ht/site-lisp-directory))
+(autoload 'magit-annex-dispatch "magit-annex.el")
+
 ;;; XDG
 
 (autoload 'xdg-data-home "xdg.el")
@@ -365,7 +368,8 @@
          (magit-diff-mode . font-lock-mode))
   :config
   (put 'magit-clean 'disabled nil)
-  (setq magit-last-seen-setup-instructions "1.4.0"))
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  (bind-key "@" #'magit-annex-dispatch magit-mode-map))
 
 ;;; PROJECT
 
