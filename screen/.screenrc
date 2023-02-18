@@ -4,3 +4,4 @@ hardstatus off
 hardstatus alwaysfirstline "%H    %w"
 vbell off
 unsetenv COLORTERM
+startup_message off
