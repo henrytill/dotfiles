@@ -2,9 +2,9 @@
 MY_HOSTS = proteus thalassa thaumas
 
 # hosts and their package sets
-proteus  = bash emacs foot gdb git git-unix \
+proteus  = bash emacs foot gdb git git-unix nix nixpkgs \
            sway sway-proteus xdg
-thalassa = bash emacs foot gdb git git-unix \
+thalassa = bash emacs foot gdb git git-unix nix nixpkgs \
            sway sway-thalassa xdg sbcl
 thaumas  = bash emacs foot gdb git git-unix \
            sway sway-thaumas xdg
