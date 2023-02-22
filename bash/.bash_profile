@@ -38,7 +38,7 @@ elif [ -n "$(command -v mg)" ]; then
 fi
 
 # Allows Emacs installed by Guix to use system terminfo dirs
-TERMINFO_DIRS=/usr/share/terminfo/
+TERMINFO_DIRS="/usr/share/terminfo/"
 if [ -d "$TERMINFO_DIRS" ]; then
     export TERMINFO_DIRS
 fi
