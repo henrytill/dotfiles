@@ -295,9 +295,6 @@
 (add-to-list 'load-path (expand-file-name "magit-annex" ht/site-lisp-directory))
 (autoload 'magit-annex-dispatch "magit-annex.el")
 
-(add-to-list 'load-path (expand-file-name "paredit" ht/site-lisp-directory))
-(autoload 'enable-paredit-mode "paredit.el" "Turn on pseudo-structural editing of Lisp code." t)
-
 (add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
 
 ;;; XDG
@@ -336,6 +333,12 @@
                    (ocaml-assignment  . "\\(\\s-+\\)=\\s-+")
                    (ocaml-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
                    (ocaml-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
+
+;;; PAREDIT
+
+(use-package paredit
+  :ensure t
+  :commands enable-paredit-mode)
 
 ;;; COMPANY
 
