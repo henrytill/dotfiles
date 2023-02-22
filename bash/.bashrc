@@ -27,10 +27,10 @@ shopt -s globstar
 [ -n "$(command -v lesspipe)" ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 case "$TERM" in
-xterm*|rxvt*|foot*|screen*)
+xterm*|rxvt*|foot*|screen*|eterm-color)
     PS1="\n${debian_chroot:+($debian_chroot)}\[\e[1m\]\u@\h\[\e[0m\] \w\\$ "
     ;;
-eterm*|dumb)
+dumb)
     PS1="\n${debian_chroot:+($debian_chroot)}\u@\h \w\\$ "
     ;;
 esac
