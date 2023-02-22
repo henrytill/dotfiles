@@ -10,9 +10,9 @@ if [ -d "$HOME/.cabal/bin" ]; then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
-OPAMSH="$HOME/.opam/opam-init/init.sh"
-if [ -e "$OPAMSH" ]; then
-    . "$OPAMSH" > /dev/null 2> /dev/null || true
+OPAM_VARIABLES_SH="$HOME/.opam/opam-init/variables.sh"
+if [ -r "$OPAM_VARIABLES_SH" ]; then
+    . "$OPAM_VARIABLES_SH" >/dev/null 2>/dev/null || true
 fi
 
 PLAN9="/usr/local/plan9"

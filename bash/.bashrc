@@ -78,6 +78,13 @@ if ! shopt -oq posix; then
     fi
 fi
 
+OPAM_COMPLETE_SH="$HOME/.opam/opam-init/complete.sh"
+OPAM_ENV_HOOK_SH="$HOME/.opam/opam-init/env_hook.sh"
+if [ -r "$OPAM_COMPLETE_SH" ] && [ -r "$OPAM_ENV_HOOK_SH" ]; then
+    . "$OPAM_COMPLETE_SH" >/dev/null 2>/dev/null || true
+    . "$OPAM_ENV_HOOK_SH" >/dev/null 2>/dev/null || true
+fi
+
 if [ -n "$SSH_CLIENT" ]; then
     if [[ $PS1 =~ (.*)"\\$" ]]; then
         PS1="${BASH_REMATCH[1]} [ssh]\\\$ "
