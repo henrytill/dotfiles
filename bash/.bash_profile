@@ -49,6 +49,8 @@ export NO_COLOR=1
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+export npm_config_prefix="$HOME/.local"
+
 # Launch sway automatically
 SWAY_SESSION="/usr/local/bin/sway-session"
 if [ "$(uname)" = "Linux" ] && [ -e "$SWAY_SESSION" ] && [ "$(tty)" = "/dev/tty1" ]; then
