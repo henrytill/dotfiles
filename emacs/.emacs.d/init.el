@@ -727,7 +727,8 @@
            (locate-file "utop.el" load-path))
   :commands (utop utop-minor-mode)
   :hook ((tuareg-mode . utop-minor-mode)
-         (tuareg-mode . ht/set-utop-command)))
+         (tuareg-mode . ht/set-utop-command)
+         (utop-mode . company-mode)))
 
 (use-package ocp-indent
   :if (and (executable-find "ocp-indent")
