@@ -311,7 +311,9 @@
 
 (with-eval-after-load 'org
   (message "Loading org config...")
-  (require 'oc-csl))
+  (require 'oc-csl)
+  (add-to-list 'org-file-apps '("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s"))
+  nil)
 
 ;;; ALIGN
 
