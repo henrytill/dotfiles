@@ -639,6 +639,13 @@
 (defun sly-common-lisp-indent-function (indent-point state)
   (common-lisp-indent-function indent-point state))
 
+;;; JAVASCRIPT
+
+(add-to-list 'auto-mode-alist '("\\.mjs\\'" . javascript-mode))
+
+(with-eval-after-load 'javascript
+  (setq js-indent-level 2))
+
 ;;; LUA
 
 (use-package lua-mode
