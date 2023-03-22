@@ -1,0 +1,9 @@
+{
+    "workbench.colorTheme": "Default Light+ Experimental",
+    "editor.fontFamily": "'PragmataPro Mono'",
+    "editor.fontLigatures": false,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "window.menuBarVisibility": "toggle"
+}
