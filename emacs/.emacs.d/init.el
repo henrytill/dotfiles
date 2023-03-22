@@ -643,7 +643,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.mjs\\'" . javascript-mode))
 
-(with-eval-after-load 'javascript
+(with-eval-after-load 'js
   (setq js-indent-level 2))
 
 ;;; LUA
