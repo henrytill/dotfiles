@@ -10,7 +10,7 @@ thaumas  = bash emacs foot gdb git git-unix \
            sway sway-thaumas xdg
 
 # base package set for undefined hosts
-BASE_PKGS = bash git git-unix
+BASE_PKGS = git git-unix
 
 # target directories
 TARG_DIRS = ../.config
