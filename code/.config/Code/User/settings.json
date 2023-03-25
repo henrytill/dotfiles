@@ -15,11 +15,7 @@
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "dev.containers.dockerPath": "podman",
-    "dev.containers.dockerComposePath": "podman-compose",
     "git.autofetch": true,
     "dotfiles.targetPath": "~/etc",
-    "dotfiles.installCommand": "make",
-    "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
-    "terminal.integrated.tabs.location": "left"
+    "dotfiles.repository": "https://github.com/henrytill/dotfiles.git"
 }
