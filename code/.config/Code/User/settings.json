@@ -1,9 +1,25 @@
 {
-    "workbench.colorTheme": "Default Light+ Experimental",
-    "editor.fontFamily": "'PragmataPro Mono'",
-    "editor.fontLigatures": false,
+    "editor.fontFamily": "'PragmataPro Mono Liga'",
+    "editor.fontLigatures": true,
+    "editor.lineHeight": 1.2,
+    "files.insertFinalNewline": true,
+    "window.menuBarVisibility": "toggle",
+    "workbench.colorTheme": "GitHub Light Default",
+    "workbench.sideBar.location": "right",
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "window.menuBarVisibility": "toggle"
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "dev.containers.dockerPath": "podman",
+    "dev.containers.dockerComposePath": "podman-compose",
+    "git.autofetch": true,
+    "dotfiles.targetPath": "~/etc",
+    "dotfiles.installCommand": "make",
+    "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
+    "terminal.integrated.tabs.location": "left"
 }
