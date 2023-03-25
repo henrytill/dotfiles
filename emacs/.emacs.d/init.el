@@ -270,6 +270,9 @@
 
 (winner-mode 1)
 
+(require 'ansi-color)
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+
 
 ;;; --- GENERAL --- ;;;
 
