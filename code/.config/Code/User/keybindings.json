@@ -1,0 +1,13 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+e",
+        "command": "ctrl+e",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "ctrl+k",
+        "when": "terminalFocus"
+    }
+]
