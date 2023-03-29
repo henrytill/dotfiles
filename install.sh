@@ -10,4 +10,6 @@ if [ -n "$IN_DEV_CONTAINER" ]; then
     exit 0
 fi
 
-make -C $DIR
+if [ "$USER" = "ht" ]; then
+    make -C $DIR
+fi
