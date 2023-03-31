@@ -1,6 +1,6 @@
 {
-  "editor.fontFamily": "'PragmataPro Mono Liga'",
-  "editor.fontLigatures": true,
+  "editor.fontFamily": "'PragmataPro Mono'",
+  "editor.fontLigatures": false,
   "editor.lineHeight": 1.2,
   "editor.inlineSuggest.enabled": true,
   "editor.formatOnSave": true,
@@ -11,6 +11,15 @@
   "git.autofetch": true,
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
+  "settingsSync.ignoredExtensions": [
+    "ms-toolsai.jupyter",
+    "ms-toolsai.vscode-jupyter-cell-tags",
+    "ms-toolsai.jupyter-keymap",
+    "ms-toolsai.jupyter-renderers",
+    "ms-toolsai.vscode-jupyter-slideshow",
+    "ms-python.vscode-pylance",
+    "ms-python.python"
+  ],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -22,5 +31,8 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.formatOnType": true
   }
 }

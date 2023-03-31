@@ -1,13 +1,23 @@
 // Place your key bindings in this file to override the defaults
 [
-    {
-        "key": "ctrl+e",
-        "command": "ctrl+e",
-        "when": "terminalFocus"
-    },
-    {
-        "key": "ctrl+k",
-        "command": "ctrl+k",
-        "when": "terminalFocus"
-    }
+  {
+    "key": "ctrl+e",
+    "command": "ctrl+e",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "ctrl+k",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+right",
+    "command": "-emacs-mcx.forwardWord",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+left",
+    "command": "-emacs-mcx.backwardWord",
+    "when": "editorTextFocus"
+  }
 ]
