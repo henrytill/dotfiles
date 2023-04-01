@@ -313,6 +313,14 @@
   (docker-tramp-add-method)
   (tramp-set-completion-function docker-tramp-method docker-tramp-completion-function-alist))
 
+;;; DIRED
+
+(with-eval-after-load 'dired
+  (require 'browse-url)
+  (defun browse-pdf-with-zathura (url &optional new-window)
+    (start-process (concat "zathura \"" url "\"") nil "zathura" url))
+  (add-to-list 'browse-url-handlers '("\\.pdf\\'" . browse-pdf-with-zathura)))
+
 ;;; INFO
 
 (when (and (is-linux-p) (fboundp 'xdg-data-home))
