@@ -19,5 +19,15 @@
     "key": "ctrl+left",
     "command": "-emacs-mcx.backwardWord",
     "when": "editorTextFocus"
+  },
+  {
+    "key": "up",
+    "command": "-emacs-mcx.isearchExit",
+    "when": "editorFocus && findWidgetVisible && !config.emacs-mcx.cursorMoveOnFindWidget && !isComposing && !replaceInputFocussed"
+  },
+  {
+    "key": "down",
+    "command": "-emacs-mcx.isearchExit",
+    "when": "editorFocus && findWidgetVisible && !config.emacs-mcx.cursorMoveOnFindWidget && !isComposing && !replaceInputFocussed"
   }
 ]
