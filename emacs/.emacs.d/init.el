@@ -317,9 +317,11 @@
 
 (with-eval-after-load 'dired
   (require 'browse-url)
-  (defun browse-pdf-with-zathura (url &optional new-window)
-    (start-process (concat "zathura \"" url "\"") nil "zathura" url))
-  (add-to-list 'browse-url-handlers '("\\.pdf\\'" . browse-pdf-with-zathura)))
+  (when (executable-find "zathura")
+    (defun browse-pdf-with-zathura (url &optional new-window)
+      (start-process (concat "zathura \"" url "\"") nil "zathura" url))
+    (add-to-list 'browse-url-handlers '("\\.pdf\\'" . browse-pdf-with-zathura)))
+  nil)
 
 ;;; INFO
 
