@@ -1,25 +1,32 @@
 {
+  "debug.enableStatusBarColor": false,
   "editor.fontFamily": "'PragmataPro Mono'",
   "editor.fontLigatures": false,
   "editor.lineHeight": 1.2,
   "editor.inlineSuggest.enabled": true,
   "editor.formatOnSave": true,
+  "editor.semanticTokenColorCustomizations": {
+    "enabled": true,
+    "rules": {
+      "*.mutable": {
+        "underline": false
+      }
+    }
+  },
   "files.insertFinalNewline": true,
   "window.menuBarVisibility": "toggle",
   "workbench.colorTheme": "GitHub Light Default",
   "workbench.sideBar.location": "right",
   "git.autofetch": true,
+  "githubPullRequests.createOnPublishBranch": "never",
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": true
+  },
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
-  "settingsSync.ignoredExtensions": [
-    "ms-toolsai.jupyter",
-    "ms-toolsai.vscode-jupyter-cell-tags",
-    "ms-toolsai.jupyter-keymap",
-    "ms-toolsai.jupyter-renderers",
-    "ms-toolsai.vscode-jupyter-slideshow",
-    "ms-python.vscode-pylance",
-    "ms-python.python"
-  ],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -34,5 +41,6 @@
   },
   "[python]": {
     "editor.formatOnType": true
-  }
+  },
+  "diffEditor.ignoreTrimWhitespace": false
 }
