@@ -47,6 +47,7 @@ if [ -d "$TERMINFO_DIRS" ]; then
     export TERMINFO_DIRS
 fi
 
+export LC_COLLATE=C
 export NO_COLOR=1
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 export _JAVA_AWT_WM_NONREPARENTING=1
