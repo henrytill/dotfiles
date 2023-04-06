@@ -276,6 +276,10 @@
 
 ;;; --- GENERAL --- ;;;
 
+;;; CUA
+
+(cua-mode 1)
+
 ;;; NAVIGATION
 
 (defun ht/next-page ()
