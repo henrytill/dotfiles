@@ -22,7 +22,7 @@ if [ -n "$(command -v emacsclient)" ]; then
 fi
 
 if [ -n "$(command -v wl-copy)" ]; then
-    alias clc="wl-copy --clear"
+    alias clear-clipboard="wl-copy --clear"
 fi
 
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
