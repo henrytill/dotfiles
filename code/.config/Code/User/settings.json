@@ -18,14 +18,17 @@
   "window.menuBarVisibility": "toggle",
   "workbench.colorTheme": "GitHub Light Default",
   "workbench.sideBar.location": "right",
+  "git.allowForcePush": true,
   "git.autofetch": true,
-  "githubPullRequests.createOnPublishBranch": "never",
+  "telemetry.telemetryLevel": "off",
   "github.copilot.enable": {
     "*": true,
     "yaml": false,
     "plaintext": false,
-    "markdown": true
+    "markdown": true,
+    "scminput": false
   },
+  "githubPullRequests.createOnPublishBranch": "never",
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
   "[javascript]": {
