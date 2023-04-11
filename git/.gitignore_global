@@ -12,7 +12,6 @@ errors.err
 compile_commands.json
 .clangd
 .ccls-cache
-.vscode
 .idea
 .cache
 .*.~undo-tree~
