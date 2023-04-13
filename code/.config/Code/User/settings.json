@@ -1,7 +1,11 @@
 {
   "debug.enableStatusBarColor": false,
   "editor.fontFamily": "'PragmataPro Mono'",
+  "editor.fontSize": 14,
   "editor.fontLigatures": false,
+  "editor.codeLens": false,
+  "editor.codeLensFontFamily": "'PragmataPro Mono'",
+  "editor.codeLensFontSize": 14,
   "editor.lineHeight": 1.2,
   "editor.inlineSuggest.enabled": true,
   "editor.formatOnSave": true,
