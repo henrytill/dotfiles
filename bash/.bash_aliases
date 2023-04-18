@@ -26,7 +26,7 @@ if [ -n "$(command -v wl-copy)" ]; then
 fi
 
 if [ -n "$(command -v lsblk)" ]; then
-    alias lsblk="lsblk -p -o +kname"
+    alias lsblk="lsblk -o +kname"
 fi
 
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
