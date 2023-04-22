@@ -1,17 +1,11 @@
+add_to_path_front () {
+    if [ -d "$1" ]; then
+        PATH="$1:$PATH"
+    fi
+}
+
 if [ -f "$HOME/.bashrc" ]; then
     . "$HOME/.bashrc"
-fi
-
-if [ -d "$HOME/.cargo/bin" ]; then
-    PATH="$HOME/.cargo/bin:$PATH"
-fi
-
-if [ -d "$HOME/.ghcup/bin" ]; then
-    PATH="$HOME/.ghcup/bin:$PATH"
-fi
-
-if [ -d "$HOME/.cabal/bin" ]; then
-    PATH="$HOME/.cabal/bin:$PATH"
 fi
 
 OPAM_VARIABLES_SH="$HOME/.opam/opam-init/variables.sh"
@@ -19,20 +13,18 @@ if [ -r "$OPAM_VARIABLES_SH" ]; then
     . "$OPAM_VARIABLES_SH" >/dev/null 2>/dev/null || true
 fi
 
+add_to_path_front "$HOME/.cargo/bin"
+add_to_path_front "$HOME/.ghcup/bin"
+add_to_path_front "$HOME/.cabal/bin"
+
 PLAN9="/usr/local/plan9"
 if [ -d "$PLAN9" ]; then
     export PLAN9
     PATH="$PATH:$PLAN9/bin"
 fi
 
-if [ -d "$HOME/.local/bin" ]; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-# $HOME/bin should always come first
-if [ -d "$HOME/bin" ]; then
-    PATH="$HOME/bin:$PATH"
-fi
+add_to_path_front "$HOME/.local/bin"
+add_to_path_front "$HOME/bin"
 
 if [ -n "$(command -v emacsclient)" ]; then
     export EDITOR="emacsclient -t"
