@@ -29,10 +29,10 @@
   "telemetry.telemetryLevel": "off",
   "github.copilot.enable": {
     "*": true,
-    "yaml": false,
-    "plaintext": true,
+    "plaintext": false,
     "markdown": true,
-    "scminput": false
+    "scminput": false,
+    "yaml": false
   },
   "githubPullRequests.createOnPublishBranch": "never",
   "dotfiles.targetPath": "~/etc",
