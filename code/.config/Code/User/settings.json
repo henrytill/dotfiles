@@ -1,4 +1,6 @@
 {
+  "debug.console.fontFamily": "'PragmataPro Mono'",
+  "debug.console.fontSize": 14,
   "debug.enableStatusBarColor": false,
   "editor.fontFamily": "'PragmataPro Mono'",
   "editor.fontSize": 14,
@@ -30,7 +32,7 @@
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
-    "markdown": true,
+    "markdown": false,
     "scminput": false,
     "yaml": false
   },
@@ -51,5 +53,8 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.wordWrap": "off"
   }
 }
