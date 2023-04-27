@@ -759,7 +759,8 @@
   :commands (utop utop-minor-mode)
   :hook ((tuareg-mode . utop-minor-mode)
          (tuareg-mode . ht/set-utop-command)
-         (utop-mode . company-mode)))
+         (utop-mode . company-mode)
+         (utop-mode . electric-pair-mode)))
 
 (use-package ocp-indent
   :if (and (executable-find "ocp-indent")
