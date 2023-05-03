@@ -262,7 +262,6 @@
 (dolist (mode-hook '(bibtex-mode-hook
                      compilation-mode-hook
                      dired-mode-hook
-                     markdown-mode-hook
                      prog-mode-hook
                      shell-mode-hook
                      sql-interactive-mode-hook))
@@ -841,7 +840,9 @@
 (use-package markdown-mode
   :ensure t
   :commands markdown-mode
-  :hook (markdown-mode . display-line-numbers-mode))
+  :hook ((markdown-mode . display-line-numbers-mode)
+         (markdown-mode . electric-pair-mode)
+         (markdown-mode . ht/truncate-lines)))
 
 (use-package rec-mode
   :ensure t
@@ -850,7 +851,10 @@
 
 (use-package yaml-mode
   :ensure t
-  :commands yaml-mode)
+  :commands yaml-mode
+  :hook ((yaml-mode . display-line-numbers-mode)
+         (yaml-mode . electric-pair-mode)
+         (yaml-mode . ht/truncate-lines)))
 
 ;;; GOPHER
 
