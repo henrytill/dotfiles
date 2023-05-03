@@ -5,7 +5,6 @@
   "editor.fontFamily": "'PragmataPro Mono'",
   "editor.fontSize": 14,
   "editor.fontLigatures": false,
-  "editor.codeLens": false,
   "editor.codeLensFontFamily": "'PragmataPro Mono'",
   "editor.codeLensFontSize": 14,
   "editor.inlayHints.enabled": "offUnlessPressed",
@@ -21,6 +20,8 @@
       }
     }
   },
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "editor.unicodeHighlight.ambiguousCharacters": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "files.insertFinalNewline": true,
   "window.menuBarVisibility": "toggle",
