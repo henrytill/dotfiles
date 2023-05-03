@@ -28,10 +28,10 @@ shopt -s globstar
 
 case "$TERM" in
 xterm*|rxvt*|foot*|screen*|eterm-color)
-    PS1="\n${debian_chroot:+($debian_chroot)}\[\e[1m\]\u@\h\[\e[0m\] \w\\$ "
+    PS1="\n${debian_chroot:+($debian_chroot)}\[\e[1m\][\$?] \u@\h\[\e[0m\] \w\\$ "
     ;;
 dumb)
-    PS1="\n${debian_chroot:+($debian_chroot)}\u@\h \w\\$ "
+    PS1="\n${debian_chroot:+($debian_chroot)}[\$?] \u@\h \w\\$ "
     ;;
 esac
 
