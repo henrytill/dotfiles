@@ -37,6 +37,10 @@
     "scminput": false,
     "yaml": false
   },
+  "settingsSync.ignoredExtensions": [
+    "github.copilot",
+    "github.copilot-nightly"
+  ],
   "githubPullRequests.createOnPublishBranch": "never",
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
