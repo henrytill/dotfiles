@@ -264,7 +264,8 @@
                      dired-mode-hook
                      prog-mode-hook
                      shell-mode-hook
-                     sql-interactive-mode-hook))
+                     sql-interactive-mode-hook
+                     text-mode-hook))
   (add-hook mode-hook #'ht/truncate-lines))
 
 (winner-mode 1)
@@ -456,6 +457,10 @@
       (setq whitespace-style (remove 'lines-tail whitespace-style))
     (add-to-list 'whitespace-style 'lines-tail))
   (whitespace-mode 1))
+
+;;; TEXT
+
+(add-hook 'text-mode-hook 'auto-revert-mode)
 
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
