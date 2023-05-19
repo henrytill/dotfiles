@@ -5,8 +5,8 @@ Xft.hintstyle:          hintslight
 Xft.lcdfilter:          lcddefault
 Xft.rgba:               rgb
 
-UXTerm*faceName:        xft:PragmataProMono:size=14
-UXTerm*boldFont:        xft:PragmataProMono:style=Bold:size=14
+UXTerm*faceName:        xft:PragmataProMono:pixelsize=14
+UXTerm*boldFont:        xft:PragmataProMono:style=Bold:pixelsize=14
 UXTerm.termName:        xterm-256color
 UXTerm.omitTranslation: fullscreen
 
