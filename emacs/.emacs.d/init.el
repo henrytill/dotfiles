@@ -915,8 +915,8 @@
     (if (and wl-copy-process (process-live-p wl-copy-process))
         nil
       (shell-command-to-string "wl-paste -n | tr -d \r")))
-  (setq interprogram-cut-function 'wl-copy
-        interprogram-paste-function 'wl-paste))
+  (setq interprogram-cut-function #'wl-copy
+        interprogram-paste-function #'wl-paste))
 
 
 ;;; --- POSTLUDE --- ;;;
