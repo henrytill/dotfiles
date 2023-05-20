@@ -192,6 +192,8 @@ bar {
 
 default_border pixel
 
+for_window [class="c_bits_window"] floating enable
+
 include /etc/sway/config.d/*
 
 # Local Variables:
