@@ -887,6 +887,17 @@
   nil)
 
 
+;;; --- X11 COPY/PASTE --- ;;;
+
+(when (and (getenv "XTERM_VERSION")
+           (executable-find "xsel"))
+  (defun xsel-paste ()
+    (let ((xsel-output (shell-command-to-string "xsel -b")))
+      (if (string-empty-p xsel-output)
+          nil
+        xsel-output)))
+  (setq interprogram-paste-function #'xsel-paste))
+
 ;;; --- WAYLAND COPY/PASTE --- ;;;
 
 (when (and (getenv "WAYLAND_DISPLAY")
