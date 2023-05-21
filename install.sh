@@ -8,6 +8,7 @@ echo "DIR=${DIR}"
 
 if [ -n "$IN_DEV_CONTAINER" ]; then
     echo "IN_DEV_CONTAINER=${IN_DEV_CONTAINER}"
+    git submodule update --init
     ln -frsv $DIR/git/.gitignore_global $DIR/..
     printf '\nexport TZ="America/Los_Angeles"\n' >> $HOME/.profile
     exit 0
