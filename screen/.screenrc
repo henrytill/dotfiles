@@ -1,7 +1,7 @@
 escape ^\\
 term screen-256color
 hardstatus off
-hardstatus alwaysfirstline "%H    %w"
+hardstatus alwaysfirstline "%H:%S    %w"
 vbell off
 unsetenv COLORTERM
 startup_message off
