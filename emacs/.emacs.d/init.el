@@ -69,6 +69,9 @@
 (defun ht/assq-replace (alist pair)
   (cons pair (assq-delete-all (car pair) alist)))
 
+(defun ht/rassq-replace (alist value pair)
+  (cons pair (rassq-delete-all value alist)))
+
 (defun ht/hostname ()
   (when (executable-find "hostname")
     (ht/s-trim (shell-command-to-string "hostname -s"))))
@@ -790,8 +793,21 @@
 
 ;;; PROLOG
 
+(setq auto-mode-alist
+      (ht/rassq-replace auto-mode-alist 'perl-mode '("\\.pl\\'" . prolog-mode)))
+
 (when (executable-find "swipl")
   (setq prolog-system 'swi))
+
+(use-package ediprolog
+  :ensure t
+  :commands (ediprolog-dwim)
+  :init
+  (when (executable-find "swipl")
+    (setq ediprolog-system 'swi)))
+
+(with-eval-after-load 'prolog
+  (bind-key "<f10>" #'ediprolog-dwim prolog-mode-map))
 
 ;;; RUST
 
