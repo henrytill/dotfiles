@@ -66,8 +66,8 @@
   "Remove whitespace at the beginning and end of S."
   (ht/s-trim-left (ht/s-trim-right s)))
 
-(defun ht/replace-item-in-alist (alist key value)
-  (cons `(,key . ,value) (assq-delete-all key alist)))
+(defun ht/assq-replace (alist pair)
+  (cons pair (assq-delete-all (car pair) alist)))
 
 (defun ht/hostname ()
   (when (executable-find "hostname")
@@ -384,7 +384,7 @@
     :commands eglot
     :config
     (setq eglot-server-programs
-          (ht/replace-item-in-alist eglot-server-programs 'rust-mode '("rust-analyzer")))))
+          (ht/assq-replace eglot-server-programs ('rust-mode . "rust-analyzer")))))
 
 ;;; MAGIT
 
