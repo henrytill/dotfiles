@@ -475,6 +475,9 @@
 
 (add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
 
+(with-eval-after-load 'cc-mode
+  (c-add-style "ht" '("k&r" (c-basic-offset . 4))))
+
 (setq path-to-ctags "ctags")
 
 (defun ht/run-ctags (paths)
@@ -522,8 +525,8 @@
   :ensure t
   :commands bison-mode
   :config
-  (setq bison-rule-separator-column 2
-        bison-rule-enumeration-column 2
+  (setq bison-rule-separator-column 4
+        bison-rule-enumeration-column 4
         bison-decl-type-column 0
         bison-decl-token-column 0))
 
@@ -681,7 +684,7 @@
   :ensure t
   :mode "\\.lua\\'"
   :config
-  (setq lua-indent-level 2))
+  (setq lua-indent-level 4))
 
 ;;; NIM
 
