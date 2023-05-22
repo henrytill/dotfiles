@@ -948,10 +948,10 @@
 (defvar ht/clang-format-on-save nil)
 
 (defun ht/finalize-buffer ()
-  (when (and (derived-mode-p 'c-mode) ht/clang-format-on-save)
-    (clang-format-buffer))
-  (when (derived-mode-p 'go-mode)
-    (gofmt)))
+  (cond ((and (derived-mode-p 'c-mode) ht/clang-format-on-save)
+         (clang-format-buffer))
+        ((derived-mode-p 'go-mode)
+         (gofmt))))
 
 (add-hook 'before-save-hook #'ht/finalize-buffer)
 
