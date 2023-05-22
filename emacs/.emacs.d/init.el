@@ -932,7 +932,12 @@
         nil
       (shell-command-to-string "wl-paste -n | tr -d \r")))
   (setq interprogram-cut-function #'wl-copy
-        interprogram-paste-function #'wl-paste))
+        interprogram-paste-function #'wl-paste)
+  (defun kill-wl-copy-process (arg)
+    (when (and wl-copy-process (process-live-p wl-copy-process))
+      (kill-process wl-copy-process)))
+  (advice-add 'save-buffers-kill-emacs :before #'kill-wl-copy-process)
+  nil)
 
 
 ;;; --- POSTLUDE --- ;;;
