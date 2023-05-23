@@ -387,7 +387,7 @@
     :commands eglot
     :config
     (setq eglot-server-programs
-          (ht/assq-replace eglot-server-programs ('rust-mode . "rust-analyzer")))))
+          (ht/assq-replace eglot-server-programs '(rust-mode . "rust-analyzer")))))
 
 ;;; MAGIT
 
