@@ -15,6 +15,10 @@ include /etc/sway/config-vars.d/*
 
 exec foot --server
 
+### Launch Emacs daemon
+
+exec screen emacs --daemon
+
 ### Idle configuration
 
 exec swayidle -w \
