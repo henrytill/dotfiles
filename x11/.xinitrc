@@ -1,6 +1,8 @@
-#!/bin/sh
-
 xrdb -load $HOME/.Xresources
+
+xset s 300 5
+
+xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock &
 
 xsetroot -solid gray &
 
@@ -8,4 +10,4 @@ setxkbmap -option ctrl:nocaps &
 
 lxterm -g 100x48+10+10 &
 
-exec cwm
+exec systemd-cat -t cwm cwm
