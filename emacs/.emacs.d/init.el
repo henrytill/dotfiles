@@ -276,6 +276,11 @@
 (require 'ansi-color)
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
+(setq display-time-day-and-date t
+      display-time-default-load-average nil)
+
+(display-time-mode 1)
+
 
 ;;; --- GENERAL --- ;;;
 
