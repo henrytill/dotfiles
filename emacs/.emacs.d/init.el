@@ -912,7 +912,8 @@
 (when (and (getenv "XTERM_VERSION")
            (executable-find "xsel"))
   (defun xsel-paste ()
-    (let ((xsel-output (shell-command-to-string "xsel -b")))
+    (let ((xsel-output (and (executable-find "xsel" t)
+                            (shell-command-to-string "xsel -b"))))
       (if (string-empty-p xsel-output)
           nil
         xsel-output)))
