@@ -5,7 +5,7 @@ MY_HOSTS = proteus thalassa thaumas
 proteus  = bash code emacs foot gdb git git-unix nix \
            sway sway-proteus xdg
 thalassa = bash code emacs foot gdb git git-unix nix \
-           sway sway-thalassa xdg sbcl
+           x11 xdg sbcl
 thaumas  = bash emacs foot gdb git git-unix \
            sway sway-thaumas xdg
 
