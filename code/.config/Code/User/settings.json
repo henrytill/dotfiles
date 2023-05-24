@@ -29,13 +29,13 @@
   "workbench.sideBar.location": "right",
   "git.allowForcePush": true,
   "git.autofetch": true,
+  "extensions.ignoreRecommendations": true,
   "telemetry.telemetryLevel": "off",
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
     "markdown": false,
-    "scminput": false,
-    "yaml": false
+    "scminput": false
   },
   "settingsSync.ignoredExtensions": [
     "github.copilot",
@@ -44,6 +44,9 @@
   "githubPullRequests.createOnPublishBranch": "never",
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
+  "files.associations": {
+    ".clang-tidy": "yaml"
+  },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
