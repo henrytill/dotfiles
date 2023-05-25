@@ -642,14 +642,14 @@
 
 ;;; SCHEME
 
-(defun ht/scheme-mode ()
+(defun ht/add-minikanren-indents ()
   (dolist (form+n '((conde . 0)
                     (fresh . 1)
                     (run . 2)
                     (run* . 1)))
     (put (car form+n) 'scheme-indent-function (cdr form+n))))
 
-(dolist (f '(ht/scheme-mode
+(dolist (f '(ht/add-minikanren-indents
              enable-paredit-mode))
   (add-hook 'scheme-mode-hook f))
 
