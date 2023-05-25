@@ -16,7 +16,7 @@ bind-key 4-d menu-exec
 bind-key 4-period menu-ssh
 
 bind-key 4-f window-fullscreen
-bind-key S4-q window-delete
+bind-key S4-q window-close
 bind-key 4-Tab window-cycle
 bind-key 4-c window-hide
 bind-key 4-s menu-window
