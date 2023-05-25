@@ -16,7 +16,6 @@ fi
 add_to_path_front "$HOME/.cargo/bin"
 add_to_path_front "$HOME/.ghcup/bin"
 add_to_path_front "$HOME/.cabal/bin"
-add_to_path_front "$HOME/.config/Code/User/globalStorage/ms-vscode-remote.remote-containers/cli-bin"
 
 PLAN9="/usr/local/plan9"
 if [ -d "$PLAN9" ]; then
