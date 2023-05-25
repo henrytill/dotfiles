@@ -7,6 +7,8 @@ Xft.rgba:               rgb
 
 UXTerm*faceName:        xft:PragmataProMono:pixelsize=14
 UXTerm*boldFont:        xft:PragmataProMono:style=Bold:pixelsize=14
+UXTerm*boldColors:      false
+UXTerm*colorBDMode:     false
 UXTerm.termName:        xterm-256color
 UXTerm.omitTranslation: fullscreen
 
