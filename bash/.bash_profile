@@ -20,7 +20,7 @@ add_to_path_front "$HOME/.cabal/bin"
 PLAN9="/usr/local/plan9"
 if [ -d "$PLAN9" ]; then
     export PLAN9
-    # PATH="$PATH:$PLAN9/bin"
+    PATH="$PATH:$PLAN9/bin"
 fi
 
 add_to_path_front "$HOME/.local/bin"
