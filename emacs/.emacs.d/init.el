@@ -94,7 +94,8 @@
             ido-use-virtual-buffers t))
   (progn
     (require 'icomplete)
-    (fido-mode 1)))
+    (fido-mode 1)
+    (fido-vertical-mode 1)))
 
 (progn
   ;; use lisp-based dired
