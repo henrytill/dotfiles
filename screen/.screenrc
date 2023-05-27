@@ -3,5 +3,6 @@ term screen-256color
 hardstatus off
 hardstatus alwaysfirstline "%{= wK} %H:%S    %w"
 unsetenv COLORTERM
-vbell on
+vbell off
 startup_message off
+compacthist on
