@@ -2,7 +2,6 @@ add-auto-load-safe-path ~/.gdbinit
 set host-charset UTF-8
 set target-charset UTF-8
 set target-wide-charset UTF-8
-set style enabled off
 set complaints 0
 set confirm off
 set history save on

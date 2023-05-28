@@ -212,15 +212,17 @@
                      org-mode-hook))
   (add-hook mode-hook #'display-line-numbers-mode))
 
-(setq frame-background-mode 'light)
+(setq frame-background-mode 'dark)
 
-(when (version< emacs-version "28.1")
-  (use-package modus-themes :ensure t))
+(defun ht/set-font-lock-face-attributes ()
+  (let ((comment-color "#7f8f9f"))
+    (set-face-attribute 'font-lock-comment-face nil :foreground comment-color)
+    (set-face-attribute 'font-lock-doc-face nil :foreground comment-color)))
 
-(load-theme 'modus-operandi)
+(add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
 
-(defconst ht/preferred-unix-font "PragmataPro Mono:size=14")
-(defconst ht/preferred-win-font "PragmataPro Mono:size=14")
+(defconst ht/preferred-unix-font "Berkeley Mono:size=12")
+(defconst ht/preferred-win-font "Berkeley Mono:size=12")
 
 (defun ht/set-face-attributes (frame)
   (when (display-graphic-p)

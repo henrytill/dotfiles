@@ -15,10 +15,6 @@ include /etc/sway/config-vars.d/*
 
 exec foot --server
 
-### Launch Emacs daemon
-
-exec screen emacs --daemon
-
 ### Idle configuration
 
 exec swayidle -w \
@@ -182,6 +178,15 @@ bindsym $mod+r mode "resize"
     # Select a window
     bindsym Mod4+Ctrl+p exec grimshot save window
 
+
+#
+# Cosmetics:
+#
+font Berkeley Mono 10
+default_border pixel
+titlebar_border_thickness 0
+gaps inner 14
+
 #
 # Status Bar:
 #
@@ -189,12 +194,8 @@ bindsym $mod+r mode "resize"
 bar {
     position bottom
 
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M %p'; do sleep 10; done
+    mode invisible
 }
-
-default_border pixel
 
 for_window [class="c_bits_window"] floating enable
 
