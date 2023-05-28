@@ -39,12 +39,12 @@ if [ -d "$TERMINFO_DIRS" ]; then
     export TERMINFO_DIRS
 fi
 
+export GOPROXY=direct
 export LC_COLLATE=C
-export NO_COLOR=1
 export LIBVIRT_DEFAULT_URI="qemu:///system"
+export NO_COLOR=1
 export _JAVA_AWT_WM_NONREPARENTING=1
 export npm_config_prefix="$HOME/.local"
-export GOPROXY=direct
 
 # Launch sway automatically
 SWAY_SESSION="/usr/local/bin/sway-session"
