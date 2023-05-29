@@ -264,13 +264,12 @@
 (setq visible-cursor nil)
 
 (defun ht/truncate-lines ()
-  (setq truncate-lines t))
+  (toggle-truncate-lines t))
 
 (dolist (mode-hook '(bibtex-mode-hook
-                     compilation-mode-hook
+                     conf-mode-hook
                      dired-mode-hook
                      prog-mode-hook
-                     shell-mode-hook
                      sql-interactive-mode-hook
                      text-mode-hook))
   (add-hook mode-hook #'ht/truncate-lines))
