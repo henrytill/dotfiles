@@ -221,8 +221,9 @@
 
 (add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
 
-(defconst ht/preferred-unix-font "Berkeley Mono:size=12")
-(defconst ht/preferred-win-font "Berkeley Mono:size=12")
+(when (display-graphic-p)
+  (defconst ht/preferred-unix-font "Berkeley Mono:size=12")
+  (defconst ht/preferred-win-font "Berkeley Mono:size=12"))
 
 (defun ht/set-face-attributes (frame)
   (when (display-graphic-p)
