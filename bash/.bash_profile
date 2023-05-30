@@ -14,7 +14,6 @@ if [ -r "$OPAM_VARIABLES_SH" ]; then
 fi
 
 add_to_path_front "$HOME/.cargo/bin"
-add_to_path_front "$HOME/.ghcup/bin"
 add_to_path_front "$HOME/.cabal/bin"
 
 PLAN9="/usr/local/plan9"
