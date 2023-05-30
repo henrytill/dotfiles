@@ -433,7 +433,7 @@
 ;;; WHITESPACE
 
 (with-eval-after-load 'whitespace
-  (setq whitespace-style '(face tabs trailing lines-tail)
+  (setq whitespace-style '(face tabs trailing)
         whitespace-line-column 80))
 
 (add-hook 'prog-mode-hook #'whitespace-mode)
@@ -456,9 +456,8 @@
 (defun ht/hide-lines-tail-display ()
   (interactive)
   (whitespace-mode -1)
-  (if (memq 'lines-tail whitespace-style)
-      (setq whitespace-style (remove 'lines-tail whitespace-style))
-    nil)
+  (when (memq 'lines-tail whitespace-style)
+    (setq whitespace-style (remove 'lines-tail whitespace-style)))
   (whitespace-mode 1))
 
 (defun ht/toggle-lines-tail-display ()
