@@ -55,12 +55,14 @@ if [ -n "$(command -v dircolors)" ]; then
     # alias egrep='egrep --color=auto'
 fi
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+BASH_ALIASES="$HOME/.bash_aliases"
+if [ -f "$BASH_ALIASES" ]; then
+    . "$BASH_ALIASES"
 fi
 
-if [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions
+BASH_FUNCTIONS="$HOME/.bash_functions"
+if [ -f "$BASH_FUNCTIONS" ]; then
+    . "$BASH_FUNCTIONS"
 fi
 
 if [ $TERM = "dumb" ]; then
