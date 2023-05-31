@@ -182,7 +182,7 @@ bindsym $mod+r mode "resize"
 #
 # Cosmetics:
 #
-font Berkeley Mono 10
+font PragmataPro Mono 10
 default_border pixel
 titlebar_border_thickness 0
 gaps inner 14

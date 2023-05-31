@@ -212,18 +212,20 @@
                      org-mode-hook))
   (add-hook mode-hook #'display-line-numbers-mode))
 
-(setq frame-background-mode 'dark)
+(setq frame-background-mode 'light)
 
 (defun ht/set-font-lock-face-attributes ()
-  (let ((comment-color "#7f8f9f"))
+  (let ((comment-color "#2f4f4f")
+        (region-color "#eeee9e"))
     (set-face-attribute 'font-lock-comment-face nil :foreground comment-color)
-    (set-face-attribute 'font-lock-doc-face nil :foreground comment-color)))
+    (set-face-attribute 'font-lock-doc-face nil :foreground comment-color)
+    (set-face-attribute 'region nil :background region-color)))
 
 (add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
 
 (when (display-graphic-p)
-  (defconst ht/preferred-unix-font "Berkeley Mono:size=12")
-  (defconst ht/preferred-win-font "Berkeley Mono:size=12"))
+  (defconst ht/preferred-unix-font "PragmataPro Mono:size=12")
+  (defconst ht/preferred-win-font "PragmataPro Mono:size=12"))
 
 (defun ht/set-face-attributes (frame)
   (when (display-graphic-p)
