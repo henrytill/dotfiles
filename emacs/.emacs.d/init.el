@@ -318,6 +318,12 @@
 
 (autoload 'xdg-data-home "xdg.el")
 
+;;; IBUFFER
+
+(setq ibuffer-default-sorting-mode 'filename/process)
+
+(add-hook 'ibuffer-mode-hook #'ibuffer-auto-mode)
+
 ;;; TRAMP
 
 (with-eval-after-load 'tramp
