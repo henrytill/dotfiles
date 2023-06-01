@@ -716,23 +716,68 @@
 
 ;;; OCAML
 
+(defun ht/import-ocaml-env ()
+  (when (executable-find "opam")
+    (let ((default-directory (project-root (project-current t))))
+      (make-local-variable 'process-environment)
+      (setq process-environment (copy-sequence process-environment))
+      (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
+        (setenv (car var) (cadr var))))))
+
+(defun ht/add-ocaml-load-path ()
+  (if-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH"))
+            (ocaml-load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))
+      (add-to-list 'load-path ocaml-load-path)
+    nil))
+
+(defun ht/set-utop-command ()
+  (when (executable-find "opam")
+    (let ((command (if (ht/dune-project-exists-p) "dune utop . -- -emacs" "utop -emacs")))
+      (setq utop-command (format "opam config exec -- %s" command)))))
+
+(defun ht/load-ocaml-packages ()
+  (when (locate-file "merlin.el" load-path)
+    (when (not (featurep 'merlin-mode))
+      (load "merlin.el"))
+    (setq merlin-command 'opam)
+    (merlin-mode 1))
+  (when (locate-file "merlin-company.el" load-path)
+    (when (not (featurep 'merlin-company))
+      (require 'merlin-company "merlin-company.el")))
+  (when (locate-file "utop.el" load-path)
+    (when (not (and (featurep 'utop) (featurep 'utop-minor-mode)))
+      (require 'utop "utop.el")
+      (require 'utop-minor-mode "utop.el"))
+    (ht/set-utop-command)
+    (utop-minor-mode 1))
+  (when (locate-file "ocp-indent.el" load-path)
+    (when (not (featurep 'ocp-indent))
+      (require 'ocp-indent "ocp-indent.el"))
+    (when (version<= "28.1" emacs-version)
+      (defun ocp-indent-buffer ()
+        (interactive nil)
+        (ocp-indent-region 1 (buffer-size))))
+    (ocp-setup-indent)))
+
+(defun ht/load-ocaml-buffer ()
+  (ht/import-ocaml-env)
+  (when-let (ocaml-load-path (ht/add-ocaml-load-path))
+    (ht/load-ocaml-packages)))
+
+(use-package tuareg
+  :ensure t
+  :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
+  :hook ((tuareg-mode . electric-indent-local-mode)
+         (tuareg-mode . ht/load-ocaml-buffer)))
+
+(defvar ht/dune-fmt-command "dune fmt")
+
 (defun ht/dune-project-exists-p ()
   (let* ((project-dir (project-root (project-current t)))
          (dune-project-file (expand-file-name "dune-project" project-dir)))
     (if (file-exists-p dune-project-file)
         dune-project-file
       nil)))
-
-(defun ht/get-ocaml-env ()
-  (when (executable-find "opam")
-    (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
-      (setenv (car var) (cadr var))))
-  (let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH"))
-         (ocaml-load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))
-    (when ocaml-load-path
-      (add-to-list 'load-path ocaml-load-path))))
-
-(defvar ht/dune-fmt-command "dune fmt")
 
 (defun ht/project-dune-fmt ()
   (interactive)
@@ -744,60 +789,12 @@
           (err-buffer (get-buffer-create "*dune-fmt-err*")))
       (shell-command ht/dune-fmt-command out-buffer err-buffer))))
 
-(use-package tuareg
-  :ensure t
-  :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
-  :hook ((tuareg-mode . electric-indent-local-mode))
-  :init
-  (ht/get-ocaml-env))
-
 (use-package dune
   :if (and (executable-find "dune")
            (locate-file "dune.el" load-path))
   :mode (("dune\\'" . dune-mode)
          ("dune-project\\'" . dune-mode))
   :commands dune-mode)
-
-(use-package merlin
-  :if (and (executable-find "ocamlmerlin")
-           (locate-file "merlin.el" load-path))
-  :commands merlin-mode
-  :defines merlin-command
-  :hook ((caml-mode . merlin-mode)
-         (tuareg-mode . merlin-mode))
-  :config
-  (when (executable-find "opam")
-    (setq merlin-command 'opam)))
-
-(use-package merlin-company
-  :if (and (executable-find "ocamlmerlin")
-           (locate-file "merlin-company.el" load-path))
-  :after (merlin))
-
-(defun ht/set-utop-command ()
-  (when (executable-find "opam")
-    (let ((command (if (ht/dune-project-exists-p) "dune utop . -- -emacs" "utop -emacs")))
-      (setq utop-command (format "opam config exec -- %s" command)))))
-
-(use-package utop
-  :if (and (executable-find "utop")
-           (locate-file "utop.el" load-path))
-  :commands (utop utop-minor-mode)
-  :hook ((tuareg-mode . utop-minor-mode)
-         (tuareg-mode . ht/set-utop-command)
-         (utop-mode . company-mode)
-         (utop-mode . electric-pair-mode)))
-
-(use-package ocp-indent
-  :if (and (executable-find "ocp-indent")
-           (locate-file "ocp-indent.el" load-path))
-  :commands ocp-setup-indent
-  :hook (tuareg-mode . ocp-setup-indent)
-  :config
-  (when (version<= "28.1" emacs-version)
-    (defun ocp-indent-buffer ()
-      (interactive nil)
-      (ocp-indent-region 1 (buffer-size)))))
 
 (with-eval-after-load 'caml-types
   (let ((color (face-attribute 'default :background)))
