@@ -356,6 +356,10 @@
   (add-to-list 'org-file-apps '("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s"))
   nil)
 
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '((emacs-lisp . t)
+                               (shell . t)))
+
 ;;; ALIGN
 
 (with-eval-after-load 'align
