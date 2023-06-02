@@ -734,6 +734,13 @@
       (add-to-list 'load-path ocaml-load-path)
     nil))
 
+(defun ht/dune-project-exists-p ()
+  (let* ((project-dir (project-root (project-current t)))
+         (dune-project-file (expand-file-name "dune-project" project-dir)))
+    (if (file-exists-p dune-project-file)
+        dune-project-file
+      nil)))
+
 (defun ht/set-utop-command ()
   (when (executable-find "opam")
     (let ((command (if (ht/dune-project-exists-p) "dune utop . -- -emacs" "utop -emacs")))
@@ -742,8 +749,8 @@
 (defun ht/load-ocaml-packages ()
   (when (locate-file "merlin.el" load-path)
     (when (not (featurep 'merlin-mode))
-      (load "merlin.el"))
-    (setq merlin-command 'opam)
+      (load "merlin.el")
+      (setq merlin-command 'opam))
     (merlin-mode 1))
   (when (locate-file "merlin-company.el" load-path)
     (when (not (featurep 'merlin-company))
@@ -751,16 +758,16 @@
   (when (locate-file "utop.el" load-path)
     (when (not (and (featurep 'utop) (featurep 'utop-minor-mode)))
       (require 'utop "utop.el")
-      (require 'utop-minor-mode "utop.el"))
-    (ht/set-utop-command)
+      (require 'utop-minor-mode "utop.el")
+      (ht/set-utop-command))
     (utop-minor-mode 1))
   (when (locate-file "ocp-indent.el" load-path)
     (when (not (featurep 'ocp-indent))
-      (require 'ocp-indent "ocp-indent.el"))
-    (when (version<= "28.1" emacs-version)
-      (defun ocp-indent-buffer ()
-        (interactive nil)
-        (ocp-indent-region 1 (buffer-size))))
+      (require 'ocp-indent "ocp-indent.el")
+      (when (version<= "28.1" emacs-version)
+        (defun ocp-indent-buffer ()
+          (interactive nil)
+          (ocp-indent-region 1 (buffer-size)))))
     (ocp-setup-indent)))
 
 (defun ht/load-ocaml-buffer ()
@@ -775,13 +782,6 @@
          (tuareg-mode . ht/load-ocaml-buffer)))
 
 (defvar ht/dune-fmt-command "dune fmt")
-
-(defun ht/dune-project-exists-p ()
-  (let* ((project-dir (project-root (project-current t)))
-         (dune-project-file (expand-file-name "dune-project" project-dir)))
-    (if (file-exists-p dune-project-file)
-        dune-project-file
-      nil)))
 
 (defun ht/project-dune-fmt ()
   (interactive)
