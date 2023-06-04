@@ -15,6 +15,7 @@
 /emacs/.emacs.d/auto-save-list
 /emacs/.emacs.d/backups
 /emacs/.emacs.d/bookmarks
+/emacs/.emacs.d/ede-projects.el
 /emacs/.emacs.d/elpa
 /emacs/.emacs.d/eln-cache
 /emacs/.emacs.d/ensime
@@ -32,6 +33,7 @@
 /emacs/.emacs.d/projects
 /emacs/.emacs.d/racket-mode
 /emacs/.emacs.d/recentf
+/emacs/.emacs.d/semanticdb/
 /emacs/.emacs.d/session.*
 /emacs/.emacs.d/smex-items
 /emacs/.emacs.d/server
