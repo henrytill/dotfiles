@@ -354,11 +354,9 @@
   (message "Loading org config...")
   (require 'oc-csl)
   (add-to-list 'org-file-apps '("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s"))
+  (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
+                                                           (shell . t)))
   nil)
-
-(org-babel-do-load-languages 'org-babel-load-languages
-                             '((emacs-lisp . t)
-                               (shell . t)))
 
 ;;; ALIGN
 
