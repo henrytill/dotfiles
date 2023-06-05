@@ -493,7 +493,17 @@
 (add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
 
 (with-eval-after-load 'cc-mode
-  (c-add-style "ht" '("k&r" (c-basic-offset . 4)))
+  ;; https://www.kernel.org/doc/html/v4.10/process/coding-style.html#you-ve-made-a-mess-of-it
+  (defun c-lineup-arglist-tabs-only (ignored)
+    "Line up argument lists by tabs, not spaces"
+    (let* ((anchor (c-langelem-pos c-syntactic-element))
+           (column (c-langelem-2nd-pos c-syntactic-element))
+           (offset (- (1+ column) anchor))
+           (steps (floor offset c-basic-offset)))
+      (* (max steps 1) c-basic-offset)))
+  (c-add-style "ht" '("linux"
+                      (indent-tabs-mode . t)
+                      (c-offsets-alist (arglist-cont-nonempty c-lineup-gcc-asm-reg c-lineup-arglist-tabs-only))))
   (add-to-list 'c-default-style '(c-mode . "ht")))
 
 (setq path-to-ctags "ctags")
@@ -518,10 +528,9 @@
          (includes (compile-commands-get-include-directories)))
     (ht/run-ctags includes)))
 
-(defun ht/c-set-tab-width (width)
+(defun ht/set-tab-width (width)
   (interactive "nSet tab-width to: ")
-  (setq tab-width width
-        c-basic-offset width))
+  (setq tab-width width))
 
 (when (is-windows-p)
   (let ((clang-format-path (or (getenv "CLANG_FORMAT_PATH")
