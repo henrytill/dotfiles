@@ -443,8 +443,8 @@
 ;;; WHITESPACE
 
 (with-eval-after-load 'whitespace
-  (setq whitespace-style '(face tabs trailing)
-        whitespace-line-column 80))
+  (setq whitespace-style '(face lines-tail trailing)
+        whitespace-line-column 100))
 
 (add-hook 'prog-mode-hook #'whitespace-mode)
 
@@ -496,14 +496,11 @@
   ;; https://www.kernel.org/doc/html/v4.10/process/coding-style.html#you-ve-made-a-mess-of-it
   (defun c-lineup-arglist-tabs-only (ignored)
     "Line up argument lists by tabs, not spaces"
-    (let* ((anchor (c-langelem-pos c-syntactic-element))
-           (column (c-langelem-2nd-pos c-syntactic-element))
-           (offset (- (1+ column) anchor))
-           (steps (floor offset c-basic-offset)))
-      (* (max steps 1) c-basic-offset)))
+    (save-excursion
+      c-basic-offset))
   (c-add-style "ht" '("linux"
                       (indent-tabs-mode . t)
-                      (c-offsets-alist (arglist-cont-nonempty c-lineup-gcc-asm-reg c-lineup-arglist-tabs-only))))
+                      (c-offsets-alist (arglist-cont-nonempty c-lineup-arglist-tabs-only))))
   (add-to-list 'c-default-style '(c-mode . "ht")))
 
 (setq path-to-ctags "ctags")
