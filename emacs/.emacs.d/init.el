@@ -735,7 +735,10 @@
 (defun ht/add-ocaml-load-path ()
   (if-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH"))
             (ocaml-load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))
-      (add-to-list 'load-path ocaml-load-path)
+      (progn
+        (make-local-variable 'load-path)
+        (setq load-path (copy-sequence load-path))
+        (add-to-list 'load-path ocaml-load-path))
     nil))
 
 (defun ht/dune-project-exists-p ()
