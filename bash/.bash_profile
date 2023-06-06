@@ -4,6 +4,12 @@ add_to_path_front () {
     fi
 }
 
+add_to_path_back () {
+    if [ -d "$1" ]; then
+        PATH="$PATH:$1"
+    fi
+}
+
 if [ -f "$HOME/.bashrc" ]; then
     . "$HOME/.bashrc"
 fi
@@ -15,6 +21,9 @@ fi
 
 add_to_path_front "$HOME/.cargo/bin"
 add_to_path_front "$HOME/.cabal/bin"
+
+export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
+add_to_path_back "/usr/local/go/bin"
 
 PLAN9="/usr/local/plan9"
 if [ -d "$PLAN9" ]; then
