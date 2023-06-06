@@ -12,6 +12,7 @@
   "editor.lineHeight": 1.2,
   "editor.inlineSuggest.enabled": true,
   "editor.formatOnSave": true,
+  "editor.rulers": [100, 120],
   "editor.semanticTokenColorCustomizations": {
     "enabled": true,
     "rules": {
@@ -20,6 +21,7 @@
       }
     }
   },
+  "editor.tabSize": 8,
   "editor.unicodeHighlight.nonBasicASCII": false,
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "diffEditor.ignoreTrimWhitespace": false,
