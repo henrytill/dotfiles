@@ -836,6 +836,14 @@
 (with-eval-after-load 'prolog
   (bind-key "<f10>" #'ediprolog-dwim prolog-mode-map))
 
+;;; PYTHON
+
+(defun ht/python-format-buffer ()
+  (interactive)
+  (let ((file-name (buffer-file-name))
+        (default-directory (project-root (project-current t))))
+    (shell-command (format "black -q %s" file-name))))
+
 ;;; RUST
 
 (use-package rust-mode
@@ -971,14 +979,20 @@
 ;;; --- POSTLUDE --- ;;;
 
 (defvar ht/clang-format-on-save nil)
+(defvar ht/black-format-on-save nil)
 
-(defun ht/finalize-buffer ()
+(defun ht/finalize-before-save ()
   (cond ((and (derived-mode-p 'c-mode) ht/clang-format-on-save)
          (clang-format-buffer))
         ((derived-mode-p 'go-mode)
          (gofmt))))
 
-(add-hook 'before-save-hook #'ht/finalize-buffer)
+(defun ht/finalize-after-save ()
+  (cond ((and (derived-mode-p 'python-mode) ht/black-format-on-save)
+         (ht/python-format-buffer))))
+
+(add-hook 'before-save-hook #'ht/finalize-before-save)
+(add-hook 'after-save-hook #'ht/finalize-after-save)
 
 (when (and (is-darwin-p) (display-graphic-p))
   (setq mac-command-modifier 'super
