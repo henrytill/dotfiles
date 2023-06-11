@@ -402,13 +402,12 @@
 
 ;;; LSP
 
-(when (version<= "26.1" emacs-version)
-  (use-package eglot
-    :ensure t
-    :commands eglot
-    :config
-    (setq eglot-server-programs
-          (ht/assq-replace eglot-server-programs '(rust-mode . "rust-analyzer")))))
+(use-package eglot
+  :ensure t
+  :commands eglot
+  :config
+  (setq eglot-server-programs
+        (ht/assq-replace eglot-server-programs '(rust-mode . "rust-analyzer"))))
 
 ;;; MAGIT
 
