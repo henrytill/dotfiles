@@ -437,6 +437,14 @@
     (bind-key "s" #'project-shell project-prefix-map)
     (add-to-list 'project-switch-commands '(project-shell "Shell") t)))
 
+(defvar ht/last-project nil)
+
+(defun ht/check-project ()
+  (let ((current-project (project-root (project-current t))))
+    (if (not (string-equal ht/last-project current-project))
+        (setq ht/last-project current-project)
+      nil)))
+
 ;;; PROG-MODE
 
 (dolist (f '(auto-revert-mode
@@ -757,6 +765,14 @@
       (setq utop-command (format "opam config exec -- %s" command)))))
 
 (defun ht/load-ocaml-packages ()
+  (when (ht/check-project)
+    (dolist (feature '(merlin-mode
+                       merlin-company
+                       utop
+                       utop-minor-mode
+                       ocp-indent))
+      (when (featurep feature)
+        (unload-feature feature))))
   (when (locate-file "merlin.el" load-path)
     (when (not (featurep 'merlin-mode))
       (load "merlin.el")
@@ -778,7 +794,8 @@
         (defun ocp-indent-buffer ()
           (interactive nil)
           (ocp-indent-region 1 (buffer-size)))))
-    (ocp-setup-indent)))
+    (ocp-setup-indent))
+  t)
 
 (defun ht/load-ocaml-buffer ()
   (ht/import-ocaml-env)
