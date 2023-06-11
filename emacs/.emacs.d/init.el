@@ -858,11 +858,14 @@
 
 ;;; PYTHON
 
-(defun ht/python-format-buffer ()
-  (interactive)
-  (let ((file-name (buffer-file-name))
-        (default-directory (project-root (project-current t))))
-    (shell-command (format "black -q %s" file-name))))
+(with-eval-after-load 'python
+  (defun ht/black-format-buffer-file ()
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (default-directory (project-root (project-current t))))
+      (shell-command (format "black -q %s" file-name)))))
+
+(add-hook 'inferior-python-mode-hook #'company-mode)
 
 ;;; RUST
 
@@ -1009,7 +1012,7 @@
 
 (defun ht/finalize-after-save ()
   (cond ((and (derived-mode-p 'python-mode) ht/black-format-on-save)
-         (ht/python-format-buffer))))
+         (ht/black-format-buffer-file))))
 
 (add-hook 'before-save-hook #'ht/finalize-before-save)
 (add-hook 'after-save-hook #'ht/finalize-after-save)
