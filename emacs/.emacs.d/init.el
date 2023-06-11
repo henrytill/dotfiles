@@ -761,7 +761,9 @@
 
 (defun ht/set-utop-command ()
   (when (executable-find "opam")
-    (let ((command (if (ht/dune-project-exists-p) "dune utop . -- -emacs" "utop -emacs")))
+    (let* ((dune-cmd "dune utop . -- -emacs")
+           (cmd "utop -emacs")
+           (command (if (ht/dune-project-exists-p) dune-cmd cmd)))
       (setq utop-command (format "opam config exec -- %s" command)))))
 
 (defun ht/load-ocaml-packages ()
