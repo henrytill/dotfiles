@@ -314,6 +314,9 @@
 (add-to-list 'load-path (expand-file-name "docker-tramp" ht/site-lisp-directory))
 (autoload 'docker-tramp-add-method "docker-tramp.el")
 
+(add-to-list 'load-path (expand-file-name "meson-mode" ht/site-lisp-directory))
+(autoload 'meson-mode "meson-mode.el")
+
 (add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
 
 ;;; XDG
@@ -567,7 +570,7 @@
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'" . cmake-mode)))
 
-(add-to-list 'auto-mode-alist '("/meson\\(\\.build\\|_options\\.txt\\)\\'" . prog-mode))
+(add-to-list 'auto-mode-alist '("/meson\\(\\.build\\|_options\\.txt\\)\\'" . meson-mode))
 
 (use-package ninja-mode
   :if (locate-file "ninja-mode.el" load-path)
