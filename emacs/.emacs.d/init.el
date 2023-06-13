@@ -327,7 +327,9 @@
 
 (setq ibuffer-default-sorting-mode 'filename/process)
 
-(add-hook 'ibuffer-mode-hook #'ibuffer-auto-mode)
+(ht/comment
+  (add-hook 'ibuffer-mode-hook #'ibuffer-auto-mode)
+  nil)
 
 ;;; TRAMP
 
