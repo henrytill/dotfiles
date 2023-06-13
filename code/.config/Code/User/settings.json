@@ -12,7 +12,7 @@
   "editor.lineHeight": 1.2,
   "editor.inlineSuggest.enabled": true,
   "editor.formatOnSave": true,
-  "editor.rulers": [100, 120],
+  "editor.rulers": [100],
   "editor.semanticTokenColorCustomizations": {
     "enabled": true,
     "rules": {
@@ -21,7 +21,6 @@
       }
     }
   },
-  "editor.tabSize": 8,
   "editor.unicodeHighlight.nonBasicASCII": false,
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "diffEditor.ignoreTrimWhitespace": false,
@@ -31,6 +30,7 @@
   "workbench.sideBar.location": "right",
   "git.allowForcePush": true,
   "git.autofetch": true,
+  "git.defaultBranchName": "master",
   "extensions.ignoreRecommendations": true,
   "telemetry.telemetryLevel": "off",
   "github.copilot.enable": {
@@ -41,18 +41,24 @@
   },
   "settingsSync.ignoredExtensions": [
     "github.copilot",
-    "github.copilot-nightly"
+    "github.copilot-nightly",
+    "mesonbuild.mesonbuild"
   ],
   "githubPullRequests.createOnPublishBranch": "never",
+  "githubPullRequests.remotes": ["origin", "upstream", "github"],
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
   "files.associations": {
     ".clang-tidy": "yaml"
   },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[c]": {
+    "editor.rulers": [80, 100],
+    "editor.tabSize": 8
   },
   "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescript]": {
@@ -64,7 +70,14 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[makefile]": {
+    "editor.tabSize": 8
+  },
   "[markdown]": {
     "editor.wordWrap": "off"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.rulers": [80, 100]
   }
 }
