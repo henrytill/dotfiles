@@ -606,44 +606,7 @@
 
 (use-package go-mode
   :ensure t
-  :mode "\\.go\\'"
-  :config
-  ;; Redefine buggy gofmt defun in go-mode.el
-  (defun gofmt ()
-    (interactive)
-    (let ((pos (point))
-          (in-file buffer-file-name)
-          (out-buffer (get-buffer-create "*gofmt-out*"))
-          (err-buffer (get-buffer-create "*gofmt-err*"))
-          (temp-file (make-temp-file "gofmttmp"))
-          (err-file (make-temp-file "gofmterr")))
-      (unwind-protect
-          (progn
-            (write-region (point-min) (point-max) temp-file)
-            (let ((result (call-process "gofmt" nil (list out-buffer err-file) nil temp-file)))
-              (if (eql result 0)
-                  (progn
-                    (erase-buffer)
-                    (insert-buffer out-buffer)
-                    (let ((window (get-buffer-window err-buffer 'visible)))
-                      (when window
-                        (delete-window window)))
-                    (kill-buffer err-buffer)
-                    t)
-                (with-temp-buffer-window err-buffer 'display-buffer-pop-up-window nil
-                  (with-current-buffer err-buffer
-                    (erase-buffer)
-                    (insert "gofmt found errors:\n")
-                    (insert-file-contents err-file)
-                    (while (re-search-forward temp-file nil t)
-                      (replace-match in-file))
-                    (compilation-mode)
-                    nil)))))
-        (delete-file err-file)
-        (delete-file temp-file)
-        (kill-buffer out-buffer)
-        (goto-char pos))))
-  nil)
+  :mode "\\.go\\'")
 
 ;;; HASKELL
 
@@ -1005,12 +968,13 @@
 ;;; --- POSTLUDE --- ;;;
 
 (defvar ht/clang-format-on-save nil)
+(defvar ht/gofmt-on-save nil)
 (defvar ht/black-format-on-save nil)
 
 (defun ht/finalize-before-save ()
   (cond ((and (derived-mode-p 'c-mode) ht/clang-format-on-save)
          (clang-format-buffer))
-        ((derived-mode-p 'go-mode)
+        ((and (derived-mode-p 'go-mode) ht/gofmt-on-save)
          (gofmt))))
 
 (defun ht/finalize-after-save ()
