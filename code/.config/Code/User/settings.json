@@ -2,16 +2,17 @@
   "debug.console.fontFamily": "'PragmataPro Mono'",
   "debug.console.fontSize": 14,
   "debug.enableStatusBarColor": false,
-  "editor.fontFamily": "'PragmataPro Mono'",
-  "editor.fontSize": 14,
-  "editor.fontLigatures": false,
   "editor.codeLensFontFamily": "'PragmataPro Mono'",
   "editor.codeLensFontSize": 14,
+  "editor.fontFamily": "'PragmataPro Mono'",
+  "editor.fontLigatures": false,
+  "editor.fontSize": 14,
+  "editor.formatOnSave": true,
   "editor.inlayHints.enabled": "offUnlessPressed",
   "editor.inlayHints.fontSize": 14,
-  "editor.lineHeight": 1.2,
   "editor.inlineSuggest.enabled": true,
-  "editor.formatOnSave": true,
+  "editor.lineHeight": 1.2,
+  "editor.minimap.renderCharacters": false,
   "editor.rulers": [100],
   "editor.semanticTokenColorCustomizations": {
     "enabled": true,
@@ -41,10 +42,10 @@
   },
   "settingsSync.ignoredExtensions": [
     "github.copilot",
-    "github.copilot-nightly",
-    "mesonbuild.mesonbuild"
+    "github.copilot-nightly"
   ],
   "githubPullRequests.createOnPublishBranch": "never",
+  "githubPullRequests.pullBranch": "never",
   "githubPullRequests.remotes": ["origin", "upstream", "github"],
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
@@ -54,6 +55,13 @@
   "[c]": {
     "editor.rulers": [80, 100],
     "editor.tabSize": 8
+  },
+  "[go]": {
+    "editor.tabSize": 8
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.rulers": [80, 100]
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -75,9 +83,5 @@
   },
   "[markdown]": {
     "editor.wordWrap": "off"
-  },
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.rulers": [80, 100]
   }
 }
