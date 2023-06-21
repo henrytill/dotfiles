@@ -97,13 +97,6 @@
     (fido-mode 1)
     (fido-vertical-mode 1)))
 
-(progn
-  ;; use lisp-based dired
-  (setq dired-use-ls-dired nil
-        ls-lisp-use-insert-directory-program nil
-        ls-lisp-dirs-first t)
-  (require 'ls-lisp))
-
 (require 'uniquify)
 
 (setq apropos-do-all t
