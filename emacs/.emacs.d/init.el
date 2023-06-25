@@ -320,10 +320,6 @@
 
 (setq ibuffer-default-sorting-mode 'filename/process)
 
-(ht/comment
-  (add-hook 'ibuffer-mode-hook #'ibuffer-auto-mode)
-  nil)
-
 ;;; TRAMP
 
 (with-eval-after-load 'tramp
@@ -838,14 +834,6 @@
   :ensure t
   :commands sml-mode)
 
-;;; TCL
-
-(ht/comment
-  (with-eval-after-load 'tcl
-    (setq tcl-indent-level 2
-          tcl-continued-indent-level 2))
-  nil)
-
 ;;; TEX
 
 (use-package auctex
@@ -913,11 +901,6 @@
   (add-hook 'shell-mode-hook f))
 
 (add-hook 'comint-output-filter-functions #'comint-osc-process-output)
-
-(ht/comment
-  (when (fboundp 'bash-completion-dynamic-complete)
-    (add-hook 'shell-dynamic-complete-functions #'bash-completion-dynamic-complete))
-  nil)
 
 
 ;;; --- X11 COPY/PASTE --- ;;;
