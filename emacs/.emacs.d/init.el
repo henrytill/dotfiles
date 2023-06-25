@@ -296,6 +296,26 @@
 (bind-key "C-c n n" #'ht/next-page)
 (bind-key "C-c n p" #'ht/prev-page)
 
+;;; EDITING
+
+(defun ht/move-line-up ()
+  "Move up the current line or region"
+  (interactive)
+  (transpose-lines 1)
+  (previous-line 2)
+  (indent-according-to-mode))
+
+(defun ht/move-line-down ()
+  "Move down the current line or region"
+  (interactive)
+  (next-line 1)
+  (transpose-lines 1)
+  (previous-line 1)
+  (indent-according-to-mode))
+
+(bind-key "M-<up>" #'ht/move-line-up)
+(bind-key "M-<down>" #'ht/move-line-down)
+
 ;;; SITE-LISP
 
 (add-to-list 'load-path (expand-file-name "compile-commands" ht/site-lisp-directory))
