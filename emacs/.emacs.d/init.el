@@ -873,6 +873,43 @@
              whitespace-mode))
   (add-hook 'bibtex-mode-hook f))
 
+;;; MARKDOWN
+
+(use-package markdown-mode
+  :ensure t
+  :commands markdown-mode
+  :hook ((markdown-mode . display-line-numbers-mode)
+         (markdown-mode . electric-pair-mode)
+         (markdown-mode . ht/truncate-lines))
+  :config
+  (require 'url)
+
+  (defun ht/fetch-html-title (url)
+    "Fetch the HTML title of a URL."
+    (let ((url-buffer (url-retrieve-synchronously url)))
+      (save-excursion
+        (set-buffer url-buffer)
+        (beginning-of-buffer)
+        (re-search-forward "<title>\\(.*?\\)</title>" nil t)
+        (match-string 1))))
+
+  (defun ht/insert-markdown-link-from-url (url)
+    "Fetch the HTML title of URL and insert it into the current buffer as a markdown link."
+    (interactive "sEnter URL: ")
+    (let ((title (ht/fetch-html-title url)))
+      (insert (format "[%s](%s)" title url))))
+
+  (defun ht/convert-url-to-markdown-link ()
+    "Take the URL at point, fetch its title and replace it with a markdown link."
+    (interactive)
+    (let* ((bounds (bounds-of-thing-at-point 'url))
+           (url (buffer-substring-no-properties (car bounds) (cdr bounds)))
+           (title (ht/fetch-html-title url)))
+      (delete-region (car bounds) (cdr bounds))
+      (insert (format "[%s](%s)" title url))))
+
+  nil)
+
 ;;; MISC
 
 (use-package debbugs
@@ -882,13 +919,6 @@
 (use-package dockerfile-mode
   :ensure t
   :commands dockerfile-mode)
-
-(use-package markdown-mode
-  :ensure t
-  :commands markdown-mode
-  :hook ((markdown-mode . display-line-numbers-mode)
-         (markdown-mode . electric-pair-mode)
-         (markdown-mode . ht/truncate-lines)))
 
 (use-package rec-mode
   :ensure t
