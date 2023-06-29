@@ -820,9 +820,6 @@
   (when (executable-find "swipl")
     (setq ediprolog-system 'swi)))
 
-(with-eval-after-load 'prolog
-  (bind-key "<f10>" #'ediprolog-dwim prolog-mode-map))
-
 ;;; PYTHON
 
 (with-eval-after-load 'python
