@@ -802,14 +802,6 @@
          ("dune-project\\'" . dune-mode))
   :commands dune-mode)
 
-(with-eval-after-load 'caml-types
-  (let ((color (face-attribute 'default :background)))
-    (dolist (face '(caml-types-expr-face
-                    caml-types-occ-face
-                    caml-types-scope-face
-                    caml-types-typed-face))
-      (set-face-foreground face color))))
-
 (with-eval-after-load 'caml-help
   (set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
 
