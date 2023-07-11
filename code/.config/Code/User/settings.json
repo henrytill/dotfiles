@@ -49,6 +49,7 @@
   "githubPullRequests.remotes": ["origin", "upstream", "github"],
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
+  "outline.collapseItems": "alwaysCollapse",
   "files.associations": {
     ".clang-tidy": "yaml"
   },
@@ -60,7 +61,6 @@
     "editor.tabSize": 8
   },
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.rulers": [80, 100]
   },
   "[html]": {
