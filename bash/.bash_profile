@@ -48,7 +48,8 @@ if [ -d "$TERMINFO_DIRS" ]; then
 fi
 
 export GOPROXY=direct
-export LC_COLLATE=C
+export LANG="en_US.utf8"
+export LC_COLLATE="C.utf8"
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 export NO_COLOR=1
 export _JAVA_AWT_WM_NONREPARENTING=1
