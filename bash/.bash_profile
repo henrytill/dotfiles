@@ -55,7 +55,10 @@ export NO_COLOR=1
 export _JAVA_AWT_WM_NONREPARENTING=1
 export npm_config_prefix="$HOME/.local"
 
-# Launch sway automatically
+# We are using Wayland
+export MOZ_ENABLE_WAYLAND=1
+
+# Launch sway
 SWAY_SESSION="/usr/local/bin/sway-session"
 if [ "$(uname)" = "Linux" ] && [ -e "$SWAY_SESSION" ] && [ "$(tty)" = "/dev/tty1" ]; then
     XDG_CURRENT_DESKTOP=sway
