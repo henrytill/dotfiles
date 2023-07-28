@@ -87,12 +87,6 @@ if [ -r "$OPAM_COMPLETE_SH" ] && [ -r "$OPAM_ENV_HOOK_SH" ]; then
     . "$OPAM_ENV_HOOK_SH" >/dev/null 2>/dev/null || true
 fi
 
-if [ -n "$SSH_CLIENT" ]; then
-    if [[ $PS1 =~ (.*)"\\$" ]]; then
-        PS1="${BASH_REMATCH[1]} [ssh]\\\$ "
-    fi
-fi
-
 # Automatically added by the Guix install script.
 if [ -n "$GUIX_ENVIRONMENT" ]; then
     if [[ $PS1 =~ (.*)"\\$" ]]; then
