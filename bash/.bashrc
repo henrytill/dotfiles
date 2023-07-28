@@ -87,13 +87,6 @@ if [ -r "$OPAM_COMPLETE_SH" ] && [ -r "$OPAM_ENV_HOOK_SH" ]; then
     . "$OPAM_ENV_HOOK_SH" >/dev/null 2>/dev/null || true
 fi
 
-# Automatically added by the Guix install script.
-if [ -n "$GUIX_ENVIRONMENT" ]; then
-    if [[ $PS1 =~ (.*)"\\$" ]]; then
-        PS1="${BASH_REMATCH[1]} [env]\\\$ "
-    fi
-fi
-
 if [ -z "$SSH_AUTH_SOCK" ]; then
     if [ -e $XDG_RUNTIME_DIR/openssh_agent ]; then
         export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/openssh_agent"
