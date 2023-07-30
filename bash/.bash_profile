@@ -41,12 +41,6 @@ elif [ -n "$(command -v mg)" ]; then
     export EDITOR="mg"
 fi
 
-# Allows Emacs installed by Guix to use system terminfo dirs
-TERMINFO_DIRS="/usr/share/terminfo/"
-if [ -d "$TERMINFO_DIRS" ]; then
-    export TERMINFO_DIRS
-fi
-
 export GOPROXY=direct
 export LANG="en_US.utf8"
 export LC_COLLATE="C.utf8"
