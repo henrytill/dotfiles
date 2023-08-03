@@ -506,6 +506,13 @@
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 
+(defun ht/enable-tabs ()
+  (setq indent-tabs-mode t))
+
+;;; ASM
+
+(add-hook 'asm-mode-hook #'ht/enable-tabs)
+
 ;;; C/C++
 
 (defun ht/modify-c-syntax-entries ()
