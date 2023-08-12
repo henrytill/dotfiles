@@ -111,7 +111,7 @@
       ispell-program-name "aspell"
       load-prefer-newer t
       mail-envelope-from 'header
-      mail-specify-envelope-from 't
+      mail-specify-envelope-from t
       message-sendmail-envelope-from 'header
       mouse-yank-at-point t
       require-final-newline t
@@ -121,7 +121,7 @@
       scroll-conservatively 1
       send-mail-function 'sendmail-send-it
       sendmail-program "msmtp"
-      tags-revert-without-query 1
+      tags-revert-without-query t
       uniquify-buffer-name-style 'forward
       visible-bell t
       x-select-enable-primary t
