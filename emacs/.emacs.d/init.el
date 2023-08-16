@@ -509,10 +509,6 @@
 (defun ht/enable-tabs ()
   (setq indent-tabs-mode t))
 
-;;; ASM
-
-(add-hook 'asm-mode-hook #'ht/enable-tabs)
-
 ;;; C/C++
 
 (defun ht/modify-c-syntax-entries ()
@@ -521,8 +517,7 @@
 (add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
 
 (with-eval-after-load 'cc-mode
-  (c-add-style "ht" '("k&r" (c-basic-offset . 2)))
-  (add-to-list 'c-default-style '(c-mode . "ht")))
+  (add-to-list 'c-default-style '(c-mode . "gnu")))
 
 (setq path-to-ctags "ctags")
 
