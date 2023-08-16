@@ -42,7 +42,8 @@
   },
   "settingsSync.ignoredExtensions": [
     "github.copilot",
-    "github.copilot-nightly"
+    "github.copilot-nightly",
+    "github.copilot-chat"
   ],
   "githubPullRequests.createOnPublishBranch": "never",
   "githubPullRequests.pullBranch": "never",
@@ -61,7 +62,8 @@
     "editor.tabSize": 8
   },
   "[python]": {
-    "editor.rulers": [80, 100]
+    "editor.rulers": [80, 100],
+    "editor.defaultFormatter": "ms-python.black-formatter"
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
