@@ -19,4 +19,5 @@
  '(font-lock-type-face ((t nil)))
  '(font-lock-variable-name-face ((t nil)))
  '(link ((t (:underline t))))
+ '(sh-heredoc ((t nil)))
  '(tuareg-font-double-semicolon-face ((t nil))))
