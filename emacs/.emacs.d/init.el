@@ -521,14 +521,7 @@
 (add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
 
 (with-eval-after-load 'cc-mode
-  ;; https://www.kernel.org/doc/html/v4.10/process/coding-style.html#you-ve-made-a-mess-of-it
-  (defun c-lineup-arglist-tabs-only (ignored)
-    "Line up argument lists by tabs, not spaces"
-    (save-excursion
-      c-basic-offset))
-  (c-add-style "ht" '("linux"
-                      (indent-tabs-mode . t)
-                      (c-offsets-alist (arglist-cont-nonempty c-lineup-arglist-tabs-only))))
+  (c-add-style "ht" '("k&r" (c-basic-offset . 2)))
   (add-to-list 'c-default-style '(c-mode . "ht")))
 
 (setq path-to-ctags "ctags")
