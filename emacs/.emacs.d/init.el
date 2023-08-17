@@ -516,9 +516,6 @@
 
 (add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
 
-(with-eval-after-load 'cc-mode
-  (add-to-list 'c-default-style '(c-mode . "gnu")))
-
 (setq path-to-ctags "ctags")
 
 (defun ht/run-ctags (paths)
