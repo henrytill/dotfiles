@@ -647,6 +647,8 @@
   :ensure t
   :defer t)
 
+(setq geiser-mode-auto-p nil)
+
 (add-hook 'geiser-repl-mode-hook #'company-mode)
 
 ;;; COMMON LISP
