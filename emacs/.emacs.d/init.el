@@ -383,15 +383,7 @@
                  '((haskell-types       . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
                    (haskell-assignment  . "\\(\\s-+\\)=\\s-+")
                    (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-                   (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+"))))
-  ;; alignment of ocaml forms
-  (nconc align-rules-list
-         (mapcar (lambda (x)
-                   `(,(car x) (regexp . ,(cdr x)) (modes quote (tuareg-mode))))
-                 '((ocaml-types       . "\\(\\s-+\\):\\s-+")
-                   (ocaml-assignment  . "\\(\\s-+\\)=\\s-+")
-                   (ocaml-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-                   (ocaml-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
+                   (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
 
 ;;; PAREDIT
 
@@ -765,27 +757,20 @@
   t)
 
 (defun ht/load-ocaml-buffer ()
+  (interactive)
   (ht/import-ocaml-env)
   (when-let (ocaml-load-path (ht/add-ocaml-load-path))
     (ht/load-ocaml-packages)))
 
-(use-package tuareg
+(use-package caml
   :ensure t
-  :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
-  :hook ((tuareg-mode . electric-indent-local-mode)
-         (tuareg-mode . ht/load-ocaml-buffer)))
-
-(defvar ht/dune-fmt-command "dune fmt")
-
-(defun ht/project-dune-fmt ()
-  (interactive)
-  (when (and (derived-mode-p 'tuareg-mode)
-             (ht/dune-project-exists-p)
-             (assoc 'auto-revert-mode minor-mode-alist))
-    (let ((default-directory (project-root (project-current t)))
-          (out-buffer (get-buffer-create "*dune-fmt-out*"))
-          (err-buffer (get-buffer-create "*dune-fmt-err*")))
-      (shell-command ht/dune-fmt-command out-buffer err-buffer))))
+  :commands (caml-mode run-caml camldebug)
+  :mode ("\\.ml[iylp]?$" . caml-mode)
+  :init
+  (setq caml-function-indent 2
+        caml-match-indent 0
+        caml-type-indent 2
+        caml-|-extra-indent 0))
 
 (use-package dune
   :if (and (executable-find "dune")
