@@ -711,26 +711,14 @@
         (add-to-list 'load-path ocaml-load-path))
     nil))
 
-(defun ht/dune-project-exists-p ()
-  (let* ((project-dir (project-root (project-current t)))
-         (dune-project-file (expand-file-name "dune-project" project-dir)))
-    (if (file-exists-p dune-project-file)
-        dune-project-file
-      nil)))
-
-(defun ht/set-utop-command ()
-  (when (executable-find "opam")
-    (let* ((dune-cmd "dune utop . -- -emacs")
-           (cmd "utop -emacs")
-           (command (if (ht/dune-project-exists-p) dune-cmd cmd)))
-      (setq utop-command (format "opam config exec -- %s" command)))))
+(defun ht/ocp-indent-p ()
+  (and (locate-file "ocp-indent.el" load-path)
+       (file-exists-p (expand-file-name ".ocp-indent" (project-root (project-current t))))))
 
 (defun ht/load-ocaml-packages ()
   (when (ht/check-project)
     (dolist (feature '(merlin-mode
                        merlin-company
-                       utop
-                       utop-minor-mode
                        ocp-indent))
       (when (featurep feature)
         (unload-feature feature))))
@@ -742,13 +730,7 @@
   (when (locate-file "merlin-company.el" load-path)
     (when (not (featurep 'merlin-company))
       (require 'merlin-company "merlin-company.el")))
-  (when (locate-file "utop.el" load-path)
-    (when (not (and (featurep 'utop) (featurep 'utop-minor-mode)))
-      (require 'utop "utop.el")
-      (require 'utop-minor-mode "utop.el")
-      (ht/set-utop-command))
-    (utop-minor-mode 1))
-  (when (locate-file "ocp-indent.el" load-path)
+  (when (ht/ocp-indent-p)
     (when (not (featurep 'ocp-indent))
       (require 'ocp-indent "ocp-indent.el")
       (when (version<= "28.1" emacs-version)
@@ -758,31 +740,44 @@
     (ocp-setup-indent))
   t)
 
+(defvar focaml-other-file-alist '(("\\.ml\\'" (".mli"))
+                                  ("\\.mli\\'" (".ml"))))
+
 (defun ht/load-ocaml-buffer ()
   (interactive)
   (ht/import-ocaml-env)
   (when-let (ocaml-load-path (ht/add-ocaml-load-path))
-    (ht/load-ocaml-packages)))
+    (ht/load-ocaml-packages))
+  (setq ff-other-file-alist #'focaml-other-file-alist))
 
-(use-package caml
-  :ensure t
-  :commands (caml-mode run-caml camldebug)
-  :mode ("\\.ml[iylp]?$" . caml-mode)
-  :init
-  (setq caml-function-indent 2
-        caml-match-indent 0
-        caml-type-indent 2
-        caml-|-extra-indent 0))
+(define-derived-mode focaml-mode prog-mode "focaml"
+  "A major mode for OCaml programming.")
 
-(use-package dune
-  :if (and (executable-find "dune")
-           (locate-file "dune.el" load-path))
-  :mode (("dune\\'" . dune-mode)
-         ("dune-project\\'" . dune-mode))
-  :commands dune-mode)
+(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . focaml-mode))
 
-(with-eval-after-load 'caml-help
-  (set-face-foreground 'ocaml-help-face (face-attribute 'default :background)))
+(add-hook 'focaml-mode-hook #'ht/load-ocaml-buffer)
+
+(defun ht/ocamlformat-buffer-file ()
+  (interactive)
+  (let ((file-name (buffer-file-name))
+        (default-directory (project-root (project-current t))))
+    (shell-command (format "ocamlformat -i %s" file-name))))
+
+(add-to-list 'auto-mode-alist '("/dune[-project]?" . lisp-data-mode))
+
+(ht/comment
+  (use-package caml
+    :ensure t
+    :commands (caml-mode run-caml camldebug)
+    :mode ("\\.ml[iylp]?$" . caml-mode)
+    :init
+    (add-hook 'caml-mode-hook #'ht/load-ocaml-buffer)
+    (setq caml-function-indent 2
+          caml-match-indent 0
+          caml-type-indent 2
+          caml-|-extra-indent 0))
+  (with-eval-after-load 'caml-help
+    (set-face-foreground 'ocaml-help-face (face-attribute 'default :background))))
 
 ;;; PROLOG
 
@@ -963,6 +958,7 @@
 
 (defvar ht/clang-format-on-save nil)
 (defvar ht/gofmt-on-save nil)
+(defvar ht/ocamlformat-on-save nil)
 (defvar ht/black-format-on-save nil)
 
 (defun ht/finalize-before-save ()
@@ -973,7 +969,9 @@
 
 (defun ht/finalize-after-save ()
   (cond ((and (derived-mode-p 'python-mode) ht/black-format-on-save)
-         (ht/black-format-buffer-file))))
+         (ht/black-format-buffer-file))
+        ((and (derived-mode-p 'focaml-mode) ht/ocamlformat-on-save)
+         (ht/ocamlformat-buffer-file))))
 
 (add-hook 'before-save-hook #'ht/finalize-before-save)
 (add-hook 'after-save-hook #'ht/finalize-after-save)
