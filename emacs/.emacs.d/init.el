@@ -636,6 +636,18 @@
              enable-paredit-mode))
   (add-hook 'scheme-mode-hook f))
 
+(when-let ((gsi (file-name-base (executable-find "gsi"))))
+  (setq scheme-program-name gsi))
+
+(ht/comment
+  (when (and (locate-file "gambit.el" load-path)
+             (string-equal scheme-program-name "gsi"))
+    (autoload 'gambit-mode "gambit.el")
+    (autoload 'gambit-inferior-mode "gambit.el")
+    (add-hook 'scheme-mode-hook #'gambit-mode)
+    (add-hook 'inferior-scheme-mode-hook #'gambit-mode))
+  nil)
+
 (use-package geiser-guile
   :ensure t
   :defer t)
