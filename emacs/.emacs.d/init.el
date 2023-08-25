@@ -756,20 +756,6 @@
 
 (add-hook 'focaml-mode-hook #'ht/load-ocaml-buffer)
 
-(ht/comment
-  (use-package caml
-    :ensure t
-    :commands (caml-mode run-caml camldebug)
-    :mode ("\\.ml[iylp]?$" . caml-mode)
-    :init
-    (add-hook 'caml-mode-hook #'ht/load-ocaml-buffer)
-    (setq caml-function-indent 2
-          caml-match-indent 0
-          caml-type-indent 2
-          caml-|-extra-indent 0))
-  (with-eval-after-load 'caml-help
-    (set-face-foreground 'ocaml-help-face (face-attribute 'default :background))))
-
 ;;; PROLOG
 
 (setq auto-mode-alist
