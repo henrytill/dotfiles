@@ -22,7 +22,7 @@ if [ -n "$(command -v emacsclient)" ]; then
 fi
 
 if [ -n "$(command -v wl-copy)" ]; then
-    alias clear-clipboard="wl-copy --clear"
+    alias clc="wl-copy --clear"
 fi
 
 if [ -n "$(command -v lsblk)" ]; then
