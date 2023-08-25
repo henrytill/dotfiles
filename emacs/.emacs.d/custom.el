@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(caml elpher yaml-mode rec-mode markdown-mode dockerfile-mode debbugs auctex sml-mode rust-mode ediprolog nix-mode lua-mode sly geiser-racket geiser-guile cmake-mode paredit magit macrostep haskell-mode go-mode gnu-apl-mode geiser forth-mode eglot company bison-mode))
+   '(elpher yaml-mode rec-mode markdown-mode dockerfile-mode debbugs auctex sml-mode rust-mode ediprolog nix-mode lua-mode sly geiser-racket geiser-guile cmake-mode paredit magit macrostep haskell-mode go-mode gnu-apl-mode geiser forth-mode eglot company bison-mode))
  '(safe-local-variable-values
    '((ht/ocamlformat-on-save . t)
      (ht/black-format-on-save . t)
