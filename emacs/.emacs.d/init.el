@@ -740,6 +740,15 @@
 (defvar focaml-other-file-alist '(("\\.ml\\'" (".mli"))
                                   ("\\.mli\\'" (".ml"))))
 
+(when (not (featurep 'cl-macs))
+  (require 'cl-macs))
+
+(defun focaml-comment-dwim (arg)
+  "A wrapper for comment-dwim that avoids unnecessary indentation."
+  (interactive "*P")
+  (cl-letf (((symbol-function 'indent-according-to-mode) (lambda ())))
+    (comment-dwim arg)))
+
 (define-derived-mode focaml-mode prog-mode "focaml"
   "A minimal major mode for editing OCaml."
   (setq comment-start "(*"
@@ -750,7 +759,8 @@
         indent-line-function #'insert-tab
         indent-tabs-mode nil
         tab-width 2)
-  (bind-key "C-c C-a" #'ff-find-other-file focaml-mode-map))
+  (bind-key "C-c C-a" #'ff-find-other-file focaml-mode-map)
+  (bind-key "M-;" #'focaml-comment-dwim focaml-mode-map))
 
 (add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . focaml-mode))
 
