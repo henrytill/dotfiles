@@ -1,4 +1,5 @@
 add-auto-load-safe-path ~/.gdbinit
+set disassembly-flavor intel
 set host-charset UTF-8
 set target-charset UTF-8
 set target-wide-charset UTF-8
@@ -30,4 +31,10 @@ define et
     x/2a $x
     set $x = (void **)$x[0]
   end
+end
+
+# https://triptico.com/blog/a-better-hex-dump-for-gdb.html
+define hd
+  dump binary memory dump.bin $arg0 ((void *)$arg0)+128
+  eval "shell hd dump.bin; rm dump.bin"
 end
