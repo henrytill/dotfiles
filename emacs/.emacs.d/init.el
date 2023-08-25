@@ -708,15 +708,9 @@
         (add-to-list 'load-path ocaml-load-path))
     nil))
 
-(defun ht/ocp-indent-p ()
-  (and (locate-file "ocp-indent.el" load-path)
-       (file-exists-p (expand-file-name ".ocp-indent" (project-root (project-current t))))))
-
-(defun ht/load-ocaml-packages ()
+(defun ht/load-merlin ()
   (when (ht/check-project)
-    (dolist (feature '(merlin-mode
-                       merlin-company
-                       ocp-indent))
+    (dolist (feature '(merlin-mode merlin-company))
       (when (featurep feature)
         (unload-feature feature))))
   (when (locate-file "merlin.el" load-path)
@@ -727,21 +721,13 @@
   (when (locate-file "merlin-company.el" load-path)
     (when (not (featurep 'merlin-company))
       (require 'merlin-company "merlin-company.el")))
-  (when (ht/ocp-indent-p)
-    (when (not (featurep 'ocp-indent))
-      (require 'ocp-indent "ocp-indent.el")
-      (when (version<= "28.1" emacs-version)
-        (defun ocp-indent-buffer ()
-          (interactive nil)
-          (ocp-indent-region 1 (buffer-size)))))
-    (ocp-setup-indent))
   t)
 
 (defun ht/load-ocaml-buffer ()
   (interactive)
   (ht/import-ocaml-env)
   (when-let (ocaml-load-path (ht/add-ocaml-load-path))
-    (ht/load-ocaml-packages)))
+    (ht/load-merlin)))
 
 (defun ht/ocamlformat-buffer-file ()
   (interactive)
