@@ -756,7 +756,7 @@
         comment-start-skip "(\\*+\\s-*"
         comment-use-syntax nil
         ff-other-file-alist #'focaml-other-file-alist
-        indent-line-function #'insert-tab
+        indent-line-function #'tab-to-tab-stop
         indent-tabs-mode nil
         tab-width 2)
   (bind-key "C-c C-a" #'ff-find-other-file focaml-mode-map)
