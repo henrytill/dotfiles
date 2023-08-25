@@ -498,9 +498,6 @@
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 
-(defun ht/enable-tabs ()
-  (setq indent-tabs-mode t))
-
 ;;; C/C++
 
 (defun ht/modify-c-syntax-entries ()
@@ -740,22 +737,11 @@
     (ocp-setup-indent))
   t)
 
-(defvar focaml-other-file-alist '(("\\.ml\\'" (".mli"))
-                                  ("\\.mli\\'" (".ml"))))
-
 (defun ht/load-ocaml-buffer ()
   (interactive)
   (ht/import-ocaml-env)
   (when-let (ocaml-load-path (ht/add-ocaml-load-path))
-    (ht/load-ocaml-packages))
-  (setq ff-other-file-alist #'focaml-other-file-alist))
-
-(define-derived-mode focaml-mode prog-mode "focaml"
-  "A major mode for OCaml programming.")
-
-(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . focaml-mode))
-
-(add-hook 'focaml-mode-hook #'ht/load-ocaml-buffer)
+    (ht/load-ocaml-packages)))
 
 (defun ht/ocamlformat-buffer-file ()
   (interactive)
@@ -764,6 +750,25 @@
     (shell-command (format "ocamlformat -i %s" file-name))))
 
 (add-to-list 'auto-mode-alist '("/dune[-project]?" . lisp-data-mode))
+
+(defvar focaml-other-file-alist '(("\\.ml\\'" (".mli"))
+                                  ("\\.mli\\'" (".ml"))))
+
+(define-derived-mode focaml-mode prog-mode "focaml"
+  "A minimal major mode for editing OCaml."
+  (setq comment-start "(*"
+        comment-end "*)"
+        comment-start-skip "(\\*+\\s-*"
+        comment-use-syntax nil
+        ff-other-file-alist #'focaml-other-file-alist
+        indent-line-function #'insert-tab
+        indent-tabs-mode nil
+        tab-width 2)
+  (bind-key "C-c C-a" #'ff-find-other-file focaml-mode-map))
+
+(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . focaml-mode))
+
+(add-hook 'focaml-mode-hook #'ht/load-ocaml-buffer)
 
 (ht/comment
   (use-package caml
