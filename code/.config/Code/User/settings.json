@@ -2,7 +2,6 @@
   "debug.console.fontFamily": "'PragmataPro Mono'",
   "debug.console.fontSize": 14,
   "debug.enableStatusBarColor": false,
-  "editor.codeLens": false,
   "editor.codeLensFontFamily": "'PragmataPro Mono'",
   "editor.codeLensFontSize": 14,
   "editor.fontFamily": "'PragmataPro Mono'",
@@ -40,6 +39,7 @@
             "keyword.other.ocaml",
             "keyword.other.rust",
             "keyword.other.fn.rust",
+            "meta.preprocessor",
             "storage.modifier",
             "variable.language"
           ],
