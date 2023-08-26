@@ -837,6 +837,13 @@
 
 ;;; MARKDOWN
 
+(defun ht/string-to-ascii (str)
+  "Transliterate STR to its closest ASCII representation using iconv."
+  (with-temp-buffer
+    (insert str)
+    (shell-command-on-region (point-min) (point-max) "iconv -f utf-8 -t ascii//translit" nil t)
+    (buffer-string)))
+
 (use-package markdown-mode
   :ensure t
   :commands markdown-mode
@@ -859,7 +866,7 @@
     "Fetch the HTML title of URL and insert it into the current buffer as a markdown link."
     (interactive "sEnter URL: ")
     (let ((title (ht/fetch-html-title url)))
-      (insert (format "[%s](%s)" title url))))
+      (insert (format "[%s](%s)" (ht/string-to-ascii title) url))))
 
   (defun ht/convert-url-to-markdown-link ()
     "Take the URL at point, fetch its title and replace it with a markdown link."
