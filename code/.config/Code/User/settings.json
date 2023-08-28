@@ -123,5 +123,6 @@
   },
   "[markdown]": {
     "editor.wordWrap": "off"
-  }
+  },
+  "python.terminal.activateEnvironment": false
 }
