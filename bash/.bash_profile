@@ -21,6 +21,7 @@ fi
 
 add_to_path_front "$HOME/.cargo/bin"
 add_to_path_front "$HOME/.cabal/bin"
+add_to_path_front "$HOME/.elan/bin"
 
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 add_to_path_back "/usr/local/go/bin"
