@@ -405,12 +405,14 @@
 
 ;;; LSP
 
+(defun ht/customize-eglot ()
+  (eglot-inlay-hints-mode 0))
+
 (use-package eglot
   :ensure t
   :commands eglot
-  :config
-  (setq eglot-server-programs
-        (ht/assq-replace eglot-server-programs '(rust-mode . "rust-analyzer"))))
+  :init
+  (add-hook 'eglot-managed-mode-hook #'ht/customize-eglot))
 
 ;;; MAGIT
 
