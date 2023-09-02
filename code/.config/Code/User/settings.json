@@ -41,6 +41,9 @@
             "keyword.other.fn.rust",
             "meta.preprocessor",
             "storage.modifier",
+            "support.type.property-name.toml",
+            "support.type.property-name.array.toml",
+            "support.type.property-name.table.toml",
             "variable.language"
           ],
           "settings": {
