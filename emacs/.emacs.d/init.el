@@ -969,22 +969,28 @@
 
 ;;; --- POSTLUDE --- ;;;
 
-(defvar ht/clang-format-on-save nil)
-(defvar ht/gofmt-on-save nil)
-(defvar ht/ocamlformat-on-save nil)
-(defvar ht/black-format-on-save nil)
+(defvar ht/format-on-save nil)
+
+(defvar ht/before-save-formatters
+  '((c-mode . clang-format-buffer)
+    (go-mode . gofmt)))
+
+(defvar ht/after-save-formatters
+  '((python-mode . ht/black-format-buffer-file)
+    (focaml-mode . ht/ocamlformat-buffer-file)))
+
+(defun ht/run-formatter (formatters)
+  (dolist (mode+formatter formatters)
+    (when (derived-mode-p (car mode+formatter))
+      (funcall (cdr mode+formatter)))))
 
 (defun ht/finalize-before-save ()
-  (cond ((and (derived-mode-p 'c-mode) ht/clang-format-on-save)
-         (clang-format-buffer))
-        ((and (derived-mode-p 'go-mode) ht/gofmt-on-save)
-         (gofmt))))
+  (when ht/format-on-save
+    (ht/run-formatter ht/before-save-formatters)))
 
 (defun ht/finalize-after-save ()
-  (cond ((and (derived-mode-p 'python-mode) ht/black-format-on-save)
-         (ht/black-format-buffer-file))
-        ((and (derived-mode-p 'focaml-mode) ht/ocamlformat-on-save)
-         (ht/ocamlformat-buffer-file))))
+  (when ht/format-on-save
+    (ht/run-formatter ht/after-save-formatters)))
 
 (add-hook 'before-save-hook #'ht/finalize-before-save)
 (add-hook 'after-save-hook #'ht/finalize-after-save)

@@ -6,9 +6,7 @@
  '(package-selected-packages
    '(elpher yaml-mode rec-mode markdown-mode dockerfile-mode debbugs auctex sml-mode rust-mode ediprolog nix-mode lua-mode sly geiser-racket geiser-guile cmake-mode paredit magit macrostep haskell-mode go-mode gnu-apl-mode geiser forth-mode eglot company bison-mode))
  '(safe-local-variable-values
-   '((ht/ocamlformat-on-save . t)
-     (ht/black-format-on-save . t)
-     (ht/clang-format-on-save . t))))
+   '((ht/format-on-save . t))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
