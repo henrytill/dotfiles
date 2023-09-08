@@ -15,4 +15,4 @@
 	url = https://github.com/henrytill/docker-tramp.el.git
 [submodule "emacs/.emacs.d/site-lisp/meson-mode"]
 	path = emacs/.emacs.d/site-lisp/meson-mode
-	url = git@github.com:wentasah/meson-mode.git
+	url = https://github.com/wentasah/meson-mode.git
