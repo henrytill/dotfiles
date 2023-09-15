@@ -329,7 +329,7 @@
 
 (add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
 
-(when (version<= "29.1" emacs-version)
+(when (version< emacs-version "29.1")
   (add-to-list 'load-path (expand-file-name "docker-tramp" ht/site-lisp-directory))
   (autoload 'docker-tramp-add-method "docker-tramp.el"))
 
