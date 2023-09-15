@@ -324,13 +324,14 @@
 (add-to-list 'load-path (expand-file-name "magit-annex" ht/site-lisp-directory))
 (autoload 'magit-annex-dispatch "magit-annex.el")
 
-(add-to-list 'load-path (expand-file-name "docker-tramp" ht/site-lisp-directory))
-(autoload 'docker-tramp-add-method "docker-tramp.el")
-
 (add-to-list 'load-path (expand-file-name "meson-mode" ht/site-lisp-directory))
 (autoload 'meson-mode "meson-mode.el")
 
 (add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
+
+(when (version<= "29.1" emacs-version)
+  (add-to-list 'load-path (expand-file-name "docker-tramp" ht/site-lisp-directory))
+  (autoload 'docker-tramp-add-method "docker-tramp.el"))
 
 ;;; XDG
 
