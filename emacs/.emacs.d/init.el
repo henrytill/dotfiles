@@ -329,10 +329,6 @@
 
 (add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
 
-(when (version< emacs-version "29.1")
-  (add-to-list 'load-path (expand-file-name "docker-tramp" ht/site-lisp-directory))
-  (autoload 'docker-tramp-add-method "docker-tramp.el"))
-
 ;;; XDG
 
 (autoload 'xdg-data-home "xdg.el")
@@ -343,9 +339,12 @@
 
 ;;; TRAMP
 
-(with-eval-after-load 'tramp
-  (docker-tramp-add-method)
-  (tramp-set-completion-function docker-tramp-method docker-tramp-completion-function-alist))
+(when (version< emacs-version "29.1")
+  (add-to-list 'load-path (expand-file-name "docker-tramp" ht/site-lisp-directory))
+  (autoload 'docker-tramp-add-method "docker-tramp.el")
+  (with-eval-after-load 'tramp
+    (docker-tramp-add-method)
+    (tramp-set-completion-function docker-tramp-method docker-tramp-completion-function-alist)))
 
 ;;; DIRED
 
