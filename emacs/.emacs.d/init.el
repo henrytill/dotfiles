@@ -329,14 +329,6 @@
 
 (add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
 
-;;; XDG
-
-(autoload 'xdg-data-home "xdg.el")
-
-;;; IBUFFER
-
-(setq ibuffer-default-sorting-mode 'filename/process)
-
 ;;; TRAMP
 
 (when (version< emacs-version "29.1")
@@ -355,6 +347,14 @@
       (start-process (concat "zathura \"" url "\"") nil "zathura" url))
     (add-to-list 'browse-url-handlers '("\\.pdf\\'" . ht/browse-pdf-with-zathura)))
   nil)
+
+;;; IBUFFER
+
+(setq ibuffer-default-sorting-mode 'filename/process)
+
+;;; XDG
+
+(autoload 'xdg-data-home "xdg.el")
 
 ;;; INFO
 
