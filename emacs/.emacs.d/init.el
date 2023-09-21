@@ -316,19 +316,6 @@
 (bind-key "M-<up>" #'ht/move-line-up)
 (bind-key "M-<down>" #'ht/move-line-down)
 
-;;; SITE-LISP
-
-(add-to-list 'load-path (expand-file-name "compile-commands" ht/site-lisp-directory))
-(autoload 'compile-commands-get-include-directories "compile-commands.el")
-
-(add-to-list 'load-path (expand-file-name "magit-annex" ht/site-lisp-directory))
-(autoload 'magit-annex-dispatch "magit-annex.el")
-
-(add-to-list 'load-path (expand-file-name "meson-mode" ht/site-lisp-directory))
-(autoload 'meson-mode "meson-mode.el")
-
-(add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
-
 ;;; TRAMP
 
 (when (version< emacs-version "29.1")
@@ -345,8 +332,7 @@
   (when (executable-find "zathura")
     (defun ht/browse-pdf-with-zathura (url &optional new-window)
       (start-process (concat "zathura \"" url "\"") nil "zathura" url))
-    (add-to-list 'browse-url-handlers '("\\.pdf\\'" . ht/browse-pdf-with-zathura)))
-  nil)
+    (add-to-list 'browse-url-handlers '("\\.pdf\\'" . ht/browse-pdf-with-zathura))))
 
 ;;; IBUFFER
 
@@ -415,6 +401,9 @@
   (add-hook 'eglot-managed-mode-hook #'ht/customize-eglot))
 
 ;;; MAGIT
+
+(add-to-list 'load-path (expand-file-name "magit-annex" ht/site-lisp-directory))
+(autoload 'magit-annex-dispatch "magit-annex.el")
 
 (use-package magit
   :ensure t
@@ -500,12 +489,18 @@
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 
+(defun ht/set-tab-width (width)
+  (interactive "nSet tab-width to: ")
+  (setq tab-width width))
+
 ;;; C/C++
 
 (defun ht/modify-c-syntax-entries ()
   (modify-syntax-entry ?_ "w"))
 
 (add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
+
+;;; CTAGS
 
 (setq path-to-ctags "ctags")
 
@@ -522,6 +517,9 @@
   (interactive "Ddirectory: ")
   (ht/run-ctags (directory-file-name dir-name)))
 
+(add-to-list 'load-path (expand-file-name "compile-commands" ht/site-lisp-directory))
+(autoload 'compile-commands-get-include-directories "compile-commands.el")
+
 (defun ht/project-generate-tags ()
   "Generate TAGS file in the current project's root."
   (interactive)
@@ -529,9 +527,7 @@
          (includes (compile-commands-get-include-directories)))
     (ht/run-ctags includes)))
 
-(defun ht/set-tab-width (width)
-  (interactive "nSet tab-width to: ")
-  (setq tab-width width))
+;;; CLANG-FORMAT
 
 (when (is-windows-p)
   (let ((clang-format-path (or (getenv "CLANG_FORMAT_PATH")
@@ -549,6 +545,8 @@
     (when clang-format-path
       (setq clang-format-executable clang-format-path))))
 
+;;; BISON
+
 (use-package bison-mode
   :ensure t
   :commands bison-mode
@@ -557,6 +555,8 @@
         bison-rule-enumeration-column 4
         bison-decl-type-column 0
         bison-decl-token-column 0))
+
+;;; CMAKE
 
 (when (is-windows-p)
   (let ((cmake-path (executable-find "cmake")))
@@ -571,11 +571,17 @@
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'" . cmake-mode)))
 
-(add-to-list 'auto-mode-alist '("/meson\\(\\.build\\|_options\\.txt\\)\\'" . meson-mode))
+;;; NINJA
 
 (use-package ninja-mode
   :if (locate-file "ninja-mode.el" load-path)
   :commands ninja-mode)
+
+;;; MESON
+
+(add-to-list 'load-path (expand-file-name "meson-mode" ht/site-lisp-directory))
+(autoload 'meson-mode "meson-mode.el")
+(add-to-list 'auto-mode-alist '("/meson\\(\\.build\\|_options\\.txt\\)\\'" . meson-mode))
 
 ;;; APL
 
@@ -692,6 +698,8 @@
   (setq lua-indent-level 4))
 
 ;;; NIM
+
+(add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
 
 (use-package nim-mode
   :if (locate-file "nim-mode.el" load-path)
@@ -838,8 +846,6 @@
   (add-hook 'bibtex-mode-hook f))
 
 ;;; MARKDOWN
-
-
 
 (use-package markdown-mode
   :ensure t
