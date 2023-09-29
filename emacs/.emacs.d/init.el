@@ -217,7 +217,7 @@
 (add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
 
 (when (display-graphic-p)
-  (defconst ht/preferred-unix-font "PragmataPro Mono:size=12")
+  (defconst ht/preferred-unix-font "PragmataPro Mono:size=14")
   (defconst ht/preferred-win-font "PragmataPro Mono:size=12"))
 
 (defun ht/set-face-attributes (frame)
