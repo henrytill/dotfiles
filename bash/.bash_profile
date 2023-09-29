@@ -53,11 +53,3 @@ export npm_config_prefix="$HOME/.local"
 
 # We are using Wayland
 export MOZ_ENABLE_WAYLAND=1
-
-# Launch sway
-SWAY_SESSION="/usr/local/bin/sway-session"
-if [ "$(uname)" = "Linux" ] && [ -e "$SWAY_SESSION" ] && [ "$(tty)" = "/dev/tty1" ]; then
-    XDG_CURRENT_DESKTOP=sway
-    export XDG_CURRENT_DESKTOP
-    exec sway-session
-fi
