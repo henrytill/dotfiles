@@ -74,6 +74,7 @@
   "git.allowForcePush": true,
   "git.autofetch": true,
   "git.defaultBranchName": "master",
+  "git.openRepositoryInParentFolders": "never",
   "extensions.ignoreRecommendations": true,
   "telemetry.telemetryLevel": "off",
   "github.copilot.enable": {
