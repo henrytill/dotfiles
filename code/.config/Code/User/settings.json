@@ -75,6 +75,7 @@
   "git.autofetch": true,
   "git.defaultBranchName": "master",
   "git.openRepositoryInParentFolders": "never",
+  "git.suggestSmartCommit": false,
   "extensions.ignoreRecommendations": true,
   "telemetry.telemetryLevel": "off",
   "github.copilot.enable": {
@@ -105,7 +106,8 @@
   },
   "[python]": {
     "editor.rulers": [80, 100],
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "terminal.activateEnvironment": false
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -127,6 +129,5 @@
   },
   "[markdown]": {
     "editor.wordWrap": "off"
-  },
-  "python.terminal.activateEnvironment": false
+  }
 }
