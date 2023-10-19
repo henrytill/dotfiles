@@ -8,6 +8,7 @@
   "editor.fontLigatures": false,
   "editor.fontSize": 14,
   "editor.formatOnSave": true,
+  "editor.guides.indentation": false,
   "editor.inlayHints.enabled": "offUnlessPressed",
   "editor.inlayHints.fontSize": 14,
   "editor.inlineSuggest.enabled": true,
@@ -94,6 +95,7 @@
   "githubPullRequests.remotes": ["origin", "upstream", "github"],
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
+  "mesonbuild.downloadLanguageServer": true,
   "outline.collapseItems": "alwaysCollapse",
   "files.associations": {
     ".clang-tidy": "yaml"
