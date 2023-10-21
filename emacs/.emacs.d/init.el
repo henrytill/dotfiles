@@ -755,34 +755,20 @@
 
 (add-to-list 'auto-mode-alist '("/dune[-project]?" . lisp-data-mode))
 
-(defvar focaml-other-file-alist '(("\\.ml\\'" (".mli"))
-                                  ("\\.mli\\'" (".ml"))))
-
 (when (not (featurep 'cl-macs))
   (require 'cl-macs))
 
-(defun focaml-comment-dwim (arg)
-  "A wrapper for comment-dwim that avoids unnecessary indentation."
-  (interactive "*P")
-  (cl-letf (((symbol-function 'indent-according-to-mode) (lambda ())))
-    (comment-dwim arg)))
+(defun ht/configure-tuareg ()
+  (setq-local indent-line-function #'tab-to-tab-stop
+              indent-tabs-mode nil
+              tab-width 2))
 
-(define-derived-mode focaml-mode prog-mode "focaml"
-  "A minimal major mode for editing OCaml."
-  (setq comment-start "(*"
-        comment-end "*)"
-        comment-start-skip "(\\*+\\s-*"
-        comment-use-syntax nil
-        ff-other-file-alist #'focaml-other-file-alist
-        indent-line-function #'tab-to-tab-stop
-        indent-tabs-mode nil
-        tab-width 2)
-  (bind-key "C-c C-a" #'ff-find-other-file focaml-mode-map)
-  (bind-key "M-;" #'focaml-comment-dwim focaml-mode-map))
-
-(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . focaml-mode))
-
-(add-hook 'focaml-mode-hook #'ht/load-ocaml-buffer)
+(use-package tuareg
+  :ensure t
+  :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
+  :hook ((tuareg-mode . electric-indent-local-mode)
+         (tuareg-mode . ht/load-ocaml-buffer)
+         (tuareg-mode . ht/configure-tuareg)))
 
 ;;; PROLOG
 
@@ -971,6 +957,9 @@
 
 ;;; --- POSTLUDE --- ;;;
 
+(setq font-lock-maximum-decoration '((tuareg-mode . 0)
+                                     (t . t)))
+
 (defvar ht/format-on-save nil)
 
 (defvar ht/before-save-formatters
@@ -979,7 +968,7 @@
 
 (defvar ht/after-save-formatters
   '((python-mode . ht/black-format-buffer-file)
-    (focaml-mode . ht/ocamlformat-buffer-file)))
+    (tuareg-mode . ht/ocamlformat-buffer-file)))
 
 (defun ht/run-formatter (formatters)
   (dolist (mode+formatter formatters)
