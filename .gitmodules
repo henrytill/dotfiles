@@ -1,6 +1,3 @@
-[submodule "emacs/.emacs.d/site-lisp/use-package"]
-	path = emacs/.emacs.d/site-lisp/use-package
-	url = https://github.com/jwiegley/use-package.git
 [submodule "emacs/.emacs.d/site-lisp/compile-commands"]
 	path = emacs/.emacs.d/site-lisp/compile-commands
 	url = https://github.com/henrytill/compile-commands.git
