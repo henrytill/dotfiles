@@ -158,26 +158,24 @@
 
 ;;; --- LOAD-PATH & PACKAGES --- ;;;
 
-(let ((directory (expand-file-name "/usr/share/emacs/site-lisp")))
-  (when (file-directory-p directory)
-    (let ((default-directory directory))
-      (when (not (member default-directory load-path))
-        (push default-directory load-path)
-        (normal-top-level-add-subdirs-to-load-path)))))
 
 (defconst ht/site-lisp-directory (expand-file-name "site-lisp" user-emacs-directory))
 
-(mapc #'(lambda (path)
-          (push (expand-file-name path ht/site-lisp-directory) load-path))
-      '("." "use-package"))
+(ht/comment
+  ;; This is a leftover from using Guix's Emacs atop Debian.
+  (let ((directory (expand-file-name "/usr/share/emacs/site-lisp")))
+    (when (file-directory-p directory)
+      (let ((default-directory directory))
+        (when (not (member default-directory load-path))
+          (push default-directory load-path)
+          (normal-top-level-add-subdirs-to-load-path)))))
+  ;; Another leftover from using more locally-compiled code and Nix packages
+  (mapc #'(lambda (path)
+            (when (file-directory-p path)
+              (push (expand-file-name path) load-path)))
+        '("/usr/local/share/emacs/site-lisp" "~/.nix-profile/share/emacs/site-lisp/"))
+  nil)
 
-(mapc #'(lambda (path)
-          (when (file-directory-p path)
-            (push (expand-file-name path) load-path)))
-      '("/usr/local/share/emacs/site-lisp" "~/.nix-profile/share/emacs/site-lisp/"))
-
-(require 'use-package)
-(require 'bind-key)
 (require 'package)
 
 (dolist (archive '(("nongnu" . "https://elpa.nongnu.org/nongnu/")))
@@ -188,6 +186,11 @@
 (when (null package-archive-contents)
   (package-refresh-contents))
 
+(when (not (package-installed-p 'use-package))
+  (package-install 'use-package))
+
+(require 'use-package)
+(require 'bind-key)
 (setq use-package-verbose t)
 
 
@@ -371,7 +374,8 @@
 
 (use-package paredit
   :ensure t
-  :commands enable-paredit-mode)
+  :commands enable-paredit-mode
+  :hook ((lisp-data-mode . enable-paredit-mode)))
 
 ;;; COMPANY
 
@@ -948,10 +952,13 @@
       (shell-command-to-string "wl-paste -n | tr -d \r")))
   (setq interprogram-cut-function #'wl-copy
         interprogram-paste-function #'wl-paste)
-  (defun kill-wl-copy-process (arg)
-    (when (and wl-copy-process (process-live-p wl-copy-process))
-      (kill-process wl-copy-process)))
-  (advice-add 'save-buffers-kill-emacs :before #'kill-wl-copy-process)
+  (ht/comment
+    ;; This is a bit racy unfortunately
+    (defun kill-wl-copy-process (arg)
+      (when (and wl-copy-process (process-live-p wl-copy-process))
+        (kill-process wl-copy-process)))
+    (advice-add 'save-buffers-kill-emacs :before #'kill-wl-copy-process)
+    nil)
   nil)
 
 
