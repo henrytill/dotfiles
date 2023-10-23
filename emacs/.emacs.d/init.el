@@ -158,7 +158,6 @@
 
 ;;; --- LOAD-PATH & PACKAGES --- ;;;
 
-
 (defconst ht/site-lisp-directory (expand-file-name "site-lisp" user-emacs-directory))
 
 (ht/comment
@@ -696,14 +695,6 @@
   :mode "\\.lua\\'"
   :config
   (setq lua-indent-level 4))
-
-;;; NIM
-
-(add-to-list 'load-path (expand-file-name "nim-mode" ht/site-lisp-directory))
-
-(use-package nim-mode
-  :if (locate-file "nim-mode.el" load-path)
-  :mode "\\.nim\\'")
 
 ;;; NIX
 
