@@ -1,9 +1,6 @@
 [submodule "emacs/.emacs.d/site-lisp/compile-commands"]
 	path = emacs/.emacs.d/site-lisp/compile-commands
 	url = https://github.com/henrytill/compile-commands.git
-[submodule "emacs/.emacs.d/site-lisp/nim-mode"]
-	path = emacs/.emacs.d/site-lisp/nim-mode
-	url = https://github.com/henrytill/nim-mode.git
 [submodule "emacs/.emacs.d/site-lisp/magit-annex"]
 	path = emacs/.emacs.d/site-lisp/magit-annex
 	url = https://github.com/magit/magit-annex.git
