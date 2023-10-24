@@ -755,9 +755,11 @@ Return the modified alist."
   (require 'cl-macs))
 
 (defun ht/configure-tuareg ()
-  (setq-local indent-line-function #'tab-to-tab-stop
-              indent-tabs-mode nil
-              tab-width 2))
+  (ht/comment
+    ;; Perhaps we should make configuration variable for this
+    (setq-local indent-line-function #'tab-to-tab-stop
+                indent-tabs-mode nil
+                tab-width 2)))
 
 (use-package tuareg
   :ensure t
