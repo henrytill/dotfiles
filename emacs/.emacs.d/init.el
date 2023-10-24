@@ -437,9 +437,8 @@ Return the modified alist."
 
 (defun ht/check-project ()
   (let ((current-project (project-root (project-current t))))
-    (if (not (string-equal ht/last-project current-project))
-        (setq ht/last-project current-project)
-      nil)))
+    (when (not (string-equal ht/last-project current-project))
+      (setq ht/last-project current-project))))
 
 ;;; PROG-MODE
 
@@ -717,13 +716,11 @@ Return the modified alist."
         (setenv (car var) (cadr var))))))
 
 (defun ht/add-ocaml-load-path ()
-  (if-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH"))
-            (ocaml-load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))
-      (progn
-        (make-local-variable 'load-path)
-        (setq load-path (copy-sequence load-path))
-        (add-to-list 'load-path ocaml-load-path))
-    nil))
+  (when-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH"))
+              (ocaml-load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))
+    (make-local-variable 'load-path)
+    (setq load-path (copy-sequence load-path))
+    (add-to-list 'load-path ocaml-load-path)))
 
 (defun ht/load-merlin ()
   (when (ht/check-project)
