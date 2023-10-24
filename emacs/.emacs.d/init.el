@@ -67,9 +67,13 @@
   (ht/s-trim-left (ht/s-trim-right s)))
 
 (defun ht/assq-replace (alist pair)
+  "Replace or insert PAIR in ALIST based on the key of PAIR.
+Return the modified alist."
   (cons pair (assq-delete-all (car pair) alist)))
 
 (defun ht/rassq-replace (alist value pair)
+  "Replace or insert PAIR in ALIST based on VALUE.
+Return the modified alist."
   (cons pair (rassq-delete-all value alist)))
 
 (defun ht/hostname ()
