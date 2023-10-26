@@ -103,13 +103,11 @@
   "[c]": {
     "editor.rulers": [80, 100]
   },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[go]": {
     "editor.tabSize": 8
-  },
-  "[python]": {
-    "editor.rulers": [80, 100],
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "terminal.activateEnvironment": false
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -131,5 +129,10 @@
   },
   "[markdown]": {
     "editor.wordWrap": "off"
+  },
+  "[python]": {
+    "editor.rulers": [80, 100],
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "terminal.activateEnvironment": false
   }
 }
