@@ -762,6 +762,8 @@ Return the modified alist."
   (require 'cl-macs))
 
 (defun ht/configure-tuareg ()
+  (when (file-exists-p (expand-file-name "dune-project" (project-root (project-current t))))
+    (setq-local compile-command "dune build "))
   (ht/comment
     ;; Perhaps we should make configuration variable for this
     (setq-local indent-line-function #'tab-to-tab-stop
