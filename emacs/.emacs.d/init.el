@@ -970,7 +970,7 @@ Return the modified alist."
 (setq font-lock-maximum-decoration '((tuareg-mode . 0)
                                      (t . t)))
 
-(defvar ht/format-on-save nil)
+(defcustom ht/format-on-save nil "Format buffers on save")
 
 (defvar ht/before-save-formatters
   '((c-mode . clang-format-buffer)
