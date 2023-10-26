@@ -758,8 +758,10 @@ Return the modified alist."
 
 (add-to-list 'auto-mode-alist '("/dune[-project]?" . lisp-data-mode))
 
-(when (not (featurep 'cl-macs))
-  (require 'cl-macs))
+(ht/comment
+  ;; I wonder why I did this
+  (when (not (featurep 'cl-macs))
+    (require 'cl-macs)))
 
 (defun ht/configure-tuareg ()
   (when (file-exists-p (expand-file-name "dune-project" (project-root (project-current t))))
