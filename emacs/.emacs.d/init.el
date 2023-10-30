@@ -360,19 +360,6 @@ Return the modified alist."
                                                            (shell . t)))
   nil)
 
-;;; ALIGN
-
-(with-eval-after-load 'align
-  ;; alignment of haskell forms
-  (nconc align-rules-list
-         (mapcar (lambda (x)
-                   `(,(car x) (regexp . ,(cdr x)) (modes quote (haskell-mode
-                                                                literate-haskell-mode))))
-                 '((haskell-types       . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
-                   (haskell-assignment  . "\\(\\s-+\\)=\\s-+")
-                   (haskell-arrows      . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-                   (haskell-left-arrows . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")))))
-
 ;;; PAREDIT
 
 (use-package paredit
@@ -620,8 +607,14 @@ Return the modified alist."
         haskell-interactive-popup-errors nil
         haskell-process-log t
         haskell-process-type 'cabal-repl
-        haskell-stylish-on-save t
+        haskell-stylish-on-save nil
         haskell-tags-on-save t))
+
+(defun ht/ormolu-buffer-file ()
+  (interactive)
+  (let ((file-name (buffer-file-name))
+        (default-directory (project-root (project-current t))))
+    (shell-command (format "ormolu --mode inplace %s" file-name))))
 
 ;;; ELISP
 
@@ -980,7 +973,8 @@ Return the modified alist."
 
 (defvar ht/after-save-formatters
   '((python-mode . ht/black-format-buffer-file)
-    (tuareg-mode . ht/ocamlformat-buffer-file)))
+    (tuareg-mode . ht/ocamlformat-buffer-file)
+    (haskell-mode . ht/ormolu-buffer-file)))
 
 (defun ht/run-formatter (formatters)
   (dolist (mode+formatter formatters)
