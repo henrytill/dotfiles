@@ -738,7 +738,6 @@ Return the modified alist."
 
 (defun ht/load-ocaml-buffer ()
   (interactive)
-  (ht/try-unload-merlin)
   (ht/import-ocaml-env)
   (when-let (ocaml-load-path (ht/add-ocaml-load-path))
     (ht/load-merlin)))
