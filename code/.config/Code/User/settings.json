@@ -83,7 +83,8 @@
     "*": true,
     "plaintext": false,
     "markdown": false,
-    "scminput": false
+    "scminput": false,
+    "dune": false
   },
   "settingsSync.ignoredExtensions": [
     "github.copilot",
@@ -97,6 +98,7 @@
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
   "mesonbuild.downloadLanguageServer": true,
   "outline.collapseItems": "alwaysCollapse",
+  "task.allowAutomaticTasks": "on",
   "files.associations": {
     ".clang-tidy": "yaml"
   },
@@ -113,10 +115,12 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
