@@ -23,6 +23,7 @@ add_to_path_front "$HOME/.cargo/bin"
 add_to_path_front "$HOME/.ghcup/bin"
 add_to_path_front "$HOME/.cabal/bin"
 add_to_path_front "$HOME/.elan/bin"
+add_to_path_front "$HOME/.local/opt/flutter/bin"
 
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 add_to_path_back "/usr/local/go/bin"
@@ -50,6 +51,7 @@ export LIBVIRT_DEFAULT_URI="qemu:///system"
 export NO_COLOR=1
 export _JAVA_AWT_WM_NONREPARENTING=1
 export npm_config_prefix="$HOME/.local"
+export CHROME_EXECUTABLE=/usr/bin/chromium
 
 # We are using Wayland
 export MOZ_ENABLE_WAYLAND=1
