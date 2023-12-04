@@ -90,6 +90,8 @@
   "workbench.colorTheme": "Visual Studio Light",
   "workbench.sideBar.location": "right",
   // Extension settings
+  "cmake.configureOnOpen": false,
+  "cmake.showOptionsMovedNotification": false,
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
   "github.copilot.enable": {
