@@ -3,6 +3,7 @@
 .DS_Store
 .cache
 .ccls-cache
+.clangd/
 .clangd
 .dir-locals.el
 .envrc
