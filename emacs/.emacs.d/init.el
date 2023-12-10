@@ -682,6 +682,10 @@ Return the modified alist."
 (with-eval-after-load 'js
   (setq js-indent-level 2))
 
+(use-package typescript-ts-mode
+  :mode (("\\.ts\\'" . typescript-ts-mode)
+         ("\\.tsx\\'" . tsx-ts-mode)))
+
 ;;; LUA
 
 (use-package lua-mode

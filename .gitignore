@@ -39,6 +39,7 @@
 /emacs/.emacs.d/server
 /emacs/.emacs.d/tramp
 /emacs/.emacs.d/transient
+/emacs/.emacs.d/tree-sitter
 /emacs/.emacs.d/url
 /emacs/.emacs.d/network-security.data
 /emacs/.emacs.d/todo
