@@ -25,7 +25,7 @@
       }
     }
   },
-  "editor.stickyScroll.enabled": true,
+  "editor.stickyScroll.enabled": false,
   "editor.tokenColorCustomizations": {
     "[Visual Studio Light]": {
       "keywords": "#000000",
