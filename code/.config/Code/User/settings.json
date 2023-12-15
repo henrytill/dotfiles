@@ -11,6 +11,7 @@
   "editor.formatOnSave": true,
   "editor.guides.indentation": false,
   "editor.inlayHints.enabled": "offUnlessPressed",
+  "editor.inlayHints.fontFamily": "'PragmataPro Mono'",
   "editor.inlayHints.fontSize": 14,
   "editor.inlineSuggest.enabled": true,
   "editor.lineHeight": 1.2,
@@ -88,6 +89,7 @@
   "task.allowAutomaticTasks": "on",
   "telemetry.telemetryLevel": "off",
   "terminal.external.linuxExec": "footclient",
+  "terminal.integrated.allowChords": false,
   "window.menuBarVisibility": "toggle",
   "workbench.colorTheme": "Visual Studio Light",
   "workbench.sideBar.location": "right",
@@ -102,8 +104,7 @@
     "markdown": false,
     "scminput": false,
     "dune": false,
-    "git-commit": false,
-    "ocaml": true
+    "git-commit": false
   },
   "githubPullRequests.createOnPublishBranch": "never",
   "githubPullRequests.pullBranch": "never",
