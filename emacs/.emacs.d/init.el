@@ -106,6 +106,7 @@ Return the modified alist."
 (setq apropos-do-all t
       backup-by-copying t
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
+      compilation-max-output-line-length nil
       custom-file (expand-file-name "custom.el" user-emacs-directory)
       eldoc-echo-area-use-multiline-p nil
       epa-armor t
