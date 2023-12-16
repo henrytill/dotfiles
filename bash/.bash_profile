@@ -48,6 +48,7 @@ export GOPROXY=direct
 export LANG="en_US.utf8"
 export LC_COLLATE="C.utf8"
 export LIBVIRT_DEFAULT_URI="qemu:///system"
+export CARGO_TERM_PROGRESS_WHEN=never
 export NO_COLOR=1
 export _JAVA_AWT_WM_NONREPARENTING=1
 export npm_config_prefix="$HOME/.local"
