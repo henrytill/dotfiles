@@ -27,7 +27,7 @@ shopt -s globstar
 [ -n "$(command -v lesspipe)" ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 case "$TERM" in
-xterm*|rxvt*|foot*|screen*|eterm-color)
+xterm*|rxvt*|foot*|screen*|tmux*|eterm-color)
     PS1="\n${debian_chroot:+($debian_chroot)}\[\e[1m\][\$?] \u@\h\[\e[0m\] \w\\$ "
     ;;
 dumb)
