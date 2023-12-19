@@ -150,5 +150,6 @@
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
   // Other language-specific settings
-  "python.terminal.activateEnvironment": false
+  "python.terminal.activateEnvironment": false,
+  "zig.initialSetupDone": true
 }
