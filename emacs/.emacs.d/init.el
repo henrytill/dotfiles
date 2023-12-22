@@ -831,6 +831,19 @@ Return the modified alist."
              whitespace-mode))
   (add-hook 'bibtex-mode-hook f))
 
+;;; ZIG
+
+(use-package zig-mode
+  :ensure t
+  :mode "\\.zig\\'"
+  :commands zig-mode)
+
+(defun ht/zig-fmt-buffer-file ()
+  (interactive)
+  (let ((file-name (buffer-file-name))
+        (default-directory (project-root (project-current t))))
+    (shell-command (format "zig fmt %s" file-name))))
+
 ;;; MARKDOWN
 
 (use-package markdown-mode
@@ -976,7 +989,8 @@ Return the modified alist."
 (defvar ht/after-save-formatters
   '((python-mode . ht/black-format-buffer-file)
     (tuareg-mode . ht/ocamlformat-buffer-file)
-    (haskell-mode . ht/ormolu-buffer-file)))
+    (haskell-mode . ht/ormolu-buffer-file)
+    (zig-mode . ht/zig-fmt-buffer-file)))
 
 (defun ht/run-formatter (formatters)
   (dolist (mode+formatter formatters)
