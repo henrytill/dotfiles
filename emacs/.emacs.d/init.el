@@ -821,10 +821,9 @@ Return the modified alist."
 
 ;;; ZIG
 
-(use-package zig-mode
-  :ensure t
-  :mode "\\.zig\\'"
-  :commands zig-mode)
+(add-to-list 'load-path (expand-file-name "zig-mode" ht/site-lisp-directory))
+(autoload 'zig-mode "zig-mode.el")
+(add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
 
 (defun ht/zig-fmt-buffer-file ()
   (interactive)
