@@ -359,13 +359,6 @@ Return the modified alist."
                                                            (shell . t)))
   nil)
 
-;;; PAREDIT
-
-(use-package paredit
-  :ensure t
-  :commands enable-paredit-mode
-  :hook ((lisp-data-mode . enable-paredit-mode)))
-
 ;;; COMPANY
 
 (use-package company
@@ -617,8 +610,6 @@ Return the modified alist."
 
 ;;; ELISP
 
-(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-
 (use-package macrostep
   :ensure t
   :commands macrostep-expand)
@@ -634,8 +625,7 @@ Return the modified alist."
                     (run* . 1)))
     (put (car form+n) 'scheme-indent-function (cdr form+n))))
 
-(dolist (f '(ht/add-minikanren-indents
-             enable-paredit-mode))
+(dolist (f '(ht/add-minikanren-indents))
   (add-hook 'scheme-mode-hook f))
 
 (when-let ((gsi (file-name-base (executable-find "gsi"))))
@@ -663,8 +653,6 @@ Return the modified alist."
 (add-hook 'geiser-repl-mode-hook #'company-mode)
 
 ;;; COMMON LISP
-
-(add-hook 'lisp-mode-hook #'enable-paredit-mode)
 
 (when (executable-find "sbcl")
   (setq inferior-lisp-program "sbcl"))
@@ -918,6 +906,16 @@ Return the modified alist."
 (use-package elpher
   :ensure t
   :commands (elpher-browse-url-elpher elpher elpher-go))
+
+;;; PAREDIT
+
+(use-package paredit
+  :ensure t
+  :commands enable-paredit-mode
+  :hook ((lisp-data-mode . enable-paredit-mode)
+         (lisp-mode . enable-paredit-mode)
+         (emacs-lisp-mode . enable-paredit-mode)
+         (scheme-mode . enable-paredit-mode)))
 
 
 ;;; --- SHELL --- ;;;
