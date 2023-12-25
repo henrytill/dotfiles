@@ -628,7 +628,8 @@ Return the modified alist."
 (dolist (f '(ht/add-minikanren-indents))
   (add-hook 'scheme-mode-hook f))
 
-(when-let ((gsi (file-name-base (executable-find "gsi"))))
+(when-let* ((gsi-path (executable-find "gsi"))
+            (gsi (file-name-base gsi-path)))
   (setq scheme-program-name gsi))
 
 (ht/comment
