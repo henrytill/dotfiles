@@ -692,76 +692,55 @@ Return the modified alist."
 
 ;;; OCAML
 
-(defun ht/import-ocaml-env ()
-  (when (executable-find "opam")
-    (let ((default-directory (project-root (project-current t))))
-      (make-local-variable 'process-environment)
-      (setq process-environment (copy-sequence process-environment))
+(eval-and-compile
+  (defun ht/import-ocaml-env ()
+    (when (executable-find "opam")
       (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
         (setenv (car var) (cadr var))))))
 
-(defun ht/add-ocaml-load-path ()
-  (when-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH"))
-              (ocaml-load-path (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))
-    (make-local-variable 'load-path)
-    (setq load-path (copy-sequence load-path))
-    (add-to-list 'load-path ocaml-load-path)))
+(eval-and-compile
+  (defun ht/get-ocaml-load-path ()
+    (when-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
+      (list (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
 
-(defun ht/try-unload-merlin ()
-  (message "Attempting to unload Merlin...")
-  (when (fboundp 'merlin-stop-server)
-    (merlin-stop-server))
-  (when (fboundp 'merlin-mode)
-    (merlin-mode 0))
-  (dolist (feature '(merlin-mode merlin-cap merlin-company merlin-xref))
-    (when (featurep feature)
-      (unload-feature feature))))
+(add-to-list 'auto-mode-alist '("/dune[-project]?" . lisp-data-mode))
 
-(defun ht/load-merlin ()
-  (when (locate-file "merlin.el" load-path)
-    (when (not (featurep 'merlin-mode))
-      (load "merlin.el")
-      (setq merlin-command 'opam))
-    (merlin-mode 1))
-  (when (locate-file "merlin-company.el" load-path)
-    (when (not (featurep 'merlin-company))
-      (require 'merlin-company "merlin-company.el")))
-  t)
+(ht/import-ocaml-env)
 
-(defun ht/load-ocaml-buffer ()
-  (interactive)
-  (ht/import-ocaml-env)
-  (when-let (ocaml-load-path (ht/add-ocaml-load-path))
-    (ht/load-merlin)))
+(use-package tuareg
+  :ensure t
+  :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
+  :hook ((tuareg-mode . electric-indent-local-mode))
+  :config
+  (when (file-exists-p (expand-file-name "dune-project" (project-root (project-current t))))
+    (setq-local compile-command "dune build ")))
+
+(use-package merlin
+  :load-path (lambda () (ht/get-ocaml-load-path))
+  :if (locate-file "merlin.el" load-path)
+  :commands (merlin-mode)
+  :after tuareg
+  :hook ((tuareg-mode . merlin-mode)))
+
+(use-package merlin-company
+  :after merlin
+  :load-path (lambda () (ht/get-ocaml-load-path))
+  :if (locate-file "merlin-company.el" load-path))
+
+(use-package ocp-indent
+  :after tuareg
+  :load-path (lambda () (ht/get-ocaml-load-path))
+  :if (locate-file "ocp-indent.el" load-path)
+  :config
+  (defun ocp-indent-buffer ()
+    (interactive nil)
+    (ocp-indent-region 1 (buffer-size))))
 
 (defun ht/ocamlformat-buffer-file ()
   (interactive)
   (let ((file-name (buffer-file-name))
         (default-directory (project-root (project-current t))))
     (shell-command (format "ocamlformat -i %s" file-name))))
-
-(add-to-list 'auto-mode-alist '("/dune[-project]?" . lisp-data-mode))
-
-(ht/comment
-  ;; I wonder why I did this
-  (when (not (featurep 'cl-macs))
-    (require 'cl-macs)))
-
-(defun ht/configure-tuareg ()
-  (when (file-exists-p (expand-file-name "dune-project" (project-root (project-current t))))
-    (setq-local compile-command "dune build "))
-  (ht/comment
-    ;; Perhaps we should make configuration variable for this
-    (setq-local indent-line-function #'tab-to-tab-stop
-                indent-tabs-mode nil
-                tab-width 2)))
-
-(use-package tuareg
-  :ensure t
-  :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
-  :hook ((tuareg-mode . electric-indent-local-mode)
-         (tuareg-mode . ht/load-ocaml-buffer)
-         (tuareg-mode . ht/configure-tuareg)))
 
 ;;; PROLOG
 
