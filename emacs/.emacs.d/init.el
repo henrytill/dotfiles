@@ -707,13 +707,15 @@ Return the modified alist."
 
 (ht/import-ocaml-env)
 
+(defun ht/set-compile-command-dune ()
+  (when (file-exists-p (expand-file-name "dune-project" (project-root (project-current t))))
+    (setq-local compile-command "dune build ")))
+
 (use-package tuareg
   :ensure t
   :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
-  :hook ((tuareg-mode . electric-indent-local-mode))
-  :config
-  (when (file-exists-p (expand-file-name "dune-project" (project-root (project-current t))))
-    (setq-local compile-command "dune build ")))
+  :hook ((tuareg-mode . electric-indent-local-mode)
+         (tuareg-mode . ht/set-compile-command-dune)))
 
 (use-package merlin
   :load-path (lambda () (ht/get-ocaml-load-path))
