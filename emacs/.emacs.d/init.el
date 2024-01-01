@@ -481,6 +481,10 @@ Return the modified alist."
 
 (add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
 
+(with-eval-after-load 'cc-mode
+  (c-add-style "ht" '("k&r" (c-basic-offset . 4)))
+  (add-to-list 'c-default-style '(c-mode . "ht")))
+
 ;;; CTAGS
 
 (setq path-to-ctags "ctags")
