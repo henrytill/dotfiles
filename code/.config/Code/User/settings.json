@@ -16,7 +16,9 @@
   "editor.inlineSuggest.enabled": true,
   "editor.lineHeight": 1.2,
   "editor.minimap.enabled": false,
-  "editor.rulers": [100],
+  "editor.rulers": [
+    100
+  ],
   "editor.bracketPairColorization.enabled": false,
   "editor.semanticTokenColorCustomizations": {
     "enabled": true,
@@ -108,46 +110,63 @@
   },
   "githubPullRequests.createOnPublishBranch": "never",
   "githubPullRequests.pullBranch": "never",
-  "githubPullRequests.remotes": ["origin", "upstream", "github"],
+  "githubPullRequests.remotes": [
+    "origin",
+    "upstream",
+    "github"
+  ],
   "haskell.manageHLS": "GHCup",
   "mesonbuild.downloadLanguageServer": true,
+  "yaml.format.singleQuote": true,
   // Language-specific editor.* settings
   "[c]": {
-    "editor.rulers": [80, 100]
+    "editor.rulers": [
+      80,
+      100
+    ]
   },
   "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.css-language-features",
+    "editor.tabSize": 2
   },
   "[go]": {
     "editor.tabSize": 8
   },
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.html-language-features",
+    "editor.tabSize": 2
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2
+    "editor.tabSize": 4
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2
+    "editor.tabSize": 4
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.tabSize": 2
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.tabSize": 2
   },
   "[makefile]": {
     "editor.tabSize": 8
   },
   "[markdown]": {
-    "editor.rulers": [80],
+    "editor.rulers": [
+      80
+    ],
     "editor.wordWrap": "off"
   },
   "[python]": {
-    "editor.rulers": [80, 100],
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.rulers": [
+      80,
+      100
+    ],
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   // Other language-specific settings
   "python.terminal.activateEnvironment": false,
