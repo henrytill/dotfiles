@@ -19,7 +19,6 @@ if [ -r "$OPAM_VARIABLES_SH" ]; then
     . "$OPAM_VARIABLES_SH" >/dev/null 2>/dev/null || true
 fi
 
-add_to_path_front "$HOME/.elan/bin"
 add_to_path_front "$HOME/.ghcup/bin"
 add_to_path_front "$HOME/.cabal/bin"
 add_to_path_front "$HOME/.cargo/bin"
