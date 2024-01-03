@@ -606,11 +606,12 @@ Return the modified alist."
         haskell-stylish-on-save nil
         haskell-tags-on-save t))
 
-(defun ht/ormolu-buffer-file ()
-  (interactive)
-  (let ((file-name (buffer-file-name))
-        (default-directory (project-root (project-current t))))
-    (shell-command (format "ormolu --mode inplace %s" file-name))))
+(with-eval-after-load 'haskell-mode
+  (defun ht/ormolu-buffer-file ()
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (default-directory (project-root (project-current t))))
+      (shell-command (format "ormolu --mode inplace %s" file-name)))))
 
 ;;; ELISP
 
@@ -742,11 +743,12 @@ Return the modified alist."
     (interactive nil)
     (ocp-indent-region 1 (buffer-size))))
 
-(defun ht/ocamlformat-buffer-file ()
-  (interactive)
-  (let ((file-name (buffer-file-name))
-        (default-directory (project-root (project-current t))))
-    (shell-command (format "ocamlformat -i %s" file-name))))
+(with-eval-after-load 'tuareg
+  (defun ht/ocamlformat-buffer-file ()
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (default-directory (project-root (project-current t))))
+      (shell-command (format "ocamlformat -i %s" file-name)))))
 
 ;;; PROLOG
 
@@ -811,11 +813,12 @@ Return the modified alist."
 (autoload 'zig-mode "zig-mode.el")
 (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
 
-(defun ht/zig-fmt-buffer-file ()
-  (interactive)
-  (let ((file-name (buffer-file-name))
-        (default-directory (project-root (project-current t))))
-    (shell-command (format "zig fmt %s" file-name))))
+(with-eval-after-load 'zig-mode
+  (defun ht/zig-fmt-buffer-file ()
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (default-directory (project-root (project-current t))))
+      (shell-command (format "zig fmt %s" file-name)))))
 
 ;;; MARKDOWN
 
