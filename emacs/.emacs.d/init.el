@@ -900,9 +900,9 @@ Return the modified alist."
 (use-package paredit
   :ensure t
   :commands enable-paredit-mode
-  :hook ((lisp-data-mode . enable-paredit-mode)
+  :hook ((emacs-lisp-mode . enable-paredit-mode)
+         (lisp-data-mode . enable-paredit-mode)
          (lisp-mode . enable-paredit-mode)
-         (emacs-lisp-mode . enable-paredit-mode)
          (scheme-mode . enable-paredit-mode)))
 
 
