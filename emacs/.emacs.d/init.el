@@ -597,7 +597,9 @@ Return the modified alist."
   :ensure t
   :commands haskell-mode
   :hook ((haskell-mode . haskell-indentation-mode)
-         (haskell-mode . interactive-haskell-mode))
+         (haskell-mode . interactive-haskell-mode)
+         (haskell-cabal-mode . display-line-numbers-mode)
+         (haskell-cabal-mode . whitespace-mode))
   :config
   (setq haskell-doc-prettify-types nil
         haskell-interactive-popup-errors nil
