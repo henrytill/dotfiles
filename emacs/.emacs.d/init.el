@@ -380,7 +380,10 @@ Return the modified alist."
   :ensure t
   :commands eglot
   :init
-  (add-hook 'eglot-managed-mode-hook #'ht/customize-eglot))
+  (add-hook 'eglot-managed-mode-hook #'ht/customize-eglot)
+  :config
+  (setq-default eglot-workspace-configuration
+                '((haskell (plugin (stan (globalOn . :json-false)))))))
 
 ;;; MAGIT
 
