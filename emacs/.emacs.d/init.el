@@ -2,8 +2,8 @@
 
 (message "Loading %s ..." load-file-name)
 
-;;; Reduce the frequency of garbage collection during startup
-(setq gc-cons-threshold  (* 50 1000 1000))
+;;; 1 GB
+(setq gc-cons-threshold #x40000000)
 
 (defun ht/reset-gc-cons-threshold ()
   "Resets gc-cons-threshold to its default setting."
@@ -14,8 +14,21 @@
            (format "%.2f seconds" (float-time (time-subtract after-init-time before-init-time)))
            gcs-done))
 
-(add-hook 'emacs-startup-hook #'ht/reset-gc-cons-threshold)
 (add-hook 'emacs-startup-hook #'ht/emacs-ready-msg)
+
+;;; https://akrl.sdf.org/#orgc15a10d
+
+(defmacro ht/k-time (&rest body)
+  "Measure and return the time it takes evaluating BODY."
+  `(let ((time (current-time)))
+     ,@body
+     (float-time (time-since time))))
+
+(defun ht/garbage-collect ()
+  (message "Garbage Collector has run for %.06fsec"
+           (ht/k-time (garbage-collect))))
+
+(defvar ht/gc-timer (run-with-idle-timer 15 t #'ht/garbage-collect))
 
 
 ;;; --- PRELUDE --- ;;;
