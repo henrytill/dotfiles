@@ -268,9 +268,10 @@ Return the modified alist."
   (ht/remove-decorations)
   (ht/fix-split-behavior))
 
-(if (daemonp)
-    (add-to-list 'after-make-frame-functions #'ht/update-frame)
-  (ht/update-frame (selected-frame)))
+(when (or (daemonp) (display-graphic-p))
+  (add-to-list 'after-make-frame-functions #'ht/update-frame))
+
+(ht/update-frame (selected-frame))
 
 (show-paren-mode 1)
 (column-number-mode 1)
