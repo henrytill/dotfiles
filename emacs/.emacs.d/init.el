@@ -735,11 +735,17 @@ Return the modified alist."
   (when (file-exists-p (expand-file-name "dune-project" (project-root (project-current t))))
     (setq-local compile-command "dune build ")))
 
+(defun ht/configure-tuareg ()
+  (setq-local indent-line-function #'tab-to-tab-stop
+              indent-tabs-mode nil
+              tab-width 2))
+
 (use-package tuareg
   :ensure t
   :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
   :hook ((tuareg-mode . electric-indent-local-mode)
-         (tuareg-mode . ht/set-compile-command-dune)))
+         (tuareg-mode . ht/set-compile-command-dune)
+         (tuareg-mode . ht/configure-tuareg)))
 
 (use-package merlin
   :load-path (lambda () (ht/get-ocaml-load-path))
@@ -754,6 +760,7 @@ Return the modified alist."
   :if (locate-file "merlin-company.el" load-path))
 
 (use-package ocp-indent
+  :disabled t
   :after tuareg
   :load-path (lambda () (ht/get-ocaml-load-path))
   :if (locate-file "ocp-indent.el" load-path)
