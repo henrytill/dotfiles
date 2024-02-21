@@ -532,20 +532,17 @@ Return the modified alist."
 ;;; CLANG-FORMAT
 
 (when (is-windows-p)
-  (let ((clang-format-path (or (getenv "CLANG_FORMAT_PATH")
-                               (executable-find "clang-format"))))
-    (when clang-format-path
-      (let* ((clang-bin-path (file-name-directory clang-format-path))
-             (clang-format-load-path (expand-directory-name "../share/clang" clang-bin-path)))
-        (push clang-format-load-path load-path)))))
+  (when-let ((clang-format-path (or (getenv "CLANG_FORMAT_PATH") (executable-find "clang-format"))))
+    (let* ((clang-bin-path (file-name-directory clang-format-path))
+           (clang-format-load-path (expand-directory-name "../share/clang" clang-bin-path)))
+      (push clang-format-load-path load-path))))
 
 (use-package clang-format
   :if (locate-file "clang-format.el" load-path)
   :commands (clang-format clang-format-region clang-format-buffer)
   :config
-  (let ((clang-format-path (getenv "CLANG_FORMAT_PATH")))
-    (when clang-format-path
-      (setq clang-format-executable clang-format-path))))
+  (when-let ((clang-format-path (getenv "CLANG_FORMAT_PATH")))
+    (setq clang-format-executable clang-format-path)))
 
 ;;; BISON
 
@@ -561,11 +558,10 @@ Return the modified alist."
 ;;; CMAKE
 
 (when (is-windows-p)
-  (let ((cmake-path (executable-find "cmake")))
-    (when cmake-path
-      (let* ((cmake-bin-path (file-name-directory cmake-path))
-             (cmake-load-path (expand-directory-name "../share/emacs/site-lisp" cmake-bin-path)))
-        (push cmake-load-path load-path)))))
+  (when-let ((cmake-path (executable-find "cmake")))
+    (let* ((cmake-bin-path (file-name-directory cmake-path))
+           (cmake-load-path (expand-directory-name "../share/emacs/site-lisp" cmake-bin-path)))
+      (push cmake-load-path load-path))))
 
 (use-package cmake-mode
   :if (locate-file "cmake-mode.el" load-path)
@@ -1025,9 +1021,8 @@ Return the modified alist."
         mac-option-modifier 'meta))
 
 (when (is-windows-p)
-  (let ((home (directory-file-name (getenv "USERPROFILE"))))
-    (when home
-      (setq default-directory home))))
+  (when-let ((home (directory-file-name (getenv "USERPROFILE"))))
+    (setq default-directory home)))
 
 (when (and (is-unix-p) (not (display-graphic-p)))
   (when (xterm-mouse-mode 1)
