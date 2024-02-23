@@ -727,8 +727,11 @@ Return the modified alist."
 
 (ht/import-ocaml-env)
 
+(defun ht/is-dune-project-p ()
+  (file-exists-p (expand-file-name "dune-project" (project-root (project-current t)))))
+
 (defun ht/set-compile-command-dune ()
-  (when (file-exists-p (expand-file-name "dune-project" (project-root (project-current t))))
+  (when (ht/is-dune-project-p)
     (setq-local compile-command "dune build ")))
 
 (defun ht/configure-tuareg ()
@@ -764,6 +767,16 @@ Return the modified alist."
   (defun ocp-indent-buffer ()
     (interactive nil)
     (ocp-indent-region 1 (buffer-size))))
+
+(use-package utop
+  :load-path (lambda () (ht/get-ocaml-load-path))
+  :if (locate-file "utop.el" load-path)
+  :commands (utop-minor-mode)
+  :after tuareg
+  :hook ((tuareg-mode . utop-minor-mode))
+  :config
+  (when (ht/is-dune-project-p)
+    (setq utop-command "dune utop . -- -emacs")))
 
 (with-eval-after-load 'tuareg
   (defun ht/ocamlformat-buffer-file ()
