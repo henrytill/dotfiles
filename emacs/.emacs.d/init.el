@@ -25,8 +25,9 @@
      (float-time (time-since time))))
 
 (defun ht/garbage-collect ()
-  (message "Garbage Collector has run for %.06fsec"
-           (ht/k-time (garbage-collect))))
+  (let ((inhibit-message t))
+    (message "Garbage Collector has run for %.06fsec"
+             (ht/k-time (garbage-collect)))))
 
 (defvar ht/gc-timer (run-with-idle-timer 15 t #'ht/garbage-collect))
 
@@ -121,7 +122,7 @@ Return the modified alist."
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
       compilation-max-output-line-length nil
       custom-file (expand-file-name "custom.el" user-emacs-directory)
-      eldoc-echo-area-use-multiline-p nil
+      eldoc-echo-area-use-multiline-p t
       epa-armor t
       gnutls-min-prime-bits 1024
       inhibit-startup-message t
