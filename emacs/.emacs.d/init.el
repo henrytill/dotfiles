@@ -719,14 +719,12 @@ Return the modified alist."
       (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
         (setenv (car var) (cadr var))))))
 
+(ht/import-ocaml-env)
+
 (eval-and-compile
   (defun ht/get-ocaml-load-path ()
     (when-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
       (list (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
-
-(add-to-list 'auto-mode-alist '("/dune[-project]?" . lisp-data-mode))
-
-(ht/import-ocaml-env)
 
 (defun ht/is-dune-project-p ()
   (file-exists-p (expand-file-name "dune-project" (project-root (project-current t)))))
@@ -785,6 +783,8 @@ Return the modified alist."
     (let ((file-name (buffer-file-name))
           (default-directory (project-root (project-current t))))
       (shell-command (format "ocamlformat -i %s" file-name)))))
+
+(add-to-list 'auto-mode-alist '("/dune[-project]?" . lisp-data-mode))
 
 ;;; PROLOG
 
@@ -890,7 +890,7 @@ Return the modified alist."
            (ascii (if title (ht/string-to-ascii title) nil)))
       (cond (ascii (insert (format "[%s](%s)" ascii url)))
             (title (insert (format "[%s](%s)" title url)))
-            (t     (insert (format "<%s>" url))))))
+            (t (insert (format "<%s>" url))))))
 
   (defun ht/convert-url-to-markdown-link ()
     "Take the URL at point, fetch its title and replace it with a markdown link."
