@@ -122,7 +122,7 @@ Return the modified alist."
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
       compilation-max-output-line-length nil
       custom-file (expand-file-name "custom.el" user-emacs-directory)
-      eldoc-echo-area-use-multiline-p t
+      eldoc-echo-area-use-multiline-p nil
       epa-armor t
       gnutls-min-prime-bits 1024
       inhibit-startup-message t
@@ -620,7 +620,7 @@ Return the modified alist."
         haskell-process-log t
         haskell-process-type 'cabal-repl
         haskell-stylish-on-save nil
-        haskell-tags-on-save t))
+        haskell-tags-on-save nil))
 
 (with-eval-after-load 'haskell-mode
   (defun ht/ormolu-buffer-file ()
