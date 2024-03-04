@@ -170,5 +170,6 @@
   },
   // Other language-specific settings
   "python.terminal.activateEnvironment": false,
-  "zig.initialSetupDone": true
+  "zig.initialSetupDone": true,
+  "haskell.upgradeGHCup": false
 }
