@@ -733,17 +733,10 @@ Return the modified alist."
   (when (ht/is-dune-project-p)
     (setq-local compile-command "dune build ")))
 
-(defun ht/configure-tuareg ()
-  (setq-local indent-line-function #'tab-to-tab-stop
-              indent-tabs-mode nil
-              tab-width 2))
-
 (use-package tuareg
   :ensure t
   :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
-  :hook ((tuareg-mode . electric-indent-local-mode)
-         (tuareg-mode . ht/set-compile-command-dune)
-         (tuareg-mode . ht/configure-tuareg)))
+  :hook ((tuareg-mode . ht/set-compile-command-dune)))
 
 (use-package merlin
   :load-path (lambda () (ht/get-ocaml-load-path))
