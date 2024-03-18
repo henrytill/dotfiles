@@ -53,9 +53,6 @@
 (defun in-nix-shell-p ()
   (string-equal (getenv "IN_NIX_SHELL") "1"))
 
-(defun expand-directory-name (dir &optional parent-dir)
-  (file-name-as-directory (expand-file-name dir parent-dir)))
-
 (defmacro ht/comment (&rest body)
   "Comment out one or more s-expressions."
   nil)
@@ -119,7 +116,7 @@ Return the modified alist."
 
 (setq apropos-do-all t
       backup-by-copying t
-      backup-directory-alist `(("." . ,(expand-directory-name "backups" user-emacs-directory)))
+      backup-directory-alist `(("." . ,(expand-file-name "backups" user-emacs-directory)))
       compilation-max-output-line-length nil
       custom-file (expand-file-name "custom.el" user-emacs-directory)
       eldoc-echo-area-use-multiline-p nil
@@ -535,7 +532,7 @@ Return the modified alist."
 (when (is-windows-p)
   (when-let ((clang-format-path (or (getenv "CLANG_FORMAT_PATH") (executable-find "clang-format"))))
     (let* ((clang-bin-path (file-name-directory clang-format-path))
-           (clang-format-load-path (expand-directory-name "../share/clang" clang-bin-path)))
+           (clang-format-load-path (expand-file-name "../share/clang" clang-bin-path)))
       (push clang-format-load-path load-path))))
 
 (use-package clang-format
@@ -561,7 +558,7 @@ Return the modified alist."
 (when (is-windows-p)
   (when-let ((cmake-path (executable-find "cmake")))
     (let* ((cmake-bin-path (file-name-directory cmake-path))
-           (cmake-load-path (expand-directory-name "../share/emacs/site-lisp" cmake-bin-path)))
+           (cmake-load-path (expand-file-name "../share/emacs/site-lisp" cmake-bin-path)))
       (push cmake-load-path load-path))))
 
 (use-package cmake-mode
@@ -724,7 +721,7 @@ Return the modified alist."
 (eval-and-compile
   (defun ht/get-ocaml-load-path ()
     (when-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
-      (list (expand-directory-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
+      (list (expand-file-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
 
 (defun ht/is-dune-project-p ()
   (file-exists-p (expand-file-name "dune-project" (project-root (project-current t)))))
