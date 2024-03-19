@@ -806,7 +806,15 @@ Return the modified alist."
 
 (use-package rust-mode
   :ensure t
-  :mode "\\.rs\\'")
+  :mode "\\.rs\\'"
+  :hook ((rust-mode . ht/set-compile-command-cargo)))
+
+(defun ht/is-cargo-project-p ()
+  (file-exists-p (expand-file-name "Cargo.toml" (project-root (project-current t)))))
+
+(defun ht/set-compile-command-cargo ()
+  (when (ht/is-cargo-project-p)
+    (setq-local compile-command "cargo build ")))
 
 ;;; SML
 
