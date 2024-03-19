@@ -87,6 +87,9 @@ Return the modified alist."
 Return the modified alist."
   (cons pair (rassq-delete-all value alist)))
 
+(defun ht/file-exists-in-project-root-p (file)
+  (file-exists-p (expand-file-name file (project-root (project-current t)))))
+
 (defun ht/hostname ()
   (when (executable-find "hostname")
     (ht/s-trim (shell-command-to-string "hostname -s"))))
@@ -724,7 +727,7 @@ Return the modified alist."
       (list (expand-file-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
 
 (defun ht/is-dune-project-p ()
-  (file-exists-p (expand-file-name "dune-project" (project-root (project-current t)))))
+  (ht/file-exists-in-project-root-p "dune-project"))
 
 (defun ht/set-compile-command-dune ()
   (when (ht/is-dune-project-p)
@@ -810,7 +813,7 @@ Return the modified alist."
   :hook ((rust-mode . ht/set-compile-command-cargo)))
 
 (defun ht/is-cargo-project-p ()
-  (file-exists-p (expand-file-name "Cargo.toml" (project-root (project-current t)))))
+  (ht/file-exists-in-project-root-p "Cargo.toml"))
 
 (defun ht/set-compile-command-cargo ()
   (when (ht/is-cargo-project-p)
