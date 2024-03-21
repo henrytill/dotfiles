@@ -146,7 +146,8 @@ Return the modified alist."
       x-select-enable-primary t
       x-select-enable-clipboard t)
 
-(setq-default indent-tabs-mode nil)
+(setq-default case-fold-search nil
+              indent-tabs-mode nil)
 
 (load custom-file t)
 
