@@ -714,14 +714,9 @@ Return the modified alist."
 ;;; OCAML
 
 (eval-and-compile
-  (defun ht/import-ocaml-env ()
-    (when (executable-find "opam")
-      (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
-        (setenv (car var) (cadr var))))))
-
-(ht/import-ocaml-env)
-
-(eval-and-compile
+  (when (executable-find "opam")
+    (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
+      (setenv (car var) (cadr var))))
   (defun ht/get-ocaml-load-path ()
     (when-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
       (list (expand-file-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
