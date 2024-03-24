@@ -584,6 +584,9 @@ Return the modified alist."
 (autoload 'meson-mode "meson-mode.el")
 (add-to-list 'auto-mode-alist '("/meson\\(\\.build\\|_options\\.txt\\)\\'" . meson-mode))
 
+(with-eval-after-load 'meson-mode
+  (setq meson-indent-basic 4))
+
 ;;; APL
 
 (use-package gnu-apl-mode
