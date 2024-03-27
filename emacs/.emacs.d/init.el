@@ -587,6 +587,12 @@ Return the modified alist."
 (with-eval-after-load 'meson-mode
   (setq meson-indent-basic 4))
 
+;;; MODULA-2
+
+(with-eval-after-load 'modula2
+  (setq m2-indent 3
+        m2-compile-command "gm2 -g"))
+
 ;;; APL
 
 (use-package gnu-apl-mode
