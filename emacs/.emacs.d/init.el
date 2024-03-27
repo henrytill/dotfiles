@@ -819,7 +819,10 @@ Return the modified alist."
 (use-package rust-mode
   :ensure t
   :mode "\\.rs\\'"
-  :hook ((rust-mode . ht/set-compile-command-cargo)))
+  :hook ((rust-mode . ht/set-compile-command-cargo))
+  :config
+  (setq rust-format-on-save t
+        rust-rustfmt-switches '("--edition" "2021")))
 
 (defun ht/is-cargo-project-p ()
   (ht/file-exists-in-project-root-p "Cargo.toml"))
