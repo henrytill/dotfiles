@@ -839,6 +839,12 @@ Return the modified alist."
   :ensure t
   :commands sml-mode)
 
+;;; SWIFT
+
+(use-package swift-mode
+  :ensure t
+  :commands swift-mode)
+
 ;;; TEX
 
 (use-package auctex
