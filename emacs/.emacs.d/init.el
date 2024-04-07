@@ -742,6 +742,12 @@ Return the modified alist."
   (when (ht/is-dune-project-p)
     (setq-local compile-command "dune build ")))
 
+(use-package dune
+  :load-path (lambda () (ht/get-ocaml-load-path))
+  :if (locate-file "dune.el" load-path)
+  :mode (("\\(?:\\`\\|/\\)dune\\(?:\\.inc\\|\\-project\\|\\-workspace\\)?\\'" . dune-mode))
+  :commands (dune-mode))
+
 (use-package tuareg
   :ensure t
   :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
@@ -785,8 +791,6 @@ Return the modified alist."
     (let ((file-name (buffer-file-name))
           (default-directory (project-root (project-current t))))
       (shell-command (format "ocamlformat -i %s" file-name)))))
-
-(add-to-list 'auto-mode-alist '("/dune[-project]?" . lisp-data-mode))
 
 ;;; PROLOG
 
