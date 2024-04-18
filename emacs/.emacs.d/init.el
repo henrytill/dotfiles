@@ -697,6 +697,19 @@ Return the modified alist."
 (defun sly-common-lisp-indent-function (indent-point state)
   (common-lisp-indent-function indent-point state))
 
+;;; COQ
+
+(use-package proof-general
+  :ensure t
+  :defer t)
+
+(use-package coq-mode
+  :mode (("\\.v\\'" . coq-mode))
+  :commands (coq-mode)
+  :config
+  (setq proof-colour-locked nil
+        proof-splash-enable nil))
+
 ;;; JAVASCRIPT
 
 (add-to-list 'auto-mode-alist '("\\.mjs\\'" . javascript-mode))
