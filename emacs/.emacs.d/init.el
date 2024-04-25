@@ -493,6 +493,15 @@ Return the modified alist."
   (interactive "nSet tab-width to: ")
   (setq tab-width width))
 
+;;; AGDA
+
+(when (executable-find "agda-mode")
+  (load-file (let ((coding-system-for-read 'utf-8))
+               (shell-command-to-string "agda-mode locate"))))
+
+(with-eval-after-load 'agda2-mode
+  (setq agda2-backend "GHC"))
+
 ;;; C/C++
 
 (defun ht/modify-c-syntax-entries ()
