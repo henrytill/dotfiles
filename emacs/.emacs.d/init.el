@@ -224,7 +224,8 @@ Return the modified alist."
 
 (dolist (mode-hook '(prog-mode-hook
                      conf-mode-hook
-                     org-mode-hook))
+                     org-mode-hook
+                     text-mode-hook))
   (add-hook mode-hook #'display-line-numbers-mode))
 
 (setq frame-background-mode 'light)
