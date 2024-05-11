@@ -65,7 +65,7 @@ if [ -f "$BASH_FUNCTIONS" ]; then
     . "$BASH_FUNCTIONS"
 fi
 
-if [ $TERM = "dumb" ]; then
+if [ $TERM = "dumb" ] && [ $TERM_PROGRAM != "vscode" ]; then
     export PAGER=cat
 fi
 
