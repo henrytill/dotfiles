@@ -511,7 +511,7 @@ Return the modified alist."
 (add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
 
 (with-eval-after-load 'cc-mode
-  (c-add-style "ht" '("k&r" (c-basic-offset . 4) (c-offsets-alist . ((innamespace . [0])))))
+  (c-add-style "ht" '("k&r" (c-basic-offset . 2) (c-offsets-alist . ((innamespace . [0])))))
   (add-to-list 'c-default-style '(c-mode . "ht"))
   (add-to-list 'c-default-style '(c++-mode . "ht")))
 
@@ -563,8 +563,8 @@ Return the modified alist."
   :ensure t
   :commands bison-mode
   :config
-  (setq bison-rule-separator-column 4
-        bison-rule-enumeration-column 4
+  (setq bison-rule-separator-column 2
+        bison-rule-enumeration-column 2
         bison-decl-type-column 0
         bison-decl-token-column 0))
 
