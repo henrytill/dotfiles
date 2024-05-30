@@ -3,9 +3,9 @@ MY_HOSTS = proteus thalassa thaumas
 
 # hosts and their package sets
 proteus  = bash code emacs foot gdb git git-unix nix \
-           xdg
+           tmux xdg zathura
 thalassa = bash code emacs foot gdb git git-unix nix \
-           x11 xdg
+           tmux x11 xdg zathura
 thaumas  = bash emacs foot gdb git git-unix \
            sway sway-thaumas xdg
 
@@ -34,7 +34,7 @@ list:
 $(TARG_DIRS):
 	mkdir -p $@
 
-sway-proteus sway-thalassa sway-thaumas::
+sway-thaumas::
 	install -bv -S .old sway/sway-session /usr/local/bin
 
 $(PKG_SET)::
