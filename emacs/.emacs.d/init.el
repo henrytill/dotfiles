@@ -689,6 +689,10 @@ Return the modified alist."
   :ensure t
   :defer t)
 
+(use-package geiser-mit
+  :ensure t
+  :defer t)
+
 (setq geiser-mode-auto-p nil)
 
 (add-hook 'geiser-repl-mode-hook #'company-mode)
@@ -812,6 +816,10 @@ Return the modified alist."
     (let ((file-name (buffer-file-name))
           (default-directory (project-root (project-current t))))
       (shell-command (format "ocamlformat -i %s" file-name)))))
+
+(use-package opam-switch-mode
+  :ensure t
+  :hook ((coq-mode tuareg-mode) . opam-switch-mode))
 
 ;;; PROLOG
 
