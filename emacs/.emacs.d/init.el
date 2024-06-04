@@ -381,9 +381,7 @@ Return the modified alist."
 (use-package company
   :ensure t
   :commands company-mode
-  :hook ((prog-mode . company-mode)
-         (shell-mode . company-mode)
-         (org-mode . company-mode))
+  :hook (((prog-mode shell-mode org-mode) . company-mode))
   :config
   (delete 'company-clang company-backends)
   (delete 'company-xcode company-backends))
@@ -984,10 +982,7 @@ Return the modified alist."
 (use-package paredit
   :ensure t
   :commands enable-paredit-mode
-  :hook ((emacs-lisp-mode . enable-paredit-mode)
-         (lisp-data-mode . enable-paredit-mode)
-         (lisp-mode . enable-paredit-mode)
-         (scheme-mode . enable-paredit-mode)))
+  :hook (((emacs-lisp-mode lisp-data-mode lisp-mode scheme-mode) . enable-paredit-mode)))
 
 
 ;;; --- SHELL --- ;;;
