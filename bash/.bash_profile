@@ -24,6 +24,7 @@ add_to_path_front "$HOME/.ghcup/bin"
 add_to_path_front "$HOME/.cabal/bin"
 add_to_path_front "$HOME/.cargo/bin"
 add_to_path_front "$HOME/.local/opt/flutter/bin"
+add_to_path_front "$HOME/.local/opt/racket-8.13/bin"
 add_to_path_front "$HOME/.local/opt/zig-linux-x86_64-0.12.0"
 
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
