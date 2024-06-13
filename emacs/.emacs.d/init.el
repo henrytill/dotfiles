@@ -1067,10 +1067,10 @@ Return the modified alist."
     (go-mode . gofmt)))
 
 (defvar ht/after-save-formatters
-  '((nix-mode . ht/nixfmt-buffer-file)
+  '((haskell-mode . ht/ormolu-buffer-file)
+    (nix-mode . ht/nixfmt-buffer-file)
     (python-mode . ht/black-format-buffer-file)
     (tuareg-mode . ht/ocamlformat-buffer-file)
-    (haskell-mode . ht/ormolu-buffer-file)
     (zig-mode . ht/zig-fmt-buffer-file)))
 
 (defun ht/run-formatter (formatters)
