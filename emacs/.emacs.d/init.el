@@ -747,6 +747,13 @@ Return the modified alist."
   :ensure t
   :mode "\\.nix\\'")
 
+(with-eval-after-load 'nix
+  (defun ht/nixfmt-buffer-file ()
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (default-directory (project-root (project-current t))))
+      (shell-command (format "nixfmt %s" file-name)))))
+
 ;;; OCAML
 
 (eval-and-compile
@@ -1060,7 +1067,8 @@ Return the modified alist."
     (go-mode . gofmt)))
 
 (defvar ht/after-save-formatters
-  '((python-mode . ht/black-format-buffer-file)
+  '((nix-mode . ht/nixfmt-buffer-file)
+    (python-mode . ht/black-format-buffer-file)
     (tuareg-mode . ht/ocamlformat-buffer-file)
     (haskell-mode . ht/ormolu-buffer-file)
     (zig-mode . ht/zig-fmt-buffer-file)))
