@@ -446,7 +446,7 @@ Return the modified alist."
 ;;; WHITESPACE
 
 (with-eval-after-load 'whitespace
-  (setq whitespace-style '(face tabs trailing)
+  (setq whitespace-style '(face trailing)
         whitespace-line-column 100))
 
 (add-hook 'prog-mode-hook #'whitespace-mode)
