@@ -14,6 +14,7 @@ BASE_PKGS = git git-unix
 
 # target directories
 TARG_DIRS = ../.config
+TARG_DIRS += ../.cache/gdb
 
 # get host name
 HOST = $(shell hostname -s)
