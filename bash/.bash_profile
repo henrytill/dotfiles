@@ -47,8 +47,6 @@ elif [ -n "$(command -v mg)" ]; then
 fi
 
 export GOPROXY=direct
-export LANG="en_US.utf8"
-export LC_COLLATE="C.utf8"
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 export CARGO_TERM_PROGRESS_WHEN=never
 export NO_COLOR=1
@@ -59,3 +57,5 @@ export CHROME_EXECUTABLE=/usr/bin/chromium
 
 # We are using Wayland
 export MOZ_ENABLE_WAYLAND=1
+
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
