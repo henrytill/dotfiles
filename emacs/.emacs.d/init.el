@@ -873,6 +873,11 @@ Return the modified alist."
   (when (ht/is-cargo-project-p)
     (setq-local compile-command "cargo build --all-targets")))
 
+;;; SH
+
+(with-eval-after-load 'sh-script
+  (setq sh-basic-offset 2))
+
 ;;; SML
 
 (use-package sml-mode
