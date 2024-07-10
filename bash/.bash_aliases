@@ -1,11 +1,11 @@
 if [ $TERM = "dumb" ]; then
-    alias less="cat"
-    alias more="cat"
-    alias l="ls -lh"
-    alias la="ls -lah"
+  alias less="cat"
+  alias more="cat"
+  alias l="ls -lh"
+  alias la="ls -lah"
 else
-    alias l="clear && ls -lh"
-    alias la="clear && ls -lah"
+  alias l="clear && ls -lh"
+  alias la="clear && ls -lah"
 fi
 
 alias lc="ls -C"
@@ -16,17 +16,17 @@ alias lt="ls -lt"
 alias u="cd .. && l"
 
 if [ -n "$(command -v emacsclient)" ]; then
-    alias e="emacsclient -t"
-    alias ec="emacsclient -cn"
-    alias et="emacsclient -t"
+  alias e="emacsclient -t"
+  alias ec="emacsclient -cn"
+  alias et="emacsclient -t"
 fi
 
 if [ -n "$(command -v wl-copy)" ]; then
-    alias clc="wl-copy --clear"
+  alias clc="wl-copy --clear"
 fi
 
 if [ -n "$(command -v lsblk)" ]; then
-    alias lsblk="lsblk -o +kname"
+  alias lsblk="lsblk -o +kname"
 fi
 
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"

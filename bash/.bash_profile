@@ -1,22 +1,22 @@
-add_to_path_front () {
-    if [ -d "$1" ]; then
-        PATH="$1:$PATH"
-    fi
+add_to_path_front() {
+  if [ -d "$1" ]; then
+    PATH="$1:$PATH"
+  fi
 }
 
-add_to_path_back () {
-    if [ -d "$1" ]; then
-        PATH="$PATH:$1"
-    fi
+add_to_path_back() {
+  if [ -d "$1" ]; then
+    PATH="$PATH:$1"
+  fi
 }
 
 if [ -f "$HOME/.bashrc" ]; then
-    . "$HOME/.bashrc"
+  . "$HOME/.bashrc"
 fi
 
 OPAM_VARIABLES_SH="$HOME/.opam/opam-init/variables.sh"
 if [ -r "$OPAM_VARIABLES_SH" ]; then
-    . "$OPAM_VARIABLES_SH" >/dev/null 2>/dev/null || true
+  . "$OPAM_VARIABLES_SH" >/dev/null 2>/dev/null || true
 fi
 
 add_to_path_front "$HOME/.elan/bin"
@@ -32,18 +32,18 @@ add_to_path_back "/usr/local/go/bin"
 
 PLAN9="/usr/local/plan9"
 if [ -d "$PLAN9" ]; then
-    export PLAN9
-    PATH="$PATH:$PLAN9/bin"
+  export PLAN9
+  PATH="$PATH:$PLAN9/bin"
 fi
 
 add_to_path_front "$HOME/.local/bin"
 add_to_path_front "$HOME/bin"
 
 if [ -n "$(command -v emacsclient)" ]; then
-    export EDITOR="emacsclient -t"
-    export ALTERNATE_EDITOR=""
+  export EDITOR="emacsclient -t"
+  export ALTERNATE_EDITOR=""
 elif [ -n "$(command -v mg)" ]; then
-    export EDITOR="mg"
+  export EDITOR="mg"
 fi
 
 export GOPROXY=direct
