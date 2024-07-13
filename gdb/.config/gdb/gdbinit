@@ -1,3 +1,7 @@
+# -*- mode: gdb-script; -*-
+
+### https://justine.lol/cosmopolitan/windows-debugging.html
+
 add-auto-load-safe-path ~/.config/gdb/gdbinit
 set disassembly-flavor intel
 set host-charset UTF-8
