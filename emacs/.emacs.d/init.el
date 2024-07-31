@@ -739,7 +739,7 @@ Return the modified alist."
   :ensure t
   :mode "\\.lua\\'"
   :config
-  (setq lua-indent-level 4))
+  (setq lua-indent-level 2))
 
 ;;; NIX
 
