@@ -1,15 +1,3 @@
-add_to_path_front() {
-  if [ -d "$1" ]; then
-    PATH="$1:$PATH"
-  fi
-}
-
-add_to_path_back() {
-  if [ -d "$1" ]; then
-    PATH="$PATH:$1"
-  fi
-}
-
 if [ -f "$HOME/.bashrc" ]; then
   . "$HOME/.bashrc"
 fi
@@ -19,25 +7,39 @@ if [ -r "$OPAM_VARIABLES_SH" ]; then
   . "$OPAM_VARIABLES_SH" >/dev/null 2>/dev/null || true
 fi
 
-add_to_path_front "$HOME/.elan/bin"
-add_to_path_front "$HOME/.ghcup/bin"
-add_to_path_front "$HOME/.cabal/bin"
-add_to_path_front "$HOME/.cargo/bin"
-add_to_path_front "$HOME/.local/opt/flutter/bin"
-add_to_path_front "$HOME/.local/opt/racket-8.13/bin"
-add_to_path_front "$HOME/.local/opt/zig-linux-x86_64-0.12.0"
-
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-add_to_path_back "/usr/local/go/bin"
 
 PLAN9="/usr/local/plan9"
 if [ -d "$PLAN9" ]; then
   export PLAN9
-  PATH="$PATH:$PLAN9/bin"
 fi
 
-add_to_path_front "$HOME/.local/bin"
-add_to_path_front "$HOME/bin"
+paths=(
+  "$HOME/bin"
+  "$HOME/foo/bin"
+  "$HOME/.local/bin"
+  "$HOME/.local/opt/zig-linux-x86_64-0.12.0"
+  "$HOME/.local/opt/racket-8.13/bin"
+  "$HOME/.local/opt/flutter/bin"
+  "$HOME/.cargo/bin"
+  "$HOME/.cabal/bin"
+  "$HOME/.ghcup/bin"
+  "$HOME/.elan/bin"
+  "$PATH"
+  "/usr/local/go/bin"
+  "$PLAN9/bin"
+)
+
+# Filter out non-existent directories
+existing_paths=()
+for path in "${paths[@]}"; do
+  if [[ -d "$path" ]] || [[ "$path" == "$PATH" ]]; then
+    existing_paths+=("$path")
+  fi
+done
+
+# Set the new PATH
+PATH=$(IFS=':'; printf '%s' "${existing_paths[*]}")
 
 if [ -n "$(command -v emacsclient)" ]; then
   export EDITOR="emacsclient -t"
