@@ -466,6 +466,8 @@ Return the modified alist."
       (add-to-list 'whitespace-style tab-mode)))
   (whitespace-mode 1))
 
+(bind-key "C-c h TAB" #'ht/toggle-tabs-display)
+
 (defun ht/hide-lines-tail-display ()
   (interactive)
   (whitespace-mode -1)
