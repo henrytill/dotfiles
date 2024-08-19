@@ -51,7 +51,7 @@
       (string-equal system-type "cygwin")))
 
 (defun in-nix-shell-p ()
-  (string-equal (getenv "IN_NIX_SHELL") "1"))
+  (stringp (getenv "IN_NIX_SHELL")))
 
 (defmacro ht/comment (&rest body)
   "Comment out one or more s-expressions."
@@ -758,16 +758,17 @@ Return the modified alist."
 
 ;;; OCAML
 
-(eval-and-compile
-  (defun ht/import-ocaml-env ()
-    (when (executable-find "opam")
-      (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
-        (setenv (car var) (cadr var)))
-      t))
-  (ht/import-ocaml-env)
-  (defun ht/get-ocaml-load-path ()
-    (when-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
-      (list (expand-file-name "../../share/emacs/site-lisp" ocaml-toplevel-path)))))
+(defun ht/import-ocaml-env ()
+  (when (and (executable-find "opam") (not (in-nix-shell-p)))
+    (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
+      (setenv (car var) (cadr var)))
+    t))
+
+(ht/import-ocaml-env)
+
+(defun ht/get-ocaml-load-path ()
+  (when-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
+    (list (expand-file-name "../../share/emacs/site-lisp" ocaml-toplevel-path))))
 
 (defun ht/is-dune-project-p ()
   (ht/file-exists-in-project-root-p "dune-project"))
@@ -828,6 +829,7 @@ Return the modified alist."
 
 (use-package opam-switch-mode
   :ensure t
+  :if (not (in-nix-shell-p))
   :hook ((coq-mode tuareg-mode) . opam-switch-mode))
 
 ;;; PROLOG
