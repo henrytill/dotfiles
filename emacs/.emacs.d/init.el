@@ -161,7 +161,8 @@ Return the modified alist."
     ("M-/" . hippie-expand)
     ("M-z" . zap-up-to-char)
     ("C-s" . isearch-forward-regexp)
-    ("C-r" . isearch-backward-regexp)))
+    ("C-r" . isearch-backward-regexp)
+    ("C-c h o" . ff-find-other-file)))
 
 (dolist (binding ht/global-bindings)
   (let ((key (car binding))
