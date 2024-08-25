@@ -69,7 +69,7 @@ if [ "$TERM" = "dumb" ]; then
   export PAGER=cat
 fi
 
-if [ -n "IN_NIX_SHELL" ]; then
+if [ -n "$IN_NIX_SHELL" ]; then
   return
 fi
 
