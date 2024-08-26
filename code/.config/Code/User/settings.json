@@ -171,5 +171,6 @@
   // Other language-specific settings
   "python.terminal.activateEnvironment": false,
   "zig.initialSetupDone": true,
-  "haskell.upgradeGHCup": false
+  "haskell.upgradeGHCup": false,
+  "workbench.experimental.enableNewProfilesUI": true
 }
