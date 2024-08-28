@@ -721,9 +721,17 @@ Return the modified alist."
 (use-package coq-mode
   :mode (("\\.v\\'" . coq-mode))
   :commands (coq-mode)
+  :hook ((coq-mode . company-coq-mode))
   :config
   (setq proof-colour-locked nil
         proof-splash-enable nil))
+
+;;; company-coq dependencies
+(use-package company-math :ensure t)
+(use-package yasnippet :ensure t)
+
+(add-to-list 'load-path (expand-file-name "company-coq" ht/site-lisp-directory))
+(autoload 'company-coq-mode "company-coq.el")
 
 ;;; JAVASCRIPT
 
