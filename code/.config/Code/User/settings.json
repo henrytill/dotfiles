@@ -86,7 +86,8 @@
   "settingsSync.ignoredExtensions": [
     "github.copilot",
     "github.copilot-nightly",
-    "github.copilot-chat"
+    "github.copilot-chat",
+    "ms-vsliveshare.vsliveshare"
   ],
   "task.allowAutomaticTasks": "on",
   "telemetry.telemetryLevel": "off",
