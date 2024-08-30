@@ -906,6 +906,9 @@ Return the modified alist."
   :ensure t
   :commands sml-mode)
 
+(when (executable-find "poly")
+  (setq sml-program-name "poly"))
+
 ;;; SWIFT
 
 (use-package swift-mode
