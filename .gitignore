@@ -1,11 +1,4 @@
-*~
-.\#*
-\#*\#
-*.bak
 *.elc
-
-.DS_Store
-
 /emacs/.emacs.d/.apl.history
 /emacs/.emacs.d/.newsrc-dribble
 /emacs/.emacs.d/.org-id-locations
@@ -44,7 +37,3 @@
 /emacs/.emacs.d/url
 /emacs/.emacs.d/network-security.data
 /emacs/.emacs.d/todo
-
-/vim/.vim/.netrwhist
-
-*.swp
