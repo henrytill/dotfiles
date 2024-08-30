@@ -798,8 +798,13 @@ Return the modified alist."
 
 (use-package tuareg
   :ensure t
-  :commands (tuareg-mode tuareg-menhir-mode tuareg-opam-mode)
+  :commands (tuareg-mode tuareg-opam-mode)
   :hook ((tuareg-mode . ht/set-compile-command-dune)))
+
+(use-package tuareg-menhir
+  :after tuareg
+  :commands (tuareg-menhir-mode)
+  :mode (("\\.mly\\'" . tuareg-menhir-mode)))
 
 (use-package merlin
   :load-path (lambda () (ht/get-ocaml-load-path))
