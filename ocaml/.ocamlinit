@@ -1,5 +1,3 @@
-(* -*- mode: tuareg; -*- *)
-
 #directory "+compiler-libs";;
 
 let () =
@@ -9,3 +7,8 @@ let () =
 
 #use "topfind";;
 #thread;;
+
+(* Local Variables: *)
+(* mode: tuareg *)
+(* eval: (merlin-mode 0) *)
+(* End: *)
