@@ -173,5 +173,6 @@
   "python.terminal.activateEnvironment": false,
   "zig.initialSetupDone": true,
   "haskell.upgradeGHCup": false,
-  "workbench.experimental.enableNewProfilesUI": true
+  "workbench.experimental.enableNewProfilesUI": true,
+  "ocaml.server.codelens": false
 }
