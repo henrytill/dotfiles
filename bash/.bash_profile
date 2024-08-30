@@ -17,7 +17,7 @@ fi
 paths=(
   "$HOME/bin"
   "$HOME/.local/bin"
-  "$HOME/.local/opt/racket-8.13/bin"
+  "$HOME/.local/opt/racket-8.14/bin"
   "$HOME/.local/opt/flutter/bin"
   "$HOME/.cargo/bin"
   "$HOME/.cabal/bin"
