@@ -1009,7 +1009,7 @@ Return the modified alist."
   :hook (((emacs-lisp-mode lisp-data-mode lisp-mode scheme-mode) . enable-paredit-mode)))
 
 
-;;; --- SHELL --- ;;;
+;;; --- COMINT --- ;;;
 
 (setq comint-input-ring-size 100000)
 
@@ -1021,6 +1021,32 @@ Return the modified alist."
   (add-hook 'shell-mode-hook f))
 
 (add-hook 'comint-output-filter-functions #'comint-osc-process-output)
+
+;;; Save Comint History
+;;;
+;;; Refs:
+;;; https://web.archive.org/web/20221003174117/https://oleksandrmanzyuk.wordpress.com/2011/10/23/a-persistent-command-history-in-emacs/
+;;; https://emacs.stackexchange.com/questions/9720/savehist-the-comint-input-ring
+
+(defun ht/comint-process-sentinel (process event)
+  (comint-write-input-ring)
+  (let ((buf (process-buffer process)))
+    (when (buffer-live-p buf)
+      (with-current-buffer buf
+        (insert (format "\nProcess %s %s" process event))))))
+
+(defun ht/turn-on-comint-history ()
+  (when-let ((derived-mode-p 'comint-mode)
+             (process (get-buffer-process (current-buffer)))
+             (pname (process-name process))
+             (history-file (expand-file-name (format "history-inferior-%s" (downcase pname)) user-emacs-directory)))
+    (setq comint-input-ring-file-name history-file)
+    (comint-read-input-ring)
+    (set-process-sentinel process #'ht/comint-process-sentinel)
+    (message "Loading history for %s from %s" pname history-file)
+    t))
+
+(add-hook 'tuareg-interactive-mode-hook #'ht/turn-on-comint-history nil nil)
 
 
 ;;; --- X11 COPY/PASTE --- ;;;
