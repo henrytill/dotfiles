@@ -22,6 +22,7 @@
 /emacs/.emacs.d/eshell/history
 /emacs/.emacs.d/eshell/lastdir
 /emacs/.emacs.d/helm-adaptive-history
+/emacs/.emacs.d/history*
 /emacs/.emacs.d/ido.last
 /emacs/.emacs.d/irony
 /emacs/.emacs.d/mail

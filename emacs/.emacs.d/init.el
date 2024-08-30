@@ -321,6 +321,10 @@ Return the modified alist."
 (bind-key "C-c n n" #'ht/next-page)
 (bind-key "C-c n p" #'ht/prev-page)
 
+;;; HISTORY
+
+(savehist-mode 1)
+
 ;;; EDITING
 
 (defun ht/move-line-up ()
