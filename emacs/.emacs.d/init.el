@@ -733,8 +733,8 @@ Return the modified alist."
         proof-splash-enable nil))
 
 ;;; company-coq dependencies
-(use-package company-math :ensure t)
-(use-package yasnippet :ensure t)
+(use-package company-math :ensure t :defer t)
+(use-package yasnippet :ensure t :defer t)
 
 (add-to-list 'load-path (expand-file-name "company-coq" ht/site-lisp-directory))
 (autoload 'company-coq-mode "company-coq.el")
