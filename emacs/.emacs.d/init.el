@@ -702,6 +702,8 @@ Return the modified alist."
 
 (setq geiser-mode-auto-p nil)
 
+(add-hook 'scheme-mode-hook #'geiser-mode)
+
 (add-hook 'geiser-repl-mode-hook #'company-mode)
 
 ;;; COMMON LISP
