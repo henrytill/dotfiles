@@ -7,7 +7,8 @@
  '(package-selected-packages
    '(yasnippet company-math opam-switch-mode geiser-mit proof-general swift-mode zig-mode tuareg elpher yaml-mode rec-mode markdown-mode dockerfile-mode debbugs auctex sml-mode rust-mode ediprolog nix-mode lua-mode sly geiser-guile cmake-mode paredit magit macrostep haskell-mode go-mode gnu-apl-mode geiser forth-mode eglot company bison-mode))
  '(safe-local-variable-values
-   '((cc-search-directories "." "../src" "../include" "/usr/include" "/usr/local/include/*")
+   '((ht/use-project-comint-history . t)
+     (cc-search-directories "." "../src" "../include" "/usr/include" "/usr/local/include/*")
      (ht/format-on-save . t))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -1040,6 +1040,8 @@ Return the modified alist."
 ;;; https://web.archive.org/web/20221003174117/https://oleksandrmanzyuk.wordpress.com/2011/10/23/a-persistent-command-history-in-emacs/
 ;;; https://emacs.stackexchange.com/questions/9720/savehist-the-comint-input-ring
 
+(defcustom ht/use-project-comint-history nil "Use project-specific comint history files" :type 'boolean)
+
 (defun ht/comint-process-sentinel (process event)
   (comint-write-input-ring)
   (let ((buf (process-buffer process)))
@@ -1047,11 +1049,18 @@ Return the modified alist."
       (with-current-buffer buf
         (insert (format "\nProcess %s %s" process event))))))
 
+(defun ht/get-history-file (pname)
+  (let ((filename (format "history-inferior-%s" (downcase pname))))
+    (hack-local-variables)
+    (if ht/use-project-comint-history
+        (expand-file-name (concat "." filename) (project-root (project-current t)))
+      (expand-file-name filename user-emacs-directory))))
+
 (defun ht/turn-on-comint-history ()
   (when-let ((derived-mode-p 'comint-mode)
              (process (get-buffer-process (current-buffer)))
              (pname (process-name process))
-             (history-file (expand-file-name (format "history-inferior-%s" (downcase pname)) user-emacs-directory)))
+             (history-file (ht/get-history-file pname)))
     (setq comint-input-ring-file-name history-file)
     (comint-read-input-ring)
     (set-process-sentinel process #'ht/comint-process-sentinel)
