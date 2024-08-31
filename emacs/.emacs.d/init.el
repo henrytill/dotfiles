@@ -1062,6 +1062,7 @@ Return the modified alist."
     (message "Loading history for %s from %s" pname history-file)
     t))
 
+(add-hook 'inferior-scheme-mode-hook #'ht/turn-on-comint-history nil nil)
 (add-hook 'tuareg-interactive-mode-hook #'ht/turn-on-comint-history nil nil)
 
 
