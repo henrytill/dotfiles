@@ -17,3 +17,4 @@ TAGS
 compile_commands.json
 errors.err
 tags
+.history-inferior-*
