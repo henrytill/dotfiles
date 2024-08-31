@@ -669,11 +669,14 @@ Return the modified alist."
 (dolist (f '(ht/add-minikanren-indents))
   (add-hook 'scheme-mode-hook f))
 
-(when-let* ((gsi-path (executable-find "gsi"))
-            (gsi (file-name-base gsi-path)))
-  (setq scheme-program-name gsi))
+(when-let* ((chez-path (executable-find "chezscheme"))
+            (chez (file-name-base chez-path)))
+  (setq scheme-program-name chez))
 
 (ht/comment
+  (when-let* ((gsi-path (executable-find "gsi"))
+              (gsi (file-name-base gsi-path)))
+    (setq scheme-program-name gsi))
   (when (and (locate-file "gambit.el" load-path)
              (string-equal scheme-program-name "gsi"))
     (autoload 'gambit-mode "gambit.el")
@@ -697,8 +700,6 @@ Return the modified alist."
   :defer t)
 
 (setq geiser-mode-auto-p nil)
-
-(add-hook 'scheme-mode-hook #'geiser-mode)
 
 (add-hook 'geiser-repl-mode-hook #'company-mode)
 
