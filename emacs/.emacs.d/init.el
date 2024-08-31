@@ -688,11 +688,13 @@ Return the modified alist."
     (add-hook 'inferior-scheme-mode-hook #'gambit-mode))
   nil)
 
-(use-package geiser-guile
+(use-package geiser-chez
   :ensure t
-  :defer t)
+  :defer t
+  :init
+  (setq geiser-chez-binary "chezscheme"))
 
-(use-package geiser-racket
+(use-package geiser-guile
   :ensure t
   :defer t)
 
