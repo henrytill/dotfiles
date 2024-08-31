@@ -456,12 +456,6 @@ Return the modified alist."
 
 (add-hook 'prog-mode-hook #'whitespace-mode)
 
-(defun ht/whitespace-mode ()
-  (when (and font-lock-mode (derived-mode-p 'prog-mode))
-    (whitespace-mode 1)))
-
-(add-hook 'hack-local-variables-hook #'ht/whitespace-mode)
-
 (defun ht/toggle-tabs-display ()
   (interactive)
   (whitespace-mode -1)
