@@ -125,6 +125,7 @@ Return the modified alist."
       custom-unlispify-remove-prefixes t
       eldoc-echo-area-use-multiline-p nil
       epa-armor t
+      gnus-select-method '(nnnil)
       gnutls-min-prime-bits 1024
       inhibit-startup-message t
       initial-scratch-message nil
