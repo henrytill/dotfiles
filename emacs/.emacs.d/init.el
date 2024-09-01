@@ -785,7 +785,7 @@ Return the modified alist."
 (ht/import-ocaml-env)
 
 (defun ht/get-ocaml-load-path ()
-  (when-let* ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
+  (when-let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
     (list (expand-file-name "../../share/emacs/site-lisp" ocaml-toplevel-path))))
 
 (defun ht/is-dune-project-p ()
@@ -1061,10 +1061,10 @@ Return the modified alist."
       (expand-file-name filename user-emacs-directory))))
 
 (defun ht/turn-on-comint-history ()
-  (when-let ((derived-mode-p 'comint-mode)
-             (process (get-buffer-process (current-buffer)))
-             (pname (process-name process))
-             (history-file (ht/get-history-file pname)))
+  (when-let* ((derived-mode-p 'comint-mode)
+              (process (get-buffer-process (current-buffer)))
+              (pname (process-name process))
+              (history-file (ht/get-history-file pname)))
     (setq comint-input-ring-file-name history-file)
     (comint-read-input-ring)
     (set-process-sentinel process #'ht/comint-process-sentinel)
