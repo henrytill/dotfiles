@@ -96,6 +96,8 @@
   "window.menuBarVisibility": "toggle",
   "workbench.colorTheme": "Visual Studio Light",
   "workbench.sideBar.location": "right",
+  "workbench.startupEditor": "none",
+  "workbench.experimental.enableNewProfilesUI": true,
   // Extension settings
   "cmake.configureOnOpen": false,
   "cmake.showOptionsMovedNotification": false,
@@ -173,6 +175,5 @@
   "python.terminal.activateEnvironment": false,
   "zig.initialSetupDone": true,
   "haskell.upgradeGHCup": false,
-  "workbench.experimental.enableNewProfilesUI": true,
   "ocaml.server.codelens": false
 }
