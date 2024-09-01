@@ -122,6 +122,7 @@ Return the modified alist."
       backup-directory-alist `(("." . ,(expand-file-name "backups" user-emacs-directory)))
       compilation-max-output-line-length nil
       custom-file (expand-file-name "custom.el" user-emacs-directory)
+      custom-unlispify-remove-prefixes t
       eldoc-echo-area-use-multiline-p nil
       epa-armor t
       gnutls-min-prime-bits 1024
@@ -148,6 +149,11 @@ Return the modified alist."
 
 (setq-default case-fold-search nil
               indent-tabs-mode nil)
+
+(defgroup ht nil
+  "Henry's customization options"
+  :prefix "ht/"
+  :group 'local)
 
 (load custom-file t)
 
@@ -1035,7 +1041,10 @@ Return the modified alist."
 ;;; https://web.archive.org/web/20221003174117/https://oleksandrmanzyuk.wordpress.com/2011/10/23/a-persistent-command-history-in-emacs/
 ;;; https://emacs.stackexchange.com/questions/9720/savehist-the-comint-input-ring
 
-(defcustom ht/use-project-comint-history nil "Use project-specific comint history files" :type 'boolean)
+(defcustom ht/use-project-comint-history nil
+  "Use project-specific comint history files"
+  :type 'boolean
+  :group 'ht)
 
 (defun ht/comint-process-sentinel (process event)
   (comint-write-input-ring)
@@ -1112,7 +1121,10 @@ Return the modified alist."
 (setq font-lock-maximum-decoration '((tuareg-mode . 0)
                                      (t . t)))
 
-(defcustom ht/format-on-save nil "Format buffers on save")
+(defcustom ht/format-on-save nil
+  "Format buffers on save"
+  :type 'boolean
+  :group 'ht)
 
 (defvar ht/before-save-formatters
   '((c-mode . clang-format-buffer)
