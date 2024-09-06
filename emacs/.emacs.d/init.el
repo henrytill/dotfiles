@@ -795,7 +795,7 @@ Return the modified alist."
 
 (defun ht/set-compile-command-dune ()
   (when (ht/is-dune-project-p)
-    (setq-local compile-command "dune build ")))
+    (setq compile-command "dune build ")))
 
 (use-package dune
   :load-path (lambda () (ht/get-ocaml-load-path))
