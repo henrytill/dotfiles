@@ -900,7 +900,7 @@ Return the modified alist."
 
 (defun ht/set-compile-command-cargo ()
   (when (ht/is-cargo-project-p)
-    (setq-local compile-command "cargo build --all-targets")))
+    (setq compile-command "cargo build --all-targets")))
 
 ;;; SH
 
