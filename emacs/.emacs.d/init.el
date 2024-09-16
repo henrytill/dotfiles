@@ -1069,7 +1069,7 @@ Return the modified alist."
       (expand-file-name filename user-emacs-directory))))
 
 (defun ht/turn-on-comint-history ()
-  (when-let* ((derived-mode-p 'comint-mode)
+  (when-let* ((_ (derived-mode-p 'comint-mode))
               (process (get-buffer-process (current-buffer)))
               (pname (process-name process))
               (history-file (ht/get-history-file pname)))
