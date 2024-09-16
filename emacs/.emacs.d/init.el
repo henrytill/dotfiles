@@ -450,6 +450,10 @@ Return the modified alist."
     (when (not (string-equal ht/last-project current-project))
       (setq ht/last-project current-project))))
 
+(defun ht/is-make-project-p ()
+  (or (ht/file-exists-in-project-root-p "Makefile")
+      (ht/file-exists-in-project-root-p "GNUmakefile")))
+
 ;;; PROG-MODE
 
 (dolist (f '(auto-revert-mode
@@ -794,7 +798,8 @@ Return the modified alist."
   (ht/file-exists-in-project-root-p "dune-project"))
 
 (defun ht/set-compile-command-dune ()
-  (when (ht/is-dune-project-p)
+  (when (and (not (ht/is-make-project-p))
+             (ht/is-dune-project-p))
     (setq compile-command "dune build ")))
 
 (use-package dune
@@ -899,7 +904,8 @@ Return the modified alist."
   (ht/file-exists-in-project-root-p "Cargo.toml"))
 
 (defun ht/set-compile-command-cargo ()
-  (when (ht/is-cargo-project-p)
+  (when (and (not (ht/is-make-project-p))
+             (ht/is-cargo-project-p))
     (setq compile-command "cargo build --all-targets")))
 
 ;;; SH
