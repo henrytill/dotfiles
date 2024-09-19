@@ -76,6 +76,7 @@
   "files.associations": {
     ".clang-tidy": "yaml"
   },
+  "files.enableTrash": false,
   "files.exclude": {
     "**/.DS_Store": false,
     "**/.git": false,
@@ -127,7 +128,10 @@
     "github"
   ],
   "haskell.manageHLS": "GHCup",
+  "haskell.upgradeGHCup": false,
   "mesonbuild.downloadLanguageServer": true,
+  "ocaml.server.codelens": false,
+  "python.terminal.activateEnvironment": false,
   "yaml.format.singleQuote": true,
   // Language-specific editor.* settings
   "[c]": {
@@ -178,10 +182,5 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml",
-  },
-  // Other language-specific settings
-  "python.terminal.activateEnvironment": false,
-  "zig.initialSetupDone": true,
-  "haskell.upgradeGHCup": false,
-  "ocaml.server.codelens": false
+  }
 }
