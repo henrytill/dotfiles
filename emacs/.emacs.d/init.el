@@ -708,6 +708,7 @@ Return the modified alist."
   :defer t)
 
 (use-package geiser-mit
+  :disabled t
   :ensure t
   :defer t)
 
