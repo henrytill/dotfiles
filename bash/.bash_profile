@@ -33,7 +33,7 @@ paths=(
 # Filter out non-existent directories
 existing_paths=()
 for path in "${paths[@]}"; do
-  if [[ -d "$path" ]] || [[ "$path" == "$PATH" ]]; then
+  if [ -d "$path" ] || [ "$path" = "$PATH" ]; then
     existing_paths+=("$path")
   fi
 done
