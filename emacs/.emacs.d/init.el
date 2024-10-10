@@ -751,9 +751,10 @@ Return the modified alist."
 
 ;;; JAVASCRIPT
 
-(add-to-list 'auto-mode-alist '("\\.mjs\\'" . javascript-mode))
+(add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-mode))
 
 (with-eval-after-load 'js
+  (bind-key "M-." nil js-mode-map)
   (setq js-indent-level 2))
 
 (use-package typescript-ts-mode
