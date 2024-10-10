@@ -751,7 +751,12 @@ Return the modified alist."
 
 (with-eval-after-load 'js
   (bind-key "M-." nil js-mode-map)
-  (setq js-indent-level 2))
+  (setq js-indent-level 2)
+  (defun ht/prettier-buffer-file ()
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (default-directory (project-root (project-current t))))
+      (shell-command (format "npx prettier --write %s" file-name)))))
 
 (use-package typescript-ts-mode
   :mode (("\\.ts\\'" . typescript-ts-mode)
@@ -1138,6 +1143,7 @@ Return the modified alist."
 
 (defvar ht/after-save-formatters
   '((haskell-mode . ht/ormolu-buffer-file)
+    (js-mode . ht/prettier-buffer-file)
     (nix-mode . ht/nixfmt-buffer-file)
     (python-mode . ht/black-format-buffer-file)
     (tuareg-mode . ht/ocamlformat-buffer-file)))
