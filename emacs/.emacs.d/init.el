@@ -501,10 +501,6 @@ Return the modified alist."
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 
-(defun ht/set-tab-width (width)
-  (interactive "nSet tab-width to: ")
-  (setq tab-width width))
-
 ;;; AGDA
 
 (when (executable-find "agda-mode")
