@@ -132,6 +132,7 @@
     "upstream",
     "github"
   ],
+  "evenBetterToml.formatter.columnWidth": 140,
   "haskell.manageHLS": "GHCup",
   "haskell.upgradeGHCup": false,
   "mesonbuild.downloadLanguageServer": true,
