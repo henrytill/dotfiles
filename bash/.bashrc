@@ -104,3 +104,7 @@ fi
 if [ -n "$(command -v tty)" ]; then
   export GPG_TTY="$(tty)"
 fi
+
+if [ -n "$(command -v direnv)" ]; then
+  eval "$(direnv hook bash)"
+fi
