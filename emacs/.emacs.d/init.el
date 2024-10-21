@@ -914,7 +914,7 @@ Return the modified alist."
 ;;; SH
 
 (with-eval-after-load 'sh-script
-  (setq sh-basic-offset 2))
+  (setq sh-basic-offset 4))
 
 ;;; SML
 
