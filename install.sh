@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 eprintf() { printf "$@" >&2; }
 
 SCRIPT="$(basename -- ${BASH_SOURCE[0]})"
