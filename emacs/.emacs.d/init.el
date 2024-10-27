@@ -712,6 +712,11 @@ Return the modified alist."
 
 (add-hook 'geiser-repl-mode-hook #'company-mode)
 
+;;; RACKET
+
+(use-package racket-mode
+  :ensure t)
+
 ;;; COMMON LISP
 
 (when (executable-find "sbcl")
