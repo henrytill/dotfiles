@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+eprintf() { printf "$@" >&2; }
+
 SCRIPT="$(basename -- ${BASH_SOURCE[0]})"
 
 DIR="$(cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -19,12 +21,12 @@ if [ "$USER" != "ht" ]; then
 fi
 
 if [ -z "$(command -v make)" ]; then
-    >&2 echo "${SCRIPT}: you must install make"
+    eprintf "${SCRIPT}: you must install make"
     exit 1
 fi
 
 if [ -z "$(command -v stow)" ]; then
-    >&2 echo "${SCRIPT}: you must install stow"
+    eprintf "${SCRIPT}: you must install stow"
     exit 1
 fi
 
