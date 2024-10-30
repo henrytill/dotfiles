@@ -715,6 +715,7 @@ Return the modified alist."
 ;;; RACKET
 
 (use-package racket-mode
+  :defer t
   :ensure t)
 
 ;;; COMMON LISP
