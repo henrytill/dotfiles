@@ -44,16 +44,4 @@ define hd
   eval "shell hd dump.bin; rm dump.bin"
 end
 
-python
-import os
-
-def setup_rust_paths():
-    commit_hash = os.getenv('RUSTC_COMMIT_HASH')
-    sysroot = os.getenv('RUSTC_SYSROOT')
-    if commit_hash and sysroot:
-        rust_path = f"/rustc/{commit_hash}"
-        rust_src = f"{sysroot}/lib/rustlib/src/rust"
-        gdb.execute(f"set substitute-path {rust_path} {rust_src}")
-
-setup_rust_paths()
-end
+source ~/.config/gdb/commands.py
