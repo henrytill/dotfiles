@@ -13,17 +13,18 @@ thaumas  = bash emacs foot gdb git git-unix \
 BASE_PKGS = git git-unix
 
 # target directories
-TARG_DIRS = ../.config
-TARG_DIRS += ../.cache/gdb
+DIRS =
+DIRS += ../.config
+DIRS += ../.cache/gdb
 
 # get host name
 HOST = $(shell hostname -s)
 
 # define package set based on host's name
 ifneq (,$(findstring $(HOST),$(MY_HOSTS)))
-  PKG_SET = $($(HOST))
+PKG_SET = $($(HOST))
 else
-  PKG_SET = $(BASE_PKGS)
+PKG_SET = $(BASE_PKGS)
 endif
 
 all: install
@@ -32,7 +33,7 @@ list:
 	@echo Packages for $(HOST):
 	@echo $(PKG_SET)
 
-$(TARG_DIRS):
+$(DIRS):
 	mkdir -p $@
 
 sway-thaumas::
@@ -41,10 +42,10 @@ sway-thaumas::
 $(PKG_SET)::
 	stow -v $@
 
-install: $(PKG_SET) $(TARG_DIRS)
+install: $(PKG_SET) | $(DIRS)
 	$(INSTALL_HOOK)
 
-reinstall: $(TARG_DIRS)
+reinstall: | $(DIRS)
 	stow -Rv $(PKG_SET)
 	$(REINSTALL_HOOK)
 
