@@ -714,9 +714,15 @@ Return the modified alist."
 
 ;;; RACKET
 
+(defun ht/add-racket-indents ()
+  (dolist (form+n '((test-suite . 1)))
+    (put (car form+n) 'racket-indent-function (cdr form+n))))
+
 (use-package racket-mode
   :defer t
-  :ensure t)
+  :ensure t
+  :hook ((racket-mode . racket-xp-mode)
+         (racket-mode . ht/add-racket-indents)))
 
 ;;; COMMON LISP
 
@@ -1036,7 +1042,7 @@ Return the modified alist."
 (use-package paredit
   :ensure t
   :commands enable-paredit-mode
-  :hook (((emacs-lisp-mode lisp-data-mode lisp-mode scheme-mode) . enable-paredit-mode)))
+  :hook (((emacs-lisp-mode lisp-data-mode lisp-mode racket-mode scheme-mode) . enable-paredit-mode)))
 
 
 ;;; --- COMINT --- ;;;
