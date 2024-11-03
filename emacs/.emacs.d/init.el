@@ -674,39 +674,29 @@ Return the modified alist."
                     (run* . 1)))
     (put (car form+n) 'scheme-indent-function (cdr form+n))))
 
-(dolist (f '(ht/add-minikanren-indents))
+(defun ht/add-chez-indents ()
+  (dolist (form+n '((begin . 0)
+                    (call-with-current-continuation . 0)
+                    (call/cc . 0)
+                    (cond . 0)
+                    (library . 1)
+                    (make-compile-time-value . 0)))
+    (put (car form+n) 'scheme-indent-function (cdr form+n))))
+
+(dolist (f '(ht/add-minikanren-indents
+             ht/add-chez-indents))
   (add-hook 'scheme-mode-hook f))
 
 (when-let* ((chez-path (executable-find "chezscheme"))
             (chez (file-name-base chez-path)))
   (setq scheme-program-name chez))
 
-(ht/comment
-  (when-let* ((gsi-path (executable-find "gsi"))
-              (gsi (file-name-base gsi-path)))
-    (setq scheme-program-name gsi))
-  (when (and (locate-file "gambit.el" load-path)
-             (string-equal scheme-program-name "gsi"))
-    (autoload 'gambit-mode "gambit.el")
-    (autoload 'gambit-inferior-mode "gambit.el")
-    (add-hook 'scheme-mode-hook #'gambit-mode)
-    (add-hook 'inferior-scheme-mode-hook #'gambit-mode))
-  nil)
-
 (use-package geiser-chez
   :ensure t
   :defer t
   :init
-  (setq geiser-chez-binary "chezscheme"))
-
-(use-package geiser-guile
-  :ensure t
-  :defer t)
-
-(use-package geiser-mit
-  :disabled t
-  :ensure t
-  :defer t)
+  (setq geiser-chez-binary "chezscheme"
+        geiser-chez-csug-url "file:///usr/share/doc/chezscheme-doc/csug9.5/"))
 
 (setq geiser-mode-auto-p nil)
 
@@ -722,7 +712,8 @@ Return the modified alist."
   :defer t
   :ensure t
   :hook ((racket-mode . racket-xp-mode)
-         (racket-mode . ht/add-racket-indents)))
+         (racket-mode . ht/add-racket-indents)
+         (racket-repl-mode . company-mode)))
 
 ;;; COMMON LISP
 
