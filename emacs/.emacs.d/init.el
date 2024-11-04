@@ -963,6 +963,19 @@ Return the modified alist."
              whitespace-mode))
   (add-hook 'bibtex-mode-hook f))
 
+;;; ZIG
+
+(add-to-list 'load-path (expand-file-name "zig-mode" ht/site-lisp-directory))
+(autoload 'zig-mode "zig-mode.el")
+(add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
+
+(with-eval-after-load 'zig-mode
+  (defun ht/zig-fmt-buffer-file ()
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (default-directory (project-root (project-current t))))
+      (shell-command (format "zig fmt %s" file-name)))))
+
 ;;; MARKDOWN
 
 (use-package markdown-mode
@@ -1161,7 +1174,8 @@ Return the modified alist."
     (js-mode . ht/prettier-buffer-file)
     (nix-mode . ht/nixfmt-buffer-file)
     (python-mode . ht/black-format-buffer-file)
-    (tuareg-mode . ht/ocamlformat-buffer-file)))
+    (tuareg-mode . ht/ocamlformat-buffer-file)
+    (zig-mode . ht/zig-fmt-buffer-file)))
 
 (defun ht/run-formatter (formatters)
   (dolist (mode+formatter formatters)
