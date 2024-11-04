@@ -667,25 +667,35 @@ Return the modified alist."
 
 ;;; SCHEME
 
-(defun ht/add-minikanren-indents ()
-  (dolist (form+n '((conde . 0)
-                    (fresh . 1)
-                    (run . 2)
-                    (run* . 1)))
+(defvar ht/minikanren-indents
+  '((conde . 0)
+    (fresh . 1)
+    (run . 2)
+    (run* . 1)))
+
+(defvar ht/chez-indents
+  '((begin . 0)
+    (call-with-current-continuation . 0)
+    (call/cc . 0)
+    (cond . 0)
+    (library . 1)
+    (make-compile-time-value . 0)))
+
+(defvar ht/custom-indents
+  '((test . 1)
+    (test-error . 1)))
+
+(defun ht/add-scheme-indents (indents)
+  (dolist (form+n indents)
     (put (car form+n) 'scheme-indent-function (cdr form+n))))
 
-(defun ht/add-chez-indents ()
-  (dolist (form+n '((begin . 0)
-                    (call-with-current-continuation . 0)
-                    (call/cc . 0)
-                    (cond . 0)
-                    (library . 1)
-                    (make-compile-time-value . 0)))
-    (put (car form+n) 'scheme-indent-function (cdr form+n))))
+(defun ht/add-custom-scheme-indents ()
+  (dolist (indents (list ht/minikanren-indents
+                         ht/chez-indents
+                         ht/custom-indents))
+    (ht/add-scheme-indents indents)))
 
-(dolist (f '(ht/add-minikanren-indents
-             ht/add-chez-indents))
-  (add-hook 'scheme-mode-hook f))
+(add-hook 'scheme-mode-hook #'ht/add-custom-scheme-indents)
 
 (when-let* ((chez-path (executable-find "chezscheme"))
             (chez (file-name-base chez-path)))
