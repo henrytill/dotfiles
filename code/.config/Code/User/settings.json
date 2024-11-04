@@ -139,6 +139,7 @@
   "ocaml.server.codelens": false,
   "python.terminal.activateEnvironment": false,
   "yaml.format.singleQuote": true,
+  "zig.initialSetupDone": true,
   // Language-specific editor.* settings
   "[c]": {
     "editor.rulers": [
