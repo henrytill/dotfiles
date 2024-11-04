@@ -6,6 +6,7 @@
 .clangd/
 .clangd
 .dir-locals.el
+.env
 .envrc
 .idea
 .projectile
