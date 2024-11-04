@@ -1035,6 +1035,8 @@ Return the modified alist."
   :commands enable-paredit-mode
   :hook (((emacs-lisp-mode lisp-data-mode lisp-mode racket-mode scheme-mode) . enable-paredit-mode)))
 
+(add-hook 'lisp-interaction-mode-hook 'disable-paredit-mode)
+
 
 ;;; --- COMINT --- ;;;
 
