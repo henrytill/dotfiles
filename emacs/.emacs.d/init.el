@@ -682,7 +682,8 @@ Return the modified alist."
     (make-compile-time-value . 0)))
 
 (defvar ht/custom-indents
-  '((test . 1)
+  '((comment . 0)
+    (test . 1)
     (test-error . 1)))
 
 (defun ht/add-scheme-indents (indents)
@@ -700,6 +701,8 @@ Return the modified alist."
 (when-let* ((chez-path (executable-find "chezscheme"))
             (chez (file-name-base chez-path)))
   (setq scheme-program-name chez))
+
+(setq scheme-mit-dialect nil)
 
 (use-package geiser-chez
   :ensure t
