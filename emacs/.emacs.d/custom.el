@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(racket-mode geiser-chez ace-window yasnippet company-math opam-switch-mode geiser-mit proof-general swift-mode zig-mode tuareg elpher yaml-mode rec-mode markdown-mode dockerfile-mode debbugs auctex sml-mode rust-mode ediprolog nix-mode lua-mode sly geiser-guile cmake-mode paredit magit macrostep haskell-mode go-mode gnu-apl-mode geiser forth-mode eglot company bison-mode))
+   '(julia-mode racket-mode geiser-chez ace-window yasnippet company-math opam-switch-mode geiser-mit proof-general swift-mode zig-mode tuareg elpher yaml-mode rec-mode markdown-mode dockerfile-mode debbugs auctex sml-mode rust-mode ediprolog nix-mode lua-mode sly geiser-guile cmake-mode paredit magit macrostep haskell-mode go-mode gnu-apl-mode geiser forth-mode eglot company bison-mode))
  '(safe-local-variable-values
    '((ht/use-project-comint-history . t)
      (cc-search-directories "." "../src" "../include" "/usr/include" "/usr/local/include/*")

@@ -775,6 +775,12 @@ Return the modified alist."
   :mode (("\\.ts\\'" . typescript-ts-mode)
          ("\\.tsx\\'" . tsx-ts-mode)))
 
+;;; JULIA
+
+(use-package julia-mode
+  :defer t
+  :ensure t)
+
 ;;; LUA
 
 (use-package lua-mode
