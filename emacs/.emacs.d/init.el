@@ -460,6 +460,14 @@ Return the modified alist."
              electric-pair-local-mode))
   (add-hook 'prog-mode-hook f))
 
+;;; TREE-SITTER
+
+(setq treesit-language-source-alist
+      '((javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
+
 ;;; WHITESPACE
 
 (with-eval-after-load 'whitespace
