@@ -663,7 +663,19 @@ Return the modified alist."
     (interactive)
     (let ((file-name (buffer-file-name))
           (default-directory (project-root (project-current t))))
-      (shell-command (format "ormolu --mode inplace %s" file-name)))))
+      (shell-command (format "ormolu --mode inplace %s" file-name))))
+
+  (defun ht/run-ghc-tags ()
+    (interactive)
+    (when (derived-mode-p 'haskell-mode)
+      (if (executable-find "ghc-tags")
+          (let ((default-directory (project-root (project-current t)))
+                (inhibit-message t))
+            (shell-command "ghc-tags -e"))
+        (message "ghc-tags not found"))))
+
+  (add-hook 'after-save-hook #'ht/run-ghc-tags)
+  nil)
 
 ;;; ELISP
 
