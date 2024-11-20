@@ -12,7 +12,7 @@
 .projectile
 .vimrc
 .vscode
-TAGS
+TAGS*
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 compile_commands.json
