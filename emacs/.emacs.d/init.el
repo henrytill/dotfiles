@@ -643,11 +643,30 @@ Return the modified alist."
 
 ;;; HASKELL
 
+(defun ht/ormolu-buffer-file ()
+  (interactive)
+  (let ((file-name (buffer-file-name))
+        (default-directory (project-root (project-current t))))
+    (shell-command (format "ormolu --mode inplace %s" file-name))))
+
+(defun ht/run-ghc-tags ()
+  (interactive)
+  (when (derived-mode-p 'haskell-mode)
+    (if (executable-find "ghc-tags")
+        (let ((default-directory (project-root (project-current t)))
+              (inhibit-message t))
+          (shell-command "ghc-tags -e"))
+      (message "ghc-tags not found"))))
+
+(defun ht/customize-haskell-mode ()
+  (add-hook 'after-save-hook #'ht/run-ghc-tags nil t))
+
 (use-package haskell-mode
   :ensure t
   :commands haskell-mode
   :hook ((haskell-mode . haskell-indentation-mode)
          (haskell-mode . interactive-haskell-mode)
+         (haskell-mode . ht/customize-haskell-mode)
          (haskell-cabal-mode . display-line-numbers-mode)
          (haskell-cabal-mode . whitespace-mode))
   :config
@@ -656,25 +675,7 @@ Return the modified alist."
         haskell-process-log t
         haskell-process-type 'cabal-repl
         haskell-stylish-on-save nil
-        haskell-tags-on-save nil))
-
-(with-eval-after-load 'haskell-mode
-  (defun ht/ormolu-buffer-file ()
-    (interactive)
-    (let ((file-name (buffer-file-name))
-          (default-directory (project-root (project-current t))))
-      (shell-command (format "ormolu --mode inplace %s" file-name))))
-
-  (defun ht/run-ghc-tags ()
-    (interactive)
-    (when (derived-mode-p 'haskell-mode)
-      (if (executable-find "ghc-tags")
-          (let ((default-directory (project-root (project-current t)))
-                (inhibit-message t))
-            (shell-command "ghc-tags -e"))
-        (message "ghc-tags not found"))))
-
-  (add-hook 'after-save-hook #'ht/run-ghc-tags)
+        haskell-tags-on-save nil)
   nil)
 
 ;;; ELISP
