@@ -184,8 +184,6 @@ bindsym $mod+r mode "resize"
 #
 font PragmataPro Mono 10
 default_border pixel
-titlebar_border_thickness 0
-gaps inner 14
 
 #
 # Status Bar:
@@ -193,8 +191,6 @@ gaps inner 14
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position bottom
-
-    mode invisible
 }
 
 for_window [class="c_bits_window"] floating enable
