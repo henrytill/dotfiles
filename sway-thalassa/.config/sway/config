@@ -26,3 +26,5 @@ input type:pointer {
 exec systemctl --user start sway-session.target
 
 exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+exec nm-applet
