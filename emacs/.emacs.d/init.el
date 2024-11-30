@@ -443,6 +443,8 @@ Return the modified alist."
     (bind-key "s" #'project-shell project-prefix-map)
     (add-to-list 'project-switch-commands '(project-shell "Shell") t)))
 
+(setq project-vc-extra-root-markers '(".dir-locals.el"))
+
 (defvar ht/last-project nil)
 
 (defun ht/check-project ()
