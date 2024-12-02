@@ -661,6 +661,7 @@ Return the modified alist."
       (message "ghc-tags not found"))))
 
 (defun ht/customize-haskell-mode ()
+  (setq compile-command "cabal v2-build")
   (add-hook 'after-save-hook #'ht/run-ghc-tags nil t))
 
 (use-package haskell-mode
