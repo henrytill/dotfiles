@@ -667,8 +667,7 @@ Return the modified alist."
 (use-package haskell-mode
   :ensure t
   :commands haskell-mode
-  :hook ((haskell-mode . haskell-indentation-mode)
-         (haskell-mode . interactive-haskell-mode)
+  :hook ((haskell-mode . interactive-haskell-mode)
          (haskell-mode . ht/customize-haskell-mode)
          (haskell-cabal-mode . display-line-numbers-mode)
          (haskell-cabal-mode . whitespace-mode))
@@ -676,6 +675,7 @@ Return the modified alist."
   (setq haskell-doc-prettify-types nil
         haskell-interactive-popup-errors nil
         haskell-process-log t
+        haskell-process-show-debug-tips nil
         haskell-process-type 'cabal-repl
         haskell-stylish-on-save nil
         haskell-tags-on-save nil)
