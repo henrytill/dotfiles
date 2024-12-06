@@ -465,7 +465,8 @@ Return the modified alist."
 ;;; TREE-SITTER
 
 (setq treesit-language-source-alist
-      '((javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+      '((haskell "https://github.com/tree-sitter/tree-sitter-haskell" "master" "src")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
         (json "https://github.com/tree-sitter/tree-sitter-json")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
