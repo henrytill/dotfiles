@@ -662,6 +662,8 @@ Return the modified alist."
 
 (defun ht/customize-haskell-mode ()
   (setq compile-command "cabal v2-build")
+  ;; We shouldn't need to do this
+  (haskell-indentation-mode 0)
   (add-hook 'after-save-hook #'ht/run-ghc-tags nil t))
 
 (use-package haskell-mode
@@ -672,6 +674,7 @@ Return the modified alist."
          (haskell-cabal-mode . display-line-numbers-mode)
          (haskell-cabal-mode . whitespace-mode))
   :config
+  (remove-hook 'haskell-mode-hook 'haskell-indentation-mode)
   (setq haskell-doc-prettify-types nil
         haskell-interactive-popup-errors nil
         haskell-process-log t
