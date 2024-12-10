@@ -469,6 +469,7 @@ Return the modified alist."
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
         (json "https://github.com/tree-sitter/tree-sitter-json")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (rust "https://github.com/tree-sitter/tree-sitter-rust" "master" "src")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
 
 ;;; WHITESPACE
@@ -947,6 +948,8 @@ Return the modified alist."
   :ensure t
   :mode "\\.rs\\'"
   :hook ((rust-mode . ht/set-compile-command-cargo))
+  :init
+  (setq rust-mode-treesitter-derive t)
   :config
   (setq rust-format-on-save t
         rust-format-show-buffer nil
