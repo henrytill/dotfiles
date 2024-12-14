@@ -58,14 +58,13 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export npm_config_prefix="$HOME/.local"
 export CHROME_EXECUTABLE=/usr/bin/chromium
 
-# We are using Wayland
-export MOZ_ENABLE_WAYLAND=1
-
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 # Launch sway
 SWAY_SESSION="/usr/local/bin/sway-session"
 if [ "$(uname)" = "Linux" ] && [ -e "$SWAY_SESSION" ] && [ "$(tty)" = "/dev/tty1" ]; then
+    # We are using Wayland
+    export MOZ_ENABLE_WAYLAND=1
     XDG_CURRENT_DESKTOP=sway
     export XDG_CURRENT_DESKTOP
     exec sway-session
