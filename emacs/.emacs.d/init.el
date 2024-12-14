@@ -530,7 +530,7 @@ Return the modified alist."
 (add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
 
 (with-eval-after-load 'cc-mode
-  (c-add-style "ht" '("k&r" (c-basic-offset . 4) (c-offsets-alist . ((innamespace . [0])))))
+  (c-add-style "ht" '("k&r" (c-basic-offset . 2) (c-offsets-alist . ((innamespace . [0])))))
   (add-to-list 'c-default-style '(c-mode . "ht"))
   (add-to-list 'c-default-style '(c++-mode . "ht")))
 
@@ -1207,6 +1207,7 @@ Return the modified alist."
 
 (defvar ht/before-save-formatters
   '((c-mode . clang-format-buffer)
+    (c++-mode . clang-format-buffer)
     (go-mode . gofmt)))
 
 (defvar ht/after-save-formatters
