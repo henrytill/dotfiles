@@ -143,6 +143,7 @@ Return the modified alist."
       scroll-conservatively 1
       send-mail-function 'sendmail-send-it
       sendmail-program "msmtp"
+      set-mark-command-repeat-pop t
       tags-revert-without-query t
       uniquify-buffer-name-style 'forward
       visible-bell t
