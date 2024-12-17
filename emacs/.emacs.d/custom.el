@@ -9,7 +9,6 @@
  '(safe-local-variable-values
    '((eval c-set-offset 'cpp-macro 0 nil)
      (ht/use-project-comint-history . t)
-     (cc-search-directories "." "../src" "../include" "/usr/include" "/usr/local/include/*")
      (ht/format-on-save . t))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

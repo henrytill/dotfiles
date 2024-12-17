@@ -535,6 +535,8 @@ Return the modified alist."
   (add-to-list 'c-default-style '(c-mode . "ht"))
   (add-to-list 'c-default-style '(c++-mode . "ht")))
 
+(put 'ff-search-directories 'safe-local-variable #'listp)
+
 ;;; CTAGS
 
 (setq path-to-ctags "ctags")
