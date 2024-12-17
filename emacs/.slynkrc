@@ -1,1 +1,5 @@
-(setq SLYNK:*USE-DEDICATED-OUTPUT-STREAM* nil)
+;;; -*- mode: lisp; -*-
+
+;;; Needed for consistent printing at the REPL using SBCL.
+;;; See: https://github.com/joaotavora/sly/issues/426
+(setq slynk:*use-dedicated-output-stream* nil)
