@@ -1,3 +1,4 @@
 set database sqlite
 set guioptions none
 set selection-clipboard clipboard
+set page-padding 0
