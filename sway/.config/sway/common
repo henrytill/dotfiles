@@ -184,7 +184,7 @@ bindsym $mod+r mode "resize"
 #
 # Cosmetics:
 #
-font pango:sans 10
+font pango:sans 9
 default_border pixel
 
 #
