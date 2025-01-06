@@ -528,7 +528,11 @@ Return the modified alist."
 (defun ht/modify-c-syntax-entries ()
   (modify-syntax-entry ?_ "w"))
 
-(add-hook 'c-mode-common-hook #'ht/modify-c-syntax-entries)
+(defun ht/c-mode-common ()
+  (ht/modify-c-syntax-entries)
+  (remove-hook 'flymake-diagnostic-functions #'flymake-cc t))
+
+(add-hook 'c-mode-common-hook #'ht/c-mode-common)
 
 (with-eval-after-load 'cc-mode
   (c-add-style "ht" '("k&r" (c-basic-offset . 2) (c-offsets-alist . ((innamespace . [0])))))
