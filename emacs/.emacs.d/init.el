@@ -123,7 +123,6 @@ Return the modified alist."
       compilation-max-output-line-length nil
       custom-file (expand-file-name "custom.el" user-emacs-directory)
       custom-unlispify-remove-prefixes t
-      dired-listing-switches "-al --group-directories-first"
       eldoc-echo-area-use-multiline-p nil
       epa-armor t
       gnus-select-method '(nnnil)
@@ -365,6 +364,9 @@ Return the modified alist."
 
 (with-eval-after-load 'dired
   (require 'browse-url))
+
+(setq dired-dwim-target t
+      dired-listing-switches "-al --group-directories-first")
 
 ;;; IBUFFER
 
