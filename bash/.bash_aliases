@@ -29,8 +29,6 @@ if [ -n "$(command -v lsblk)" ]; then
     alias lsblk="lsblk -o +kname"
 fi
 
-alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
-
 # Local Variables:
 # mode: sh
 # End:
