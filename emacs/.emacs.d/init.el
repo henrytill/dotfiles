@@ -695,6 +695,16 @@ Return the modified alist."
         haskell-tags-on-save nil)
   nil)
 
+;;; IDRIS
+
+(add-to-list 'load-path (expand-file-name "idris-mode" ht/site-lisp-directory))
+(autoload 'idris-mode "idris-mode.el")
+(add-to-list 'auto-mode-alist '("\\.idr\\'" . idris-mode))
+(add-to-list 'auto-mode-alist '("\\.ipkg\\'" . idris-ipkg-mode))
+
+(with-eval-after-load 'idris-mode
+  (setq idris-interpreter-path "idris2"))
+
 ;;; ELISP
 
 (use-package macrostep
