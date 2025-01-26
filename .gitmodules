@@ -16,3 +16,6 @@
 [submodule "emacs/.emacs.d/site-lisp/company-coq"]
 	path = emacs/.emacs.d/site-lisp/company-coq
 	url = https://github.com/cpitclaudel/company-coq.git
+[submodule "emacs/.emacs.d/site-lisp/idris-mode"]
+	path = emacs/.emacs.d/site-lisp/idris-mode
+	url = https://github.com/idris-hackers/idris-mode.git
