@@ -963,10 +963,17 @@ Return the modified alist."
 
 ;;; RUST
 
+(defun ht/rust-mode ()
+  (setq-local skeleton-pair t
+              skeleton-pair-alist '((?| _ ?|) (?\|))))
+
 (use-package rust-mode
   :ensure t
   :mode "\\.rs\\'"
-  :hook ((rust-mode . ht/set-compile-command-cargo))
+  :hook ((rust-mode . ht/set-compile-command-cargo)
+         (rust-mode . ht/rust-mode))
+  :bind (("<" . skeleton-pair-insert-maybe)
+         ("|" . skeleton-pair-insert-maybe))
   :init
   (setq rust-mode-treesitter-derive t)
   :config
