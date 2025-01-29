@@ -410,8 +410,7 @@ Return the modified alist."
 (use-package eglot
   :ensure t
   :commands eglot
-  :init
-  (add-hook 'eglot-managed-mode-hook #'ht/customize-eglot)
+  :hook ((eglot-managed-mode . ht/customize-eglot))
   :config
   (setq-default eglot-workspace-configuration
                 '((haskell (plugin (stan (globalOn . :json-false)))))))
@@ -755,7 +754,7 @@ Return the modified alist."
 (use-package geiser-chez
   :ensure t
   :defer t
-  :init
+  :config
   (setq geiser-chez-binary "chezscheme"
         geiser-chez-csug-url "file:///usr/share/doc/chezscheme-doc/csug9.5/"))
 
@@ -946,7 +945,7 @@ Return the modified alist."
 (use-package ediprolog
   :ensure t
   :commands (ediprolog-dwim)
-  :init
+  :config
   (when (executable-find "swipl")
     (setq ediprolog-system 'swi)))
 
