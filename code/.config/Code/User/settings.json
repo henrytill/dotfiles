@@ -2,7 +2,7 @@
   "debug.console.fontFamily": "'PragmataPro Mono'",
   "debug.console.fontSize": 14,
   "debug.enableStatusBarColor": false,
-  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.ignoreTrimWhitespace": true,
   "editor.codeLensFontFamily": "'PragmataPro Mono'",
   "editor.codeLensFontSize": 14,
   "editor.fontFamily": "'PragmataPro Mono'",
@@ -108,11 +108,14 @@
   "telemetry.telemetryLevel": "off",
   "terminal.external.linuxExec": "footclient",
   "terminal.integrated.allowChords": false,
+  "window.customTitleBarVisibility": "auto",
   "window.menuBarVisibility": "toggle",
+  "workbench.activityBar.location": "top",
   "workbench.colorTheme": "Visual Studio Light",
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   // Extension settings
+  "clangd.checkUpdates": true,
   "cmake.configureOnOpen": false,
   "cmake.showOptionsMovedNotification": false,
   "dotfiles.targetPath": "~/etc",
@@ -159,7 +162,8 @@
   },
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features",
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.wordWrap": "off"
   },
   "[javascript]": {
     "editor.tabSize": 2
