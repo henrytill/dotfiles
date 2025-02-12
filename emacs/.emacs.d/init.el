@@ -389,6 +389,7 @@ Return the modified alist."
   (require 'oc-csl)
   (add-to-list 'org-file-apps '("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s"))
   (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
+                                                           (haskell . t)
                                                            (shell . t)))
   nil)
 
