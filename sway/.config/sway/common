@@ -199,6 +199,8 @@ for_window [class="c_bits_window"] floating enable
 
 include /etc/sway/config.d/*
 
+output * bg #000000 solid_color
+
 # Local Variables:
 # mode: conf
 # End:
