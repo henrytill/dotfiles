@@ -7,7 +7,8 @@
  '(package-selected-packages
    '(julia-mode racket-mode geiser-chez ace-window yasnippet company-math opam-switch-mode geiser-mit proof-general swift-mode zig-mode tuareg elpher yaml-mode rec-mode markdown-mode dockerfile-mode debbugs auctex sml-mode rust-mode ediprolog nix-mode lua-mode sly geiser-guile cmake-mode paredit magit macrostep haskell-mode go-mode gnu-apl-mode geiser forth-mode eglot company bison-mode))
  '(safe-local-variable-values
-   '((eval c-set-offset 'cpp-macro 0 nil)
+   '((geiser-scheme-implementation . chez)
+     (eval c-set-offset 'cpp-macro 0 nil)
      (ht/use-project-comint-history . t)
      (ht/format-on-save . t))))
 (custom-set-faces
