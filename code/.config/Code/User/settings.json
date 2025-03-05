@@ -142,6 +142,7 @@
   "haskell.plugin.eval.config.diff": false,
   "haskell.plugin.eval.globalOn": false,
   "haskell.upgradeGHCup": false,
+  "lean4.alwaysAskBeforeInstallingLeanVersions": true,
   "mesonbuild.downloadLanguageServer": true,
   "ocaml.server.codelens": false,
   "python.terminal.activateEnvironment": false,
