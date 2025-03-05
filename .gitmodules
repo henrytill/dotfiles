@@ -4,9 +4,6 @@
 [submodule "emacs/.emacs.d/site-lisp/magit-annex"]
 	path = emacs/.emacs.d/site-lisp/magit-annex
 	url = https://github.com/magit/magit-annex.git
-[submodule "emacs/.emacs.d/site-lisp/docker-tramp"]
-	path = emacs/.emacs.d/site-lisp/docker-tramp
-	url = https://github.com/henrytill/docker-tramp.el.git
 [submodule "emacs/.emacs.d/site-lisp/meson-mode"]
 	path = emacs/.emacs.d/site-lisp/meson-mode
 	url = https://github.com/wentasah/meson-mode.git

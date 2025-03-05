@@ -366,19 +366,6 @@ file doesn't exist."
 (bind-key "M-<up>" #'ht/move-line-up)
 (bind-key "M-<down>" #'ht/move-line-down)
 
-;;; TRAMP
-
-(when (version< emacs-version "29.1")
-  (add-to-list 'load-path (expand-file-name "docker-tramp" ht/site-lisp-directory))
-  (autoload 'docker-tramp-add-method "docker-tramp.el")
-  (with-eval-after-load 'tramp
-    (when (fboundp 'docker-tramp-add-method)
-      (docker-tramp-add-method)
-      (when (and (fboundp 'tramp-set-completion-function)
-                 (boundp 'docker-tramp-method)
-                 (boundp 'docker-tramp-completion-function-alist))
-        (tramp-set-completion-function docker-tramp-method docker-tramp-completion-function-alist)))))
-
 ;;; DIRED
 
 (with-eval-after-load 'dired
