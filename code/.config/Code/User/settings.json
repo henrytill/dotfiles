@@ -141,6 +141,9 @@
   "haskell.plugin.importLens.codeActionsOn": false,
   "haskell.plugin.eval.config.diff": false,
   "haskell.plugin.eval.globalOn": false,
+  "haskell.toolchain": {
+    "stack": null
+  },
   "haskell.upgradeGHCup": false,
   "lean4.alwaysAskBeforeInstallingLeanVersions": true,
   "mesonbuild.downloadLanguageServer": true,
