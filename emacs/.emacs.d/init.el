@@ -700,7 +700,7 @@ file doesn't exist."
 
 (defun ht/customize-haskell-mode ()
   "Customize Haskell mode with appropriate settings and hooks."
-  (setq-local compile-command "cabal v2-build")
+  (setq-local compile-command "cabal v2-build all")
   ;; We shouldn't need to do this
   (when (fboundp 'haskell-indentation-mode)
     (haskell-indentation-mode 0))
