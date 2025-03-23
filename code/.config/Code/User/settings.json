@@ -149,6 +149,7 @@
   "mesonbuild.downloadLanguageServer": true,
   "ocaml.server.codelens": false,
   "python.terminal.activateEnvironment": false,
+  "rust-analyzer.lens.enable": false,
   "yaml.format.singleQuote": true,
   // Language-specific editor.* settings
   "[c]": {
