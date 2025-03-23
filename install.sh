@@ -23,12 +23,12 @@ if [ "$USER" != "ht" ]; then
 fi
 
 if [ -z "$(command -v make)" ]; then
-    eprintf "${SCRIPT}: you must install make"
+    eprintf "%s: you must install make" "${SCRIPT}"
     exit 1
 fi
 
 if [ -z "$(command -v stow)" ]; then
-    eprintf "${SCRIPT}: you must install stow"
+    eprintf "%s: you must install stow" "${SCRIPT}"
     exit 1
 fi
 
