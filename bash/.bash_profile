@@ -19,7 +19,7 @@ paths=(
     "$HOME/.local/bin"
     "$HOME/.local/opt/mlton/bin"
     "$HOME/.local/opt/polyml/bin"
-    "$HOME/.local/opt/racket-8.15/bin"
+    "$HOME/.local/opt/racket-8.16/bin"
     "$HOME/.local/opt/flutter/bin"
     "$HOME/.local/opt/zig-linux-x86_64-0.13.0"
     "$HOME/.cargo/bin"
