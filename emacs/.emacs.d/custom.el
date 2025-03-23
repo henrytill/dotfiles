@@ -5,12 +5,18 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(julia-mode racket-mode geiser-chez ace-window yasnippet company-math opam-switch-mode geiser-mit proof-general swift-mode zig-mode tuareg elpher yaml-mode rec-mode markdown-mode dockerfile-mode debbugs auctex sml-mode rust-mode ediprolog nix-mode lua-mode sly geiser-guile cmake-mode paredit magit macrostep haskell-mode go-mode gnu-apl-mode geiser forth-mode eglot company bison-mode))
+   '(ace-window auctex bison-mode cmake-mode company company-math debbugs
+                dockerfile-mode ediprolog eglot elpher forth-mode
+                geiser geiser-chez geiser-guile geiser-mit
+                gnu-apl-mode go-mode haskell-mode julia-mode lua-mode
+                macrostep magit markdown-mode nix-mode
+                opam-switch-mode paredit proof-general racket-mode
+                rec-mode rust-mode sly sml-mode swift-mode transient
+                tuareg yaml-mode yasnippet zig-mode))
  '(safe-local-variable-values
    '((geiser-scheme-implementation . chez)
      (eval c-set-offset 'cpp-macro 0 nil)
-     (ht/use-project-comint-history . t)
-     (ht/format-on-save . t))))
+     (ht/use-project-comint-history . t) (ht/format-on-save . t))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
