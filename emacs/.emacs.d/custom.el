@@ -5,9 +5,9 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(ace-window auctex bison-mode cmake-mode company company-math debbugs
-                dockerfile-mode ediprolog eglot elpher forth-mode
-                geiser geiser-chez geiser-guile geiser-mit
+   '(ace-window auctex bison-mode cmake-mode company company-math dash
+                debbugs dockerfile-mode ediprolog eglot elpher
+                forth-mode geiser geiser-chez geiser-guile geiser-mit
                 gnu-apl-mode go-mode haskell-mode julia-mode lua-mode
                 macrostep magit markdown-mode nix-mode
                 opam-switch-mode paredit proof-general racket-mode
