@@ -1,7 +1,6 @@
 [user]
     name = Henry Till
     email = henrytill@gmail.com
-    signingkey = 67D03863B46657BC4CE57C4DF1CE276596CE0D8A
 [push]
     default = simple
 [pull]
