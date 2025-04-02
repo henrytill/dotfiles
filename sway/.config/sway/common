@@ -7,7 +7,7 @@ set $right l
 
 set $term footclient
 
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu fuzzel --terminal=foot --launch-prefix='swaymsg exec --'
 
 include /etc/sway/config-vars.d/*
 
