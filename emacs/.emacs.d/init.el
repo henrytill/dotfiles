@@ -841,6 +841,7 @@ state at that position."
 
 ;;; company-coq dependencies
 (use-package company-math :ensure t :defer t)
+(use-package dash :ensure t :defer t)
 (use-package yasnippet :ensure t :defer t)
 
 (add-to-list 'load-path (expand-file-name "company-coq" ht/site-lisp-directory))
