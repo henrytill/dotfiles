@@ -130,7 +130,6 @@ file doesn't exist."
 (setopt apropos-do-all t
         backup-by-copying t
         backup-directory-alist `(("." . ,(expand-file-name "backups" user-emacs-directory)))
-        case-fold-search nil
         compilation-max-output-line-length nil
         custom-file (expand-file-name "custom.el" user-emacs-directory)
         custom-unlispify-remove-prefixes t
@@ -172,12 +171,8 @@ file doesn't exist."
 
 (defconst ht/global-bindings
   '(("C-x C-b" . ibuffer)
-    ("C-M-s" . isearch-forward)
-    ("C-M-r" . isearch-backward)
     ("M-/" . hippie-expand)
     ("M-z" . zap-up-to-char)
-    ("C-s" . isearch-forward-regexp)
-    ("C-r" . isearch-backward-regexp)
     ("C-c h o" . ff-find-other-file)))
 
 (dolist (binding ht/global-bindings)
