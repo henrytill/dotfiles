@@ -1,3 +1,4 @@
+*~
 *.elc
 /emacs/.emacs.d/.apl.history
 /emacs/.emacs.d/.newsrc-dribble
@@ -37,3 +38,4 @@
 /emacs/.emacs.d/url
 /emacs/.emacs.d/network-security.data
 /emacs/.emacs.d/todo
+/emacs-minimal/.emacs.d
