@@ -72,24 +72,6 @@
 
 (put 'ht/comment 'lisp-indent-function 'defun)
 
-(defun ht/s-trim-left (s)
-  "Remove whitespace at the beginning of S."
-  (save-match-data
-    (if (string-match "\\`[ \t\n\r]+" s)
-        (replace-match "" t t s)
-      s)))
-
-(defun ht/s-trim-right (s)
-  "Remove whitespace at the end of S."
-  (save-match-data
-    (if (string-match "[ \t\n\r]+\\'" s)
-        (replace-match "" t t s)
-      s)))
-
-(defun ht/s-trim (s)
-  "Remove whitespace at the beginning and end of S."
-  (ht/s-trim-left (ht/s-trim-right s)))
-
 (defun ht/assq-replace (alist pair)
   "Replace or insert PAIR in ALIST based on the key of PAIR.
 Return the modified alist."
@@ -111,7 +93,7 @@ file doesn't exist."
 (defun ht/hostname ()
   "Return short hostname if hostname command exists, nil otherwise."
   (when (executable-find "hostname")
-    (ht/s-trim (shell-command-to-string "hostname -s"))))
+    (string-trim (shell-command-to-string "hostname -s"))))
 
 (defun ht/hex-to-decimal (start end)
   "Convert the hexadecimal number in the region from START to END to decimal."
