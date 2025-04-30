@@ -72,16 +72,6 @@
 
 (put 'ht/comment 'lisp-indent-function 'defun)
 
-(defun ht/assq-replace (alist pair)
-  "Replace or insert PAIR in ALIST based on the key of PAIR.
-Return the modified alist."
-  (cons pair (assq-delete-all (car pair) alist)))
-
-(defun ht/rassq-replace (alist value pair)
-  "Replace or insert PAIR in ALIST based on VALUE.
-Return the modified alist."
-  (cons pair (rassq-delete-all value alist)))
-
 (defun ht/file-exists-in-project-root-p (file)
   "Check if FILE exists in the current project's root directory.
 
@@ -959,9 +949,6 @@ state at that position."
   :hook ((coq-mode tuareg-mode) . opam-switch-mode))
 
 ;;; PROLOG
-
-(setq auto-mode-alist
-      (ht/rassq-replace auto-mode-alist 'perl-mode '("\\.pl\\'" . prolog-mode)))
 
 (when (executable-find "swipl")
   (setopt prolog-system 'swi))
