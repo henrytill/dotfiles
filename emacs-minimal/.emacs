@@ -13,9 +13,10 @@
  '(fido-vertical-mode t)
  '(frame-background-mode 'light)
  '(global-display-line-numbers-mode t)
+ '(haskell-mode-hook '(interactive-haskell-mode ht/customize-haskell-mode))
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
- '(package-selected-packages '(cmake-mode magit rust-mode tuareg))
+ '(package-selected-packages '(cmake-mode haskell-mode magit nix-mode rust-mode tuareg))
  '(require-final-newline t)
  '(savehist-mode t)
  '(truncate-lines t)
@@ -27,3 +28,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(defun ht/customize-haskell-mode ()
+  "Customize Haskell mode with appropriate settings."
+  ;; We shouldn't need to do this
+  (when (fboundp 'haskell-indentation-mode)
+    (haskell-indentation-mode 0)))
