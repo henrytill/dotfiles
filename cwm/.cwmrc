@@ -61,5 +61,8 @@ bind-key S4-2 window-movetogroup-2
 bind-key S4-3 window-movetogroup-3
 bind-key S4-4 window-movetogroup-4
 
+bind-key S4-s window-stick
+
 bind-key 4-x window-maximize
 bind-key 4-z window-vmaximize
+bind-key 4-v window-vtile
