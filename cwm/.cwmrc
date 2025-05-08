@@ -66,3 +66,5 @@ bind-key S4-s window-stick
 bind-key 4-x window-maximize
 bind-key 4-z window-vmaximize
 bind-key 4-v window-vtile
+
+ignore xclock

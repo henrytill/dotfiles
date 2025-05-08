@@ -12,6 +12,8 @@ setxkbmap -option ctrl:nocaps &
 
 lxterm -g 100x48+10+10 &
 
+xclock &
+
 if ! pgrep -x "nm-applet" >/dev/null; then
     nm-applet &
 fi
