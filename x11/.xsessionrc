@@ -1,3 +1,5 @@
+# -*- mode: sh; -*-
+
 xrdb -load $HOME/.Xresources
 
 xset s 300 5
