@@ -1315,9 +1315,8 @@ as a markdown link."
     (setq default-directory home)))
 
 (when (and (is-unix-p) (not (display-graphic-p)))
-  (when (xterm-mouse-mode 1)
-    (bind-key "<mouse-4>" 'previous-line)
-    (bind-key "<mouse-5>" 'next-line)))
+  (xterm-mouse-mode 1)
+  (mouse-wheel-mode 1))
 
 ;;; REGISTERS
 
