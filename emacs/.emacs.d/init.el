@@ -1214,12 +1214,22 @@ as a markdown link."
 
 (when (and (getenv "XTERM_VERSION")
            (executable-find "xsel"))
+  (defun xsel-cut (text &optional _push)
+    (when (and text (executable-find "xsel" t))
+      (let ((proc (make-process :name "xsel"
+                                :buffer nil
+                                :command '("xsel" "-b" "-i")
+                                :connection-type 'pipe)))
+        (process-send-string proc text)
+        (process-send-eof proc))))
   (defun xsel-paste ()
     (let ((xsel-output (and (executable-find "xsel" t)
                             (shell-command-to-string "xsel -b"))))
       (if (string-empty-p xsel-output)
           nil
         xsel-output)))
+  (when (fboundp 'xsel-cut)
+    (setq interprogram-cut-function #'xsel-cut))
   (when (fboundp 'xsel-paste)
     (setq interprogram-paste-function #'xsel-paste)))
 
