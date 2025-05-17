@@ -69,3 +69,7 @@ if [ "$(uname)" = "Linux" ] && [ -e "$SWAY_SESSION" ] && [ "$(tty)" = "/dev/tty1
     export XDG_CURRENT_DESKTOP
     exec sway-session
 fi
+
+if [ "$(uname)" = "Linux" ] && [ "$(tty)" = "/dev/tty2" ]; then
+    exec startx
+fi
