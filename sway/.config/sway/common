@@ -197,6 +197,8 @@ bar {
 
 for_window [class="c_bits_window"] floating enable
 
+for_window [app_id="gamescope"] floating enable
+
 include /etc/sway/config.d/*
 
 output * bg #000000 solid_color
