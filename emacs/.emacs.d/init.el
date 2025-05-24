@@ -648,12 +648,12 @@ file doesn't exist."
 
 ;;; HASKELL
 
-(defun ht/ormolu-buffer-file ()
-  "Format the current Haskell buffer using the ormolu formatter."
+(defun ht/fourmolu-buffer-file ()
+  "Format the current Haskell buffer using the fourmolu formatter."
   (interactive)
   (let ((file-name (buffer-file-name))
         (default-directory (project-root (project-current t))))
-    (shell-command (format "ormolu --mode inplace %s" file-name))))
+    (shell-command (format "fourmolu -q --mode inplace %s" file-name))))
 
 (defun ht/run-ghc-tags ()
   "Run ghc-tags on the current Haskell project to generate a TAGS file."
@@ -1280,7 +1280,7 @@ as a markdown link."
     (go-mode . gofmt)))
 
 (defvar ht/after-save-formatters
-  '((haskell-mode . ht/ormolu-buffer-file)
+  '((haskell-mode . ht/fourmolu-buffer-file)
     (js-mode . ht/prettier-buffer-file)
     (nix-mode . ht/nixfmt-buffer-file)
     (python-mode . ht/black-format-buffer-file)
