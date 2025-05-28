@@ -10,9 +10,9 @@
                 forth-mode geiser geiser-chez geiser-guile geiser-mit
                 gnu-apl-mode go-mode haskell-mode julia-mode lua-mode
                 macrostep magit markdown-mode nix-mode
-                opam-switch-mode paredit proof-general racket-mode
-                rec-mode rust-mode sly sml-mode swift-mode transient
-                tuareg yaml-mode yasnippet zig-mode))
+                opam-switch-mode paredit proof-general prop-menu
+                racket-mode rec-mode rust-mode sly sml-mode swift-mode
+                transient tuareg yaml-mode yasnippet zig-mode))
  '(safe-local-variable-values
    '((geiser-scheme-implementation . chez)
      (eval c-set-offset 'cpp-macro 0 nil)

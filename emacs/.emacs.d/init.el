@@ -693,6 +693,8 @@ file doesn't exist."
 
 ;;; IDRIS
 
+(use-package prop-menu :ensure t :defer t)
+
 (add-to-list 'load-path (expand-file-name "idris-mode" ht/site-lisp-directory))
 (autoload 'idris-mode "idris-mode.el")
 (add-to-list 'auto-mode-alist '("\\.idr\\'" . idris-mode))
