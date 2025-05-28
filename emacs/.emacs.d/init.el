@@ -1004,7 +1004,7 @@ state at that position."
   (setopt rust-format-on-save t
           rust-format-show-buffer nil
           rust-format-goto-problem nil
-          rust-rustfmt-switches '("--edition" "2021")))
+          rust-rustfmt-switches '("--edition" "2024")))
 
 ;;; SH
 
