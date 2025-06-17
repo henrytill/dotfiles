@@ -18,4 +18,8 @@ if ! pgrep -x "nm-applet" >/dev/null; then
     nm-applet &
 fi
 
+if [ "$(hostname -s)" = "thalassa" ]; then
+    xrandr --rate 144
+fi
+
 exec systemd-cat -t cwm cwm
