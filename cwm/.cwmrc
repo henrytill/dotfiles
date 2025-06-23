@@ -46,8 +46,8 @@ bind-key S4-Up window-resize-up-big
 bind-key S4-Right window-resize-right-big
 
 bind-mouse 4-1 window-move
-bind-mouse 4-2 window-resize
-bind-mouse 4-3 window-lower
+bind-mouse 4-2 window-lower
+bind-mouse 4-3 window-resize
 
 bind-mouse S4-1 window-resize
 
