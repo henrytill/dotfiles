@@ -898,18 +898,20 @@ state at that position."
 (use-package tuareg
   :ensure t
   :commands (tuareg-mode tuareg-opam-mode)
-  :hook ((tuareg-mode . ht/set-compile-command-dune)))
-
-(use-package tuareg-menhir
-  :after tuareg
-  :commands (tuareg-menhir-mode)
-  :mode (("\\.mly\\'" . tuareg-menhir-mode)))
+  :hook ((tuareg-mode . ht/set-compile-command-dune))
+  :config
+  (when (not (fboundp 'ht/ocamlformat-buffer-file))
+    (defun ht/ocamlformat-buffer-file ()
+      "Format the current OCaml buffer using ocamlformat."
+      (interactive)
+      (let ((file-name (buffer-file-name))
+            (default-directory (project-root (project-current t))))
+        (shell-command (format "ocamlformat -i %s" file-name))))))
 
 (use-package merlin
   :load-path (lambda () (ht/get-ocaml-load-path))
   :if (locate-file "merlin.el" load-path)
   :commands (merlin-mode)
-  :after tuareg
   :hook ((tuareg-mode . merlin-mode)))
 
 (use-package merlin-company
@@ -919,7 +921,6 @@ state at that position."
 
 (use-package ocp-indent
   :disabled t
-  :after tuareg
   :load-path (lambda () (ht/get-ocaml-load-path))
   :if (locate-file "ocp-indent.el" load-path)
   :config
@@ -931,19 +932,10 @@ state at that position."
   :load-path (lambda () (ht/get-ocaml-load-path))
   :if (locate-file "utop.el" load-path)
   :commands (utop-minor-mode)
-  :after tuareg
   :hook ((tuareg-mode . utop-minor-mode))
   :config
   (when (ht/is-dune-project-p)
     (setopt utop-command "dune utop . -- -emacs")))
-
-(with-eval-after-load 'tuareg
-  (defun ht/ocamlformat-buffer-file ()
-    "Format the current OCaml buffer using ocamlformat."
-    (interactive)
-    (let ((file-name (buffer-file-name))
-          (default-directory (project-root (project-current t))))
-      (shell-command (format "ocamlformat -i %s" file-name)))))
 
 (use-package opam-switch-mode
   :ensure t
