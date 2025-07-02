@@ -1318,7 +1318,7 @@ as a markdown link."
 
 ;;; REGISTERS
 
-(set-register ?i `(file . ,(concat user-emacs-directory "init.el")))
+(set-register ?i `(file . ,(locate-user-emacs-file "init.el")))
 
 (provide 'init)
 ;;; init.el ends here
