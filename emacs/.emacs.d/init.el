@@ -1061,7 +1061,8 @@ state at that position."
   :commands markdown-mode
   :hook ((markdown-mode . display-line-numbers-mode)
          (markdown-mode . electric-pair-mode)
-         (markdown-mode . ht/truncate-lines))
+         (markdown-mode . ht/truncate-lines)
+         (markdown-mode . flyspell-mode))
   :functions (ht/fetch-html-title
               ht/string-to-ascii
               ht/insert-markdown-link-from-url)
