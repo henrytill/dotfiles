@@ -48,6 +48,9 @@ exec swayidle -w \
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
+    # Lock screen
+    bindsym $mod+Shift+w exec 'swaylock -f -c 000000'
+
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
 #
