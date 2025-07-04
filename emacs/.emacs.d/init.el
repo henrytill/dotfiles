@@ -1020,21 +1020,23 @@ state at that position."
 
 ;;; TEX
 
+(defun ht/customize-auctex ()
+  (TeX-source-correlate-mode 1)
+  (TeX-PDF-mode 1))
+
 (use-package auctex
   :ensure t
-  :hook ((LaTeX-mode . display-line-numbers-mode)))
+  :hook ((LaTeX-mode . display-line-numbers-mode)
+         (LaTeX-mode . ht/customize-auctex)))
 
 (with-eval-after-load 'tex
   (setopt TeX-auto-save t
           TeX-parse-self t)
   (when (and (is-linux-p)
              (executable-find "zathura")
-             (boundp 'TeX-view-program-list)
              (boundp 'TeX-view-program-selection))
-    (add-to-list 'TeX-view-program-list
-                 '("zathura" ("zathura" (mode-io-correlate " -P %(outpage)") " %o")))
     (add-to-list 'TeX-view-program-selection
-                 '(output-pdf "zathura"))))
+                 '(output-pdf "Zathura"))))
 
 (dolist (f '(display-line-numbers-mode
              whitespace-mode))
