@@ -368,17 +368,6 @@ file doesn't exist."
                                                            (shell . t)))
   nil)
 
-;;; COMPANY
-
-(use-package company
-  :ensure t
-  :commands company-mode
-  :hook (((prog-mode shell-mode org-mode) . company-mode))
-  :defines (company-backends)
-  :config
-  (delete 'company-clang company-backends)
-  (delete 'company-xcode company-backends))
-
 ;;; LSP
 
 (use-package eglot
@@ -760,8 +749,6 @@ file doesn't exist."
           geiser-chez-binary "chezscheme"
           geiser-chez-csug-url "file:///usr/share/doc/chezscheme-doc/csug9.5/"))
 
-(add-hook 'geiser-repl-mode-hook #'company-mode)
-
 ;;; RACKET
 
 (defun ht/add-racket-indents ()
@@ -773,8 +760,7 @@ file doesn't exist."
   :defer t
   :ensure t
   :hook ((racket-mode . racket-xp-mode)
-         (racket-mode . ht/add-racket-indents)
-         (racket-repl-mode . company-mode)))
+         (racket-mode . ht/add-racket-indents)))
 
 ;;; COMMON LISP
 
@@ -803,18 +789,11 @@ state at that position."
 (use-package coq-mode
   :mode (("\\.v\\'" . coq-mode))
   :commands (coq-mode)
-  :hook ((coq-mode . company-coq-mode))
   :config
   (setopt proof-colour-locked nil
           proof-splash-enable nil))
 
-;;; company-coq dependencies
-(use-package company-math :ensure t :defer t)
-(use-package dash :ensure t :defer t)
 (use-package yasnippet :ensure t :defer t)
-
-(add-to-list 'load-path (expand-file-name "company-coq" ht/site-lisp-directory))
-(autoload 'company-coq-mode "company-coq.el")
 
 ;;; JAVASCRIPT
 
@@ -914,11 +893,6 @@ state at that position."
   :commands (merlin-mode)
   :hook ((tuareg-mode . merlin-mode)))
 
-(use-package merlin-company
-  :after merlin
-  :load-path (lambda () (ht/get-ocaml-load-path))
-  :if (locate-file "merlin-company.el" load-path))
-
 (use-package ocp-indent
   :disabled t
   :load-path (lambda () (ht/get-ocaml-load-path))
@@ -963,8 +937,6 @@ state at that position."
     (let ((file-name (buffer-file-name))
           (default-directory (project-root (project-current t))))
       (shell-command (format "black -q %s" file-name)))))
-
-(add-hook 'inferior-python-mode-hook #'company-mode)
 
 ;;; RUST
 
