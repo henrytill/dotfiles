@@ -993,8 +993,11 @@ state at that position."
 ;;; TEX
 
 (defun ht/customize-auctex ()
-  (TeX-source-correlate-mode 1)
-  (TeX-PDF-mode 1))
+  "Customize `LaTeX-mode'."
+  (when (and (fboundp 'TeX-source-correlate-mode)
+             (fboundp 'TeX-PDF-mode))
+    (TeX-source-correlate-mode 1)
+    (TeX-PDF-mode 1)))
 
 (use-package auctex
   :ensure t
