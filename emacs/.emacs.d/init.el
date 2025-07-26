@@ -160,21 +160,6 @@ file doesn't exist."
 
 (defconst ht/site-lisp-directory (expand-file-name "site-lisp" user-emacs-directory))
 
-(ht/comment
-  ;; This is a leftover from using Guix's Emacs atop Debian.
-  (let ((directory (expand-file-name "/usr/share/emacs/site-lisp")))
-    (when (file-directory-p directory)
-      (let ((default-directory directory))
-        (when (not (member default-directory load-path))
-          (push default-directory load-path)
-          (normal-top-level-add-subdirs-to-load-path)))))
-  ;; Another leftover from using more locally-compiled code and Nix packages
-  (mapc #'(lambda (path)
-            (when (file-directory-p path)
-              (push (expand-file-name path) load-path)))
-        '("/usr/local/share/emacs/site-lisp" "~/.nix-profile/share/emacs/site-lisp/"))
-  nil)
-
 (require 'package)
 
 (dolist (archive '(("nongnu" . "https://elpa.nongnu.org/nongnu/")))
