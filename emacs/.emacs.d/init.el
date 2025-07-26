@@ -1180,10 +1180,10 @@ as a markdown link."
       (if (string-empty-p xsel-output)
           nil
         xsel-output)))
-  (when (fboundp 'xsel-cut)
-    (setq interprogram-cut-function #'xsel-cut))
-  (when (fboundp 'xsel-paste)
-    (setq interprogram-paste-function #'xsel-paste)))
+  (when (and (fboundp 'xsel-cut)
+             (fboundp 'xsel-paste))
+    (setq interprogram-cut-function #'xsel-cut
+          interprogram-paste-function #'xsel-paste)))
 
 ;;; WAYLAND
 
