@@ -93,11 +93,6 @@ file doesn't exist."
                  (string (char-after)))))
     (message (number-to-string (string-to-number input 16)))))
 
-(ht/comment
-  (require 'icomplete)
-  (fido-mode 1)
-  (fido-vertical-mode 1))
-
 (require 'uniquify)
 
 (setopt apropos-do-all t
