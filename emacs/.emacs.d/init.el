@@ -1206,13 +1206,6 @@ as a markdown link."
              (fboundp 'wl-paste))
     (setq interprogram-cut-function #'wl-copy
           interprogram-paste-function #'wl-paste))
-  (ht/comment
-    ;; This is a bit racy unfortunately
-    (defun kill-wl-copy-process (arg)
-      (when (and wl-copy-process (process-live-p wl-copy-process))
-        (kill-process wl-copy-process)))
-    (advice-add 'save-buffers-kill-emacs :before #'kill-wl-copy-process)
-    nil)
   nil)
 
 
