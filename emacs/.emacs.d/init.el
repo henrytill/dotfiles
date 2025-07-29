@@ -478,7 +478,8 @@ file doesn't exist."
 
 (when (executable-find "agda-mode")
   (load-file (let ((coding-system-for-read 'utf-8))
-               (shell-command-to-string "agda-mode locate"))))
+               (shell-command-to-string "agda-mode locate")))
+  (setopt agda2-mode-abbrevs-use-defaults t))
 
 (with-eval-after-load 'agda2-mode
   (setopt agda2-backend "GHC"))
