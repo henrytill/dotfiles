@@ -1156,7 +1156,7 @@ as a markdown link."
                 (process (get-buffer-process (current-buffer)))
                 (pname (process-name process))
                 (history-file (ht/get-history-file pname)))
-      (setopt comint-input-ring-file-name history-file)
+      (setq-local comint-input-ring-file-name history-file)
       (comint-read-input-ring)
       (set-process-sentinel process #'ht/comint-process-sentinel)
       (message "Loading history for %s from %s" pname history-file)
