@@ -1013,6 +1013,11 @@ state at that position."
           (default-directory (project-root (project-current t))))
       (shell-command (format "zig fmt %s" file-name)))))
 
+;;; CSV
+
+(use-package csv-mode
+  :ensure t)
+
 ;;; MARKDOWN
 
 (use-package markdown-mode
