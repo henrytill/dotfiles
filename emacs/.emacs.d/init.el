@@ -773,7 +773,8 @@ state at that position."
   :commands (coq-mode)
   :config
   (setopt proof-colour-locked nil
-          proof-splash-enable nil))
+          proof-splash-enable nil
+          proof-three-window-mode-policy 'hybrid))
 
 (use-package yasnippet :ensure t :defer t)
 
