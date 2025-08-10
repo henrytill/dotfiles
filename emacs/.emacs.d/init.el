@@ -366,9 +366,6 @@ file doesn't exist."
 
 ;;; MAGIT
 
-(add-to-list 'load-path (expand-file-name "magit-annex" ht/site-lisp-directory))
-(autoload 'magit-annex-dispatch "magit-annex.el")
-
 (use-package magit
   :ensure t
   :commands (magit-status magit-project-status)
@@ -379,6 +376,11 @@ file doesn't exist."
   (put 'magit-clean 'disabled nil)
   (setopt magit-last-seen-setup-instructions "1.4.0")
   (bind-key "@" #'magit-annex-dispatch magit-mode-map))
+
+(use-package magit-annex
+  :after magit
+  :vc (:url "https://github.com/magit/magit-annex.git" :rev :newest)
+  :commands magit-annex-dispatch)
 
 ;;; PROJECT
 
@@ -581,11 +583,11 @@ file doesn't exist."
 
 ;;; MESON
 
-(add-to-list 'load-path (expand-file-name "meson-mode" ht/site-lisp-directory))
-(autoload 'meson-mode "meson-mode.el")
-(add-to-list 'auto-mode-alist '("/meson\\(\\.build\\|_options\\.txt\\)\\'" . meson-mode))
-
-(with-eval-after-load 'meson-mode
+(use-package meson-mode
+  :vc (:url "https://github.com/wentasah/meson-mode.git" :rev :newest)
+  :mode (("/meson\\(\\.build\\|_options\\.txt\\)\\'" . meson-mode))
+  :commands meson-mode
+  :config
   (setopt meson-indent-basic 4))
 
 ;;; MODULA-2
@@ -664,14 +666,12 @@ file doesn't exist."
 
 ;;; IDRIS
 
-(use-package prop-menu :ensure t :defer t)
-
-(add-to-list 'load-path (expand-file-name "idris-mode" ht/site-lisp-directory))
-(autoload 'idris-mode "idris-mode.el")
-(add-to-list 'auto-mode-alist '("\\.idr\\'" . idris-mode))
-(add-to-list 'auto-mode-alist '("\\.ipkg\\'" . idris-ipkg-mode))
-
-(with-eval-after-load 'idris-mode
+(use-package idris-mode
+  :vc (:url "https://github.com/idris-hackers/idris-mode.git" :rev :newest)
+  :commands (idris-mode idris-ipkg-mode)
+  :mode (("\\.idr\\'" . idris-mode)
+         ("\\.ipkg\\'" . idris-ipkg-mode))
+  :config
   (setopt idris-interpreter-path "idris2"))
 
 ;;; ELISP
@@ -1002,11 +1002,11 @@ state at that position."
 
 ;;; ZIG
 
-(add-to-list 'load-path (expand-file-name "zig-mode" ht/site-lisp-directory))
-(autoload 'zig-mode "zig-mode.el")
-(add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
-
-(with-eval-after-load 'zig-mode
+(use-package zig-mode
+  :vc (:url "https://github.com/henrytill/zig-mode.git" :rev "patched")
+  :commands zig-mode
+  :mode (("\\.zig\\'" . zig-mode))
+  :config
   (defun ht/zig-fmt-buffer-file ()
     "Format the current Zig buffer using zig fmt."
     (interactive)

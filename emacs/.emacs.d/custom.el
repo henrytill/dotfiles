@@ -13,6 +13,12 @@
                 opam-switch-mode paredit proof-general prop-menu
                 racket-mode rec-mode rust-mode sly sml-mode swift-mode
                 transient tuareg yaml-mode yasnippet zig-mode))
+ '(package-vc-selected-packages
+   '((zig-mode :url "https://github.com/henrytill/zig-mode.git")
+     (idris-mode :url
+                 "https://github.com/idris-hackers/idris-mode.git")
+     (meson-mode :url "https://github.com/wentasah/meson-mode.git")
+     (magit-annex :url "https://github.com/magit/magit-annex.git")))
  '(safe-local-variable-values
    '((geiser-scheme-implementation . chez)
      (eval c-set-offset 'cpp-macro 0 nil)

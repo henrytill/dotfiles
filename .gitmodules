@@ -1,15 +1,3 @@
 [submodule "emacs/.emacs.d/site-lisp/compile-commands"]
 	path = emacs/.emacs.d/site-lisp/compile-commands
 	url = https://github.com/henrytill/compile-commands.git
-[submodule "emacs/.emacs.d/site-lisp/magit-annex"]
-	path = emacs/.emacs.d/site-lisp/magit-annex
-	url = https://github.com/magit/magit-annex.git
-[submodule "emacs/.emacs.d/site-lisp/meson-mode"]
-	path = emacs/.emacs.d/site-lisp/meson-mode
-	url = https://github.com/wentasah/meson-mode.git
-[submodule "emacs/.emacs.d/site-lisp/zig-mode"]
-	path = emacs/.emacs.d/site-lisp/zig-mode
-	url = https://github.com/henrytill/zig-mode.git
-[submodule "emacs/.emacs.d/site-lisp/idris-mode"]
-	path = emacs/.emacs.d/site-lisp/idris-mode
-	url = https://github.com/idris-hackers/idris-mode.git
