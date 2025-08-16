@@ -776,6 +776,14 @@ state at that position."
           proof-splash-enable nil
           proof-three-window-mode-policy 'hybrid))
 
+(use-package rocq-mode
+  :disabled t
+  :vc (:url "https://codeberg.org/jpoiret/rocq-mode.el.git" :rev :newest)
+  :mode "\\.v\\'"
+  :hook
+  (rocq-mode . rocq-follow-viewport-mode)
+  (rocq-mode . rocq-auto-goals-at-point-mode))
+
 (use-package yasnippet :ensure t :defer t)
 
 ;;; JAVASCRIPT
