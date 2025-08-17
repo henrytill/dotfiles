@@ -420,14 +420,15 @@ file doesn't exist."
 
 ;;; TREE-SITTER
 
-(when (boundp 'treesit-language-source-alist)
-  (setq treesit-language-source-alist
-        '((haskell "https://github.com/tree-sitter/tree-sitter-haskell" "master" "src")
-          (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-          (json "https://github.com/tree-sitter/tree-sitter-json")
-          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-          (rust "https://github.com/tree-sitter/tree-sitter-rust" "master" "src")
-          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))))
+(with-eval-after-load 'treesit
+  (when (boundp 'treesit-language-source-alist)
+    (setq treesit-language-source-alist
+          '((haskell "https://github.com/tree-sitter/tree-sitter-haskell" "master" "src")
+            (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+            (json "https://github.com/tree-sitter/tree-sitter-json")
+            (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+            (rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.23.3" "src")
+            (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))))
 
 ;;; WHITESPACE
 
