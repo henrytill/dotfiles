@@ -6,13 +6,13 @@
  '(auth-source-save-behavior nil)
  '(package-selected-packages
    '(ace-window auctex bison-mode cmake-mode csv-mode debbugs
-                dockerfile-mode ediprolog eglot elpher forth-mode
-                geiser geiser-chez geiser-guile geiser-mit
-                gnu-apl-mode go-mode haskell-mode julia-mode lua-mode
-                macrostep magit markdown-mode nix-mode
-                opam-switch-mode paredit proof-general prop-menu
-                racket-mode rec-mode rust-mode sly sml-mode swift-mode
-                transient tuareg yaml-mode yasnippet zig-mode))
+                dockerfile-mode ediprolog elpher forth-mode
+                geiser-chez gnu-apl-mode go-mode haskell-mode
+                idris-mode julia-mode lua-mode macrostep magit-annex
+                markdown-mode meson-mode nix-mode opam-switch-mode
+                paredit proof-general racket-mode rec-mode rust-mode
+                sly sml-mode swift-mode tuareg yaml-mode yasnippet
+                zig-mode))
  '(package-vc-selected-packages
    '((zig-mode :url "https://github.com/henrytill/zig-mode.git")
      (idris-mode :url
