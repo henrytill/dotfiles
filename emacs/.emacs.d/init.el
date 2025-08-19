@@ -910,15 +910,9 @@ state at that position."
 
 ;;; PROLOG
 
-(when (executable-find "swipl")
-  (setopt prolog-system 'swi))
-
 (use-package ediprolog
   :ensure t
-  :commands (ediprolog-dwim)
-  :config
-  (when (executable-find "swipl")
-    (setopt ediprolog-system 'swi)))
+  :commands (ediprolog-dwim))
 
 ;;; PYTHON
 
