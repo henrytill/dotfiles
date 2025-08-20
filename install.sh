@@ -14,6 +14,7 @@ if [ -n "$IN_DEV_CONTAINER" ]; then
     echo "IN_DEV_CONTAINER=${IN_DEV_CONTAINER}"
     ln -frsv $DIR/git/.gitignore_global $DIR/..
     printf '\nexport TZ="America/Los_Angeles"\n' >> $HOME/.profile
+    printf '\nexport npm_config_prefix="$HOME/.local"\n'>> $HOME/.profile
     git submodule update --init
     exit 0
 fi
