@@ -98,6 +98,7 @@
   "git.openRepositoryInParentFolders": "never",
   "git.suggestSmartCommit": false,
   "outline.collapseItems": "alwaysCollapse",
+  "remote.autoForwardPortsSource": "hybrid",
   "settingsSync.ignoredExtensions": [
     "github.copilot",
     "github.copilot-nightly",
@@ -118,6 +119,9 @@
   "clangd.checkUpdates": true,
   "cmake.configureOnOpen": false,
   "cmake.showOptionsMovedNotification": false,
+  "dev.containers.repositoryConfigurationPaths": [
+    "/home/ht/containers"
+  ],
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
   "github.copilot.enable": {
