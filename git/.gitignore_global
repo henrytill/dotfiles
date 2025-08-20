@@ -21,3 +21,4 @@ tags
 .history-inferior-*
 .direnv/
 CLAUDE.md
+/.claude/
