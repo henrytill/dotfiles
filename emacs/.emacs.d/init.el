@@ -101,6 +101,7 @@ file doesn't exist."
         compilation-max-output-line-length nil
         custom-file (expand-file-name "custom.el" user-emacs-directory)
         custom-unlispify-remove-prefixes t
+        eldoc-echo-area-prefer-doc-buffer t
         eldoc-echo-area-use-multiline-p nil
         epa-armor t
         ;; gnus-select-method '(nnnil)
