@@ -22,7 +22,6 @@ paths=(
     "$HOME/.local/opt/flutter/bin"
     "$HOME/.local/opt/zig-x86_64-linux-0.15.1"
     "$HOME/.cargo/bin"
-    "$HOME/.cabal/bin"
     "$HOME/.ghcup/bin"
     "$HOME/.elan/bin"
     "$PATH"
