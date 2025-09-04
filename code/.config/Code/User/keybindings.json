@@ -13,5 +13,9 @@
   {
     "key": "ctrl+k ctrl+delete",
     "command": "deleteAllRight"
+  },
+  {
+    "key": "f9",
+    "command": "workbench.action.tasks.test"
   }
 ]
