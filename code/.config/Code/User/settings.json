@@ -2,7 +2,8 @@
   "debug.console.fontFamily": "'PragmataPro Mono'",
   "debug.console.fontSize": 14,
   "debug.enableStatusBarColor": false,
-  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.renderSideBySide": false,
   "editor.codeLensFontFamily": "'PragmataPro Mono'",
   "editor.codeLensFontSize": 14,
   "editor.fontFamily": "'PragmataPro Mono'",
@@ -94,6 +95,8 @@
   "files.insertFinalNewline": true,
   "git.allowForcePush": true,
   "git.autofetch": true,
+  "git.confirmForcePush": false,
+  "git.confirmSync": false,
   "git.defaultBranchName": "master",
   "git.openRepositoryInParentFolders": "never",
   "git.suggestSmartCommit": false,
@@ -140,16 +143,14 @@
     "github"
   ],
   "evenBetterToml.formatter.columnWidth": 140,
+  "haskell.formattingProvider": "fourmolu",
   "haskell.manageHLS": "GHCup",
-  "haskell.plugin.importLens.codeLensOn": false,
-  "haskell.plugin.importLens.codeActionsOn": false,
-  "haskell.plugin.eval.config.diff": false,
-  "haskell.plugin.eval.globalOn": false,
   "haskell.toolchain": {
     "stack": null
   },
   "haskell.upgradeGHCup": false,
   "lean4.alwaysAskBeforeInstallingLeanVersions": true,
+  "lldb.suppressUpdateNotifications": true,
   "mesonbuild.downloadLanguageServer": true,
   "ocaml.server.codelens": false,
   "python.terminal.activateEnvironment": false,
@@ -166,9 +167,7 @@
     "editor.defaultFormatter": "vscode.css-language-features",
     "editor.tabSize": 2
   },
-  "[go]": {
-    "editor.tabSize": 8
-  },
+  "[go]": {},
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features",
     "editor.tabSize": 2,
