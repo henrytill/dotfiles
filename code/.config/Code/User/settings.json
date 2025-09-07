@@ -156,6 +156,7 @@
   "python.terminal.activateEnvironment": false,
   "rust-analyzer.lens.enable": false,
   "yaml.format.singleQuote": true,
+  "xml.format.maxLineWidth": 0,
   // Language-specific editor.* settings
   "[c]": {
     "editor.rulers": [
