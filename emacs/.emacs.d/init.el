@@ -621,6 +621,23 @@ file doesn't exist."
   :ensure t
   :mode "\\.go\\'")
 
+(defun setup-go-eglot ()
+  "Configure eglot to use gopls from GOPATH if not available in PATH."
+  (when (and (executable-find "go")
+             (not (executable-find "gopls")))
+    (let* ((go-modes '(go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode))
+           (gopath-output (shell-command-to-string "go env GOPATH"))
+           (gopath (string-trim gopath-output))
+           (gopls-path (expand-file-name "bin/gopls" gopath)))
+      (when (file-exists-p gopls-path)
+        (with-eval-after-load 'eglot
+          (setq eglot-server-programs
+                (cons `(,go-modes . (,gopls-path))
+                      (cl-remove-if (lambda (entry) (equal (car entry) go-modes))
+                                    eglot-server-programs))))))))
+
+(setup-go-eglot)
+
 ;;; HASKELL
 
 (defun ht/fourmolu-buffer-file ()
