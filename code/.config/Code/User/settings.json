@@ -138,6 +138,7 @@
   "window.customTitleBarVisibility": "auto",
   "window.menuBarVisibility": "toggle",
   "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "Visual Studio Light",
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "dev.containers.repositoryConfigurationPaths": [
@@ -206,6 +207,5 @@
   "python.terminal.activateEnvironment": false,
   "xml.format.maxLineWidth": 0,
   "yaml.format.singleQuote": true,
-  "zig.zls.enabled": "on",
-  "workbench.colorTheme": "mnml"
+  "zig.zls.enabled": "on"
 }
