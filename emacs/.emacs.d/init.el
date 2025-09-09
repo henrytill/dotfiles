@@ -502,7 +502,7 @@ file doesn't exist."
 (add-hook 'c-mode-common-hook #'ht/c-mode-common)
 
 (with-eval-after-load 'cc-mode
-  (c-add-style "ht" '("k&r" (c-basic-offset . 4) (c-offsets-alist . ((innamespace . [0])))))
+  (c-add-style "ht" '("linux" (c-offsets-alist . ((innamespace . [0])))))
   (when (boundp 'c-default-style)
     (add-to-list 'c-default-style '(c-mode . "ht"))
     (add-to-list 'c-default-style '(c++-mode . "ht"))))
