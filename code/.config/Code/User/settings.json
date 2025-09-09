@@ -4,6 +4,7 @@
   "debug.enableStatusBarColor": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": false,
+  "editor.bracketPairColorization.enabled": false,
   "editor.codeLensFontFamily": "'PragmataPro Mono'",
   "editor.codeLensFontSize": 14,
   "editor.fontFamily": "'PragmataPro Mono'",
@@ -20,7 +21,6 @@
   "editor.rulers": [
     100
   ],
-  "editor.bracketPairColorization.enabled": false,
   "editor.semanticTokenColorCustomizations": {
     "enabled": true,
     "rules": {
@@ -33,11 +33,14 @@
   "editor.tokenColorCustomizations": {
     "[Visual Studio Light]": {
       "keywords": "#000000",
-      "comments": "#2F4F4F",
+      "comments": "#7c7c7c",
       "textMateRules": [
         {
           "scope": [
             "constant.language.c",
+            "constant.language.boolean.go",
+            "constant.language.iota.go",
+            "constant.language.null.go",
             "constant.language.nullptr.cpp",
             "constant.language.capital-identifier.ocaml",
             "constant.language.unit.ocaml",
@@ -45,6 +48,12 @@
             "entity.other.attribute-name.html",
             "entity.name.function.preprocessor",
             "entity.name.tag.html",
+            "keyword.const.go",
+            "keyword.function.go",
+            "keyword.package.go",
+            "keyword.struct.go",
+            "keyword.type.go",
+            "keyword.var.go",
             "keyword.ocaml",
             "keyword.operator.expression",
             "keyword.operator.logical.python",
@@ -60,9 +69,12 @@
             "keyword.other.typedef.cpp",
             "keyword.other.using.directive.cpp",
             "meta.preprocessor",
+            "meta.preprocessor.include.c",
             "punctuation.definition.tag.begin.html",
             "punctuation.definition.tag.end.html",
             "storage.modifier",
+            "string.quoted.double.include.c",
+            "string.quoted.other.lt-gt.include.c",
             "support.type.property-name.css",
             "support.type.property-name.toml",
             "support.type.property-name.array.toml",
@@ -95,6 +107,7 @@
       ]
     }
   },
+  "editor.tabSize": 8,
   "editor.unicodeHighlight.nonBasicASCII": false,
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "extensions.ignoreRecommendations": true,
@@ -125,26 +138,13 @@
   "window.customTitleBarVisibility": "auto",
   "window.menuBarVisibility": "toggle",
   "workbench.activityBar.location": "top",
-  "workbench.colorTheme": "Visual Studio Light",
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
-  // Extension settings
-  "clangd.checkUpdates": true,
-  "cmake.configureOnOpen": false,
-  "cmake.showOptionsMovedNotification": false,
   "dev.containers.repositoryConfigurationPaths": [
     "/home/ht/containers"
   ],
   "dotfiles.targetPath": "~/etc",
   "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
-  "github.copilot.enable": {
-    "*": true,
-    "plaintext": false,
-    "markdown": false,
-    "scminput": false,
-    "dune": false,
-    "git-commit": false
-  },
   "githubPullRequests.createOnPublishBranch": "never",
   "githubPullRequests.pullBranch": "never",
   "githubPullRequests.remotes": [
@@ -152,21 +152,6 @@
     "upstream",
     "github"
   ],
-  "evenBetterToml.formatter.columnWidth": 140,
-  "haskell.formattingProvider": "fourmolu",
-  "haskell.manageHLS": "GHCup",
-  "haskell.toolchain": {
-    "stack": null
-  },
-  "haskell.upgradeGHCup": false,
-  "lean4.alwaysAskBeforeInstallingLeanVersions": true,
-  "lldb.suppressUpdateNotifications": true,
-  "mesonbuild.downloadLanguageServer": true,
-  "ocaml.server.codelens": false,
-  "python.terminal.activateEnvironment": false,
-  "rust-analyzer.lens.enable": false,
-  "yaml.format.singleQuote": true,
-  "xml.format.maxLineWidth": 0,
   // Language-specific editor.* settings
   "[c]": {
     "editor.rulers": [
@@ -178,7 +163,6 @@
     "editor.defaultFormatter": "vscode.css-language-features",
     "editor.tabSize": 2
   },
-  "[go]": {},
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features",
     "editor.tabSize": 2,
@@ -215,5 +199,13 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml",
-  }
+  },
+  // --- STUFF TENDS TO ACCUMULATE DOWN HERE ---
+  "evenBetterToml.formatter.columnWidth": 140,
+  "mesonbuild.downloadLanguageServer": true,
+  "python.terminal.activateEnvironment": false,
+  "xml.format.maxLineWidth": 0,
+  "yaml.format.singleQuote": true,
+  "zig.zls.enabled": "on",
+  "workbench.colorTheme": "mnml"
 }
