@@ -1118,12 +1118,16 @@ as a markdown link."
 
 ;;; SH-MODE
 
-(defun ht/customize-sh-mode ()
+(setopt sh-indent-for-case-label 0
+        sh-indent-for-case-alt '+)
+
+(defun ht/customize-rc ()
   (setq indent-line-function 'insert-tab)
+  (modify-syntax-entry ?` "." sh-mode-syntax-table))
+
+(defun ht/customize-sh-mode ()
   (electric-indent-local-mode 1)
-  (when (eq sh-shell 'rc)
-    (setq indent-tabs-mode t)
-    (modify-syntax-entry ?` "." sh-mode-syntax-table)))
+  (when (eq sh-shell 'rc) (ht/customize-rc)))
 
 (add-hook 'sh-mode-hook #'ht/customize-sh-mode)
 
