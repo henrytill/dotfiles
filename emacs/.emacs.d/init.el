@@ -1120,8 +1120,10 @@ as a markdown link."
 
 (defun ht/customize-sh-mode ()
   (setq indent-line-function 'insert-tab)
-  (electric-pair-mode -1)
-  (electric-indent-mode -1))
+  (electric-indent-local-mode 1)
+  (when (eq sh-shell 'rc)
+    (setq indent-tabs-mode t)
+    (modify-syntax-entry ?` "." sh-mode-syntax-table)))
 
 (add-hook 'sh-mode-hook #'ht/customize-sh-mode)
 
