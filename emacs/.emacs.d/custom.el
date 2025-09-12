@@ -36,4 +36,5 @@
  '(font-lock-variable-name-face ((t nil)))
  '(link ((t (:underline t))))
  '(sh-heredoc ((t nil)))
+ '(sh-quoted-exec ((t nil)))
  '(tuareg-font-double-semicolon-face ((t nil))))

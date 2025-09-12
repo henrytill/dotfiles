@@ -1116,6 +1116,15 @@ as a markdown link."
          (yaml-mode . electric-pair-mode)
          (yaml-mode . ht/truncate-lines)))
 
+;;; SH-MODE
+
+(defun ht/customize-sh-mode ()
+  (setq indent-line-function 'insert-tab)
+  (electric-pair-mode -1)
+  (electric-indent-mode -1))
+
+(add-hook 'sh-mode-hook #'ht/customize-sh-mode)
+
 ;;; GOPHER
 
 (use-package elpher
