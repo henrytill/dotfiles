@@ -4,7 +4,14 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(auctex bison-mode cmake-mode csv-mode debbugs dockerfile-mode
+            ediprolog elpher forth-mode geiser-chez gnu-apl-mode
+            go-mode haskell-mode idris-mode julia-mode lua-mode
+            macrostep magit-annex markdown-mode meson-mode nix-mode
+            opam-switch-mode paredit proof-general racket-mode
+            rec-mode rust-mode sly sml-mode swift-mode tuareg
+            yaml-mode yasnippet zig-mode))
  '(package-vc-selected-packages
    '((zig-mode :url "https://github.com/henrytill/zig-mode.git")
      (idris-mode :url
