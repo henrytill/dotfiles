@@ -315,6 +315,14 @@ file doesn't exist."
 (bind-key "M-<up>" #'ht/move-line-up)
 (bind-key "M-<down>" #'ht/move-line-down)
 
+;;; CONF-MODE
+
+(defun ht/customize-conf-unix-mode ()
+  (when indent-tabs-mode
+    (setq-local indent-line-function 'insert-tab)))
+
+(add-hook 'conf-unix-mode-local-vars-hook #'ht/customize-conf-unix-mode)
+
 ;;; DIRED
 
 (with-eval-after-load 'dired
