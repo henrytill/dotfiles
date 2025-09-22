@@ -1150,7 +1150,11 @@ as a markdown link."
 
 (defun ht/customize-sh-mode ()
   (electric-indent-local-mode 1)
-  (when (eq sh-shell 'rc) (ht/customize-rc)))
+  (when (eq sh-shell 'rc)
+    (ht/customize-rc))
+  (when (and (eq sh-shell 'bash)
+             (executable-find "shellcheck"))
+    (flymake-mode 1)))
 
 (add-hook 'sh-mode-hook #'ht/customize-sh-mode)
 
