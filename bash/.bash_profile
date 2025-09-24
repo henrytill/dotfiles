@@ -22,7 +22,6 @@ paths=(
 	"${HOME}/.local/bin"
 	"${HOME}/.local/opt/mlton/bin"
 	"${HOME}/.local/opt/racket-8.17/bin"
-	"${HOME}/.local/opt/flutter/bin"
 	"${HOME}/.local/opt/z3/bin"
 	"${HOME}/.local/opt/zig-x86_64-linux-0.15.1"
 	"${HOME}/.cargo/bin"
