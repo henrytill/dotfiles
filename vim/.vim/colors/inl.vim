@@ -12,6 +12,7 @@ endif
 
 let colors_name = "inl"
 
+highlight Normal        term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight Comment       term=NONE           cterm=NONE          ctermfg=DarkGray    ctermbg=NONE        gui=NONE            guifg=DarkGray      guibg=NONE
 highlight Constant      term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight CursorLine    term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=LightGray   gui=NONE            guifg=NONE          guibg=LightGray
