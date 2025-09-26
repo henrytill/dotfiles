@@ -941,7 +941,11 @@ state at that position."
 
 ;;; PERL
 
+(use-package perl-doc
+  :ensure t)
+
 (defun ht/customize-perl ()
+  (flymake-mode 1)
   (when indent-tabs-mode
     (setopt perl-indent-level 8
             perl-indent-continued-arguments nil
