@@ -391,6 +391,11 @@ file doesn't exist."
   :vc (:url "https://github.com/magit/magit-annex.git" :rev :newest)
   :commands magit-annex-dispatch)
 
+;;; EAT
+
+(use-package eat
+  :ensure t)
+
 ;;; PROJECT
 
 (with-eval-after-load 'project
