@@ -317,11 +317,12 @@ file doesn't exist."
 
 ;;; CONF-MODE
 
-(defun ht/customize-conf-unix-mode ()
+(defun ht/customize-conf-unix ()
+  "Customize `conf-unix-mode'."
   (when indent-tabs-mode
     (setq-local indent-line-function 'insert-tab)))
 
-(add-hook 'conf-unix-mode-local-vars-hook #'ht/customize-conf-unix-mode)
+(add-hook 'conf-unix-mode-local-vars-hook #'ht/customize-conf-unix)
 
 ;;; DIRED
 
@@ -360,15 +361,15 @@ file doesn't exist."
 
 ;;; LSP
 
+(defun ht/customize-eglot ()
+  "Customize `eglot-mode'."
+  (eglot-inlay-hints-mode 0))
+
 (use-package eglot
   :ensure t
   :commands eglot
   :hook ((eglot-managed-mode . ht/customize-eglot))
   :functions (eglot-inlay-hints-mode)
-  :init
-  (defun ht/customize-eglot ()
-    "Customize `eglot-mode'."
-    (eglot-inlay-hints-mode 0))
   :config
   (setq eglot-workspace-configuration
         '((haskell (plugin (stan (globalOn . :json-false)))))))
@@ -675,7 +676,7 @@ file doesn't exist."
           (shell-command "ghc-tags -e"))
       (message "ghc-tags not found"))))
 
-(defun ht/customize-haskell-mode ()
+(defun ht/customize-haskell ()
   "Customize Haskell mode with appropriate settings and hooks."
   (setq-local compile-command "cabal v2-build all")
   ;; We shouldn't need to do this
@@ -687,7 +688,7 @@ file doesn't exist."
   :ensure t
   :commands haskell-mode
   :hook ((haskell-mode . interactive-haskell-mode)
-         (haskell-mode . ht/customize-haskell-mode)
+         (haskell-mode . ht/customize-haskell)
          (haskell-cabal-mode . display-line-numbers-mode)
          (haskell-cabal-mode . whitespace-mode))
   :config
@@ -950,6 +951,7 @@ state at that position."
   :ensure t)
 
 (defun ht/customize-perl ()
+  "Customize `perl-mode'."
   (flymake-mode 1)
   (when indent-tabs-mode
     (setopt perl-indent-level 8
@@ -1154,18 +1156,23 @@ as a markdown link."
         sh-indent-for-case-alt '+)
 
 (defun ht/customize-rc ()
+  "Customize `sh-mode' for rc shell."
   (setq indent-line-function 'insert-tab)
-  (modify-syntax-entry ?` "." sh-mode-syntax-table))
+  (when (boundp 'sh-mode-syntax-table)
+    (modify-syntax-entry ?` "." sh-mode-syntax-table)))
 
-(defun ht/customize-sh-mode ()
+(defun ht/customize-sh ()
+  "Customize `sh-mode'."
   (electric-indent-local-mode 1)
-  (when (eq sh-shell 'rc)
+  (when (and (boundp 'sh-shell)
+             (eq sh-shell 'rc))
     (ht/customize-rc))
-  (when (and (eq sh-shell 'bash)
+  (when (and (boundp 'sh-shell)
+             (eq sh-shell 'bash)
              (executable-find "shellcheck"))
     (flymake-mode 1)))
 
-(add-hook 'sh-mode-hook #'ht/customize-sh-mode)
+(add-hook 'sh-mode-hook #'ht/customize-sh)
 
 ;;; GOPHER
 
