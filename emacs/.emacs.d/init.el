@@ -395,7 +395,8 @@ file doesn't exist."
 ;;; EAT
 
 (use-package eat
-  :ensure t)
+  :ensure t
+  :commands (eat eat-project))
 
 ;;; PROJECT
 
@@ -409,7 +410,7 @@ file doesn't exist."
     (bind-key "m" #'magit-project-status project-prefix-map)
     (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)
     ;; Add Shell
-    (bind-key "s" #'project-shell project-prefix-map)
+    (bind-key "s" #'eat-project project-prefix-map)
     (add-to-list 'project-switch-commands '(project-shell "Shell") t)))
 
 (setopt project-vc-extra-root-markers '(".dir-locals.el"))
