@@ -605,7 +605,13 @@ file doesn't exist."
   :mode (("/meson\\(\\.build\\|_options\\.txt\\)\\'" . meson-mode))
   :commands meson-mode
   :config
-  (setopt meson-indent-basic 4))
+  (setopt meson-indent-basic 4)
+  (defun ht/meson-format-buffer-file ()
+    "Format the current Meson buffer."
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (default-directory (project-root (project-current t))))
+      (shell-command (format "meson format -i %s" file-name)))))
 
 ;;; MODULA-2
 
@@ -1317,6 +1323,7 @@ as a markdown link."
 (defvar ht/after-save-formatters
   '((haskell-mode . ht/fourmolu-buffer-file)
     (js-mode . ht/prettier-buffer-file)
+    (meson-mode . ht/meson-format-buffer-file)
     (nix-mode . ht/nixfmt-buffer-file)
     (python-mode . ht/black-format-buffer-file)
     (tuareg-mode . ht/ocamlformat-buffer-file)
