@@ -784,8 +784,8 @@ file doesn't exist."
     (put (car form+n) 'racket-indent-function (cdr form+n))))
 
 (use-package racket-mode
-  :defer t
   :ensure t
+  :defer t
   :hook ((racket-mode . racket-xp-mode)
          (racket-mode . ht/add-racket-indents)))
 
@@ -853,8 +853,8 @@ state at that position."
 ;;; JULIA
 
 (use-package julia-mode
-  :defer t
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;;; LUA
 
