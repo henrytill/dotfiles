@@ -955,7 +955,8 @@ state at that position."
 ;;; PERL
 
 (use-package perl-doc
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (defun ht/customize-perl ()
   "Customize `perl-mode'."
@@ -1083,7 +1084,8 @@ state at that position."
 ;;; CSV
 
 (use-package csv-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;;; MARKDOWN
 
