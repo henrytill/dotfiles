@@ -15,9 +15,3 @@ cls() {
 		clear
 	fi
 }
-
-# Local Variables:
-# mode: sh
-# sh-basic-offset: 8
-# indent-tabs-mode: t
-# End:
