@@ -961,14 +961,14 @@ state at that position."
 (defun ht/customize-perl ()
   "Customize `perl-mode'."
   (flymake-mode 1)
+  (setopt perl-indent-continued-arguments nil)
   (when indent-tabs-mode
-    (setopt perl-indent-level 8
-            perl-indent-continued-arguments nil
-            perl-continued-statement-offset 8
-            perl-continued-brace-offset 0
-            perl-brace-offset -8
-            perl-brace-imaginary-offset 0
-            perl-label-offset -8)))
+    (setq-local perl-indent-level 8
+                perl-continued-statement-offset 8
+                perl-continued-brace-offset 0
+                perl-brace-offset -8
+                perl-brace-imaginary-offset 0
+                perl-label-offset -8)))
 
 (add-hook 'perl-mode-local-vars-hook #'ht/customize-perl)
 
