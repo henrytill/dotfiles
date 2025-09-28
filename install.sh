@@ -21,6 +21,7 @@ then
 	if test -n "$(command -v stow)"
 	then
 		stow -v emacs
+		stow -v mg
 		stow -v tmux
 	fi
 
