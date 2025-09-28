@@ -27,7 +27,6 @@ then
 	if test "${SHELL}" = "/bin/bash" && test -f "${HOME}/.bashrc"
 	then
 		{ printf '\n'; cat bash/.bash_functions; } >> "${HOME}/.bashrc"
-		echo 'alias e="${EDITOR}"' >> "${HOME}/.bash_aliases"
 	fi
 
 	if test "$(command -v mg)"
