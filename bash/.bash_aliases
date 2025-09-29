@@ -32,9 +32,3 @@ if test -n "$(command -v lsblk)"
 then
 	alias lsblk="lsblk -o +kname"
 fi
-
-# Local Variables:
-# mode: sh
-# sh-basic-offset: 8
-# indent-tabs-mode: t
-# End:
