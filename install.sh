@@ -33,6 +33,7 @@ then
 	if test "$(command -v mg)"
 	then
 		printf '\nEDITOR=mg\nexport EDITOR\n' >> "${HOME}/.profile"
+		printf '\nVISUAL=mg\nexport VISUAL\n' >> "${HOME}/.profile"
 	fi
 
 	exit 0
