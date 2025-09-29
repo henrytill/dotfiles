@@ -45,13 +45,13 @@ done
 # Set the new PATH
 PATH=$(IFS=':'; printf '%s' "${existing_paths[*]}")
 
-if test -n "$(command -v emacsclient)"
+if test  -n "$(command -v mg)"
 then
-	export EDITOR="emacsclient -t"
-	export ALTERNATE_EDITOR=""
-elif test  -n "$(command -v mg)"
-then
-	export EDITOR="mg"
+	EDITOR="mg"
+	export EDITOR
+
+	VISUAL="mg"
+	export VISUAL
 fi
 
 export GOPROXY=direct
