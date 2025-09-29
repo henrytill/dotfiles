@@ -1161,7 +1161,11 @@ as a markdown link."
 
 ;;; SH-MODE
 
-(setopt sh-indent-for-case-label 0
+(add-to-list 'auto-mode-alist '("\\.bash_functions\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.bash_aliases\\'" . sh-mode))
+
+(setopt sh-basic-offset 8
+        sh-indent-for-case-label 0
         sh-indent-for-case-alt '+)
 
 (defun ht/customize-rc ()
@@ -1172,6 +1176,7 @@ as a markdown link."
 
 (defun ht/customize-sh ()
   "Customize `sh-mode'."
+  (indent-tabs-mode t)
   (electric-indent-local-mode 1)
   (when (and (boundp 'sh-shell)
              (eq sh-shell 'rc))
