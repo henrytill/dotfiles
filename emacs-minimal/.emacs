@@ -14,7 +14,7 @@
  '(frame-background-mode 'light)
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
- '(package-selected-packages '(magit))
+ '(package-selected-packages '(go-mode magit rust-mode tuareg))
  '(prog-mode-hook '(electric-pair-local-mode))
  '(require-final-newline t)
  '(savehist-mode t)
