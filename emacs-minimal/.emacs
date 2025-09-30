@@ -5,6 +5,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
+ '(c-default-style "bsd")
  '(dired-dwim-target 'dired-dwim-target-next)
  '(dired-listing-switches "-al --group-directories-first")
  '(eglot-ignored-server-capabilities '(:inlayHintProvider))
