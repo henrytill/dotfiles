@@ -16,9 +16,11 @@ alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
 
-if test -n "$(command -v mg)"
+if test -n "$(command -v emacsclient)"
 then
-	alias e="mg"
+	alias e="emacsclient -t"
+	alias ec="emacsclient -cn"
+	alias et="emacsclient -t"
 fi
 
 if test -n "$(command -v wl-copy)"
