@@ -1020,11 +1020,6 @@ state at that position."
           rust-format-goto-problem nil
           rust-rustfmt-switches '("--edition" "2024")))
 
-;;; SH
-
-(with-eval-after-load 'sh-script
-  (setopt sh-basic-offset 4))
-
 ;;; SML
 
 (use-package sml-mode
