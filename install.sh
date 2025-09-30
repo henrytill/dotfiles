@@ -30,10 +30,10 @@ then
 		{ printf '\n'; cat bash/.bash_functions; } >> "${HOME}/.bashrc"
 	fi
 
-	if test "$(command -v mg)"
+	if test "$(command -v emacsclient)"
 	then
-		printf '\nEDITOR=mg\nexport EDITOR\n' >> "${HOME}/.profile"
-		printf '\nVISUAL=mg\nexport VISUAL\n' >> "${HOME}/.profile"
+		printf '\nEDITOR="emacsclient"\nexport EDITOR\n' >> "${HOME}/.profile"
+		printf '\nALTERNATE_EDITOR=""\nexport ALTERNATE_EDITOR\n' >> "${HOME}/.profile"
 	fi
 
 	exit 0
