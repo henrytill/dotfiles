@@ -23,5 +23,7 @@ tags
 .direnv/
 CLAUDE.md
 /.claude/
+AGENTS.md
 core
 cscope.*
+.mg-local
