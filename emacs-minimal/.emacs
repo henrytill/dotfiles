@@ -12,6 +12,7 @@
  '(font-lock-global-modes
    '(diff-mode magit-diff-mode magit-revision-mode magit-status-mode))
  '(frame-background-mode 'light)
+ '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
  '(package-selected-packages '(go-mode magit rust-mode tuareg))
