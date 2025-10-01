@@ -10,7 +10,7 @@
  '(dired-listing-switches "-al --group-directories-first")
  '(eglot-ignored-server-capabilities '(:inlayHintProvider))
  '(font-lock-global-modes
-   '(diff-mode magit-diff-mode magit-revision-mode magit-status-mode))
+   '(diff-mode magit-diff-mode magit-revision-mode magit-stash-mode magit-status-mode))
  '(frame-background-mode 'light)
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
