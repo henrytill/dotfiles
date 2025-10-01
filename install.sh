@@ -34,6 +34,7 @@ then
 	then
 		printf '\nEDITOR="emacsclient"\nexport EDITOR\n' >> "${HOME}/.profile"
 		printf '\nALTERNATE_EDITOR=""\nexport ALTERNATE_EDITOR\n' >> "${HOME}/.profile"
+		printf '\nalias e="emacsclient"\n' >> "${HOME}/.bash_aliases"
 	fi
 
 	exit 0
