@@ -4,13 +4,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(backup-directory-alist '(("." . "~/.emacs.d/backup")))
  '(blink-cursor-mode nil)
  '(c-default-style "bsd")
  '(dired-dwim-target 'dired-dwim-target-next)
  '(dired-listing-switches "-al --group-directories-first")
  '(eglot-ignored-server-capabilities '(:inlayHintProvider))
  '(font-lock-global-modes
-   '(diff-mode magit-diff-mode magit-revision-mode magit-stash-mode magit-status-mode))
+   '(diff-mode magit-diff-mode magit-revision-mode magit-stash-mode
+	       magit-status-mode))
  '(frame-background-mode 'light)
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
