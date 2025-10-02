@@ -47,7 +47,7 @@ PATH=$(IFS=':'; printf '%s' "${existing_paths[*]}")
 
 if test -n "$(command -v emacsclient)"
 then
-	EDITOR="emacsclient -t"
+	EDITOR="emacsclient"
 	export EDITOR
 
 	ALTERNATE_EDITOR=""
