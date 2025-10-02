@@ -185,6 +185,12 @@ file doesn't exist."
 ;;; https://codeberg.org/dnkl/foot/wiki#only-8-colors-in-emacs
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
 
+(setopt font-lock-global-modes '(diff-mode
+                                 magit-diff-mode
+                                 magit-revision-mode
+                                 magit-stash-mode
+                                 magit-status-mode))
+
 (setopt display-line-numbers-width 4
         display-line-numbers-widen t)
 
