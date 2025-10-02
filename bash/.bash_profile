@@ -69,15 +69,11 @@ export CHROME_EXECUTABLE=/usr/bin/chromium
 
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
-# Launch sway
-SWAY_SESSION="/usr/local/bin/sway-session"
-if test "$(uname)" = "Linux"  && test -e "$SWAY_SESSION"  && test "$(tty)" = "/dev/tty1"
+if test "$(uname)" = "Linux" && test "$(tty)" = "/dev/tty1"
 then
-	# We are using Wayland
 	export MOZ_ENABLE_WAYLAND=1
-	XDG_CURRENT_DESKTOP=sway
-	export XDG_CURRENT_DESKTOP
-	exec sway-session
+	# https://github.com/YaLTeR/niri/issues/1914
+	exec niri-session -l
 fi
 
 if test "$(uname)" = "Linux" && test "$(tty)" = "/dev/tty2"
