@@ -3,11 +3,11 @@ MY_HOSTS = proteus thalassa thaumas
 
 # hosts and their package sets
 proteus  = bash code dune emacs foot gdb git git-unix nix \
-           sway sway-proteus tmux xdg zathura
+           tmux xdg zathura
 thalassa = bash code dune emacs foot gdb git git-unix nix \
-           sway sway-thalassa tmux x11 xdg zathura
+           tmux x11 xdg zathura
 thaumas  = bash emacs foot gdb git git-unix \
-           sway sway-thaumas xdg
+           xdg
 
 # base package set for undefined hosts
 BASE_PKGS = git git-unix
@@ -35,9 +35,6 @@ list:
 
 $(DIRS):
 	mkdir -p $@
-
-sway-proteus sway-thaumas::
-	install -bv -S .old sway/sway-session /usr/local/bin
 
 $(PKG_SET)::
 	stow -v $@

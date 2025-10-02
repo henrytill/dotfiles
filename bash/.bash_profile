@@ -69,9 +69,7 @@ export CHROME_EXECUTABLE=/usr/bin/chromium
 
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
-# Launch sway
-SWAY_SESSION="/usr/local/bin/sway-session"
-if test "$(uname)" = "Linux"  && test -e "$SWAY_SESSION"  && test "$(tty)" = "/dev/tty1"
+if test "$(uname)" = "Linux" && test "$(tty)" = "/dev/tty1"
 then
     export MOZ_ENABLE_WAYLAND=1
     # https://github.com/YaLTeR/niri/issues/1914
