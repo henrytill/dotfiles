@@ -123,6 +123,13 @@
   "git.defaultBranchName": "master",
   "git.openRepositoryInParentFolders": "never",
   "git.suggestSmartCommit": false,
+  "githubPullRequests.createOnPublishBranch": "never",
+  "githubPullRequests.pullBranch": "never",
+  "githubPullRequests.remotes": [
+    "origin",
+    "upstream",
+    "github"
+  ],
   "outline.collapseItems": "alwaysCollapse",
   "remote.autoForwardPortsSource": "hybrid",
   "settingsSync.ignoredExtensions": [
@@ -141,18 +148,6 @@
   "workbench.colorTheme": "Visual Studio Light",
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
-  "dev.containers.repositoryConfigurationPaths": [
-    "/home/ht/containers"
-  ],
-  "dotfiles.targetPath": "~/etc",
-  "dotfiles.repository": "https://github.com/henrytill/dotfiles.git",
-  "githubPullRequests.createOnPublishBranch": "never",
-  "githubPullRequests.pullBranch": "never",
-  "githubPullRequests.remotes": [
-    "origin",
-    "upstream",
-    "github"
-  ],
   // Language-specific editor.* settings
   "[c]": {
     "editor.rulers": [
@@ -168,6 +163,9 @@
     "editor.defaultFormatter": "vscode.html-language-features",
     "editor.tabSize": 2,
     "editor.wordWrap": "off"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "[javascript]": {
     "editor.tabSize": 2
@@ -202,10 +200,5 @@
     "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   // --- STUFF TENDS TO ACCUMULATE DOWN HERE ---
-  "evenBetterToml.formatter.columnWidth": 140,
-  "mesonbuild.downloadLanguageServer": true,
-  "python.terminal.activateEnvironment": false,
-  "xml.format.maxLineWidth": 0,
-  "yaml.format.singleQuote": true,
-  "zig.zls.enabled": "on"
+  "yaml.format.singleQuote": true
 }
