@@ -64,7 +64,7 @@ export CARGO_TERM_PROGRESS_WHEN=never
 export NO_COLOR=1
 export OPAMCOLOR=never
 export _JAVA_AWT_WM_NONREPARENTING=1
-export npm_config_prefix="$HOME/.local"
+export npm_config_prefix="$HOME/.local/opt/npm"
 export CHROME_EXECUTABLE=/usr/bin/chromium
 
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
