@@ -4,13 +4,8 @@
 
 if test "$SHLVL" = 1
 then
-	if test -x /usr/bin/clear_console
-	then
-		/usr/bin/clear_console -q
-	fi
+    if test -x /usr/bin/clear_console
+    then
+	/usr/bin/clear_console -q
+    fi
 fi
-
-# Local Variables:
-# sh-basic-offset: 8
-# indent-tabs-mode: t
-# End:
