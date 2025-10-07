@@ -408,28 +408,7 @@ file doesn't exist."
 
 ;;; PROJECT
 
-(with-eval-after-load 'project
-  (when (and (boundp 'project-prefix-map)
-             (boundp 'project-switch-commands))
-    ;; Delete less useful commands
-    (delete '(project-vc-dir "VC-Dir") project-switch-commands)
-    (delete '(project-eshell "Eshell") project-switch-commands)
-    ;; Add Magit
-    (bind-key "m" #'magit-project-status project-prefix-map)
-    (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)
-    ;; Add Shell
-    (bind-key "s" #'eat-project project-prefix-map)
-    (add-to-list 'project-switch-commands '(project-shell "Shell") t)))
-
 (setopt project-vc-extra-root-markers '(".dir-locals.el"))
-
-(defvar ht/last-project nil "Stores the path to the last project visited.")
-
-(defun ht/check-project ()
-  "Check if the current project has changed and update `ht/last-project' if needed."
-  (let ((current-project (project-root (project-current t))))
-    (when (not (string-equal ht/last-project current-project))
-      (setq ht/last-project current-project))))
 
 (defun ht/is-make-project-p ()
   "Return t if there is a Makefile or GNUmakefile at the project root."
