@@ -1167,7 +1167,7 @@ as a markdown link."
 (add-to-list 'auto-mode-alist '("\\.bash_functions\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.bash_aliases\\'" . sh-mode))
 
-(setopt sh-basic-offset 8
+(setopt sh-basic-offset 4
         sh-indent-for-case-label 0
         sh-indent-for-case-alt '+)
 
