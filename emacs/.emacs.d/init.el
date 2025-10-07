@@ -198,22 +198,6 @@ file doesn't exist."
 
 (setopt frame-background-mode 'dark)
 
-(defun ht/set-face-attributes (frame)
-  "Customize fonts for a given FRAME on a graphic display."
-  (let ((ht/preferred-unix-font "PragmataPro Mono:size=14")
-        (ht/preferred-win-font "PragmataPro Mono:size=12"))
-    (when (and (display-graphic-p)
-               (fboundp 'set-fontset-font))
-      (set-face-attribute 'mode-line frame :box nil)
-      (set-face-attribute 'mode-line-inactive frame :box nil)
-      (cond ((is-unix-p)
-             (progn (set-fontset-font "fontset-default" 'unicode ht/preferred-unix-font)
-                    (set-face-attribute 'default frame :font ht/preferred-unix-font)
-                    (set-face-attribute 'fixed-pitch frame :font ht/preferred-unix-font)))
-            ((is-windows-p)
-             (progn (set-fontset-font "fontset-default" 'unicode ht/preferred-win-font)
-                    (set-face-attribute 'default frame :font ht/preferred-win-font)))))))
-
 (defun ht/remove-decorations ()
   "Remove decorations."
   (when (and (is-unix-p)
@@ -231,7 +215,6 @@ file doesn't exist."
 (defun ht/update-frame (frame)
   "Customize a given FRAME."
   (select-frame frame)
-  (ht/set-face-attributes frame)
   (ht/remove-decorations)
   (ht/fix-split-behavior))
 
