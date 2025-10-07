@@ -187,11 +187,13 @@ file doesn't exist."
 ;;; https://codeberg.org/dnkl/foot/wiki#only-8-colors-in-emacs
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
 
-(setopt font-lock-global-modes '(diff-mode
-                                 magit-diff-mode
-                                 magit-revision-mode
-                                 magit-stash-mode
-                                 magit-status-mode))
+(ht/comment
+  (setopt font-lock-global-modes '(diff-mode
+                                   magit-diff-mode
+                                   magit-revision-mode
+                                   magit-stash-mode
+                                   magit-status-mode))
+  nil)
 
 (setopt display-line-numbers-width 4
         display-line-numbers-widen t)
@@ -224,14 +226,16 @@ file doesn't exist."
       (set-face-attribute 'mode-line-inactive frame :box nil)
       (cond ((is-unix-p)
              (progn (set-fontset-font "fontset-default" 'unicode ht/preferred-unix-font)
-                    (set-face-attribute 'default frame :font ht/preferred-unix-font)))
+                    (set-face-attribute 'default frame :font ht/preferred-unix-font)
+                    (set-face-attribute 'fixed-pitch frame :font ht/preferred-unix-font)))
             ((is-windows-p)
              (progn (set-fontset-font "fontset-default" 'unicode ht/preferred-win-font)
                     (set-face-attribute 'default frame :font ht/preferred-win-font)))))))
 
 (defun ht/remove-decorations ()
   "Remove decorations."
-  (when (is-unix-p)
+  (when (and (is-unix-p)
+             (not (display-graphic-p)))
     (menu-bar-mode -1))
   (when (display-graphic-p)
     (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -508,6 +512,7 @@ file doesn't exist."
   (when (boundp 'c-default-style)
     (add-to-list 'c-default-style '(c-mode . "ht"))
     (add-to-list 'c-default-style '(c++-mode . "ht"))
+    (add-to-list 'c-default-style '(java-mode . "ht"))
     (add-to-list 'c-default-style '(awk-mode . "ht"))))
 
 (put 'ff-search-directories 'safe-local-variable #'listp)
@@ -1273,7 +1278,8 @@ as a markdown link."
 
 ;;; WAYLAND
 
-(when (and (getenv "WAYLAND_DISPLAY")
+(when (and (not (display-graphic-p))
+           (getenv "WAYLAND_DISPLAY")
            (executable-find "wl-copy")
            (executable-find "wl-paste"))
   (defvar wl-copy-process nil)
@@ -1308,6 +1314,7 @@ as a markdown link."
 (defvar ht/before-save-formatters
   '((c-mode . clang-format-buffer)
     (c++-mode . clang-format-buffer)
+    (java-mode . clang-format-buffer)
     (go-mode . gofmt)))
 
 (defvar ht/after-save-formatters
