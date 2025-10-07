@@ -18,9 +18,7 @@ alias u="cd .. && l"
 
 if test -n "$(command -v emacsclient)"
 then
-	alias e="emacsclient -t"
-	alias ec="emacsclient -cn"
-	alias et="emacsclient -t"
+	alias e="emacsclient"
 fi
 
 if test -n "$(command -v wl-copy)"
