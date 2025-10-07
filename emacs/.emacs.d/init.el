@@ -187,14 +187,6 @@ file doesn't exist."
 ;;; https://codeberg.org/dnkl/foot/wiki#only-8-colors-in-emacs
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
 
-(ht/comment
-  (setopt font-lock-global-modes '(diff-mode
-                                   magit-diff-mode
-                                   magit-revision-mode
-                                   magit-stash-mode
-                                   magit-status-mode))
-  nil)
-
 (setopt display-line-numbers-width 4
         display-line-numbers-widen t)
 
@@ -204,17 +196,7 @@ file doesn't exist."
                      text-mode-hook))
   (add-hook mode-hook #'display-line-numbers-mode))
 
-(setopt frame-background-mode 'light)
-
-(defun ht/set-font-lock-face-attributes ()
-  "Customize several faces."
-  (let ((comment-color "#2f4f4f")
-        (region-color "#eeee9e"))
-    (set-face-attribute 'font-lock-comment-face nil :foreground comment-color)
-    (set-face-attribute 'font-lock-doc-face nil :foreground comment-color)
-    (set-face-attribute 'region nil :background region-color)))
-
-(add-hook 'font-lock-mode-hook #'ht/set-font-lock-face-attributes)
+(setopt frame-background-mode 'dark)
 
 (defun ht/set-face-attributes (frame)
   "Customize fonts for a given FRAME on a graphic display."
