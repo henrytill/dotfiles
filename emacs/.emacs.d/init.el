@@ -1219,7 +1219,8 @@ as a markdown link."
 
 ;;; X11
 
-(when (and (getenv "XTERM_VERSION")
+(when (and (not (display-graphic-p))
+           (getenv "XTERM_VERSION")
            (executable-find "xsel"))
   (defun xsel-cut (text &optional _push)
     (when (and text (executable-find "xsel" t))
