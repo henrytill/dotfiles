@@ -600,12 +600,11 @@ file doesn't exist."
   :ensure t
   :mode "\\.go\\'")
 
-(defun setup-go-eglot ()
+(defun ht/setup-go-eglot ()
   "Configure eglot to use gopls from GOPATH if not available in PATH."
   (when (and (executable-find "go")
              (not (executable-find "gopls")))
-    (let* ((gopath-output (shell-command-to-string "go env GOPATH"))
-           (gopath (string-trim gopath-output))
+    (let* ((gopath (string-trim (shell-command-to-string "go env GOPATH")))
            (gopls-path (expand-file-name "bin/gopls" gopath)))
       (when (file-exists-p gopls-path)
         (with-eval-after-load 'eglot
@@ -619,7 +618,7 @@ file doesn't exist."
                       (cons `(,(car go-entry) . (,gopls-path))
                             (remove go-entry eglot-server-programs)))))))))))
 
-(setup-go-eglot)
+(ht/setup-go-eglot)
 
 ;;; HASKELL
 
