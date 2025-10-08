@@ -8,6 +8,10 @@ let () =
 #use "topfind";;
 #thread;;
 
+#use_output "if [ -f dune-project ]; then dune top; fi";;
+
+#use "down.top";;
+
 (* Local Variables: *)
 (* mode: tuareg *)
 (* eval: (merlin-mode 0) *)
