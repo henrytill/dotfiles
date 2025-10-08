@@ -1,7 +1,5 @@
 if test "${TERM}" = "dumb"
 then
-	alias less="cat"
-	alias more="cat"
 	alias l="ls -lh"
 	alias la="ls -lah"
 else
@@ -9,16 +7,13 @@ else
 	alias la="clear && ls -lah"
 fi
 
-alias lc="ls -C"
-alias lf="ls -aF"
-alias ll="ls -la"
 alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
 
 if test -n "$(command -v emacsclient)"
 then
-	alias e="emacsclient"
+	alias e="emacsclient -t"
 fi
 
 if test -n "$(command -v wl-copy)"
