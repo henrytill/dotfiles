@@ -145,7 +145,6 @@
   "window.customTitleBarVisibility": "auto",
   "window.menuBarVisibility": "toggle",
   "workbench.activityBar.location": "top",
-  "workbench.colorTheme": "Visual Studio Light",
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   // Language-specific editor.* settings
