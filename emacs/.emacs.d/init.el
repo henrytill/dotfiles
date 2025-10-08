@@ -398,6 +398,7 @@ file doesn't exist."
           '((haskell "https://github.com/tree-sitter/tree-sitter-haskell" "master" "src")
             (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
             (json "https://github.com/tree-sitter/tree-sitter-json")
+            (python "https://github.com/tree-sitter/tree-sitter-python" "v0.23.3")
             (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
             (rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.23.3" "src")
             (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))))
@@ -935,6 +936,8 @@ state at that position."
   :commands (ediprolog-dwim))
 
 ;;; PYTHON
+
+(add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 
 (with-eval-after-load 'python
   (defun ht/black-format-buffer-file ()
