@@ -5,8 +5,8 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 Xft.rgba: rgb
 
-UXTerm*faceName: xft:BerkeleyMono:pixelsize=14
-UXTerm*boldFont: xft:BerkeleyMono:style=Bold:pixelsize=14
+UXTerm*faceName: xft:PragmataProMono:pixelsize=14
+UXTerm*boldFont: xft:PragmataProMono:style=Bold:pixelsize=14
 UXTerm*boldColors: false
 UXTerm*colorBDMode: false
 UXTerm.termName: xterm-256color
@@ -16,29 +16,29 @@ UXTerm.omitTranslation: fullscreen
 UXTerm*eightBitInput: false
 UXTerm*eightBitOutput: true
 
-! Monokai Pro color scheme
-UXTerm*background: #2D2A2E
-UXTerm*foreground: #FCFCFA
+! Modus Operandi color scheme
+UXTerm*background: #ffffff
+UXTerm*foreground: #000000
 
 ! Normal colors
-UXTerm*color0: #403E41
-UXTerm*color1: #FF6188
-UXTerm*color2: #A9DC76
-UXTerm*color3: #FFD866
-UXTerm*color4: #FC9867
-UXTerm*color5: #AB9DF2
-UXTerm*color6: #78DCE8
-UXTerm*color7: #FCFCFA
+UXTerm*color0: #000000
+UXTerm*color1: #a60000
+UXTerm*color2: #005e00
+UXTerm*color3: #813e00
+UXTerm*color4: #0031a9
+UXTerm*color5: #721045
+UXTerm*color6: #00538b
+UXTerm*color7: #bfbfbf
 
 ! Bright colors
-UXTerm*color8: #727072
-UXTerm*color9: #FF6188
-UXTerm*color10: #A9DC76
-UXTerm*color11: #FFD866
-UXTerm*color12: #FC9867
-UXTerm*color13: #AB9DF2
-UXTerm*color14: #78DCE8
-UXTerm*color15: #FCFCFA
+UXTerm*color8: #595959
+UXTerm*color9: #972500
+UXTerm*color10: #315b00
+UXTerm*color11: #70480f
+UXTerm*color12: #2544bb
+UXTerm*color13: #5317ac
+UXTerm*color14: #005a5f
+UXTerm*color15: #ffffff
 
 ! Local Variables:
 ! compile-command: "xrdb -load x11/.Xresources"
