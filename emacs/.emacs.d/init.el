@@ -196,7 +196,15 @@ file doesn't exist."
                      text-mode-hook))
   (add-hook mode-hook #'display-line-numbers-mode))
 
-(setopt frame-background-mode 'dark)
+(setopt frame-background-mode 'light)
+
+(load-theme 'modus-operandi)
+
+(setopt font-lock-global-modes '(diff-mode
+                                 magit-diff-mode
+                                 magit-revision-mode
+                                 magit-stash-mode
+                                 magit-status-mode))
 
 (defun ht/remove-decorations ()
   "Remove decorations."
