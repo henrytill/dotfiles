@@ -103,6 +103,7 @@ file doesn't exist."
         custom-unlispify-remove-prefixes t
         eldoc-echo-area-prefer-doc-buffer t
         eldoc-echo-area-use-multiline-p nil
+        enable-recursive-minibuffers t
         epa-armor t
         ;; gnus-select-method '(nnnil)
         indent-tabs-mode nil
