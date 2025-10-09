@@ -995,6 +995,15 @@ state at that position."
 (when (executable-find "poly")
   (setopt sml-program-name "poly"))
 
+;;; SQL
+
+(use-package sql-indent
+  :ensure t
+  :hook ((sql-mode . sqlind-minor-mode))
+  :commands sqlind-minor-mode
+  :config
+  (setq sqlind-basic-offset 4))
+
 ;;; SWIFT
 
 (use-package swift-mode

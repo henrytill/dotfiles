@@ -10,8 +10,8 @@
             go-mode haskell-mode idris-mode julia-mode lua-mode
             macrostep magit-annex markdown-mode meson-mode nix-mode
             opam-switch-mode paredit perl-doc proof-general
-            racket-mode rec-mode rust-mode sly sml-mode swift-mode
-            tuareg yaml-mode yasnippet zig-mode))
+            racket-mode rec-mode rust-mode sly sml-mode sql-indent
+            swift-mode tuareg yaml-mode yasnippet zig-mode))
  '(package-vc-selected-packages
    '((zig-mode :url "https://github.com/henrytill/zig-mode.git")
      (idris-mode :url
