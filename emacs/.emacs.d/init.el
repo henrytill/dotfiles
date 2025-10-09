@@ -200,8 +200,7 @@ file doesn't exist."
 
 (defun ht/remove-decorations ()
   "Remove decorations."
-  (when (and (is-unix-p)
-             (not (display-graphic-p)))
+  (when (and (is-unix-p))
     (menu-bar-mode -1))
   (when (display-graphic-p)
     (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
