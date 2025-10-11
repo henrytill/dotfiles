@@ -11,9 +11,9 @@ alias llt="ls -lat"
 alias lt="ls -lt"
 alias u="cd .. && l"
 
-if test -n "$(command -v emacsclient)"
+if test -n "$(command -v editor)"
 then
-	alias e="emacsclient -t"
+	alias e="editor"
 fi
 
 if test -n "$(command -v wl-copy)"
