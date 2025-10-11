@@ -1,19 +1,19 @@
 {
-  "debug.console.fontFamily": "'Berkeley Mono'",
+  "debug.console.fontFamily": "'PragmataPro Mono'",
   "debug.console.fontSize": 14,
   "debug.enableStatusBarColor": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": false,
   "editor.bracketPairColorization.enabled": false,
-  "editor.codeLensFontFamily": "'Berkeley Mono'",
+  "editor.codeLensFontFamily": "'PragmataPro Mono'",
   "editor.codeLensFontSize": 14,
-  "editor.fontFamily": "'Berkeley Mono'",
+  "editor.fontFamily": "'PragmataPro Mono'",
   "editor.fontLigatures": false,
   "editor.fontSize": 14,
   "editor.formatOnSave": true,
   "editor.guides.indentation": false,
   "editor.inlayHints.enabled": "offUnlessPressed",
-  "editor.inlayHints.fontFamily": "'Berkeley Mono'",
+  "editor.inlayHints.fontFamily": "'PragmataPro Mono'",
   "editor.inlayHints.fontSize": 14,
   "editor.inlineSuggest.enabled": true,
   "editor.lineHeight": 1.2,
@@ -200,5 +200,5 @@
   },
   // --- STUFF TENDS TO ACCUMULATE DOWN HERE ---
   "yaml.format.singleQuote": true,
-  "workbench.colorTheme": "GitHub Dark"
+  "workbench.colorTheme": "GitHub Light"
 }
