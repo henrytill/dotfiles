@@ -376,12 +376,6 @@ file doesn't exist."
   :vc (:url "https://github.com/magit/magit-annex.git" :rev :newest)
   :commands magit-annex-dispatch)
 
-;;; EAT
-
-(use-package eat
-  :ensure t
-  :commands (eat eat-project))
-
 ;;; PROJECT
 
 (setopt project-vc-extra-root-markers '(".dir-locals.el"))
