@@ -30,17 +30,13 @@ set shiftwidth=0 " use tabstop
 set signcolumn=yes
 
 set backspace=indent,eol,start
-set path=.,,$PWD/**
+set path=.,,**
 
 set wildignore+=*/.git/*
 
 setglobal tags=./tags;
 
 if has("autocmd")
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
   filetype plugin indent on
 
   " highlight unnecessary whitespace
@@ -50,14 +46,6 @@ if has("autocmd")
   au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
   " prevent colorscheme from overriding these highlights
   au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-
-  " " highlight tabs
-  " highlight Tab ctermbg=LightGray guibg=LightGray
-  " match Tab /\t/
-  " au BufWinEnter,InsertLeave * match Tab /\t/
-  " au InsertEnter * match Tab /\t/
-  " " prevent colorscheme from overriding these highlights
-  " au ColorScheme * highlight Tab ctermbg=LightGray guibg=LightGray
 
   " use c syntax for *.h files
   let g:c_syntax_for_h = 1
@@ -70,6 +58,8 @@ map <space> <leader>
 nnoremap - :e %:h<CR>
 nnoremap <F5> :make<CR>
 map <Leader>/ :nohlsearch<CR>
+
+set mouse=a
 
 set exrc
 set secure
