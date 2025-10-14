@@ -24,6 +24,8 @@ set showcmd
 set showmatch
 set wildmenu
 
+set signcolumn=yes
+
 set backspace=indent,eol,start
 set path=.,,$PWD/**
 
