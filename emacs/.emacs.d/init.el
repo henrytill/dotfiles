@@ -200,7 +200,8 @@ file doesn't exist."
 
 (load-theme 'modus-operandi)
 
-(setopt font-lock-global-modes '(diff-mode
+(setopt font-lock-global-modes '(compilation-mode
+                                 diff-mode
                                  magit-diff-mode
                                  magit-revision-mode
                                  magit-stash-mode
