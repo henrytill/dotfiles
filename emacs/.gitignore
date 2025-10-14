@@ -4,4 +4,5 @@
 !.emacs.d/eshell/alias
 !.emacs.d/init.el
 !.emacs.d/site-lisp/compile-commands
+!.emacs.d/site-lisp/niminal-mode.el
 !.slynkrc

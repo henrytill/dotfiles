@@ -579,6 +579,12 @@ file doesn't exist."
   (setopt m2-indent 3
           m2-compile-command "gm2 -g"))
 
+;;; NIM
+
+(use-package niminal-mode
+  :load-path ht/site-lisp-directory
+  :mode "\\.nim\\'")
+
 ;;; APL
 
 (use-package gnu-apl-mode
