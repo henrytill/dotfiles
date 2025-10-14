@@ -2,6 +2,7 @@
 
 set nocompatible
 
+set termguicolors
 syntax off
 colorscheme inl
 set background=light
@@ -24,6 +25,7 @@ set showcmd
 set showmatch
 set wildmenu
 
+set laststatus=1
 set signcolumn=yes
 
 set backspace=indent,eol,start
