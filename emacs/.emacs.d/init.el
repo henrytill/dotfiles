@@ -873,6 +873,7 @@ state at that position."
   :load-path (lambda () (ht/get-ocaml-load-path))
   :if (locate-file "dune.el" load-path)
   :mode (("\\(?:\\`\\|/\\)dune\\(?:\\.inc\\|\\-project\\|\\-workspace\\)?\\'" . dune-mode))
+  :hook ((dune-mode . paredit-mode))
   :commands (dune-mode))
 
 (use-package tuareg
