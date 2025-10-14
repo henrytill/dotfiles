@@ -26,6 +26,7 @@ set showmatch
 set wildmenu
 
 set laststatus=1
+set shiftwidth=0 " use tabstop
 set signcolumn=yes
 
 set backspace=indent,eol,start
