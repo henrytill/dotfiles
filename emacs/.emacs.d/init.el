@@ -262,6 +262,16 @@ file doesn't exist."
 
 ;;; --- GENERAL --- ;;;
 
+;;; EVIL
+
+(use-package evil
+  :ensure t
+  :config
+  (setopt evil-want-abbrev-expand-on-insert-exit nil
+          evil-search-module 'evil-search
+          evil-ex-search-case 'sensitive)
+  (evil-mode 1))
+
 ;;; NAVIGATION
 
 (defun ht/next-page ()

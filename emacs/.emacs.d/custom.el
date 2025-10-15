@@ -6,7 +6,7 @@
  '(auth-source-save-behavior nil)
  '(package-selected-packages
    '(auctex bison-mode cmake-mode csv-mode debbugs dockerfile-mode
-            ediprolog elpher forth-mode geiser-chez gnu-apl-mode
+            ediprolog elpher evil forth-mode geiser-chez gnu-apl-mode
             go-mode haskell-mode idris-mode julia-mode lua-mode
             macrostep magit-annex markdown-mode meson-mode nix-mode
             opam-switch-mode paredit perl-doc proof-general
