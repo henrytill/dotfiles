@@ -29,6 +29,7 @@ highlight SignColumn    term=NONE           cterm=NONE          ctermfg=NONE    
 highlight Special       term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight Statement     term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight String        term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
+highlight Title         term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight Type          term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight Visual        term=reverse        cterm=NONE          ctermfg=Black       ctermbg=Cyan        gui=NONE            guifg=Black         guibg=Cyan
 
