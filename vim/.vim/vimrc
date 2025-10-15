@@ -39,21 +39,14 @@ setglobal tags=./tags;
 if has("autocmd")
   filetype plugin indent on
 
-  " highlight unnecessary whitespace
-  highlight ExtraWhitespace ctermbg=red guibg=red
-  match ExtraWhitespace /\s\+$/
-  au BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/
-  au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-  " prevent colorscheme from overriding these highlights
-  au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-
   " use c syntax for *.h files
   let g:c_syntax_for_h = 1
 endif
 
 runtime functions.vim
 
-map <space> <leader>
+let g:mapleader = " "
+let g:maplocalleader = "\\"
 
 nnoremap - :e %:h<CR>
 nnoremap <F5> :make<CR>
