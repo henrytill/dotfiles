@@ -25,4 +25,6 @@ vim.lsp.config('gopls', {
 
 vim.lsp.enable('gopls')
 
+vim.lsp.enable('ocamllsp')
+
 vim.lsp.enable('rust_analyzer')
