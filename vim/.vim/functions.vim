@@ -45,19 +45,14 @@ function! RunGofmt()
   call setpos('.', pos)
 endfunction
 
-""" hasktags
+""" ghc-tags
 
-function! RunHasktags(...)
-  if executable('hasktags') && filereadable('tags')
-    if len(a:000) == 0
-      let optionString = ""
-    else
-      let optionString = join(a:000, " ")
-    endif
-    execute "silent! !hasktags " . optionString . " 2>/dev/null &"
-  else
-    echo 'Could not locate hasktags'
+function! RunGhcTags()
+  if !executable('ghc-tags')
+    echo 'Could not locate ghc-tags'
+    return
   endif
+  execute "silent! !ghc-tags -c 2>/dev/null &"
 endfunction
 
 """ autocmd invocation
@@ -65,5 +60,5 @@ endfunction
 if has("autocmd")
   autocmd BufWritePre  *.h,*.c  :call RunClangFormat()
   autocmd BufWritePre  *.go     :call RunGofmt()
-  autocmd BufWritePost *.hs     :call RunHasktags("--ignore-close-implementation", "--ctags", ".")
+  autocmd BufWritePost *.hs     :call RunGhcTags()
 endif
