@@ -4,8 +4,10 @@ return {
 	cmd = { "ConformInfo" },
 	opts = {
 		formatters_by_ft = {
+			go = { "gofmt" },
 			lua = { "stylua" },
 			nix = { "nixfmt" },
+			python = { "black" },
 		},
 		format_on_save = {
 			timeout_ms = 500,
