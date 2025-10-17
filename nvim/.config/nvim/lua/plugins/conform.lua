@@ -5,6 +5,7 @@ return {
 	opts = {
 		formatters_by_ft = {
 			go = { "gofmt" },
+			haskell = { "fourmolu" },
 			lua = { "stylua" },
 			nix = { "nixfmt" },
 			python = { "black" },
