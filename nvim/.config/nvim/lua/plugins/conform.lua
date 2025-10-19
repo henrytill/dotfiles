@@ -8,6 +8,7 @@ return {
 			haskell = { "fourmolu" },
 			lua = { "stylua" },
 			nix = { "nixfmt" },
+			perl = { "perltidy" },
 			python = { "black" },
 		},
 		format_on_save = {
