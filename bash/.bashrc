@@ -81,11 +81,6 @@ then
     export PAGER=cat
 fi
 
-if test -n "$IN_NIX_SHELL"
-then
-    return
-fi
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -98,15 +93,6 @@ then
     then
 	. /etc/bash_completion
     fi
-fi
-
-OPAM_COMPLETE_SH="$HOME/.opam/opam-init/complete.sh"
-OPAM_ENV_HOOK_SH="$HOME/.opam/opam-init/env_hook.sh"
-
-if test -r "$OPAM_COMPLETE_SH"  && test -r "$OPAM_ENV_HOOK_SH"
-then
-    . "$OPAM_COMPLETE_SH" >/dev/null 2>/dev/null || true
-    . "$OPAM_ENV_HOOK_SH" >/dev/null 2>/dev/null || true
 fi
 
 if test -z "$SSH_AUTH_SOCK"
