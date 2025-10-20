@@ -1,8 +1,9 @@
-*
-!.gitignore
-!.emacs.d/custom.el
-!.emacs.d/eshell/alias
-!.emacs.d/init.el
-!.emacs.d/site-lisp/compile-commands
-!.emacs.d/site-lisp/niminal-mode.el
-!.slynkrc
+.emacs.d/auto-save-list/
+.emacs.d/backups/
+.emacs.d/eln-cache/
+.emacs.d/elpa/
+.emacs.d/history
+.emacs.d/projects
+.emacs.d/tramp
+.emacs.d/transient/
+.emacs.d/tree-sitter/
