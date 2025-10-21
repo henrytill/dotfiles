@@ -34,6 +34,7 @@ return {
 		vim.lsp.enable("clangd")
 		vim.lsp.enable("gopls")
 		vim.lsp.enable("lua_ls")
+		vim.lsp.enable("nim_langserver")
 		vim.lsp.enable("ocamllsp")
 		vim.lsp.enable("pyright")
 		vim.lsp.enable("rust_analyzer")
