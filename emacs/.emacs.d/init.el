@@ -606,12 +606,11 @@ file doesn't exist."
 
 ;;; FORTH
 
-(use-package forth-mode
-  :ensure t
-  :commands (forth-mode run-forth))
-
-(use-package forth-block-mode
-  :after (forth-mode))
+(use-package gforth
+  :if (locate-file "gforth.el" load-path)
+  :commands (forth-mode forth-block-mode)
+  :mode (("\\.fs\\'" . forth-mode)
+         ("\\.fb\\'" . forth-block-mode)))
 
 ;;; GO
 
