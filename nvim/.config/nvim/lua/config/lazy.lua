@@ -35,6 +35,14 @@ require("lazy").setup({
 	},
 })
 
+local function goto_prev()
+	vim.diagnostic.jump({ count = -1, float = true })
+end
+
+local function goto_next()
+	vim.diagnostic.jump({ count = 1, float = true })
+end
+
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic float" })
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+vim.keymap.set("n", "[d", goto_prev, { desc = "Previous diagnostic" })
+vim.keymap.set("n", "]d", goto_next, { desc = "Next diagnostic" })
