@@ -52,5 +52,9 @@ map <Leader>/ :nohlsearch<CR>
 
 set mouse=a
 
+if !has('nvim')
+  set ttimeoutlen=50
+endif
+
 set exrc
 set secure
