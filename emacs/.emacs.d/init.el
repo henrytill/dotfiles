@@ -1027,20 +1027,6 @@ state at that position."
 
 ;;; OCAML
 
-(defun ht/import-ocaml-env ()
-  "Import opam environment variables for OCaml development."
-  (when (and (executable-find "opam") (not (in-nix-shell-p)))
-    (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
-      (setenv (car var) (cadr var)))
-    t))
-
-(ht/import-ocaml-env)
-
-(defun ht/get-ocaml-load-path ()
-  "Get the load path for OCaml-related Emacs packages."
-  (when-let ((ocaml-toplevel-path (getenv "OCAML_TOPLEVEL_PATH")))
-    (list (expand-file-name "../../share/emacs/site-lisp" ocaml-toplevel-path))))
-
 (defun ht/is-dune-project-p ()
   "Return t if the current project is a Dune project."
   (ht/file-exists-in-project-root-p "dune-project"))
@@ -1051,17 +1037,15 @@ state at that position."
              (ht/is-dune-project-p))
     (setq-local compile-command "dune build @all")))
 
-(use-package dune
-  :load-path (lambda () (ht/get-ocaml-load-path))
-  :if (locate-file "dune.el" load-path)
-  :mode (("\\(?:\\`\\|/\\)dune\\(?:\\.inc\\|\\-project\\|\\-workspace\\)?\\'" . dune-mode))
-  :hook ((dune-mode . paredit-mode))
-  :commands (dune-mode))
+(defun ht/tuareg-mode ()
+  (electric-indent-local-mode 0)
+  (ht/set-compile-command-dune)
+  (setq-local evil-auto-indent nil))
 
 (use-package tuareg
   :ensure t
   :commands (tuareg-mode tuareg-opam-mode)
-  :hook ((tuareg-mode . ht/set-compile-command-dune))
+  :hook ((tuareg-mode . ht/tuareg-mode))
   :config
   (when (not (fboundp 'ht/ocamlformat-buffer-file))
     (defun ht/ocamlformat-buffer-file ()
@@ -1071,15 +1055,20 @@ state at that position."
             (default-directory (project-root (project-current t))))
         (shell-command (format "ocamlformat -i %s" file-name))))))
 
-(use-package merlin
-  :load-path (lambda () (ht/get-ocaml-load-path))
-  :if (locate-file "merlin.el" load-path)
-  :commands (merlin-mode)
-  :hook ((tuareg-mode . merlin-mode)))
+(use-package ocaml-eglot
+  :if (executable-find "ocamllsp")
+  :vc (:url "https://github.com/tarides/ocaml-eglot.git" :rev :newest)
+  :after tuareg
+  :hook ((tuareg-mode . ocaml-eglot)
+         (ocaml-eglot . eglot-ensure)))
+
+(use-package dune
+  :if (locate-file "dune.el" load-path)
+  :mode (("\\(?:\\`\\|/\\)dune\\(?:\\.inc\\|\\-project\\|\\-workspace\\)?\\'" . dune-mode))
+  :commands (dune-mode))
 
 (use-package ocp-indent
   :disabled t
-  :load-path (lambda () (ht/get-ocaml-load-path))
   :if (locate-file "ocp-indent.el" load-path)
   :config
   (defun ocp-indent-buffer ()
@@ -1087,18 +1076,12 @@ state at that position."
     (ocp-indent-region 1 (buffer-size))))
 
 (use-package utop
-  :load-path (lambda () (ht/get-ocaml-load-path))
   :if (locate-file "utop.el" load-path)
   :commands (utop-minor-mode)
   :hook ((tuareg-mode . utop-minor-mode))
   :config
   (when (ht/is-dune-project-p)
     (setopt utop-command "dune utop . -- -emacs")))
-
-(use-package opam-switch-mode
-  :ensure t
-  :if (not (in-nix-shell-p))
-  :hook ((coq-mode tuareg-mode) . opam-switch-mode))
 
 ;;; PERL
 
