@@ -264,13 +264,177 @@ file doesn't exist."
 
 ;;; EVIL
 
+(defun ht/other-window ()
+  (interactive)
+  (other-window 1))
+
+(defconst ht/evil-emacs-state-modes
+  '(geiser-repl-mode
+    haskell-error-mode
+    haskell-interactive-mode
+    idris-repl-mode
+    inferior-caml-mode
+    inferior-emacs-lisp-mode
+    inferior-forth-mode
+    inferior-haskell-mode
+    inferior-python-mode
+    inferior-scheme-mode
+    inferior-sml-mode
+    ocamldebug-mode
+    prolog-inferior-mode
+    shell-mode
+    term-mode
+    tuareg-interactive-mode
+    utop-mode
+    xref--xref-buffer-mode))
+
+(defun ht/setup-evil-emacs-state-modes ()
+  (dolist (mode ht/evil-emacs-state-modes)
+    (progn (when (member mode evil-insert-state-modes)
+             (delete mode evil-insert-state-modes))
+           (when (member mode evil-normal-state-modes)
+             (delete mode evil-normal-state-modes))
+           (add-to-list 'evil-emacs-state-modes mode))))
+
+(defconst ht/evil-emacs-state-bindings
+  '(("C-w C-w" . ht/other-window)
+    ("C-w s"   . split-window-below)
+    ("C-w v"   . split-window-right)
+    ("C-w o"   . delete-other-windows)
+    ("C-w c"   . delete-window)
+    ("C-w q"   . kill-buffer)
+    ("C-o"     . evil-execute-in-normal-state)))
+
+(defconst ht/evil-normal-state-bindings
+  '(("C-w C-]" . find-tag-other-window)
+    ("g x"     . browse-url-at-point)
+    ("-"       . ht/dired-pwd)))
+
+(defun ht/setup-evil-bindings ()
+  (dolist (binding ht/evil-emacs-state-bindings)
+    (let ((key (car binding))
+          (cmd (cdr binding)))
+      (bind-key key cmd evil-emacs-state-map)))
+  (dolist (binding ht/evil-normal-state-bindings)
+    (let ((key (car binding))
+          (cmd (cdr binding)))
+      (bind-key key cmd evil-normal-state-map))))
+
+(defconst evil-paredit-state-bindings
+  '(("j"     . paredit-forward)
+    ("k"     . paredit-backward)
+    ("h"     . paredit-backward-up)
+    ("l"     . paredit-forward-down)
+    ("C-b"   . paredit-backward-down)
+    ("C-f"   . paredit-forward-up)
+    ("J"     . evil-next-line)
+    ("K"     . evil-previous-line)
+    ("H"     . evil-backward-char)
+    ("L"     . evil-forward-char)
+    ("M-r"   . paredit-raise-sexp)
+    ("M-c"   . paredit-convolute-sexp)
+    (")"     . paredit-forward-slurp-sexp)
+    ("}"     . paredit-forward-barf-sexp)
+    ("("     . paredit-backward-slurp-sexp)
+    ("{"     . paredit-backward-barf-sexp)
+    ("C-d"   . paredit-forward-delete)
+    ("DEL"   . paredit-backward-delete)
+    ("M-d"   . paredit-forward-kill-word)
+    ("M-DEL" . paredit-backward-kill-word)
+    ("M-j"   . paredit-splice-sexp-killing-forward)
+    ("M-k"   . paredit-splice-sexp-killing-backward)
+    ("C-o"   . evil-execute-in-normal-state)))
+
+(defun ht/setup-evil-paredit-state ()
+  (evil-define-state paredit "Paredit state."
+    :tag " <PAR> "
+    :enable (paredit normal)
+    :intercept-esc nil
+    :entry-hook (enable-paredit-mode)
+    :exit-hook (disable-paredit-mode))
+  (dolist (binding evil-paredit-state-bindings)
+    (let ((key (car binding))
+          (cmd (cdr binding)))
+      (bind-key key cmd evil-paredit-state-map))))
+
+(defun ht/setup-evil-ex-commands ()
+  (evil-define-command cfile () (flymake-show-buffer-diagnostics))
+  (evil-define-command tnext () (find-tag nil t))
+  (evil-define-command tprevious () (find-tag nil '-))
+  (evil-ex-define-cmd "cf[ile]" 'cfile)
+  (evil-ex-define-cmd "tn[ext]" 'tnext)
+  (evil-ex-define-cmd "tp[revious]" 'tprevious))
+
+(defconst ht/evil-leader-bindings
+  '(;; General
+    ("/" . evil-ex-nohighlight)
+    ("l" . evil-paredit-state)
+    ;; Find/File operations (mimicking Telescope <leader>f*)
+    ("ff" . project-find-file)
+    ("fg" . project-find-regexp)
+    ("fb" . ibuffer)
+    ("fr" . recentf-open-files)
+    ;; Project operations
+    ("pp" . project-switch-project)
+    ("pc" . project-compile)
+    ("ps" . project-shell)
+    ("pk" . project-kill-buffers)
+    ("pt" . ht/project-generate-tags)
+    ;; Search/Symbol operations (mimicking Telescope <leader>s*)
+    ("ss" . imenu)
+    ("sd" . flymake-show-buffer-diagnostics)
+    ;; Git/Magit operations
+    ("gg" . magit-status)
+    ("gd" . magit-diff-buffer-file)
+    ("gb" . magit-blame)
+    ("gl" . magit-log-buffer-file)
+    ;; Help operations
+    ("hf" . describe-function)
+    ("hv" . describe-variable)
+    ("hk" . describe-key)
+    ("hm" . describe-mode)))
+
+(defun ht/setup-evil-leader-keys ()
+  (evil-set-leader 'normal (kbd "SPC"))
+  (evil-set-leader 'visual (kbd "SPC"))
+  (evil-set-leader 'normal (kbd "\\") t)  ; localleader
+  (dolist (binding ht/evil-leader-bindings)
+    (let ((key (concat "<leader>" (car binding)))
+          (cmd (cdr binding)))
+      (evil-define-key 'normal 'global (kbd key) cmd))))
+
+(defun ht/setup-which-key-prefixes ()
+  "Configure which-key prefix descriptions for leader key bindings."
+  (which-key-add-key-based-replacements
+    "<leader> f" "files/find"
+    "<leader> p" "project"
+    "<leader> s" "search/symbol"
+    "<leader> g" "git"
+    "<leader> h" "help"))
+
 (use-package evil
   :ensure t
   :config
   (setopt evil-want-abbrev-expand-on-insert-exit nil
           evil-search-module 'evil-search
           evil-ex-search-case 'sensitive)
+  (ht/setup-evil-emacs-state-modes)
+  (ht/setup-evil-bindings)
+  (ht/setup-evil-paredit-state)
+  (ht/setup-evil-ex-commands)
+  (ht/setup-evil-leader-keys)
+  (ht/setup-which-key-prefixes)
+  (recentf-mode 1)
   (evil-mode 1))
+
+(with-eval-after-load 'compile
+  (bind-key "SPC" nil compilation-mode-map))
+
+(defun ht/bind-xref-navigation-keys ()
+  (bind-key "j" 'xref-next-line xref--xref-buffer-mode-map)
+  (bind-key "k" 'xref-prev-line xref--xref-buffer-mode-map))
+
+(add-hook 'xref--xref-buffer-mode-hook #'ht/bind-xref-navigation-keys)
 
 ;;; NAVIGATION
 
@@ -321,8 +485,14 @@ file doesn't exist."
 
 ;;; DIRED
 
+(defun ht/dired-pwd ()
+  (interactive)
+  (dired default-directory))
+
 (with-eval-after-load 'dired
-  (require 'browse-url))
+  (require 'browse-url)
+  (bind-key "SPC" nil dired-mode-map)
+  (bind-key "-" #'dired-up-directory dired-mode-map))
 
 (setopt dired-dwim-target t
         dired-listing-switches "-al --group-directories-first")
@@ -380,6 +550,8 @@ file doesn't exist."
   :config
   (put 'magit-clean 'disabled nil)
   (setopt magit-last-seen-setup-instructions "1.4.0")
+  (bind-key "SPC" nil magit-mode-map)
+  (bind-key "x" nil magit-mode-map)
   (bind-key "@" #'magit-annex-dispatch magit-mode-map))
 
 (use-package magit-annex
@@ -659,7 +831,8 @@ file doesn't exist."
 
 (defun ht/customize-haskell ()
   "Customize Haskell mode with appropriate settings and hooks."
-  (setq-local compile-command "cabal v2-build all")
+  (setq-local compile-command "cabal v2-build all"
+              evil-auto-indent nil)
   ;; We shouldn't need to do this
   (when (fboundp 'haskell-indentation-mode)
     (haskell-indentation-mode 0))
@@ -1179,10 +1352,7 @@ as a markdown link."
 
 (use-package paredit
   :ensure t
-  :commands enable-paredit-mode
-  :hook (((emacs-lisp-mode lisp-data-mode lisp-mode racket-mode scheme-mode) . enable-paredit-mode)))
-
-(add-hook 'lisp-interaction-mode-hook 'disable-paredit-mode)
+  :commands enable-paredit-mode)
 
 
 ;;; --- COMINT --- ;;;
