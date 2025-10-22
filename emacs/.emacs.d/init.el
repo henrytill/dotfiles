@@ -151,6 +151,11 @@ file doesn't exist."
 
 (setopt which-key-mode t)
 
+(with-eval-after-load 'which-key
+  (which-key-add-key-based-replacements
+    "C-c h" "ht-helpers"
+    "C-c n" "narrow-page"))
+
 ;;; https://stackoverflow.com/questions/5147060/how-can-i-access-directory-local-variables-in-my-major-mode-hooks
 (defun ht/run-local-vars-mode-hook ()
   "Run a hook for the major-mode after the local variables have been processed."
