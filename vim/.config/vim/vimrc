@@ -9,10 +9,6 @@ if has("gui_running")
   set guioptions=
 endif
 
-if has("gui_running") && has("gui_win32")
-  set guifont=Dina:h8:cANSI
-endif
-
 set expandtab
 set hlsearch
 set incsearch
@@ -26,6 +22,7 @@ set wildmenu
 set laststatus=1
 set shiftwidth=0 " use tabstop
 set signcolumn=yes
+set tabstop=2
 
 set backspace=indent,eol,start
 set path=.,,**
@@ -37,23 +34,21 @@ setglobal tags=./tags;
 if has("autocmd")
   filetype plugin indent on
 
-  " use c syntax for *.h files
   let g:c_syntax_for_h = 1
 endif
-
-runtime functions.vim
 
 let g:mapleader = " "
 let g:maplocalleader = "\\"
 
 nnoremap - :e %:h<CR>
 nnoremap <F5> :make<CR>
-map <Leader>/ :nohlsearch<CR>
+nnoremap <Leader>/ :nohlsearch<CR>
 
 set mouse=a
 
 if !has('nvim')
-  set ttimeoutlen=50
+  runtime vimrc.vim
+  runtime functions.vim
 endif
 
 set exrc

@@ -1,4 +1,3 @@
-setlocal expandtab
 setlocal textwidth=120
 setlocal tabstop=2
 

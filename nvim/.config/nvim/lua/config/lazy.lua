@@ -1,6 +1,6 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-local vimpath = vim.fn.expand("~/.vim")
-local vimafterpath = vim.fn.expand("~/.vim/after")
+local vimpath = vim.fn.expand("~/.config/vim")
+local vimafterpath = vim.fn.expand("~/.config/vim/after")
 
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -20,7 +20,7 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.opt.rtp:prepend(vimpath)
 vim.opt.rtp:append(vimafterpath)
-vim.cmd("source ~/.vim/vimrc")
+vim.cmd("source ~/.config/vim/vimrc")
 
 require("lazy").setup({
 	spec = {
