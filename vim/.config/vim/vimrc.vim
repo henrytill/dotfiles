@@ -16,3 +16,7 @@ endfunction
 command! -nargs=* -bang Files   call s:LazyLoadFzf('Files',   <q-args>, <bang>0)
 command! -nargs=* -bang Buffers call s:LazyLoadFzf('Buffers', <q-args>, <bang>0)
 command! -nargs=* -bang Rg      call s:LazyLoadFzf('Rg',      <q-args>, <bang>0)
+
+let g:fzf_vim = {}
+let g:fzf_vim.preview_window = ['right,50%', '?']
+let g:fzf_vim.helptags_options = ['--preview-window', 'hidden']
