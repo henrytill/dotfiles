@@ -26,6 +26,7 @@ highlight Number        term=NONE           cterm=NONE          ctermfg=NONE    
 highlight Operator      term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight PreProc       term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight SignColumn    term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
+highlight VertSplit     term=NONE           cterm=NONE          ctermfg=Gray        ctermbg=NONE        gui=NONE            guifg=#bfbfbf       guibg=NONE
 highlight Special       term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight Statement     term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight StatusLine    term=NONE           cterm=NONE          ctermfg=Black       ctermbg=LightGray   gui=NONE            guifg=#000000       guibg=#c8c8c8
