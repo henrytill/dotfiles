@@ -31,6 +31,8 @@ then
     export ALTERNATE_EDITOR
 fi
 
+export FZF_DEFAULT_OPTS_FILE="${HOME}/.config/fzf/fzfrc"
+
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 export _JAVA_AWT_WM_NONREPARENTING=1
 export npm_config_prefix="$HOME/.local/opt/npm"
