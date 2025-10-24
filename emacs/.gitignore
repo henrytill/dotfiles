@@ -2,10 +2,12 @@
 .emacs.d/backups/
 .emacs.d/eln-cache/
 .emacs.d/elpa/
-.emacs.d/history
+.emacs.d/eshell/
+.emacs.d/history*
 .emacs.d/ielm-history.eld
 .emacs.d/projects
 .emacs.d/recentf
 .emacs.d/tramp
 .emacs.d/transient/
 .emacs.d/tree-sitter/
+.emacs.d/url/
