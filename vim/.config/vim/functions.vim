@@ -71,6 +71,16 @@ function! RunGofmt()
   call setpos('.', pos)
 endfunction
 
+function! RunNixfmt()
+  if !executable('nixfmt')
+    echo 'Could not locate nixfmt'
+    return
+  endif
+  let pos = getpos('.')
+  silent! %!nixfmt
+  call setpos('.', pos)
+endfunction
+
 function! RunOcamlformat()
   if !executable('ocamlformat')
     echo 'Could not locate ocamlformat'
@@ -89,5 +99,6 @@ if has("autocmd")
   autocmd BufWritePre  *.hs      :call RunFourmolu()
   autocmd BufWritePost *.hs      :call RunGhcTags()
   autocmd BufWritePre  *.go      :call RunGofmt()
+  autocmd BufWritePre  *.nix     :call RunNixfmt()
   autocmd BufWritePre  *.ml{,i}  :call RunOcamlformat()
 endif
