@@ -50,9 +50,9 @@ if test -n "$(command -v dircolors)"
 then
     if test -r ~/.dircolors
     then
-	eval "$(dircolors -b ~/.dircolors)"
+        eval "$(dircolors -b ~/.dircolors)"
     else
-	eval "$(dircolors -b)"
+        eval "$(dircolors -b)"
     fi
 
     alias ls='ls --color=auto'
