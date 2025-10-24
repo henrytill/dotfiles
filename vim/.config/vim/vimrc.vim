@@ -6,6 +6,7 @@ nmap ga <Plug>(EasyAlign)
 
 function! s:LazyLoadFzf(cmd, args, bang)
   delcommand Files
+  delcommand GFiles
   delcommand Buffers
   delcommand Rg
   packadd fzf
@@ -14,6 +15,7 @@ function! s:LazyLoadFzf(cmd, args, bang)
 endfunction
 
 command! -nargs=* -bang Files   call s:LazyLoadFzf('Files',   <q-args>, <bang>0)
+command! -nargs=* -bang GFiles  call s:LazyLoadFzf('GFiles',  <q-args>, <bang>0)
 command! -nargs=* -bang Buffers call s:LazyLoadFzf('Buffers', <q-args>, <bang>0)
 command! -nargs=* -bang Rg      call s:LazyLoadFzf('Rg',      <q-args>, <bang>0)
 
