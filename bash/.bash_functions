@@ -10,8 +10,8 @@ stripcolor() {
 cls() {
     if test -n "$(command -v tput)"
     then
-	tput reset
+        tput reset
     else
-	clear
+        clear
     fi
 }

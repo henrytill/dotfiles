@@ -88,10 +88,10 @@ if ! shopt -oq posix
 then
     if test -f /usr/share/bash-completion/bash_completion
     then
-	. /usr/share/bash-completion/bash_completion
+    . /usr/share/bash-completion/bash_completion
     elif test -f /etc/bash_completion
     then
-	. /etc/bash_completion
+    . /etc/bash_completion
     fi
 fi
 
@@ -99,12 +99,12 @@ if test -z "$SSH_AUTH_SOCK"
 then
     if test -e "${XDG_RUNTIME_DIR}/openssh_agent"
     then
-	export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/openssh_agent"
+    export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/openssh_agent"
     elif ! test -e "/tmp/ssh-agent-${USER}"
     then
-	ssh-agent 2>/dev/null >"/tmp/ssh-agent-${USER}"
+    ssh-agent 2>/dev/null >"/tmp/ssh-agent-${USER}"
     else
-	. "/tmp/ssh-agent-${USER}" >/dev/null
+    . "/tmp/ssh-agent-${USER}" >/dev/null
     fi
 fi
 

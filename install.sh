@@ -13,53 +13,48 @@ echo "DIR=${DIR}"
 
 if test -n "$IN_DEV_CONTAINER"
 then
-	echo "IN_DEV_CONTAINER=${IN_DEV_CONTAINER}"
-	ln -frsv "${DIR}/git/.gitignore_global" "${DIR}/.."
-	printf '\nTZ="America/Los_Angeles"\nexport TZ\n' >> "${HOME}/.profile"
-	git submodule update --init
+    echo "IN_DEV_CONTAINER=${IN_DEV_CONTAINER}"
+    ln -frsv "${DIR}/git/.gitignore_global" "${DIR}/.."
+    printf '\nTZ="America/Los_Angeles"\nexport TZ\n' >> "${HOME}/.profile"
+    git submodule update --init
 
-	if test -n "$(command -v stow)"
-	then
-		stow -v emacs-minimal
-		stow -v mg
-		stow -v tmux
-	fi
+    if test -n "$(command -v stow)"
+    then
+        stow -v emacs-minimal
+        stow -v mg
+        stow -v tmux
+    fi
 
-	if test "${SHELL}" = "/bin/bash" && test -f "${HOME}/.bashrc"
-	then
-		{ printf '\n'; cat bash/.bash_functions; } >> "${HOME}/.bashrc"
-	fi
+    if test "${SHELL}" = "/bin/bash" && test -f "${HOME}/.bashrc"
+    then
+        { printf '\n'; cat bash/.bash_functions; } >> "${HOME}/.bashrc"
+    fi
 
-	if test "$(command -v emacsclient)"
-	then
-		printf '\nEDITOR="emacsclient"\nexport EDITOR\n' >> "${HOME}/.profile"
-		printf '\nALTERNATE_EDITOR=""\nexport ALTERNATE_EDITOR\n' >> "${HOME}/.profile"
-		printf '\nalias e="emacsclient"\n' >> "${HOME}/.bash_aliases"
-	fi
+    if test "$(command -v emacsclient)"
+    then
+        printf '\nEDITOR="emacsclient"\nexport EDITOR\n' >> "${HOME}/.profile"
+        printf '\nALTERNATE_EDITOR=""\nexport ALTERNATE_EDITOR\n' >> "${HOME}/.profile"
+        printf '\nalias e="emacsclient"\n' >> "${HOME}/.bash_aliases"
+    fi
 
-	exit 0
+    exit 0
 fi
 
 if test "$USER" != "ht"
 then
-	exit 0
+    exit 0
 fi
 
 if test -z "$(command -v make)"
 then
-	eprintf "%s: you must install make" "${SCRIPT}"
-	exit 1
+    eprintf "%s: you must install make" "${SCRIPT}"
+    exit 1
 fi
 
 if test -z "$(command -v stow)"
 then
-	eprintf "%s: you must install stow" "${SCRIPT}"
-	exit 1
+    eprintf "%s: you must install stow" "${SCRIPT}"
+    exit 1
 fi
 
 make -C "${DIR}"
-
-# Local Variables:
-# indent-tabs-mode: t
-# sh-basic-offset: 8
-# End:
