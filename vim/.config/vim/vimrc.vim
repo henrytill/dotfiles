@@ -1,5 +1,7 @@
 set ttimeoutlen=50
 
+nnoremap <F10> :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<CR>
+
 packadd vim-easy-align
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
