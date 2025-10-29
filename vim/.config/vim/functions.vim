@@ -48,8 +48,11 @@ function! RunFourmolu()
     echo 'Could not locate fourmolu'
     return
   endif
+  if !&modified || empty(findfile('fourmolu.yaml', expand('%:p:h') . ';'))
+    return
+  endif
   let pos = getpos('.')
-  silent! %!fourmolu
+  silent! %!fourmolu -q --stdin-input-file=%:p
   call setpos('.', pos)
 endfunction
 
