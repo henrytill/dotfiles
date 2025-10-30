@@ -1,5 +1,6 @@
 return {
 	"neovim/nvim-lspconfig",
+	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local function find_gopls()
 			if vim.fn.executable("gopls") == 1 then
