@@ -559,7 +559,6 @@ file doesn't exist."
   (bind-key "@" #'magit-annex-dispatch magit-mode-map))
 
 (use-package magit-annex
-  :after magit
   :vc (:url "https://github.com/magit/magit-annex.git" :rev :newest)
   :commands magit-annex-dispatch)
 
@@ -1062,7 +1061,6 @@ state at that position."
 (use-package ocaml-eglot
   :if (executable-find "ocamllsp")
   :vc (:url "https://github.com/tarides/ocaml-eglot.git" :rev :newest)
-  :after tuareg
   :hook ((tuareg-mode . ocaml-eglot)
          (ocaml-eglot . eglot-ensure)))
 
