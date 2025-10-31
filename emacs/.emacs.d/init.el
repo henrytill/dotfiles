@@ -272,10 +272,6 @@ file doesn't exist."
 
 ;;; EVIL
 
-(defun ht/other-window ()
-  (interactive)
-  (other-window 1))
-
 (defconst ht/evil-emacs-state-modes
   '(geiser-repl-mode
     haskell-error-mode
@@ -305,7 +301,7 @@ file doesn't exist."
            (add-to-list 'evil-emacs-state-modes mode))))
 
 (defconst ht/evil-emacs-state-bindings
-  '(("C-w C-w" . ht/other-window)
+  '(("C-w C-w" . other-window)
     ("C-w s"   . split-window-below)
     ("C-w v"   . split-window-right)
     ("C-w o"   . delete-other-windows)
