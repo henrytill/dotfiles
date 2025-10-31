@@ -104,6 +104,8 @@ file doesn't exist."
         eldoc-echo-area-prefer-doc-buffer t
         enable-recursive-minibuffers t
         epa-armor t
+        flymake-fringe-indicator-position nil
+        flymake-indicator-type nil
         ;; gnus-select-method '(nnnil)
         indent-tabs-mode nil
         inhibit-startup-message t
