@@ -39,6 +39,7 @@ return {
 		vim.lsp.enable("ocamllsp")
 		vim.lsp.enable("pyright")
 		vim.lsp.enable("rust_analyzer")
+		vim.lsp.enable("yamlls")
 		vim.lsp.enable("zls")
 	end,
 }
