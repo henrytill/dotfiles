@@ -273,7 +273,8 @@ file doesn't exist."
 ;;; EVIL
 
 (defconst ht/evil-emacs-state-modes
-  '(geiser-repl-mode
+  '(compilation-mode
+    geiser-repl-mode
     haskell-error-mode
     haskell-interactive-mode
     idris-repl-mode
