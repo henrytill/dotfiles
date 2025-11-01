@@ -664,10 +664,10 @@ file doesn't exist."
 (with-eval-after-load 'cc-mode
   (c-add-style "ht" '("k&r" (c-basic-offset . 2) (c-offsets-alist . ((innamespace . [0])))))
   (when (boundp 'c-default-style)
-    (add-to-list 'c-default-style '(c-mode . "ht"))
-    (add-to-list 'c-default-style '(c++-mode . "ht"))
+    (add-to-list 'c-default-style '(c-mode    . "ht"))
+    (add-to-list 'c-default-style '(c++-mode  . "ht"))
     (add-to-list 'c-default-style '(java-mode . "ht"))
-    (add-to-list 'c-default-style '(awk-mode . "ht"))))
+    (add-to-list 'c-default-style '(awk-mode  . "ht"))))
 
 (put 'ff-search-directories 'safe-local-variable #'listp)
 
