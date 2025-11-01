@@ -7,6 +7,8 @@ set background=light
 
 if has("gui_running")
   set guioptions=
+  set guifont=Monospace\ 10
+  set guicursor+=a:blinkon0
 endif
 
 set expandtab
