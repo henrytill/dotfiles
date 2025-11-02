@@ -300,6 +300,8 @@ file doesn't exist."
              (delete mode evil-insert-state-modes))
            (when (member mode evil-normal-state-modes)
              (delete mode evil-normal-state-modes))
+           (when (member mode evil-motion-state-modes)
+             (delete mode evil-motion-state-modes))
            (add-to-list 'evil-emacs-state-modes mode))))
 
 (defconst ht/evil-emacs-state-bindings
