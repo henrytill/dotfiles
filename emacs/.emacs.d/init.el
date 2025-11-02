@@ -213,7 +213,8 @@ file doesn't exist."
                                  magit-diff-mode
                                  magit-revision-mode
                                  magit-stash-mode
-                                 magit-status-mode))
+                                 magit-status-mode
+                                 text-mode))
 
 (defun ht/remove-decorations ()
   "Remove decorations."
