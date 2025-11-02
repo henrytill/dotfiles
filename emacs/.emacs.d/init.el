@@ -1282,10 +1282,6 @@ as a markdown link."
 
 ;;; MISC
 
-(use-package debbugs
-  :ensure t
-  :commands debbugs-gnu)
-
 (use-package dockerfile-mode
   :ensure t
   :commands dockerfile-mode)
