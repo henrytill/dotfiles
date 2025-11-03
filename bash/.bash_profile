@@ -13,9 +13,9 @@ paths=(
 existing_paths=()
 for path in "${paths[@]}"
 do
-    if test -d "$path" || test "$path" = "$PATH"
+    if test -d "${path}" || test "${path}" = "${PATH}"
     then
-        existing_paths+=("$path")
+        existing_paths+=("${path}")
     fi
 done
 
