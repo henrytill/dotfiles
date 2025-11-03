@@ -1,2 +1,2 @@
 setlocal noexpandtab
-setlocal tabstop=8
+setlocal tabstop=4
