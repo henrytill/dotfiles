@@ -23,6 +23,7 @@ highlight Identifier    term=NONE           cterm=NONE          ctermfg=NONE    
 highlight Keyword       term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight LineNr        term=NONE           cterm=NONE          ctermfg=Gray        ctermbg=NONE        gui=NONE            guifg=#bfbfbf       guibg=NONE
 highlight Number        term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
+highlight NonText       term=NONE           cterm=NONE          ctermfg=Gray        ctermbg=NONE        gui=NONE            guifg=#bfbfbf       guibg=NONE
 highlight Operator      term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight PreProc       term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
 highlight SignColumn    term=NONE           cterm=NONE          ctermfg=NONE        ctermbg=NONE        gui=NONE            guifg=NONE          guibg=NONE
