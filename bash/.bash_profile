@@ -31,14 +31,19 @@ then
     export ALTERNATE_EDITOR
 fi
 
-export FZF_DEFAULT_OPTS_FILE="${HOME}/.config/fzf/fzfrc"
+declare -A env_vars=(
+    [FZF_DEFAULT_OPTS_FILE]="${HOME}/.config/fzf/fzfrc"
+    [LIBVIRT_DEFAULT_URI]="qemu:///system"
+    [_JAVA_AWT_WM_NONREPARENTING]=1
+    [npm_config_prefix]="$HOME/.local/opt/npm"
+    [CHROME_EXECUTABLE]=/usr/bin/chromium
+    [LOCALE_ARCHIVE]=/usr/lib/locale/locale-archive
+)
 
-export LIBVIRT_DEFAULT_URI="qemu:///system"
-export _JAVA_AWT_WM_NONREPARENTING=1
-export npm_config_prefix="$HOME/.local/opt/npm"
-export CHROME_EXECUTABLE=/usr/bin/chromium
-
-export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+for var in "${!env_vars[@]}"; do
+    declare "${var}=${env_vars[$var]}"
+    export "${var}"
+done
 
 if test "$(uname)" = "Linux" && test "$(tty)" = "/dev/tty1"
 then
