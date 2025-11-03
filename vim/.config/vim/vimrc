@@ -52,6 +52,3 @@ if !has('nvim')
   runtime vimrc.vim
   runtime functions.vim
 endif
-
-set exrc
-set secure
