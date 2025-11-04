@@ -775,6 +775,12 @@ file doesn't exist."
   :load-path ht/site-lisp-directory
   :mode "\\.nim\\'")
 
+;;; D
+
+(use-package d-mode
+  :ensure t
+  :mode "\\.d\\'")
+
 ;;; APL
 
 (use-package gnu-apl-mode
