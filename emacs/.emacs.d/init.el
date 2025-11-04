@@ -789,6 +789,13 @@ file doesn't exist."
   :init
   (setopt gnu-apl-show-keymap-on-startup nil))
 
+;;; ERLANG
+
+(use-package erlang
+  :if (locate-file "erlang.el" load-path)
+  :commands (erlang-mode)
+  :mode (("\\.erl\\'" . erlang-mode)))
+
 ;;; FORTH
 
 (use-package gforth
