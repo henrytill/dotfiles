@@ -1,5 +1,5 @@
 ; Custom C fold queries - fold bodies only, keeping declarations/conditions visible
-; This file should take precedence over nvim-treesitter's default
+; Loaded via vim.treesitter.query.set() which overrides all runtime queries
 
 ; Function bodies (not the signature)
 (function_definition
