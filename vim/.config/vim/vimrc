@@ -33,12 +33,6 @@ set wildignore+=*/.git/*
 
 setglobal tags=./tags;
 
-if has("autocmd")
-  filetype plugin indent on
-
-  let g:c_syntax_for_h = 1
-endif
-
 let g:mapleader = " "
 let g:maplocalleader = "\\"
 
@@ -49,6 +43,10 @@ nnoremap <Leader>/ :nohlsearch<CR>
 set mouse=a
 
 if !has('nvim')
+  if has("autocmd")
+    filetype plugin indent on
+    let g:c_syntax_for_h = 1
+  endif
   runtime vimrc.vim
   runtime functions.vim
 endif
