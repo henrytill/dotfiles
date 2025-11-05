@@ -1,5 +1,12 @@
 set nocompatible
 
+" Must set global tabstop/shiftwidth/expandtab before 'syntax on'
+" because 'syntax on' triggers FileType detection which runs ftplugin files.
+" If these are set after, they can clobber buffer-local ftplugin settings.
+set expandtab
+set tabstop=2
+set shiftwidth=0 " use tabstop
+
 set termguicolors
 syntax on
 colorscheme inl
@@ -11,7 +18,6 @@ if has("gui_running")
   set guicursor+=a:blinkon0
 endif
 
-set expandtab
 set hlsearch
 set incsearch
 set nowrap
@@ -22,9 +28,7 @@ set showmatch
 set wildmenu
 
 set laststatus=1
-set shiftwidth=0 " use tabstop
 set signcolumn=yes
-set tabstop=2
 
 set backspace=indent,eol,start
 set path=.,,**
