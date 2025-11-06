@@ -182,11 +182,7 @@ require("nvim-treesitter.configs").setup({
   },
 })
 
--- Custom C fold queries - fold bodies only, keeping declarations/conditions visible
-vim.treesitter.query.set(
-  "c",
-  "folds",
-  [[
+local c_folds = [[
 ; Function bodies (not the signature)
 (function_definition
   body: (compound_statement) @fold)
@@ -235,10 +231,13 @@ vim.treesitter.query.set(
 (compound_statement
   (compound_statement) @fold)
 ]]
-)
+
+-- Custom C fold queries - fold bodies only, keeping declarations/conditions visible
+vim.treesitter.query.set("c", "folds", c_folds)
+vim.treesitter.query.set("cpp", "folds", c_folds)
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "c", "go", "rust", "lua", "ocaml", "haskell" },
+  pattern = { "c", "cpp", "go", "rust", "lua", "ocaml", "python", "haskell", "perl" },
   callback = function()
     vim.opt_local.foldmethod = "expr"
     vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
