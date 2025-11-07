@@ -91,6 +91,10 @@ vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("zls")
 
+-- ocaml.nvim
+
+require("ocaml").setup()
+
 -- telescope
 
 local telescope = require("telescope")
