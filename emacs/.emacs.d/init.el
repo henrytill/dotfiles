@@ -1029,6 +1029,13 @@ state at that position."
   :ensure t
   :mode "\\.lua\\'"
   :config
+  (defun ht/stylua-buffer-file ()
+    "Format the current Lua buffer using the stylua formatter."
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (default-directory (project-root (project-current t))))
+      (shell-command (format "stylua %s" file-name))))
+
   (setopt lua-indent-level 2))
 
 ;;; NIX
@@ -1483,6 +1490,7 @@ as a markdown link."
 (defvar ht/after-save-formatters
   '((haskell-mode . ht/fourmolu-buffer-file)
     (js-mode . ht/prettier-buffer-file)
+    (lua-mode . ht/stylua-buffer-file)
     (meson-mode . ht/meson-format-buffer-file)
     (nix-mode . ht/nixfmt-buffer-file)
     (python-mode . ht/black-format-buffer-file)
