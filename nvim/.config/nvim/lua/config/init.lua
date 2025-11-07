@@ -93,70 +93,86 @@ vim.lsp.enable("zls")
 
 -- telescope
 
-local builtin = require("telescope.builtin")
-local actions = require("telescope.actions")
+local telescope = require("telescope")
 
-require("telescope").setup({
-  defaults = {
-    mappings = {
-      i = {
-        ["<C-d>"] = actions.delete_buffer,
-      },
-      n = {
-        ["<C-d>"] = actions.delete_buffer,
+do
+  local actions = require("telescope.actions")
+  telescope.setup({
+    defaults = {
+      mappings = {
+        i = {
+          ["<C-d>"] = actions.delete_buffer,
+        },
+        n = {
+          ["<C-d>"] = actions.delete_buffer,
+        },
       },
     },
-  },
-})
-
-local function find_files_all()
-  builtin.find_files({
-    hidden = true,
-    file_ignore_patterns = { "^%.git/" },
   })
 end
 
-vim.keymap.set("n", "<leader>ff", find_files_all, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+do
+  local builtin = require("telescope.builtin")
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    -- Navigation (g* prefix)
-    vim.keymap.set("n", "gd", function()
-      builtin.lsp_definitions({ reuse_win = true })
-    end, { buffer = args.buf, desc = "Goto definition" })
-
-    vim.keymap.set("n", "grr", function()
-      builtin.lsp_references({ reuse_win = true })
-    end, { buffer = args.buf, desc = "References (LSP via Telescope)" })
-
-    vim.keymap.set("n", "gi", function()
-      builtin.lsp_implementations({ reuse_win = true })
-    end, { buffer = args.buf, desc = "Goto implementation" })
-
-    vim.keymap.set("n", "gy", function()
-      builtin.lsp_type_definitions({ reuse_win = true })
-    end, { buffer = args.buf, desc = "Goto type definition" })
-
-    -- Search (<leader>s* prefix)
-    vim.keymap.set("n", "<leader>ss", builtin.lsp_document_symbols, {
-      buffer = args.buf,
-      desc = "Document symbols",
+  local function find_files_all()
+    builtin.find_files({
+      hidden = true,
+      file_ignore_patterns = { "^%.git/" },
     })
+  end
 
-    vim.keymap.set("n", "<leader>sS", builtin.lsp_workspace_symbols, {
-      buffer = args.buf,
-      desc = "Workspace symbols",
-    })
+  vim.keymap.set("n", "<leader>ff", find_files_all, { desc = "Telescope find files" })
+  vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+  vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+  vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 
-    vim.keymap.set("n", "<leader>sd", builtin.diagnostics, {
-      buffer = args.buf,
-      desc = "Diagnostics",
-    })
-  end,
-})
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+      -- Navigation (g* prefix)
+      vim.keymap.set("n", "gd", function()
+        builtin.lsp_definitions({ reuse_win = true })
+      end, { buffer = args.buf, desc = "Goto definition" })
+
+      vim.keymap.set("n", "grr", function()
+        builtin.lsp_references({ reuse_win = true })
+      end, { buffer = args.buf, desc = "References (LSP via Telescope)" })
+
+      vim.keymap.set("n", "gi", function()
+        builtin.lsp_implementations({ reuse_win = true })
+      end, { buffer = args.buf, desc = "Goto implementation" })
+
+      vim.keymap.set("n", "gy", function()
+        builtin.lsp_type_definitions({ reuse_win = true })
+      end, { buffer = args.buf, desc = "Goto type definition" })
+
+      -- Search (<leader>s* prefix)
+      vim.keymap.set("n", "<leader>ss", builtin.lsp_document_symbols, {
+        buffer = args.buf,
+        desc = "Document symbols",
+      })
+
+      vim.keymap.set("n", "<leader>sS", builtin.lsp_workspace_symbols, {
+        buffer = args.buf,
+        desc = "Workspace symbols",
+      })
+
+      vim.keymap.set("n", "<leader>sd", builtin.diagnostics, {
+        buffer = args.buf,
+        desc = "Diagnostics",
+      })
+    end,
+  })
+end
+
+-- telescope_hoogle
+
+telescope.load_extension("hoogle")
+
+local function hoogle()
+  telescope.extensions.hoogle.hoogle({ default_text = vim.fn.expand("<cword>") })
+end
+
+vim.keymap.set("n", "<leader>fH", hoogle, { desc = "Telescope hoogle" })
 
 -- treesitter
 
