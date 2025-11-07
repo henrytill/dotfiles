@@ -325,9 +325,11 @@ require("which-key").setup({
   end,
 })
 
-vim.keymap.set("n", "<leader>?", function()
+local function buffer_local_keymaps()
   require("which-key").show({ global = false })
-end, { desc = "Buffer Local Keymaps (which-key)" })
+end
+
+vim.keymap.set("n", "<leader>?", buffer_local_keymaps, { desc = "Buffer Local Keymaps (which-key)" })
 
 -- misc
 
