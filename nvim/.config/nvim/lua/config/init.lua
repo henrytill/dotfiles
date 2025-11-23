@@ -337,6 +337,19 @@ vim.keymap.set("n", "<leader>?", buffer_local_keymaps, { desc = "Buffer Local Ke
 
 -- misc
 
+local function run_ghc_tags()
+  if vim.fn.executable("ghc-tags") == 0 then
+    return
+  end
+  vim.fn.jobstart("ghc-tags -c 2>/dev/null", { detach = true })
+end
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.hs",
+  callback = run_ghc_tags,
+  desc = "Generate ctags for Haskell files",
+})
+
 local function goto_prev()
   vim.diagnostic.jump({ count = -1, float = true })
 end
