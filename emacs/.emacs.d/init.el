@@ -806,9 +806,13 @@ file doesn't exist."
 
 ;;; GO
 
+(defun ht/customize-go-mode ()
+  (setq-local tab-width 4))
+
 (use-package go-mode
   :ensure t
-  :mode "\\.go\\'")
+  :mode "\\.go\\'"
+  :hook ((go-mode . ht/customize-go-mode)))
 
 (defun ht/setup-go-eglot ()
   "Configure eglot to use gopls from GOPATH if not available in PATH."
