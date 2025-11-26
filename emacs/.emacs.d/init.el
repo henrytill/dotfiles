@@ -660,7 +660,8 @@ file doesn't exist."
 (defun ht/c-mode-common ()
   "Common setup for C/C++ modes."
   (ht/modify-c-syntax-entries)
-  (remove-hook 'flymake-diagnostic-functions #'flymake-cc t))
+  (remove-hook 'flymake-diagnostic-functions #'flymake-cc t)
+  (hs-minor-mode t))
 
 (add-hook 'c-mode-common-hook #'ht/c-mode-common)
 
