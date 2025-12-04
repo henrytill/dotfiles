@@ -93,7 +93,9 @@ vim.lsp.enable("zls")
 
 -- ocaml.nvim
 
-require("ocaml").setup()
+require("ocaml").setup({
+  keymaps = {},
+})
 
 -- telescope
 
