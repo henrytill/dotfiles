@@ -4,4 +4,6 @@ if filereadable("dune-project")
   set makeprg=dune\ build\ $*
 endif
 
-highlight clear ocamlTypeVariant
+for group in getcompletion('ocaml', 'highlight')
+  execute 'highlight clear' group
+endfor
