@@ -6,9 +6,9 @@
  '(auth-source-save-behavior nil)
  '(package-selected-packages
    '(auctex bison-mode csv-mode d-mode dockerfile-mode ediprolog elpher
-            evil geiser-chez gnu-apl-mode go-mode haskell-mode
-            idris-mode julia-mode lua-mode macrostep magit-annex
-            markdown-mode meson-mode nix-mode ocaml-eglot
+            evil geiser-chez git-modes gnu-apl-mode go-mode
+            haskell-mode idris-mode julia-mode lua-mode macrostep
+            magit-annex markdown-mode meson-mode nix-mode ocaml-eglot
             opam-switch-mode paredit perl-doc proof-general
             racket-mode rec-mode rust-mode sly sml-mode sql-indent
             swift-mode tuareg yaml-mode yasnippet zig-mode))

@@ -210,6 +210,8 @@ file doesn't exist."
 
 (setopt font-lock-global-modes '(compilation-mode
                                  diff-mode
+                                 gitconfig-mode
+                                 gitignore-mode
                                  magit-diff-mode
                                  magit-revision-mode
                                  magit-stash-mode
@@ -565,6 +567,9 @@ file doesn't exist."
 (use-package magit-annex
   :vc (:url "https://github.com/magit/magit-annex.git" :rev :newest)
   :commands magit-annex-dispatch)
+
+(use-package git-modes
+  :ensure t)
 
 ;;; PROJECT
 
