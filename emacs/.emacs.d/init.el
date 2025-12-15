@@ -554,8 +554,6 @@ file doesn't exist."
 (use-package magit
   :ensure t
   :commands (magit-status magit-project-status)
-  :hook ((magit-status-mode . font-lock-mode)
-         (magit-diff-mode . font-lock-mode))
   :defines (magit-mode-map)
   :config
   (put 'magit-clean 'disabled nil)
