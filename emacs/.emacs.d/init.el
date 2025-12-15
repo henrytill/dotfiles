@@ -1093,6 +1093,7 @@ state at that position."
 (use-package ocaml-eglot
   :if (executable-find "ocamllsp")
   :vc (:url "https://github.com/tarides/ocaml-eglot.git" :rev :newest)
+  :commands (ocaml-eglot)
   :hook ((tuareg-mode . ocaml-eglot)
          (ocaml-eglot . eglot-ensure)))
 
