@@ -192,7 +192,7 @@ require("nvim-treesitter.configs").setup({
   modules = {},
 
   highlight = {
-    enable = false,
+    enable = true,
   },
 
   incremental_selection = {
