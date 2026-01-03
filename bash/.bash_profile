@@ -44,15 +44,3 @@ for var in "${!env_vars[@]}"; do
     declare "${var}=${env_vars[$var]}"
     export "${var}"
 done
-
-if test "$(uname)" = "Linux" && test "$(tty)" = "/dev/tty1"
-then
-    export MOZ_ENABLE_WAYLAND=1
-    # https://github.com/YaLTeR/niri/issues/1914
-    exec niri-session -l
-fi
-
-if test "$(uname)" = "Linux" && test "$(tty)" = "/dev/tty2"
-then
-    exec startx
-fi
