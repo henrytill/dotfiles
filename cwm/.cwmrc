@@ -1,6 +1,6 @@
 # -*- mode: conf-space; -*-
 
-fontname "PragmataProMono:style=Bold:pixelsize=14"
+fontname "Go Mono:style=Bold:pixelsize=12"
 
 color activeborder goldenrod
 color inactiveborder dimgray
