@@ -3,11 +3,10 @@ MY_HOSTS = proteus thalassa thaumas
 
 # hosts and their package sets
 proteus  = bash code dune emacs foot gdb git git-unix nix \
-           tmux xdg zathura
+           tmux zathura
 thalassa = bash code dune emacs foot gdb git git-unix nix \
-           tmux x11 xdg zathura
-thaumas  = bash emacs foot gdb git git-unix \
-           xdg
+           tmux x11 zathura
+thaumas  = bash emacs foot gdb git git-unix
 
 # base package set for undefined hosts
 BASE_PKGS = git git-unix

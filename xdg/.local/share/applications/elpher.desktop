@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=elpher
-MimeType=x-scheme-handler/gopher;x-scheme-handler/gemini
-Exec=elpher
-Type=Application
-Terminal=true
