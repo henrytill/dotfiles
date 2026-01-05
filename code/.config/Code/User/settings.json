@@ -200,5 +200,6 @@
   },
   // --- STUFF TENDS TO ACCUMULATE DOWN HERE ---
   "yaml.format.singleQuote": true,
-  "workbench.colorTheme": "GitHub Light"
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredLightColorTheme": "GitHub Light"
 }
