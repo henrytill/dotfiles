@@ -1,6 +1,6 @@
 # -*- mode: conf-space; -*-
 
-fontname "Go Mono:style=Bold:pixelsize=12"
+fontname "JuliaMono:style=Bold:pixelsize=14"
 
 color activeborder goldenrod
 color inactiveborder dimgray

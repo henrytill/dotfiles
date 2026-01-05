@@ -5,8 +5,8 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 Xft.rgba: rgb
 
-UXTerm*faceName: xft:Go Mono:pixelsize=12
-UXTerm*boldFont: xft:Go Mono:style=Bold:pixelsize=12
+UXTerm*faceName: xft:JuliaMono:style=Regular:pixelsize=14
+UXTerm*boldFont: xft:JuliaMono:style=Bold:pixelsize=14
 UXTerm*boldColors: false
 UXTerm*colorBDMode: false
 UXTerm.termName: xterm-256color
