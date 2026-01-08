@@ -206,8 +206,6 @@ file doesn't exist."
 
 (setopt frame-background-mode 'light)
 
-(load-theme 'modus-operandi)
-
 (setopt font-lock-global-modes '(compilation-mode
                                  diff-mode
                                  gitconfig-mode
