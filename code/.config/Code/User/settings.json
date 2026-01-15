@@ -1,19 +1,19 @@
 {
-  "debug.console.fontFamily": "'PragmataPro Mono'",
+  "debug.console.fontFamily": "'JuliaMono'",
   "debug.console.fontSize": 14,
   "debug.enableStatusBarColor": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": false,
   "editor.bracketPairColorization.enabled": false,
-  "editor.codeLensFontFamily": "'PragmataPro Mono'",
+  "editor.codeLensFontFamily": "'JuliaMono'",
   "editor.codeLensFontSize": 14,
-  "editor.fontFamily": "'PragmataPro Mono'",
+  "editor.fontFamily": "'JuliaMono'",
   "editor.fontLigatures": false,
   "editor.fontSize": 14,
   "editor.formatOnSave": true,
   "editor.guides.indentation": false,
   "editor.inlayHints.enabled": "offUnlessPressed",
-  "editor.inlayHints.fontFamily": "'PragmataPro Mono'",
+  "editor.inlayHints.fontFamily": "'JuliaMono'",
   "editor.inlayHints.fontSize": 14,
   "editor.inlineSuggest.enabled": true,
   "editor.lineHeight": 1.2,
@@ -200,6 +200,5 @@
   },
   // --- STUFF TENDS TO ACCUMULATE DOWN HERE ---
   "yaml.format.singleQuote": true,
-  "window.autoDetectColorScheme": true,
-  "workbench.preferredLightColorTheme": "GitHub Light"
+  "window.autoDetectColorScheme": true
 }
