@@ -182,7 +182,7 @@ vim.keymap.set("n", "<leader>fH", hoogle, { desc = "Telescope hoogle" })
 
 -- treesitter
 
-require("nvim-treesitter.configs").setup({
+require("nvim-treesitter").setup({
   -- Note: parsers are installed via Nix, not ensure_installed
   ensure_installed = {},
 
@@ -269,7 +269,11 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- treesitter-textobjects
 
-require("nvim-treesitter-textobjects").init()
+require("nvim-treesitter-textobjects").setup({
+  move = {
+    set_jumps = true,
+  },
+})
 
 local keys = {
   goto_next_start = {
@@ -311,7 +315,7 @@ local function attach(buf)
       -- Skip ]c/[c in diff mode to preserve native diff navigation
       if not (vim.wo.diff and key:find("[cC]")) then
         vim.keymap.set({ "n", "x", "o" }, key, function()
-          require("nvim-treesitter.textobjects.move")[method](query, "textobjects")
+          require("nvim-treesitter-textobjects.move")[method](query, "textobjects")
         end, {
           buffer = buf,
           desc = desc,
