@@ -10,7 +10,6 @@ DIR="$(cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 
 echo "DIR=${DIR}"
 
-
 if test -n "$IN_DEV_CONTAINER"
 then
     echo "IN_DEV_CONTAINER=${IN_DEV_CONTAINER}"
@@ -20,9 +19,7 @@ then
 
     if test -n "$(command -v stow)"
     then
-        stow -v emacs-minimal
-        stow -v mg
-        stow -v tmux
+        stow -v emacs-minimal mg tmux
     fi
 
     if test "${SHELL}" = "/bin/bash" && test -f "${HOME}/.bashrc"
