@@ -425,7 +425,8 @@ file doesn't exist."
   :config
   (setopt evil-want-abbrev-expand-on-insert-exit nil
           evil-search-module 'evil-search
-          evil-ex-search-case 'sensitive)
+          evil-ex-search-case 'sensitive
+          evil-undo-system 'undo-redo)
   (ht/setup-evil-emacs-state-modes)
   (ht/setup-evil-bindings)
   (ht/setup-evil-paredit-state)
