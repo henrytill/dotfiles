@@ -1077,6 +1077,7 @@ state at that position."
   (setq-local evil-auto-indent nil))
 
 (use-package tuareg
+  :disabled t
   :ensure t
   :commands (tuareg-mode tuareg-opam-mode)
   :hook ((tuareg-mode . ht/tuareg-mode))
@@ -1089,11 +1090,26 @@ state at that position."
             (default-directory (project-root (project-current t))))
         (shell-command (format "ocamlformat -i %s" file-name))))))
 
+(use-package neocaml
+  :vc (:url "https://github.com/bbatsov/neocaml" :rev :newest)
+  :config
+  ;; Register neocaml modes with Eglot
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '((neocaml-mode neocaml-interface-mode) . ("ocamllsp"))))
+  (when (not (fboundp 'ht/ocamlformat-buffer-file))
+    (defun ht/ocamlformat-buffer-file ()
+      "Format the current OCaml buffer using ocamlformat."
+      (interactive)
+      (let ((file-name (buffer-file-name))
+            (default-directory (project-root (project-current t))))
+        (shell-command (format "ocamlformat -i %s" file-name))))))
+
 (use-package ocaml-eglot
   :if (executable-find "ocamllsp")
   :vc (:url "https://github.com/tarides/ocaml-eglot.git" :rev :newest)
   :commands (ocaml-eglot)
-  :hook ((tuareg-mode . ocaml-eglot)
+  :hook ((neocaml-mode . ocaml-eglot)
          (ocaml-eglot . eglot-ensure)))
 
 (use-package dune
@@ -1500,6 +1516,7 @@ as a markdown link."
     (js-mode . ht/prettier-buffer-file)
     (lua-mode . ht/stylua-buffer-file)
     (meson-mode . ht/meson-format-buffer-file)
+    (neocaml-mode . ht/ocamlformat-buffer-file)
     (nix-mode . ht/nixfmt-buffer-file)
     (python-mode . ht/black-format-buffer-file)
     (tuareg-mode . ht/ocamlformat-buffer-file)

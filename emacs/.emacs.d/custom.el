@@ -8,12 +8,13 @@
    '(auctex bison-mode csv-mode d-mode dockerfile-mode ediprolog elpher
             evil geiser-chez git-modes gnu-apl-mode go-mode
             haskell-mode idris-mode julia-mode lua-mode macrostep
-            magit-annex markdown-mode meson-mode nix-mode ocaml-eglot
-            opam-switch-mode paredit perl-doc proof-general
-            racket-mode rec-mode rust-mode sly sml-mode sql-indent
-            swift-mode tuareg yaml-mode yasnippet zig-mode))
+            magit-annex markdown-mode meson-mode neocaml nix-mode
+            ocaml-eglot opam-switch-mode paredit perl-doc
+            proof-general racket-mode rec-mode rust-mode sly sml-mode
+            sql-indent swift-mode tuareg yaml-mode yasnippet zig-mode))
  '(package-vc-selected-packages
-   '((ocaml-eglot :url "https://github.com/tarides/ocaml-eglot.git")
+   '((neocaml :url "https://github.com/bbatsov/neocaml")
+     (ocaml-eglot :url "https://github.com/tarides/ocaml-eglot.git")
      (zig-mode :url "https://github.com/henrytill/zig-mode.git")
      (idris-mode :url
                  "https://github.com/idris-hackers/idris-mode.git")
