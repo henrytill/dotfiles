@@ -824,7 +824,8 @@ file doesn't exist."
 (use-package go-mode
   :ensure t
   :mode "\\.go\\'"
-  :hook ((go-mode . ht/customize-go-mode)))
+  :hook ((go-mode . ht/customize-go-mode)
+         (go-mode . eglot-ensure)))
 
 (defun ht/setup-go-eglot ()
   "Configure eglot to use gopls from GOPATH if not available in PATH."
