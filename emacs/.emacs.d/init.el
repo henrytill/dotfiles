@@ -216,6 +216,13 @@ file doesn't exist."
                                  magit-status-mode
                                  text-mode))
 
+(defun ht/colorize ()
+  "Add some color to your life."
+  (interactive)
+  (setopt font-lock-global-modes t)
+  (global-font-lock-mode t)
+  (load-theme 'modus-operandi t))
+
 (defun ht/remove-decorations ()
   "Remove decorations."
   (when (and (is-unix-p))
