@@ -282,6 +282,7 @@ file doesn't exist."
 
 (defconst ht/evil-emacs-state-modes
   '(compilation-mode
+    flymake-diagnostics-buffer-mode
     geiser-repl-mode
     haskell-error-mode
     haskell-interactive-mode
