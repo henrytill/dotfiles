@@ -280,6 +280,8 @@ file doesn't exist."
 
 ;;; EVIL
 
+(declare-function flymake-show-buffer-diagnostics "flymake")
+
 (defconst ht/evil-emacs-state-modes
   '(compilation-mode
     flymake-diagnostics-buffer-mode
@@ -302,16 +304,6 @@ file doesn't exist."
     utop-mode
     xref--xref-buffer-mode))
 
-(defun ht/setup-evil-emacs-state-modes ()
-  (dolist (mode ht/evil-emacs-state-modes)
-    (progn (when (member mode evil-insert-state-modes)
-             (delete mode evil-insert-state-modes))
-           (when (member mode evil-normal-state-modes)
-             (delete mode evil-normal-state-modes))
-           (when (member mode evil-motion-state-modes)
-             (delete mode evil-motion-state-modes))
-           (add-to-list 'evil-emacs-state-modes mode))))
-
 (defconst ht/evil-emacs-state-bindings
   '(("C-w C-w" . other-window)
     ("C-w s"   . split-window-below)
@@ -325,16 +317,6 @@ file doesn't exist."
   '(("C-w C-]" . find-tag-other-window)
     ("g x"     . browse-url-at-point)
     ("-"       . ht/dired-pwd)))
-
-(defun ht/setup-evil-bindings ()
-  (dolist (binding ht/evil-emacs-state-bindings)
-    (let ((key (car binding))
-          (cmd (cdr binding)))
-      (bind-key key cmd evil-emacs-state-map)))
-  (dolist (binding ht/evil-normal-state-bindings)
-    (let ((key (car binding))
-          (cmd (cdr binding)))
-      (bind-key key cmd evil-normal-state-map))))
 
 (defconst evil-paredit-state-bindings
   '(("j"     . paredit-forward)
@@ -360,26 +342,6 @@ file doesn't exist."
     ("M-j"   . paredit-splice-sexp-killing-forward)
     ("M-k"   . paredit-splice-sexp-killing-backward)
     ("C-o"   . evil-execute-in-normal-state)))
-
-(defun ht/setup-evil-paredit-state ()
-  (evil-define-state paredit "Paredit state."
-    :tag " <PAR> "
-    :enable (paredit normal)
-    :intercept-esc nil
-    :entry-hook (enable-paredit-mode)
-    :exit-hook (disable-paredit-mode))
-  (dolist (binding evil-paredit-state-bindings)
-    (let ((key (car binding))
-          (cmd (cdr binding)))
-      (bind-key key cmd evil-paredit-state-map))))
-
-(defun ht/setup-evil-ex-commands ()
-  (evil-define-command cfile () (flymake-show-buffer-diagnostics))
-  (evil-define-command tnext () (find-tag nil t))
-  (evil-define-command tprevious () (find-tag nil '-))
-  (evil-ex-define-cmd "cf[ile]" 'cfile)
-  (evil-ex-define-cmd "tn[ext]" 'tnext)
-  (evil-ex-define-cmd "tp[revious]" 'tprevious))
 
 (defconst ht/evil-leader-bindings
   '(;; General
@@ -410,31 +372,102 @@ file doesn't exist."
     ("hk" . describe-key)
     ("hm" . describe-mode)))
 
-(defun ht/setup-evil-leader-keys ()
-  (evil-set-leader 'normal (kbd "SPC"))
-  (evil-set-leader 'visual (kbd "SPC"))
-  (evil-set-leader 'normal (kbd "\\") t)  ; localleader
-  (dolist (binding ht/evil-leader-bindings)
-    (let ((key (concat "<leader>" (car binding)))
-          (cmd (cdr binding)))
-      (evil-define-key 'normal 'global (kbd key) cmd))))
-
-(defun ht/setup-which-key-prefixes ()
-  "Configure which-key prefix descriptions for leader key bindings."
-  (which-key-add-key-based-replacements
-    "<leader> f" "files/find"
-    "<leader> p" "project"
-    "<leader> s" "search/symbol"
-    "<leader> g" "git"
-    "<leader> h" "help"))
+(declare-function xref-next-line "xref")
+(declare-function xref-prev-line "xref")
 
 (use-package evil
   :ensure t
+  :defines (evil-insert-state-modes
+            evil-normal-state-modes
+            evil-motion-state-modes
+            evil-emacs-state-modes
+            evil-emacs-state-map
+            evil-normal-state-map
+            evil-paredit-state-map)
+  :functions (evil-define-state
+              evil-define-command
+              evil-ex-define-cmd
+              evil-set-leader
+              evil-define-key
+              evil-mode
+              paredit
+              ht/setup-evil-emacs-state-modes
+              ht/setup-evil-bindings
+              ht/setup-evil-paredit-state
+              ht/setup-evil-ex-commands
+              ht/setup-evil-leader-keys
+              ht/setup-which-key-prefixes)
   :config
+  (defun ht/setup-evil-emacs-state-modes ()
+    "Configure `evil-emacs-state-modes' from `ht/evil-emacs-state-modes'."
+    (dolist (mode ht/evil-emacs-state-modes)
+      (progn (when (member mode evil-insert-state-modes)
+               (delete mode evil-insert-state-modes))
+             (when (member mode evil-normal-state-modes)
+               (delete mode evil-normal-state-modes))
+             (when (member mode evil-motion-state-modes)
+               (delete mode evil-motion-state-modes))
+             (add-to-list 'evil-emacs-state-modes mode))))
+
+  (defun ht/setup-evil-bindings ()
+    "Set up evil keybindings from the configured binding alists."
+    (dolist (binding ht/evil-emacs-state-bindings)
+      (let ((key (car binding))
+            (cmd (cdr binding)))
+        (bind-key key cmd evil-emacs-state-map)))
+    (dolist (binding ht/evil-normal-state-bindings)
+      (let ((key (car binding))
+            (cmd (cdr binding)))
+        (bind-key key cmd evil-normal-state-map))))
+
+  (defun ht/setup-evil-paredit-state ()
+    "Define the evil paredit state and configure its keybindings."
+    (with-suppressed-warnings ((free-vars paredit normal))
+      (evil-define-state paredit "Paredit state."
+        :tag " <PAR> "
+        :enable (paredit normal)
+        :intercept-esc nil
+        :entry-hook (enable-paredit-mode)
+        :exit-hook (disable-paredit-mode)))
+    (dolist (binding evil-paredit-state-bindings)
+      (let ((key (car binding))
+            (cmd (cdr binding)))
+        (bind-key key cmd evil-paredit-state-map))))
+
+  (defun ht/setup-evil-ex-commands ()
+    "Define custom evil ex commands for flymake and xref navigation."
+    (with-suppressed-warnings ((free-vars cfile tnext tprevious))
+      (evil-define-command cfile () "Show flymake diagnostics buffer." (flymake-show-buffer-diagnostics))
+      (evil-define-command tnext () "Jump to next xref match." (xref-next-line))
+      (evil-define-command tprevious () "Jump to previous xref match." (xref-prev-line))
+      (evil-ex-define-cmd "cf[ile]" 'cfile)
+      (evil-ex-define-cmd "tn[ext]" 'tnext)
+      (evil-ex-define-cmd "tp[revious]" 'tprevious)))
+
+  (defun ht/setup-evil-leader-keys ()
+    "Configure evil leader key bindings."
+    (evil-set-leader 'normal (kbd "SPC"))
+    (evil-set-leader 'visual (kbd "SPC"))
+    (evil-set-leader 'normal (kbd "\\") t)  ; localleader
+    (dolist (binding ht/evil-leader-bindings)
+      (let ((key (concat "<leader>" (car binding)))
+            (cmd (cdr binding)))
+        (evil-define-key 'normal 'global (kbd key) cmd))))
+
+  (defun ht/setup-which-key-prefixes ()
+    "Configure which-key prefix descriptions for leader key bindings."
+    (which-key-add-key-based-replacements
+      "<leader> f" "files/find"
+      "<leader> p" "project"
+      "<leader> s" "search/symbol"
+      "<leader> g" "git"
+      "<leader> h" "help"))
+
   (setopt evil-want-abbrev-expand-on-insert-exit nil
           evil-search-module 'evil-search
           evil-ex-search-case 'sensitive
           evil-undo-system 'undo-redo)
+
   (ht/setup-evil-emacs-state-modes)
   (ht/setup-evil-bindings)
   (ht/setup-evil-paredit-state)
@@ -444,10 +477,15 @@ file doesn't exist."
   (recentf-mode 1)
   (evil-mode 1))
 
+(defvar compilation-mode-map)
+
 (with-eval-after-load 'compile
   (bind-key "SPC" nil compilation-mode-map))
 
+(defvar xref--xref-buffer-mode-map)
+
 (defun ht/bind-xref-navigation-keys ()
+  "Bind j/k to xref navigation in the xref results buffer."
   (bind-key "j" 'xref-next-line xref--xref-buffer-mode-map)
   (bind-key "k" 'xref-prev-line xref--xref-buffer-mode-map))
 
@@ -503,8 +541,12 @@ file doesn't exist."
 ;;; DIRED
 
 (defun ht/dired-pwd ()
+  "Open Dired in the current buffer's directory."
   (interactive)
   (dired default-directory))
+
+(defvar dired-mode-map)
+(declare-function dired-up-directory "dired")
 
 (with-eval-after-load 'dired
   (require 'browse-url)
@@ -524,18 +566,20 @@ file doesn't exist."
 
 ;;; INFO
 
+(defvar Info-additional-directory-list)
+
 (when (and (is-linux-p) (fboundp 'xdg-data-home))
   (require 'info)
-  (when (boundp 'Info-additional-directory-list)
-    (add-to-list 'Info-additional-directory-list (expand-file-name "info" (xdg-data-home)))))
+  (add-to-list 'Info-additional-directory-list (expand-file-name "info" (xdg-data-home))))
 
 ;;; ORG-MODE
+
+(defvar org-file-apps)
 
 (with-eval-after-load 'org
   (message "Loading org config...")
   (require 'oc-csl)
-  (when (boundp 'org-file-apps)
-    (add-to-list 'org-file-apps '("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s")))
+  (add-to-list 'org-file-apps '("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s"))
   (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
                                                            (haskell . t)
                                                            (shell . t)))
@@ -593,9 +637,10 @@ file doesn't exist."
 
 ;;; TREE-SITTER
 
+(defvar treesit-language-source-alist)
+
 (with-eval-after-load 'treesit
-  (when (boundp 'treesit-language-source-alist)
-    (setq treesit-language-source-alist
+  (setq treesit-language-source-alist
           '((go         . ("https://github.com/tree-sitter/tree-sitter-go"         "master"  "src"           ))
             (haskell    . ("https://github.com/tree-sitter/tree-sitter-haskell"    "master"  "src"           ))
             (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "master"  "src"           ))
@@ -603,7 +648,7 @@ file doesn't exist."
             (python     . ("https://github.com/tree-sitter/tree-sitter-python"     "v0.23.3"                 ))
             (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"       "v0.23.3" "src"           ))
             (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master"  "typescript/src"))
-            (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" "master"  "tsx/src"       ))))))
+            (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" "master"  "tsx/src"       )))))
 
 ;;; WHITESPACE
 
@@ -613,15 +658,16 @@ file doesn't exist."
 
 (add-hook 'prog-mode-hook #'whitespace-mode)
 
+(defvar whitespace-style)
+
 (defun ht/toggle-tabs-display ()
   "Toggle the display of tab characters in `whitespace-mode'."
   (interactive)
   (whitespace-mode -1)
   (let ((tab-mode (if font-lock-mode 'tabs 'tab-mark)))
-    (when (boundp 'whitespace-style)
-      (if (memq tab-mode whitespace-style)
-          (setopt whitespace-style (remove tab-mode whitespace-style))
-        (add-to-list 'whitespace-style tab-mode))))
+    (if (memq tab-mode whitespace-style)
+        (setopt whitespace-style (remove tab-mode whitespace-style))
+      (add-to-list 'whitespace-style tab-mode)))
   (whitespace-mode 1))
 
 (bind-key "C-c h TAB" #'ht/toggle-tabs-display)
@@ -630,8 +676,7 @@ file doesn't exist."
   "Disable the display of lines exceeding the maximum length in `whitespace-mode'."
   (interactive)
   (whitespace-mode -1)
-  (when (and (boundp 'whitespace-style)
-             (memq 'lines-tail whitespace-style))
+  (when (memq 'lines-tail whitespace-style)
     (setopt whitespace-style (remove 'lines-tail whitespace-style)))
   (whitespace-mode 1))
 
@@ -639,10 +684,9 @@ file doesn't exist."
   "Toggle the display of lines exceeding the maximum length in `whitespace-mode'."
   (interactive)
   (whitespace-mode -1)
-  (when (boundp 'whitespace-style)
-    (if (memq 'lines-tail whitespace-style)
-        (setopt whitespace-style (remove 'lines-tail whitespace-style))
-      (add-to-list 'whitespace-style 'lines-tail)))
+  (if (memq 'lines-tail whitespace-style)
+      (setopt whitespace-style (remove 'lines-tail whitespace-style))
+    (add-to-list 'whitespace-style 'lines-tail))
   (whitespace-mode 1))
 
 ;;; TEXT
@@ -676,13 +720,14 @@ file doesn't exist."
 
 (add-hook 'c-mode-common-hook #'ht/c-mode-common)
 
+(defvar c-default-style)
+
 (with-eval-after-load 'cc-mode
   (c-add-style "ht" '("k&r" (c-basic-offset . 4) (c-offsets-alist . ((innamespace . [0])))))
-  (when (boundp 'c-default-style)
-    (add-to-list 'c-default-style '(c-mode    . "ht"))
-    (add-to-list 'c-default-style '(c++-mode  . "ht"))
-    (add-to-list 'c-default-style '(java-mode . "ht"))
-    (add-to-list 'c-default-style '(awk-mode  . "ht"))))
+  (add-to-list 'c-default-style '(c-mode    . "ht"))
+  (add-to-list 'c-default-style '(c++-mode  . "ht"))
+  (add-to-list 'c-default-style '(java-mode . "ht"))
+  (add-to-list 'c-default-style '(awk-mode  . "ht")))
 
 (put 'ff-search-directories 'safe-local-variable #'listp)
 
@@ -819,6 +864,7 @@ file doesn't exist."
 ;;; GO
 
 (defun ht/customize-go-mode ()
+  "Customize `go-mode'."
   (setq-local tab-width 4))
 
 (use-package go-mode
@@ -1019,9 +1065,10 @@ state at that position."
 
 (add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-mode))
 
+(defvar js-mode-map)
+
 (with-eval-after-load 'js
-  (when (boundp 'js-mode-map)
-    (bind-key "M-." nil js-mode-map))
+  (bind-key "M-." nil js-mode-map)
   (setopt js-indent-level 2)
   (defun ht/prettier-buffer-file ()
     "Format the current JavaScript buffer using prettier."
@@ -1082,6 +1129,7 @@ state at that position."
     (setq-local compile-command "dune build @all")))
 
 (defun ht/tuareg-mode ()
+  "Customize `tuareg-mode'."
   (electric-indent-local-mode 0)
   (ht/set-compile-command-dune)
   (setq-local evil-auto-indent nil))
@@ -1226,6 +1274,7 @@ state at that position."
 
 (use-package sql-indent
   :ensure t
+  :defines sqlind-basic-offset
   :hook ((sql-mode . sqlind-minor-mode))
   :commands sqlind-minor-mode
   :config
@@ -1361,21 +1410,21 @@ as a markdown link."
         sh-indent-for-case-label 0
         sh-indent-for-case-alt '+)
 
+(defvar sh-mode-syntax-table)
+(defvar sh-shell)
+
 (defun ht/customize-rc ()
   "Customize `sh-mode' for rc shell."
   (setq indent-line-function 'insert-tab)
-  (when (boundp 'sh-mode-syntax-table)
-    (modify-syntax-entry ?` "." sh-mode-syntax-table)))
+  (modify-syntax-entry ?` "." sh-mode-syntax-table))
 
 (defun ht/customize-sh ()
   "Customize `sh-mode'."
   (indent-tabs-mode t)
   (electric-indent-local-mode 1)
-  (when (and (boundp 'sh-shell)
-             (eq sh-shell 'rc))
+  (when (eq sh-shell 'rc)
     (ht/customize-rc))
-  (when (and (boundp 'sh-shell)
-             (eq sh-shell 'bash)
+  (when (and (eq sh-shell 'bash)
              (executable-find "shellcheck"))
     (flymake-mode 1)))
 
@@ -1391,6 +1440,7 @@ as a markdown link."
 
 (use-package paredit
   :ensure t
+  :functions disable-paredit-mode
   :commands enable-paredit-mode)
 
 
@@ -1420,14 +1470,16 @@ as a markdown link."
   :type 'boolean
   :group 'ht)
 
+(declare-function comint-write-input-ring "comint")
+(declare-function comint-read-input-ring "comint")
+
 (defun ht/comint-process-sentinel (process event)
   "Save the comint input ring on EVENT from PROCESS."
-  (when (fboundp 'comint-write-input-ring)
-    (comint-write-input-ring)
-    (let ((buf (process-buffer process)))
-      (when (buffer-live-p buf)
-        (with-current-buffer buf
-          (insert (format "\nProcess %s %s" process event)))))))
+  (comint-write-input-ring)
+  (let ((buf (process-buffer process)))
+    (when (buffer-live-p buf)
+      (with-current-buffer buf
+        (insert (format "\nProcess %s %s" process event))))))
 
 (defun ht/get-history-file (pname)
   "Get the history file path for process with name PNAME."
@@ -1439,16 +1491,15 @@ as a markdown link."
 
 (defun ht/turn-on-comint-history ()
   "Enable persistent history for comint-based modes."
-  (when (fboundp 'comint-read-input-ring)
-    (when-let* ((_ (derived-mode-p 'comint-mode))
-                (process (get-buffer-process (current-buffer)))
-                (pname (process-name process))
-                (history-file (ht/get-history-file pname)))
-      (setq-local comint-input-ring-file-name history-file)
-      (comint-read-input-ring)
-      (set-process-sentinel process #'ht/comint-process-sentinel)
-      (message "Loading history for %s from %s" pname history-file)
-      t)))
+  (when-let* ((_ (derived-mode-p 'comint-mode))
+              (process (get-buffer-process (current-buffer)))
+              (pname (process-name process))
+              (history-file (ht/get-history-file pname)))
+    (setq-local comint-input-ring-file-name history-file)
+    (comint-read-input-ring)
+    (set-process-sentinel process #'ht/comint-process-sentinel)
+    (message "Loading history for %s from %s" pname history-file)
+    t))
 
 (add-hook 'inferior-scheme-mode-hook #'ht/turn-on-comint-history nil nil)
 (add-hook 'tuareg-interactive-mode-hook #'ht/turn-on-comint-history nil nil)
