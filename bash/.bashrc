@@ -95,19 +95,6 @@ then
     fi
 fi
 
-if test -z "$SSH_AUTH_SOCK"
-then
-    if test -e "${XDG_RUNTIME_DIR}/openssh_agent"
-    then
-	export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/openssh_agent"
-    elif ! test -e "/tmp/ssh-agent-${USER}"
-    then
-	ssh-agent 2>/dev/null >"/tmp/ssh-agent-${USER}"
-    else
-	. "/tmp/ssh-agent-${USER}" >/dev/null
-    fi
-fi
-
 if test -n "$(command -v tty)"
 then
     GPG_TTY="$(tty)"
