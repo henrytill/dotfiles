@@ -171,6 +171,8 @@ file doesn't exist."
 
 (defconst ht/site-lisp-directory (expand-file-name "site-lisp" user-emacs-directory))
 
+(add-to-list 'custom-theme-load-path ht/site-lisp-directory)
+
 (require 'package)
 
 (dolist (archive '(("nongnu" . "https://elpa.nongnu.org/nongnu/")))
@@ -206,22 +208,7 @@ file doesn't exist."
 
 (setopt frame-background-mode 'light)
 
-(setopt font-lock-global-modes '(compilation-mode
-                                 diff-mode
-                                 gitconfig-mode
-                                 gitignore-mode
-                                 magit-diff-mode
-                                 magit-revision-mode
-                                 magit-stash-mode
-                                 magit-status-mode
-                                 text-mode))
-
-(defun ht/colorize ()
-  "Add some color to your life."
-  (interactive)
-  (setopt font-lock-global-modes t)
-  (global-font-lock-mode t)
-  (load-theme 'modus-operandi t))
+(load-theme 'inl t)
 
 (defun ht/remove-decorations ()
   "Remove decorations."
