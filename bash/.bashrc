@@ -105,3 +105,8 @@ if test -n "$(command -v direnv)"
 then
     eval "$(direnv hook bash)"
 fi
+
+if test -n "$(command -v fzf)"
+then
+    eval "$(fzf --bash)"
+fi
