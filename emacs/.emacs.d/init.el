@@ -644,8 +644,7 @@ file doesn't exist."
 (use-package go-mode
   :ensure t
   :mode "\\.go\\'"
-  :hook ((go-mode . ht/customize-go-mode)
-         (go-mode . eglot-ensure)))
+  :hook ((go-mode . ht/customize-go-mode)))
 
 (defun ht/setup-go-eglot ()
   "Configure eglot to use gopls from GOPATH if not available in PATH."
@@ -941,8 +940,7 @@ state at that position."
   :if (executable-find "ocamllsp")
   :vc (:url "https://github.com/tarides/ocaml-eglot.git" :rev :newest)
   :commands (ocaml-eglot)
-  :hook ((neocaml-mode . ocaml-eglot)
-         (ocaml-eglot . eglot-ensure)))
+  :hook ((ocaml-eglot . eglot-ensure)))
 
 (use-package dune
   :if (locate-file "dune.el" load-path)
