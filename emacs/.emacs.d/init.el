@@ -944,6 +944,7 @@ state at that position."
   :hook ((ocaml-eglot . eglot-ensure)))
 
 (use-package dune
+  :disabled t
   :if (locate-file "dune.el" load-path)
   :mode (("\\(?:\\`\\|/\\)dune\\(?:\\.inc\\|\\-project\\|\\-workspace\\)?\\'" . dune-mode))
   :commands (dune-mode))
