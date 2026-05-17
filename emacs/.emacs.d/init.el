@@ -923,6 +923,7 @@ state at that position."
 
 (use-package neocaml
   :vc (:url "https://github.com/bbatsov/neocaml" :rev :newest)
+  :defer t
   :config
   ;; Register neocaml modes with Eglot
   (with-eval-after-load 'eglot
