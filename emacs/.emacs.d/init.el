@@ -1215,7 +1215,11 @@ as a markdown link."
 (use-package paredit
   :ensure t
   :functions disable-paredit-mode
-  :commands enable-paredit-mode)
+  :commands enable-paredit-mode
+  :hook ((emacs-lisp-mode . enable-paredit-mode)
+         (lisp-mode . enable-paredit-mode)
+         (lisp-data-mode . enable-paredit-mode)
+         (scheme-mode . enable-paredit-mode)))
 
 
 ;;; --- COMINT --- ;;;
