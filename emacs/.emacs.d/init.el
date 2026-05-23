@@ -1336,8 +1336,7 @@ as a markdown link."
 
 ;;; --- POSTLUDE --- ;;;
 
-(setopt font-lock-maximum-decoration '((tuareg-mode . 0)
-                                       (t . t)))
+(setopt font-lock-maximum-decoration nil)
 
 (defcustom ht/format-on-save nil
   "Format buffers on save."
