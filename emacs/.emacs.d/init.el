@@ -828,9 +828,8 @@ state at that position."
   :disabled t
   :vc (:url "https://codeberg.org/jpoiret/rocq-mode.el.git" :rev :newest)
   :mode "\\.v\\'"
-  :hook
-  (rocq-mode . rocq-follow-viewport-mode)
-  (rocq-mode . rocq-auto-goals-at-point-mode))
+  :hook ((rocq-mode . rocq-follow-viewport-mode)
+         (rocq-mode . rocq-auto-goals-at-point-mode)))
 
 (use-package yasnippet :ensure t :defer t)
 
