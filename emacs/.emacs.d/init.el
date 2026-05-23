@@ -208,7 +208,7 @@ file doesn't exist."
 
 (setopt frame-background-mode 'light)
 
-(load-theme 'inl t)
+(load-theme 'modus-operandi t)
 
 (defun ht/remove-decorations ()
   "Remove decorations."
