@@ -114,12 +114,12 @@ then
     export GPG_TTY
 fi
 
-if test -n "$(command -v direnv)"
+if test "$TERM" != "dumb" -a -n "$(command -v direnv)"
 then
     eval "$(direnv hook bash)"
 fi
 
-if test -n "$(command -v fzf)"
+if test "$TERM" != "dumb" -a -n "$(command -v fzf)"
 then
     eval "$(fzf --bash)"
 fi
