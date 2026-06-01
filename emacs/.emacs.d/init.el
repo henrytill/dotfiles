@@ -982,10 +982,10 @@ state at that position."
         (shell-command (format "ocamlformat -i %s" file-name))))))
 
 (use-package ocaml-eglot
-  :if (executable-find "ocamllsp")
   :vc (:url "https://github.com/tarides/ocaml-eglot.git" :rev :newest)
-  :commands (ocaml-eglot)
-  :hook ((ocaml-eglot . eglot-ensure)))
+  :commands ocaml-eglot
+  :hook ((neocaml-base-mode . ocaml-eglot)
+         (ocaml-eglot . eglot-ensure)))
 
 (use-package dune
   :disabled t
