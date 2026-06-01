@@ -413,14 +413,14 @@ file doesn't exist."
 
 (with-eval-after-load 'treesit
   (setq treesit-language-source-alist
-          '((go         . ("https://github.com/tree-sitter/tree-sitter-go"         "master"  "src"           ))
-            (haskell    . ("https://github.com/tree-sitter/tree-sitter-haskell"    "master"  "src"           ))
-            (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "master"  "src"           ))
-            (json       . ("https://github.com/tree-sitter/tree-sitter-json"                                 ))
-            (python     . ("https://github.com/tree-sitter/tree-sitter-python"     "v0.23.3"                 ))
-            (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"       "v0.23.3" "src"           ))
-            (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master"  "typescript/src"))
-            (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" "master"  "tsx/src"       )))))
+        '((go         . ("https://github.com/tree-sitter/tree-sitter-go"         "master"  "src"           ))
+          (haskell    . ("https://github.com/tree-sitter/tree-sitter-haskell"    "master"  "src"           ))
+          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "master"  "src"           ))
+          (json       . ("https://github.com/tree-sitter/tree-sitter-json"                                 ))
+          (python     . ("https://github.com/tree-sitter/tree-sitter-python"     "v0.23.3"                 ))
+          (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"       "v0.23.3" "src"           ))
+          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master"  "typescript/src"))
+          (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" "master"  "tsx/src"       )))))
 
 ;;; WHITESPACE
 
