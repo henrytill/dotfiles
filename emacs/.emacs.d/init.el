@@ -660,7 +660,7 @@ file doesn't exist."
 
 (use-package erlang
   :if (locate-file "erlang.el" load-path)
-  :commands (erlang-mode)
+  :commands erlang-mode
   :mode (("\\.erl\\'" . erlang-mode)))
 
 ;;; FORTH
@@ -854,7 +854,7 @@ state at that position."
 
 (use-package coq-mode
   :mode (("\\.v\\'" . coq-mode))
-  :commands (coq-mode)
+  :commands coq-mode
   :config
   (setopt proof-colour-locked nil
           proof-splash-enable nil
@@ -982,7 +982,7 @@ state at that position."
   :disabled t
   :if (locate-file "dune.el" load-path)
   :mode (("\\(?:\\`\\|/\\)dune\\(?:\\.inc\\|\\-project\\|\\-workspace\\)?\\'" . dune-mode))
-  :commands (dune-mode))
+  :commands dune-mode)
 
 (use-package ocp-indent
   :disabled t
@@ -994,7 +994,7 @@ state at that position."
 
 (use-package utop
   :if (locate-file "utop.el" load-path)
-  :commands (utop-minor-mode)
+  :commands utop-minor-mode
   :hook ((tuareg-mode . utop-minor-mode))
   :config
   (when (ht/is-dune-project-p)
@@ -1024,7 +1024,7 @@ state at that position."
 
 (use-package ediprolog
   :ensure t
-  :commands (ediprolog-dwim))
+  :commands ediprolog-dwim)
 
 ;;; PYTHON
 
