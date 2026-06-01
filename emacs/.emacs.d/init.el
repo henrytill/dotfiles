@@ -689,8 +689,10 @@ file doesn't exist."
 
 (defun ht/setup-go-eglot ()
   "Configure eglot to use gopls from GOPATH if not available in PATH."
-  (when (and (executable-find "go")
-             (not (executable-find "gopls")))
+  (when (and (or (executable-find "go")
+                 (executable-find "go" 'remote))
+             (not (or (executable-find "gopls")
+                      (executable-find "gopls" 'remote))))
     (let* ((gopath (string-trim (shell-command-to-string "go env GOPATH")))
            (gopls-path (expand-file-name "bin/gopls" gopath)))
       (when (file-exists-p gopls-path)
@@ -712,19 +714,21 @@ file doesn't exist."
 (defun ht/fourmolu-buffer-file ()
   "Format the current Haskell buffer using the fourmolu formatter."
   (interactive)
-  (let ((file-name (buffer-file-name))
+  (let ((file-name (file-local-name (buffer-file-name)))
         (default-directory (project-root (project-current t))))
-    (shell-command (format "fourmolu -q --mode inplace %s" file-name))))
+    (shell-command (format "fourmolu -q --mode inplace %s" file-name))
+    (revert-buffer t t)))
 
 (defun ht/run-ghc-tags ()
   "Run ghc-tags on the current Haskell project to generate a TAGS file."
   (interactive)
   (when (derived-mode-p 'haskell-mode)
-    (if (executable-find "ghc-tags")
-        (let ((default-directory (project-root (project-current t)))
-              (inhibit-message t))
-          (shell-command "ghc-tags -e"))
-      (message "ghc-tags not found"))))
+    (let ((default-directory (project-root (project-current t)))
+          (inhibit-message t))
+      (if (or (executable-find "ghc-tags")
+              (executable-find "ghc-tags" 'remote))
+          (shell-command "ghc-tags -e")
+        (message "ghc-tags not found")))))
 
 (defun ht/customize-haskell ()
   "Customize Haskell mode with appropriate settings and hooks."
