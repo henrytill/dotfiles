@@ -195,8 +195,16 @@ file doesn't exist."
 ;;; https://codeberg.org/dnkl/foot/wiki#only-8-colors-in-emacs
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
 
-(setopt display-line-numbers-width 4
-        display-line-numbers-widen t)
+(setopt blink-cursor-mode nil
+        column-number-mode t
+        display-line-numbers-widen t
+        display-line-numbers-width 4
+        display-time-day-and-date t
+        display-time-default-load-average nil
+        display-time-mode t
+        frame-background-mode 'light
+        show-paren-mode t
+        visible-cursor nil)
 
 (dolist (mode-hook '(prog-mode-hook
                      conf-mode-hook
@@ -204,17 +212,15 @@ file doesn't exist."
                      text-mode-hook))
   (add-hook mode-hook #'display-line-numbers-mode))
 
-(setopt frame-background-mode 'light)
-
 (load-theme 'modus-operandi t)
 
 (defun ht/remove-decorations ()
   "Remove decorations."
   (when (and (is-unix-p))
-    (menu-bar-mode -1))
+    (setopt menu-bar-mode nil))
   (when (display-graphic-p)
-    (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-    (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))))
+    (setopt scroll-bar-mode nil
+            tool-bar-mode nil)))
 
 (defun ht/fix-split-behavior ()
   "Fix split behavior on Unix with a graphic display."
@@ -232,12 +238,6 @@ file doesn't exist."
 
 (ht/update-frame (selected-frame))
 
-(show-paren-mode 1)
-(column-number-mode 1)
-
-(blink-cursor-mode 0)
-(setopt visible-cursor nil)
-
 (defun ht/truncate-lines ()
   "Toggle truncating of long lines for the current buffer."
   (toggle-truncate-lines t))
@@ -254,11 +254,6 @@ file doesn't exist."
 
 (require 'ansi-color)
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
-
-(setopt display-time-day-and-date t
-        display-time-default-load-average nil)
-
-(display-time-mode 1)
 
 
 ;;; --- GENERAL --- ;;;
