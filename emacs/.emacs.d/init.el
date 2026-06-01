@@ -305,6 +305,11 @@ file doesn't exist."
 
 (add-hook 'conf-unix-mode-local-vars-hook #'ht/customize-conf-unix)
 
+;;; TRAMP
+
+(with-eval-after-load 'tramp
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+
 ;;; DIRED
 
 (defun ht/dired-pwd ()
