@@ -152,8 +152,6 @@ file doesn't exist."
         (cmd (cdr binding)))
     (global-set-key (kbd key) cmd)))
 
-(setopt which-key-mode t)
-
 (with-eval-after-load 'which-key
   (which-key-add-key-based-replacements
     "C-c h" "ht-helpers"
@@ -467,6 +465,49 @@ file doesn't exist."
 
 (add-hook 'text-mode-hook 'auto-revert-mode)
 
+;;; EMBARK
+
+(use-package vertico
+  :ensure t
+  :functions (vertico-mode)
+  :config
+  (vertico-mode 1))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package marginalia
+  :ensure t
+  :functions (marginalia-mode)
+  :config
+  (marginalia-mode))
+
+(use-package consult
+  :ensure t
+  :bind (("M-s g" . consult-grep)))
+
+(use-package embark
+  :ensure t
+  :functions (embark-prefix-help-command)
+  :bind (("C-c e" . embark-act)
+         ("C-c E" . embark-dwim)
+         ("C-h B" . embark-bindings))
+  :config
+  (setq prefix-help-command #'embark-prefix-help-command))
+
+(use-package embark-consult :ensure t)
+
+(use-package vertico-multiform
+  :defines (vertico-multiform-categories)
+  :functions (vertico-multiform-mode)
+  :config
+  (add-to-list 'vertico-multiform-categories '(embark-keybinding grid))
+  (vertico-multiform-mode 1))
+
+
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 
@@ -728,7 +769,7 @@ file doesn't exist."
   :ensure t
   :commands macrostep-expand)
 
-(bind-key "C-c e" #'macrostep-expand emacs-lisp-mode-map)
+(bind-key "C-c x" #'macrostep-expand emacs-lisp-mode-map)
 
 ;;; SCHEME
 
