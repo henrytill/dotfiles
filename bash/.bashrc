@@ -64,19 +64,19 @@ then
     # alias egrep='egrep --color=auto'
 fi
 
-ALIASES="$HOME/.bash_aliases"
+readonly ALIASES="$HOME/.bash_aliases"
 if test -f "$ALIASES"
 then
     . "$ALIASES"
 fi
 
-FUNCTIONS="$HOME/.bash_functions"
+readonly FUNCTIONS="$HOME/.bash_functions"
 if test -f "$FUNCTIONS"
 then
     . "$FUNCTIONS"
 fi
 
-if test "${TERM}" = "dumb"
+if test "$TERM" = "dumb"
 then
     export PAGER=cat
 fi

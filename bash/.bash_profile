@@ -42,5 +42,5 @@ declare -A env_vars=(
 
 for var in "${!env_vars[@]}"; do
     declare "${var}=${env_vars[$var]}"
-    export "${var}"
+    export "${var?}"
 done
