@@ -953,19 +953,19 @@ state at that position."
   (ht/set-compile-command-dune)
   (setq-local evil-auto-indent nil))
 
+(defun ht/ocamlformat-buffer-file ()
+  "Format the current OCaml buffer using ocamlformat."
+  (interactive)
+  (let ((file-name (file-local-name (buffer-file-name)))
+        (default-directory (project-root (project-current t))))
+    (shell-command (format "ocamlformat -i %s" file-name))
+    (revert-buffer t t)))
+
 (use-package tuareg
   :disabled t
   :ensure t
   :commands (tuareg-mode tuareg-opam-mode)
-  :hook ((tuareg-mode . ht/tuareg-mode))
-  :config
-  (when (not (fboundp 'ht/ocamlformat-buffer-file))
-    (defun ht/ocamlformat-buffer-file ()
-      "Format the current OCaml buffer using ocamlformat."
-      (interactive)
-      (let ((file-name (buffer-file-name))
-            (default-directory (project-root (project-current t))))
-        (shell-command (format "ocamlformat -i %s" file-name))))))
+  :hook ((tuareg-mode . ht/tuareg-mode)))
 
 (use-package neocaml
   :vc (:url "https://github.com/bbatsov/neocaml" :rev :newest)
@@ -974,14 +974,7 @@ state at that position."
   ;; Register neocaml modes with Eglot
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs
-                 '((neocaml-mode neocaml-interface-mode) . ("ocamllsp"))))
-  (when (not (fboundp 'ht/ocamlformat-buffer-file))
-    (defun ht/ocamlformat-buffer-file ()
-      "Format the current OCaml buffer using ocamlformat."
-      (interactive)
-      (let ((file-name (buffer-file-name))
-            (default-directory (project-root (project-current t))))
-        (shell-command (format "ocamlformat -i %s" file-name))))))
+                 '((neocaml-mode neocaml-interface-mode) . ("ocamllsp")))))
 
 (use-package ocaml-eglot
   :vc (:url "https://github.com/tarides/ocaml-eglot.git" :rev :newest)
