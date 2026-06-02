@@ -307,6 +307,8 @@ file doesn't exist."
 
 ;;; TRAMP
 
+(defvar tramp-remote-path)
+
 (with-eval-after-load 'tramp
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
