@@ -202,7 +202,6 @@ file doesn't exist."
         display-time-day-and-date t
         display-time-default-load-average nil
         display-time-mode t
-        frame-background-mode 'light
         show-paren-mode t
         visible-cursor nil)
 
@@ -212,7 +211,7 @@ file doesn't exist."
                      text-mode-hook))
   (add-hook mode-hook #'display-line-numbers-mode))
 
-(load-theme 'modus-operandi t)
+(load-theme 'modus-vivendi t)
 
 (defun ht/remove-decorations ()
   "Remove decorations."
