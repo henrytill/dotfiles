@@ -1429,9 +1429,6 @@ as a markdown link."
   (xterm-mouse-mode 1)
   (mouse-wheel-mode 1))
 
-(when (string-equal "proteus" (ht/hostname))
-  (display-battery-mode 1))
-
 ;;; REGISTERS
 
 (set-register ?i `(file . ,(locate-user-emacs-file "init.el")))
