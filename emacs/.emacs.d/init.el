@@ -211,6 +211,26 @@ file doesn't exist."
                      text-mode-hook))
   (add-hook mode-hook #'display-line-numbers-mode))
 
+(defcustom ht/after-enable-theme-hook nil
+  "Hook run after a color theme is enabled via `enable-theme'."
+  :type 'hook
+  :group 'ht)
+
+(defun ht/run-after-enable-theme-hook (&rest _)
+  "Run `ht/after-enable-theme-hook'."
+  (run-hooks 'ht/after-enable-theme-hook))
+
+(advice-add 'enable-theme :after #'ht/run-after-enable-theme-hook)
+
+(defun ht/normalize-face-weights ()
+  "Reset every bold face to a normal weight on all frames."
+  (dolist (face (face-list))
+    (when (memq (face-attribute face :weight nil t)
+                '(semi-bold bold extra-bold ultra-bold heavy black))
+      (set-face-attribute face nil :weight 'normal))))
+
+(add-hook 'ht/after-enable-theme-hook #'ht/normalize-face-weights)
+
 (load-theme 'modus-vivendi t)
 
 (defun ht/remove-decorations ()
@@ -497,7 +517,8 @@ file doesn't exist."
          ("C-c E" . embark-dwim)
          ("C-h B" . embark-bindings))
   :config
-  (setq prefix-help-command #'embark-prefix-help-command))
+  (setq prefix-help-command #'embark-prefix-help-command)
+  (set-face-attribute 'embark-verbose-indicator-title nil :height 120 :weight 'normal))
 
 (use-package embark-consult :ensure t)
 
