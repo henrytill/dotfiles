@@ -595,11 +595,11 @@ file doesn't exist."
 (use-package bison-mode
   :ensure t
   :commands bison-mode
-  :config
-  (setopt bison-rule-separator-column 2
-          bison-rule-enumeration-column 2
-          bison-decl-type-column 0
-          bison-decl-token-column 0))
+  :custom
+  (bison-rule-separator-column 2)
+  (bison-rule-enumeration-column 2)
+  (bison-decl-type-column 0)
+  (bison-decl-token-column 0))
 
 ;;; CMAKE
 
@@ -627,8 +627,9 @@ file doesn't exist."
   :vc (:url "https://github.com/wentasah/meson-mode.git" :rev :newest)
   :mode (("/meson\\(\\.build\\|_options\\.txt\\)\\'" . meson-mode))
   :commands meson-mode
+  :custom
+  (meson-indent-basic 4)
   :config
-  (setopt meson-indent-basic 4)
   (defun ht/meson-format-buffer-file ()
     "Format the current Meson buffer."
     (interactive)
@@ -659,8 +660,8 @@ file doesn't exist."
 (use-package gnu-apl-mode
   :ensure t
   :commands (gnu-apl gnu-apl-mode)
-  :init
-  (setopt gnu-apl-show-keymap-on-startup nil))
+  :custom
+  (gnu-apl-show-keymap-on-startup nil))
 
 ;;; ERLANG
 
@@ -749,14 +750,14 @@ file doesn't exist."
          (haskell-cabal-mode . whitespace-mode))
   :config
   (remove-hook 'haskell-mode-hook 'haskell-indentation-mode)
-  (setopt haskell-doc-prettify-types nil
-          haskell-interactive-popup-errors nil
-          haskell-process-log t
-          haskell-process-show-debug-tips nil
-          haskell-process-type 'cabal-repl
-          haskell-stylish-on-save nil
-          haskell-tags-on-save nil)
-  nil)
+  :custom
+  (haskell-doc-prettify-types nil)
+  (haskell-interactive-popup-errors nil)
+  (haskell-process-log t)
+  (haskell-process-show-debug-tips nil)
+  (haskell-process-type 'cabal-repl)
+  (haskell-stylish-on-save nil)
+  (haskell-tags-on-save nil))
 
 ;;; IDRIS
 
@@ -765,8 +766,8 @@ file doesn't exist."
   :commands (idris-mode idris-ipkg-mode)
   :mode (("\\.idr\\'" . idris-mode)
          ("\\.ipkg\\'" . idris-ipkg-mode))
-  :config
-  (setopt idris-interpreter-path "idris2"))
+  :custom
+  (idris-interpreter-path "idris2"))
 
 ;;; ELISP
 
@@ -820,10 +821,10 @@ file doesn't exist."
 (use-package geiser-chez
   :ensure t
   :defer t
-  :config
-  (setopt geiser-mode-auto-p nil
-          geiser-chez-binary "chezscheme"
-          geiser-chez-csug-url "file:///usr/share/doc/chezscheme-doc/csug9.5/"))
+  :custom
+  (geiser-mode-auto-p nil)
+  (geiser-chez-binary "chezscheme")
+  (geiser-chez-csug-url "file:///usr/share/doc/chezscheme-doc/csug9.5/"))
 
 ;;; RACKET
 
@@ -865,10 +866,10 @@ state at that position."
 (use-package coq-mode
   :mode (("\\.v\\'" . coq-mode))
   :commands coq-mode
-  :config
-  (setopt proof-colour-locked nil
-          proof-splash-enable nil
-          proof-three-window-mode-policy 'hybrid))
+  :custom
+  (proof-colour-locked nil)
+  (proof-splash-enable nil)
+  (proof-three-window-mode-policy 'hybrid))
 
 (use-package rocq-mode
   :disabled t
@@ -1067,11 +1068,11 @@ state at that position."
          ("|" . skeleton-pair-insert-maybe))
   :init
   (setopt rust-mode-treesitter-derive t)
-  :config
-  (setopt rust-format-on-save t
-          rust-format-show-buffer nil
-          rust-format-goto-problem nil
-          rust-rustfmt-switches '("--edition" "2024")))
+  :custom
+  (rust-format-on-save t)
+  (rust-format-show-buffer nil)
+  (rust-format-goto-problem nil)
+  (rust-rustfmt-switches '("--edition" "2024")))
 
 ;;; SML
 
