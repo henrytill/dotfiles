@@ -365,6 +365,10 @@ file doesn't exist."
   (require 'info)
   (add-to-list 'Info-additional-directory-list (expand-file-name "info" (xdg-data-home))))
 
+;;; DOC-View
+
+(setopt doc-view-resolution 300)
+
 ;;; ORG-MODE
 
 (defvar org-file-apps)
