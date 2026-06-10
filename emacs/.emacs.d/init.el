@@ -534,6 +534,14 @@ file doesn't exist."
   (vertico-multiform-mode 1))
 
 
+;;; EAT
+
+(use-package eat
+  :ensure t
+  :custom
+  (eat-enable-shell-prompt-annotation nil))
+
+
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 
