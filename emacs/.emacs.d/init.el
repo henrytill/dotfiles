@@ -211,6 +211,8 @@ file doesn't exist."
                      text-mode-hook))
   (add-hook mode-hook #'display-line-numbers-mode))
 
+(set-face-attribute 'help-for-help-header nil :height 1.0)
+
 (defcustom ht/after-enable-theme-hook nil
   "Hook run after a color theme is enabled via `enable-theme'."
   :type 'hook
