@@ -538,6 +538,7 @@ file doesn't exist."
 
 (use-package eat
   :ensure t
+  :commands eat
   :custom
   (eat-enable-shell-prompt-annotation nil))
 
