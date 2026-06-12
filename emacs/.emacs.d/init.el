@@ -535,6 +535,18 @@ file doesn't exist."
   (add-to-list 'vertico-multiform-categories '(embark-keybinding grid))
   (vertico-multiform-mode 1))
 
+(use-package corfu
+  :ensure t
+  :config
+  (global-corfu-mode 1))
+
+(use-package cape
+  :ensure t
+  :bind ("C-c p" . cape-prefix-map)
+  :config
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
 ;;; EAT
 
