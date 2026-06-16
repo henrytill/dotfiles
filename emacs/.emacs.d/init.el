@@ -554,6 +554,17 @@ file doesn't exist."
   (eat-enable-shell-prompt-annotation nil))
 
 
+;;; DIRENV
+
+(use-package inheritenv
+  :vc (:url "https://github.com/purcell/inheritenv.git" :rev newest)
+  :defer t)
+
+(use-package envrc
+  :vc (:url "https://github.com/purcell/envrc.git" :rev newest)
+  :hook (after-init . envrc-global-mode))
+
+
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 

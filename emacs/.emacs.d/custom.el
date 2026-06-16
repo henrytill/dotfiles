@@ -16,7 +16,9 @@
             tuareg vertico vertico-multiform yaml-mode yasnippet
             zig-mode))
  '(package-vc-selected-packages
-   '((neocaml :url "https://github.com/bbatsov/neocaml")
+   '((inheritenv :url "https://github.com/purcell/inheritenv.git")
+     (envrc :url "https://github.com/purcell/envrc.git")
+     (neocaml :url "https://github.com/bbatsov/neocaml")
      (ocaml-eglot :url "https://github.com/tarides/ocaml-eglot.git")
      (zig-mode :url "https://github.com/henrytill/zig-mode.git")
      (idris-mode :url
