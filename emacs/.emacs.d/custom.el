@@ -5,15 +5,16 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(auctex bison-mode buttercup consult csv-mode d-mode dockerfile-mode
-            eat ediprolog elpher embark embark-consult evil
-            geiser-chez git-modes gnu-apl-mode go-mode haskell-mode
-            idris-mode julia-mode lua-mode macrostep magit-annex
-            marginalia markdown-mode meow meson-mode neocaml nix-mode
-            ocaml-eglot opam-switch-mode orderless paredit perl-doc
-            proof-general racket-mode rec-mode rust-mode sly sml-mode
-            sql-indent swift-mode tuareg vertico vertico-multiform
-            yaml-mode yasnippet zig-mode))
+   '(auctex bison-mode buttercup cape consult corfu csv-mode d-mode
+            dockerfile-mode eat ediprolog elpher embark embark-consult
+            envrc evil geiser-chez git-modes gnu-apl-mode go-mode
+            haskell-mode idris-mode inheritenv julia-mode lua-mode
+            macrostep magit-annex marginalia markdown-mode meow
+            meson-mode neocaml nix-mode ocaml-eglot opam-switch-mode
+            orderless paredit perl-doc proof-general racket-mode
+            rec-mode rust-mode sly sml-mode sql-indent swift-mode
+            tuareg vertico vertico-multiform yaml-mode yasnippet
+            zig-mode))
  '(package-vc-selected-packages
    '((neocaml :url "https://github.com/bbatsov/neocaml")
      (ocaml-eglot :url "https://github.com/tarides/ocaml-eglot.git")
@@ -31,4 +32,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Unifont" :foundry "GNU " :slant normal :weight regular :height 120 :width normal)))))
+ '(default ((t (:family "Unifont" :foundry "GNU " :slant normal :weight regular :height 120 :width normal))))
+ '(fixed-pitch ((t (:family "Unifont")))))
