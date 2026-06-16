@@ -345,7 +345,6 @@ file doesn't exist."
 
 (with-eval-after-load 'dired
   (require 'browse-url)
-  (bind-key "SPC" nil dired-mode-map)
   (bind-key "-" #'dired-up-directory dired-mode-map))
 
 (setopt dired-dwim-target t
@@ -408,8 +407,6 @@ file doesn't exist."
   :config
   (put 'magit-clean 'disabled nil)
   (setopt magit-last-seen-setup-instructions "1.4.0")
-  (bind-key "SPC" nil magit-mode-map)
-  (bind-key "x" nil magit-mode-map)
   (bind-key "@" #'magit-annex-dispatch magit-mode-map))
 
 (use-package magit-annex
