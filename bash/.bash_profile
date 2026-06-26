@@ -38,6 +38,7 @@ declare -A env_vars=(
     [npm_config_prefix]="$HOME/.local/opt/npm"
     [CHROME_EXECUTABLE]=/usr/bin/chromium
     [LOCALE_ARCHIVE]=/usr/lib/locale/locale-archive
+    [NO_COLOR]=1
 )
 
 for var in "${!env_vars[@]}"; do
