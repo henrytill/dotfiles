@@ -981,9 +981,8 @@ state at that position."
 
 (use-package nix-mode
   :ensure t
-  :mode "\\.nix\\'")
-
-(with-eval-after-load 'nix
+  :mode "\\.nix\\'"
+  :config
   (defun ht/nixfmt-buffer-file ()
     "Format the current Nix buffer using nixfmt."
     (interactive)
