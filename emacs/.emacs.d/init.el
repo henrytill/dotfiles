@@ -143,8 +143,8 @@ file doesn't exist."
 
 (defconst ht/global-bindings
   '(("C-x C-b" . ibuffer)
-    ("M-/" . hippie-expand)
-    ("M-z" . zap-up-to-char)
+    ("M-/"     . hippie-expand)
+    ("M-z"     . zap-up-to-char)
     ("C-c h o" . ff-find-other-file)))
 
 (dolist (binding ht/global-bindings)
@@ -1440,21 +1440,21 @@ as a markdown link."
   :group 'ht)
 
 (defvar ht/before-save-formatters
-  '((c-mode . clang-format-buffer)
-    (c++-mode . clang-format-buffer)
+  '((c-mode    . clang-format-buffer)
+    (c++-mode  . clang-format-buffer)
     (java-mode . clang-format-buffer)
-    (go-mode . gofmt)))
+    (go-mode   . gofmt)))
 
 (defvar ht/after-save-formatters
   '((haskell-mode . ht/fourmolu-buffer-file)
-    (js-mode . ht/prettier-buffer-file)
-    (lua-mode . ht/stylua-buffer-file)
-    (meson-mode . ht/meson-format-buffer-file)
+    (js-mode      . ht/prettier-buffer-file)
+    (lua-mode     . ht/stylua-buffer-file)
+    (meson-mode   . ht/meson-format-buffer-file)
     (neocaml-mode . ht/ocamlformat-buffer-file)
-    (nix-mode . ht/nixfmt-buffer-file)
-    (python-mode . ht/black-format-buffer-file)
-    (tuareg-mode . ht/ocamlformat-buffer-file)
-    (zig-mode . ht/zig-fmt-buffer-file)))
+    (nix-mode     . ht/nixfmt-buffer-file)
+    (python-mode  . ht/black-format-buffer-file)
+    (tuareg-mode  . ht/ocamlformat-buffer-file)
+    (zig-mode     . ht/zig-fmt-buffer-file)))
 
 (defun ht/run-formatter (formatters)
   "Run appropriate formatter from FORMATTERS based on current major mode."
