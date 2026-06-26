@@ -987,9 +987,10 @@ state at that position."
   (defun ht/nixfmt-buffer-file ()
     "Format the current Nix buffer using nixfmt."
     (interactive)
-    (let ((file-name (buffer-file-name))
+    (let ((file-name (file-local-name (buffer-file-name)))
           (default-directory (project-root (project-current t))))
-      (shell-command (format "nixfmt %s" file-name)))))
+      (shell-command (format "nixfmt %s" file-name))
+      (revert-buffer t t))))
 
 ;;; OCAML
 
