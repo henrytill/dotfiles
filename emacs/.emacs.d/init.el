@@ -1439,13 +1439,13 @@ as a markdown link."
   :type 'boolean
   :group 'ht)
 
-(defvar ht/before-save-formatters
+(defconst ht/before-save-formatters
   '((c-mode    . clang-format-buffer)
     (c++-mode  . clang-format-buffer)
     (java-mode . clang-format-buffer)
     (go-mode   . gofmt)))
 
-(defvar ht/after-save-formatters
+(defconst ht/after-save-formatters
   '((haskell-mode . ht/fourmolu-buffer-file)
     (js-mode      . ht/prettier-buffer-file)
     (lua-mode     . ht/stylua-buffer-file)
