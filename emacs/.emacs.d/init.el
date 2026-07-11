@@ -1171,12 +1171,7 @@ state at that position."
 
 (with-eval-after-load 'tex
   (setopt TeX-auto-save t
-          TeX-parse-self t)
-  (when (and (is-linux-p)
-             (executable-find "zathura")
-             (boundp 'TeX-view-program-selection))
-    (add-to-list 'TeX-view-program-selection
-                 '(output-pdf "Zathura"))))
+          TeX-parse-self t))
 
 (dolist (f '(display-line-numbers-mode
              whitespace-mode))
