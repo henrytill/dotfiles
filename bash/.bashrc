@@ -28,14 +28,18 @@ shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -n "$(command -v lesspipe)" ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-case "$TERM" in
-xterm*|rxvt*|foot*|screen*|tmux*|eterm-color|eat-truecolor)
-    PS1="\n${debian_chroot:+($debian_chroot)}\[\e[1m\][\$?] \u@\h\[\e[0m\] \w\\$ "
-    ;;
-dumb)
+if test -z "$NO_COLOR"
+then
+    case "$TERM" in
+    xterm*|rxvt*|foot*|screen*|tmux*|eterm-color|eat-truecolor)
+	PS1="\n${debian_chroot:+($debian_chroot)}\[\e[1m\][\$?] \u@\h\[\e[0m\] \w\\$ "
+	;;
+    *)
+	;;
+    esac
+else
     PS1="\n${debian_chroot:+($debian_chroot)}[\$?] \u@\h \w\\$ "
-    ;;
-esac
+fi
 
 # Set the title
 case "$TERM" in
