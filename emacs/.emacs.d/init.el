@@ -195,13 +195,10 @@ file doesn't exist."
 ;;; https://codeberg.org/dnkl/foot/wiki#only-8-colors-in-emacs
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
 
-(setopt blink-cursor-mode nil
-        column-number-mode t
-        display-line-numbers-widen t
+(setopt display-line-numbers-widen t
         display-line-numbers-width 4
         display-time-day-and-date t
         display-time-default-load-average nil
-        display-time-mode t
         show-paren-mode t
         visible-cursor nil)
 
@@ -240,8 +237,7 @@ file doesn't exist."
   (when (and (is-unix-p))
     (setopt menu-bar-mode nil))
   (when (display-graphic-p)
-    (setopt scroll-bar-mode nil
-            tool-bar-mode nil)))
+    (setopt scroll-bar-mode nil)))
 
 (defun ht/fix-split-behavior ()
   "Fix split behavior on Unix with a graphic display."

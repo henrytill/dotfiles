@@ -4,6 +4,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
+ '(blink-cursor-mode nil)
+ '(column-number-mode t)
+ '(display-time-mode t)
  '(package-selected-packages
    '(auctex bison-mode buttercup cape consult corfu csv-mode d-mode
             dockerfile-mode eat ediprolog elpher embark embark-consult
@@ -28,7 +31,8 @@
  '(safe-local-variable-values
    '((geiser-scheme-implementation . chez)
      (eval c-set-offset 'cpp-macro 0 nil)
-     (ht/use-project-comint-history . t) (ht/format-on-save . t))))
+     (ht/use-project-comint-history . t) (ht/format-on-save . t)))
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
