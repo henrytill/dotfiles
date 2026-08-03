@@ -13,6 +13,5 @@ let () =
 #use "down.top";;
 
 (* Local Variables: *)
-(* mode: tuareg *)
-(* eval: (merlin-mode 0) *)
+(* mode: neocaml *)
 (* End: *)
