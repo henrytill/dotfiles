@@ -5,8 +5,10 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 Xft.rgba: rgb
 
-UXTerm*faceName: xft:JuliaMono:style=Regular:pixelsize=14
-UXTerm*boldFont: xft:JuliaMono:style=Bold:pixelsize=14
+UXTerm*faceName: Mx437 IBM VGA 8x16
+UXTerm*faceSize: 12
+UXTerm*renderFont: true
+
 UXTerm*boldColors: false
 UXTerm*colorBDMode: false
 UXTerm.termName: xterm-256color
@@ -16,29 +18,8 @@ UXTerm.omitTranslation: fullscreen
 UXTerm*eightBitInput: false
 UXTerm*eightBitOutput: true
 
-! Modus Operandi color scheme
-UXTerm*background: #ffffff
-UXTerm*foreground: #000000
-
-! Normal colors
-UXTerm*color0: #000000
-UXTerm*color1: #a60000
-UXTerm*color2: #005e00
-UXTerm*color3: #813e00
-UXTerm*color4: #0031a9
-UXTerm*color5: #721045
-UXTerm*color6: #00538b
-UXTerm*color7: #bfbfbf
-
-! Bright colors
-UXTerm*color8: #595959
-UXTerm*color9: #972500
-UXTerm*color10: #315b00
-UXTerm*color11: #70480f
-UXTerm*color12: #2544bb
-UXTerm*color13: #5317ac
-UXTerm*color14: #005a5f
-UXTerm*color15: #ffffff
+UXTerm*background: #000000
+UXTerm*foreground: #ffffff
 
 ! Local Variables:
 ! compile-command: "xrdb -load x11/.Xresources"
