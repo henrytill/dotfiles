@@ -2,10 +2,10 @@
 MY_HOSTS = proteus thalassa thaumas
 
 # hosts and their package sets
-proteus  = bash code dune emacs foot gdb git git-unix nix \
-           tmux zathura
-thalassa = bash code dune emacs foot gdb git git-unix nix \
-           tmux x11 zathura
+proteus  = bash code dune emacs fontconfig foot gdb git git-unix \
+           nix ptyxis tmux zathura
+thalassa = bash code dune emacs fontconfig foot gdb git git-unix \
+           nix ptyxis tmux x11 zathura
 thaumas  = bash emacs foot gdb git git-unix
 
 # base package set for undefined hosts
@@ -14,7 +14,9 @@ BASE_PKGS = git git-unix
 # target directories
 DIRS =
 DIRS += ../.config
+DIRS += ../.config/fontconfig
 DIRS += ../.cache/gdb
+DIRS += ../.var/app/app.devsuite.Ptyxis/config/fontconfig/conf.d
 
 # get host name
 HOST = $(shell hostname -s)
