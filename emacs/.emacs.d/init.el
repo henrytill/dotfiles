@@ -221,14 +221,46 @@ file doesn't exist."
 
 (advice-add 'enable-theme :after #'ht/run-after-enable-theme-hook)
 
-(defun ht/normalize-face-weights ()
-  "Reset every bold face to a normal weight on all frames."
-  (dolist (face (face-list))
-    (when (memq (face-attribute face :weight nil t)
-                '(semi-bold bold extra-bold ultra-bold heavy black))
-      (set-face-attribute face nil :weight 'normal))))
+(defconst ht/bold-weights '(semi-bold bold extra-bold ultra-bold heavy black)
+  "Face weights treated as bold by `ht/normalize-face-weights'.")
 
-(add-hook 'ht/after-enable-theme-hook #'ht/normalize-face-weights)
+(defun ht/font-has-real-bold-p (family)
+  "Return non-nil if FAMILY provides an actual bold face.
+A family without one gets a synthesized bold instead, drawn by
+overstriking the glyphs a pixel apart."
+  (let ((font (and (stringp family)
+                   (find-font (font-spec :family family :weight 'bold)))))
+    (and font (eq (font-get font :weight) 'bold))))
+
+(defun ht/face-family (face)
+  "Return the font family FACE resolves to, falling back to `default'."
+  (let ((family (face-attribute face :family nil t)))
+    (if (or (null family) (eq family 'unspecified))
+        (face-attribute 'default :family)
+      family)))
+
+(defun ht/normalize-face-weights ()
+  "Reset bold faces to a normal weight on all frames.
+Faces whose family has a real bold face are left alone, so that real
+bold is still used where it exists and only synthesized bold is
+suppressed."
+  (let ((cache (make-hash-table :test #'equal)))
+    (dolist (face (face-list))
+      (when (memq (face-attribute face :weight nil t) ht/bold-weights)
+        (let* ((family (ht/face-family face))
+               (real-bold (gethash family cache 'unknown)))
+          (when (eq real-bold 'unknown)
+            (setq real-bold (ht/font-has-real-bold-p family))
+            (puthash family real-bold cache))
+          (unless real-bold
+            (set-face-attribute face nil :weight 'normal)))))))
+
+(cond ((boundp 'font-use-fontconfig-embolden)
+       (setq font-use-fontconfig-embolden t)
+       (message "ht: fontconfig decides synthetic bold"))
+      (t
+       (add-hook 'ht/after-enable-theme-hook #'ht/normalize-face-weights)
+       (message "ht: unpatched Emacs, normalizing bold face weights in Lisp")))
 
 (load-theme 'modus-vivendi t)
 
@@ -548,7 +580,6 @@ file doesn't exist."
   :commands eat
   :custom
   (eat-enable-shell-prompt-annotation nil))
-
 
 ;;; DIRENV
 
