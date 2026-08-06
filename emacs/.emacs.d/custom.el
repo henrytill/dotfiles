@@ -39,4 +39,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Px IBM VGA8" :foundry "V.R." :slant normal :weight regular :height 120 :width normal))))
- '(fixed-pitch ((t (:family "Unifont")))))
+ '(fixed-pitch ((t (:family "Px IBM VGA8" :foundry "V.R." :slant normal :weight regular :height 120 :width normal)))))
