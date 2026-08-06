@@ -560,6 +560,12 @@ file doesn't exist."
   :vc (:url "https://github.com/purcell/envrc.git" :rev newest)
   :hook (after-init . envrc-global-mode))
 
+;;; PDFGREP
+
+(use-package pdf-grep
+  :load-path ht/site-lisp-directory
+  :if (executable-find "pdfgrep")
+  :commands (pdf-grep))
 
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
