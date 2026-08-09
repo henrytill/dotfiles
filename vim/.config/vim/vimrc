@@ -10,7 +10,6 @@ set shiftwidth=0 " use tabstop
 set termguicolors
 syntax on
 colorscheme inl
-set background=light
 
 if has("gui_running")
   set guioptions=
