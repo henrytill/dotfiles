@@ -6,6 +6,11 @@
 ;; entrypoint does not run for exec either.  Everything below exists to put
 ;; back, selectively, the parts of that environment we actually want.
 
+;; both live in tramp-loaddefs.el, so (require 'tramp) is enough to bind
+;; them — tramp-container.el itself need not be loaded
+(defvar tramp-podman-method)
+(defvar tramp-podman-program)
+
 (defconst ht/devcontainer-base-env
   '("ENV=''" "TMOUT=0" "LC_CTYPE=en_US.UTF-8"
     "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=cat"
@@ -17,6 +22,13 @@
 This is the default from tramp.el with LC_CTYPE given a real locale:
 Tramp ships it as the literal two-apostrophe string, which bash rejects
 with a setlocale warning once `shell-file-name' is bash rather than sh.")
+
+;; Loading this file unconditionally is deliberate: it mirrors Tramp, which
+;; registers the podman method whether or not podman is installed and shells
+;; out only when a connection or a completion actually asks it to.  Nothing
+;; here runs a program at load time, so there is no executable-find guard;
+;; the two commands below use `tramp-podman-program' so a renamed or wrapped
+;; client stays a single point of configuration.
 
 ;; safe at init time — just defines the bundle
 (connection-local-set-profile-variables
@@ -34,7 +46,7 @@ with a setlocale warning once `shell-file-name' is bash rather than sh.")
 (with-eval-after-load 'tramp
   (require 'shell)
   (connection-local-set-profiles
-   '(:application tramp :protocol "podman") 'ht/devcontainer-env))
+   `(:application tramp :protocol ,tramp-podman-method) 'ht/devcontainer-env))
 
 ;;; Importing the login-shell environment
 
@@ -62,8 +74,9 @@ with a setlocale warning once `shell-file-name' is bash rather than sh.")
 
 (defun ht/devcontainer-containers ()
   "Return the names of the running podman containers."
+  (require 'tramp)
   (with-temp-buffer
-    (unless (zerop (call-process "podman" nil t nil
+    (unless (zerop (call-process tramp-podman-program nil t nil
                                  "ps" "--format" "{{.Names}}"))
       (error "podman ps failed: %s" (string-trim (buffer-string))))
     (split-string (buffer-string) "\n" t)))
@@ -78,7 +91,7 @@ user means the image's default: Tramp drops its (\"-u\" \"%u\") login-arg
 group when the expansion is empty, so we omit -u for the same case."
   (with-temp-buffer
     (unless (zerop (apply #'call-process
-                          "podman" nil t nil
+                          tramp-podman-program nil t nil
                           `("exec"
                             ,@(when-let* ((user (tramp-file-name-user vec)))
                                 (list "-u" user))
@@ -110,7 +123,8 @@ the next remote operation reconnects with the new values.  Re-run after
   (require 'tramp)
   ;; one parse drives both the probe and the flush, so they cannot disagree
   ;; about which user's connection is being refreshed
-  (let* ((vec (tramp-dissect-file-name (format "/podman:%s:/" container)))
+  (let* ((vec (tramp-dissect-file-name
+               (format "/%s:%s:/" tramp-podman-method container)))
          (imported (ht/devcontainer-login-env vec))
          ;; shadow only what actually came back, not every name we asked
          ;; for: a variable the login shell did not export must keep its
