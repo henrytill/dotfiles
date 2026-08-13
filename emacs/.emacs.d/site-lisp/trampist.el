@@ -38,6 +38,11 @@ with a setlocale warning once `shell-file-name' is bash rather than sh.")
 
 ;;; Importing the login-shell environment
 
+;; Compile-time only; none of these are autoloaded outside tramp.el, so the
+;; commands below `require' Tramp before calling them.
+(declare-function tramp-cleanup-connection "tramp-cmds")
+(declare-function tramp-dissect-file-name "tramp")
+
 ;; Variables set by ~/.profile (opam's init hook, the ssh-agent drop-in) are
 ;; invisible to Tramp, which matters most for M-x compile: without
 ;; CAML_LD_LIBRARY_PATH and friends the toolchain half-works.  Hardcoding them
@@ -86,6 +91,9 @@ the next remote operation reconnects with the new values.  Re-run after
 `opam switch', which invalidates every imported path."
   (interactive (list (completing-read "Container: "
                                       (ht/devcontainer-containers) nil t)))
+  ;; deferred rather than a top-level `require': loading this file must not
+  ;; drag in Tramp at startup, but nothing below works without it
+  (require 'tramp)
   (let ((imported (ht/devcontainer-login-env container)))
     (connection-local-update-profile-variables
      'ht/devcontainer-env
@@ -96,11 +104,13 @@ the next remote operation reconnects with the new values.  Re-run after
                               ht/devcontainer-env-imports))
                     ht/devcontainer-base-env)
                    imported))))
-    (when-let* ((vec (ignore-errors
-                       (tramp-dissect-file-name
-                        (format "/podman:%s:/" container)))))
-      ;; keep async processes: existing shell buffers survive the flush
-      (tramp-cleanup-connection vec 'keep-debug 'keep-password 'keep-processes))
+    ;; a never-connected vector is fine here: the cleanup is a no-op.  A
+    ;; malformed one should signal rather than be silently taken for "no
+    ;; connection to flush".
+    (tramp-cleanup-connection
+     (tramp-dissect-file-name (format "/podman:%s:/" container))
+     ;; keep async processes: existing shell buffers survive the flush
+     'keep-debug 'keep-password 'keep-processes)
     (message "Imported %d variable(s) from %s" (length imported) container)
     imported))
 
