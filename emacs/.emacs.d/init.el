@@ -598,6 +598,11 @@ suppressed."
   :if (executable-find "pdfgrep")
   :commands (pdf-grep))
 
+;;; TRAMPIST
+
+(use-package trampist
+  :load-path ht/site-lisp-directory)
+
 
 ;;; --- PROGRAMMING LANGUAGES --- ;;;
 
