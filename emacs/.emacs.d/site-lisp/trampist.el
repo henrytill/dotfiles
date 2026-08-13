@@ -109,15 +109,17 @@ group when the expansion is empty, so we omit -u for the same case."
 
 (defun ht/devcontainer-sync-env (container)
   "Merge CONTAINER's login-shell environment into the connection profile.
-CONTAINER is a name from `ht/devcontainer-containers', optionally
-prefixed with \"USER@\" to match how the connection is addressed.
+CONTAINER is a name from `ht/devcontainer-containers'.  From Lisp it may
+also carry a \"USER@\" prefix, naming the connection as Tramp addresses
+it; interactively the prompt requires a match against the running
+containers, so a typo cannot be taken for a container that is simply not
+running yet.
 The imported values reach remote processes through the environment Tramp
 exports once at connection setup, so any existing connection is flushed;
 the next remote operation reconnects with the new values.  Re-run after
 `opam switch', which invalidates every imported path."
   (interactive (list (completing-read "Container: "
-                                      (ht/devcontainer-containers)
-                                      nil 'confirm)))
+                                      (ht/devcontainer-containers) nil t)))
   ;; deferred rather than a top-level `require': loading this file must not
   ;; drag in Tramp at startup, but nothing below works without it
   (require 'tramp)
