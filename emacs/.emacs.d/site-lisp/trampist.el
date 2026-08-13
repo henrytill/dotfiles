@@ -42,6 +42,8 @@ with a setlocale warning once `shell-file-name' is bash rather than sh.")
 ;; commands below `require' Tramp before calling them.
 (declare-function tramp-cleanup-connection "tramp-cmds")
 (declare-function tramp-dissect-file-name "tramp")
+(declare-function tramp-file-name-host "tramp")
+(declare-function tramp-file-name-user "tramp")
 
 ;; Variables set by ~/.profile (opam's init hook, the ssh-agent drop-in) are
 ;; invisible to Tramp, which matters most for M-x compile: without
@@ -66,13 +68,22 @@ with a setlocale warning once `shell-file-name' is bash rather than sh.")
       (error "podman ps failed: %s" (string-trim (buffer-string))))
     (split-string (buffer-string) "\n" t)))
 
-(defun ht/devcontainer-login-env (container)
-  "Return (\"VAR=VAL\" ...) for `ht/devcontainer-env-imports' in CONTAINER.
-Queried with podman directly rather than over Tramp, so this can run
-before any connection exists."
+(defun ht/devcontainer-login-env (vec)
+  "Return (\"VAR=VAL\" ...) for `ht/devcontainer-env-imports' in VEC.
+VEC is a dissected Tramp file name naming the container.  Queried with
+podman directly rather than over Tramp, so this can run before any
+connection exists -- but as the user Tramp itself would connect as,
+since HOME, and therefore which ~/.profile runs, depends on it.  A nil
+user means the image's default: Tramp drops its (\"-u\" \"%u\") login-arg
+group when the expansion is empty, so we omit -u for the same case."
   (with-temp-buffer
-    (unless (zerop (call-process "podman" nil t nil
-                                 "exec" container "bash" "-lc" "env -0"))
+    (unless (zerop (apply #'call-process
+                          "podman" nil t nil
+                          `("exec"
+                            ,@(when-let* ((user (tramp-file-name-user vec)))
+                                (list "-u" user))
+                            ,(tramp-file-name-host vec)
+                            "bash" "-lc" "env -0")))
       (error "podman exec failed: %s" (string-trim (buffer-string))))
     (delq nil
           (mapcar (lambda (entry)
@@ -85,16 +96,22 @@ before any connection exists."
 
 (defun ht/devcontainer-sync-env (container)
   "Merge CONTAINER's login-shell environment into the connection profile.
+CONTAINER is a name from `ht/devcontainer-containers', optionally
+prefixed with \"USER@\" to match how the connection is addressed.
 The imported values reach remote processes through the environment Tramp
 exports once at connection setup, so any existing connection is flushed;
 the next remote operation reconnects with the new values.  Re-run after
 `opam switch', which invalidates every imported path."
   (interactive (list (completing-read "Container: "
-                                      (ht/devcontainer-containers) nil t)))
+                                      (ht/devcontainer-containers)
+                                      nil 'confirm)))
   ;; deferred rather than a top-level `require': loading this file must not
   ;; drag in Tramp at startup, but nothing below works without it
   (require 'tramp)
-  (let ((imported (ht/devcontainer-login-env container)))
+  ;; one parse drives both the probe and the flush, so they cannot disagree
+  ;; about which user's connection is being refreshed
+  (let* ((vec (tramp-dissect-file-name (format "/podman:%s:/" container)))
+         (imported (ht/devcontainer-login-env vec)))
     (connection-local-update-profile-variables
      'ht/devcontainer-env
      `((tramp-remote-process-environment
@@ -104,11 +121,9 @@ the next remote operation reconnects with the new values.  Re-run after
                               ht/devcontainer-env-imports))
                     ht/devcontainer-base-env)
                    imported))))
-    ;; a never-connected vector is fine here: the cleanup is a no-op.  A
-    ;; malformed one should signal rather than be silently taken for "no
-    ;; connection to flush".
+    ;; a never-connected vector is fine here: the cleanup is a no-op
     (tramp-cleanup-connection
-     (tramp-dissect-file-name (format "/podman:%s:/" container))
+     vec
      ;; keep async processes: existing shell buffers survive the flush
      'keep-debug 'keep-password 'keep-processes)
     (message "Imported %d variable(s) from %s" (length imported) container)
