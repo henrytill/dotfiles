@@ -28,6 +28,7 @@
                  "https://github.com/idris-hackers/idris-mode.git")
      (meson-mode :url "https://github.com/wentasah/meson-mode.git")
      (magit-annex :url "https://github.com/magit/magit-annex.git")))
+ '(recentf-mode t)
  '(safe-local-variable-values
    '((geiser-scheme-implementation . chez)
      (eval c-set-offset 'cpp-macro 0 nil)
