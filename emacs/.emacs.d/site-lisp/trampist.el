@@ -1,10 +1,47 @@
-;;; trampist.el --- Tramp setup for the podman devcontainer -*- lexical-binding: t -*-
+;;; trampist.el --- Tramp setup for the podman devcontainer  -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2026  Henry Till
+
+;; Author: Henry Till <henrytill@gmail.com>
+;; Keywords: comm, processes
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
 
 ;; Tramp's connection shell is deliberately init-free: the podman method runs
 ;; "podman exec -it -u USER HOST /bin/sh -i", which is interactive but not a
 ;; login shell, so nothing in /etc/profile.d is sourced.  The container's
-;; entrypoint does not run for exec either.  Everything below exists to put
+;; entrypoint does not run for exec either.  Everything here exists to put
 ;; back, selectively, the parts of that environment we actually want.
+;;
+;; Loading this file registers a connection-local profile for the podman
+;; method: bash as the remote shell, and a `tramp-remote-process-environment'
+;; built from `ht/devcontainer-base-env'.  That much is static, and enough for
+;; a shell that behaves.
+;;
+;; The toolchain needs more.  `ht/devcontainer-sync-env' lifts the variables
+;; named in `ht/devcontainer-env-imports' out of a real login shell in the
+;; container and merges them into the profile, so that M-x compile and
+;; friends see what an interactive session there would see.  Each value
+;; embeds the current opam switch, so re-run it after `opam switch'.
+;;
+;; The probe runs podman directly rather than going over Tramp, which lets it
+;; work before any connection exists -- and as the same user Tramp would
+;; connect as, since HOME, and so which ~/.profile runs, follows from that.
+
+;;; Code:
 
 ;; both live in tramp-loaddefs.el, so (require 'tramp) is enough to bind
 ;; them — tramp-container.el itself need not be loaded
@@ -78,7 +115,7 @@ with a setlocale warning once `shell-file-name' is bash rather than sh.")
   (with-temp-buffer
     (unless (zerop (call-process tramp-podman-program nil t nil
                                  "ps" "--format" "{{.Names}}"))
-      (error "podman ps failed: %s" (string-trim (buffer-string))))
+      (error "Cannot list containers: %s" (string-trim (buffer-string))))
     (split-string (buffer-string) "\n" t)))
 
 (defun ht/devcontainer-login-env (vec)
@@ -97,7 +134,8 @@ group when the expansion is empty, so we omit -u for the same case."
                                 (list "-u" user))
                             ,(tramp-file-name-host vec)
                             "bash" "-lc" "env -0")))
-      (error "podman exec failed: %s" (string-trim (buffer-string))))
+      (error "Cannot read environment from %s: %s"
+             (tramp-file-name-host vec) (string-trim (buffer-string))))
     (delq nil
           (mapcar (lambda (entry)
                     (let ((name (car (split-string entry "="))))
