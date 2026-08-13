@@ -28,14 +28,14 @@
 ;;
 ;; Loading this file registers a connection-local profile for the podman
 ;; method: bash as the remote shell, and a `tramp-remote-process-environment'
-;; built from `ht/devcontainer-base-env'.  That much is static, and enough for
-;; a shell that behaves.
+;; built from `trampist-base-env'.  That much is static, and enough for a
+;; shell that behaves.
 ;;
-;; The toolchain needs more.  `ht/devcontainer-sync-env' lifts the variables
-;; named in `ht/devcontainer-env-imports' out of a real login shell in the
-;; container and merges them into the profile, so that M-x compile and
-;; friends see what an interactive session there would see.  Each value
-;; embeds the current opam switch, so re-run it after `opam switch'.
+;; The toolchain needs more.  `trampist-sync-env' lifts the variables named in
+;; `trampist-env-imports' out of a real login shell in the container and
+;; merges them into the profile, so that M-x compile and friends see what an
+;; interactive session there would see.  Each value embeds the current opam
+;; switch, so re-run it after `opam switch'.
 ;;
 ;; The probe runs podman directly rather than going over Tramp, which lets it
 ;; work before any connection exists -- and as the same user Tramp would
@@ -48,12 +48,12 @@
 (defvar tramp-podman-method)
 (defvar tramp-podman-program)
 
-(defconst ht/devcontainer-base-env
+(defconst trampist-base-env
   '("ENV=''" "TMOUT=0" "LC_CTYPE=en_US.UTF-8"
     "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=cat"
     "autocorrect=" "correct="
-    ;; static fallback; `ht/devcontainer-sync-env' replaces it with the
-    ;; value a login shell in the container actually reports
+    ;; static fallback; `trampist-sync-env' replaces it with the value a
+    ;; login shell in the container actually reports
     "SSH_AUTH_SOCK=/run/user/1000/keyring/ssh")
   "Base value for `tramp-remote-process-environment' in the container.
 This is the default from tramp.el with LC_CTYPE given a real locale:
@@ -69,11 +69,11 @@ with a setlocale warning once `shell-file-name' is bash rather than sh.")
 
 ;; safe at init time — just defines the bundle
 (connection-local-set-profile-variables
- 'ht/devcontainer-env
+ 'trampist-env
  `((shell-file-name . "/bin/bash")
    (shell-command-switch . "-c")
    (explicit-bash-args . ("--noediting" "-l" "-i"))
-   (tramp-remote-process-environment . ,ht/devcontainer-base-env)))
+   (tramp-remote-process-environment . ,trampist-base-env)))
 
 ;; must run AFTER tramp-integration registers its defaults: new criteria are
 ;; consed onto the front of `connection-local-criteria-alist' and the resolver
@@ -83,7 +83,7 @@ with a setlocale warning once `shell-file-name' is bash rather than sh.")
 (with-eval-after-load 'tramp
   (require 'shell)
   (connection-local-set-profiles
-   `(:application tramp :protocol ,tramp-podman-method) 'ht/devcontainer-env))
+   `(:application tramp :protocol ,tramp-podman-method) 'trampist-env))
 
 ;;; Importing the login-shell environment
 
@@ -103,13 +103,13 @@ with a setlocale warning once `shell-file-name' is bash rather than sh.")
 ;; `tramp-remote-process-environment'.  Use `tramp-remote-path' (with
 ;; `tramp-own-remote-path') if Tramp ever fails to find a remote executable.
 
-(defvar ht/devcontainer-env-imports
+(defvar trampist-env-imports
   '("SSH_AUTH_SOCK"
     "OPAM_SWITCH_PREFIX" "CAML_LD_LIBRARY_PATH"
     "OCAML_TOPLEVEL_PATH" "OCAMLTOP_INCLUDE_PATH" "MANPATH")
   "Variables to lift out of a login shell inside the container.")
 
-(defun ht/devcontainer-containers ()
+(defun trampist-containers ()
   "Return the names of the running podman containers."
   (require 'tramp)
   (with-temp-buffer
@@ -118,8 +118,8 @@ with a setlocale warning once `shell-file-name' is bash rather than sh.")
       (error "Cannot list containers: %s" (string-trim (buffer-string))))
     (split-string (buffer-string) "\n" t)))
 
-(defun ht/devcontainer-login-env (vec)
-  "Return (\"VAR=VAL\" ...) for `ht/devcontainer-env-imports' in VEC.
+(defun trampist--login-env (vec)
+  "Return (\"VAR=VAL\" ...) for `trampist-env-imports' in VEC.
 VEC is a dissected Tramp file name naming the container.  Queried with
 podman directly rather than over Tramp, so this can run before any
 connection exists -- but as the user Tramp itself would connect as,
@@ -139,25 +139,24 @@ group when the expansion is empty, so we omit -u for the same case."
     (delq nil
           (mapcar (lambda (entry)
                     (let ((name (car (split-string entry "="))))
-                      (and (member name ht/devcontainer-env-imports)
+                      (and (member name trampist-env-imports)
                            (not (string-empty-p
                                  (substring entry (1+ (length name)))))
                            entry)))
                   (split-string (buffer-string) "\0" t)))))
 
-(defun ht/devcontainer-sync-env (container)
+(defun trampist-sync-env (container)
   "Merge CONTAINER's login-shell environment into the connection profile.
-CONTAINER is a name from `ht/devcontainer-containers'.  From Lisp it may
-also carry a \"USER@\" prefix, naming the connection as Tramp addresses
-it; interactively the prompt requires a match against the running
-containers, so a typo cannot be taken for a container that is simply not
-running yet.
+CONTAINER is a name from `trampist-containers'.  From Lisp it may also
+carry a \"USER@\" prefix, naming the connection as Tramp addresses it;
+interactively the prompt requires a match against the running containers,
+so a typo cannot be taken for a container that is simply not running yet.
 The imported values reach remote processes through the environment Tramp
 exports once at connection setup, so any existing connection is flushed;
 the next remote operation reconnects with the new values.  Re-run after
 `opam switch', which invalidates every imported path."
   (interactive (list (completing-read "Container: "
-                                      (ht/devcontainer-containers) nil t)))
+                                      (trampist-containers) nil t)))
   ;; deferred rather than a top-level `require': loading this file must not
   ;; drag in Tramp at startup, but nothing below works without it
   (require 'tramp)
@@ -165,20 +164,20 @@ the next remote operation reconnects with the new values.  Re-run after
   ;; about which user's connection is being refreshed
   (let* ((vec (tramp-dissect-file-name
                (format "/%s:%s:/" tramp-podman-method container)))
-         (imported (ht/devcontainer-login-env vec))
-         ;; shadow only what actually came back, not every name we asked
-         ;; for: a variable the login shell did not export must keep its
-         ;; static fallback from `ht/devcontainer-base-env' rather than
-         ;; end up unset, which would make syncing worse than not syncing
+         (imported (trampist--login-env vec))
+         ;; shadow only what actually came back, not every name we asked for:
+         ;; a variable the login shell did not export must keep its static
+         ;; fallback from `trampist-base-env' rather than end up unset, which
+         ;; would make syncing worse than not syncing
          (shadowed (mapcar (lambda (entry) (car (split-string entry "=")))
                            imported)))
     (connection-local-update-profile-variables
-     'ht/devcontainer-env
+     'trampist-env
      `((tramp-remote-process-environment
         . ,(append (seq-remove
                     (lambda (entry)
                       (member (car (split-string entry "=")) shadowed))
-                    ht/devcontainer-base-env)
+                    trampist-base-env)
                    imported))))
     ;; a never-connected vector is fine here: the cleanup is a no-op
     (tramp-cleanup-connection
