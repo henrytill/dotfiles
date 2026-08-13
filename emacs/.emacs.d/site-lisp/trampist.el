@@ -111,14 +111,19 @@ the next remote operation reconnects with the new values.  Re-run after
   ;; one parse drives both the probe and the flush, so they cannot disagree
   ;; about which user's connection is being refreshed
   (let* ((vec (tramp-dissect-file-name (format "/podman:%s:/" container)))
-         (imported (ht/devcontainer-login-env vec)))
+         (imported (ht/devcontainer-login-env vec))
+         ;; shadow only what actually came back, not every name we asked
+         ;; for: a variable the login shell did not export must keep its
+         ;; static fallback from `ht/devcontainer-base-env' rather than
+         ;; end up unset, which would make syncing worse than not syncing
+         (shadowed (mapcar (lambda (entry) (car (split-string entry "=")))
+                           imported)))
     (connection-local-update-profile-variables
      'ht/devcontainer-env
      `((tramp-remote-process-environment
         . ,(append (seq-remove
                     (lambda (entry)
-                      (member (car (split-string entry "="))
-                              ht/devcontainer-env-imports))
+                      (member (car (split-string entry "=")) shadowed))
                     ht/devcontainer-base-env)
                    imported))))
     ;; a never-connected vector is fine here: the cleanup is a no-op
