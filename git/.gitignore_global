@@ -26,6 +26,5 @@ tags.mtime
 .direnv/
 CLAUDE.md
 /.claude/
-AGENTS.md
 cscope.*
 .mg-local
