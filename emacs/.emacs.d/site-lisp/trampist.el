@@ -140,8 +140,7 @@ group when the expansion is empty, so we omit -u for the same case."
           (mapcar (lambda (entry)
                     (let ((name (car (split-string entry "="))))
                       (and (member name trampist-env-imports)
-                           (not (string-empty-p
-                                 (substring entry (1+ (length name)))))
+                           (not (string-empty-p (substring entry (1+ (length name)))))
                            entry)))
                   (split-string (buffer-string) "\0" t)))))
 
