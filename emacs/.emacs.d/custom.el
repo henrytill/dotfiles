@@ -11,13 +11,13 @@
    '(auctex bison-mode buttercup cape consult corfu csv-mode d-mode
             dockerfile-mode eat ediprolog elpher embark embark-consult
             envrc evil geiser-chez git-modes gnu-apl-mode go-mode
-            haskell-mode idris-mode inheritenv julia-mode lua-mode
-            macrostep magit-annex marginalia markdown-mode meow
-            meson-mode neocaml nix-mode ocaml-eglot opam-switch-mode
-            orderless paredit perl-doc proof-general racket-mode
-            rec-mode rust-mode sly sml-mode sql-indent swift-mode
-            tuareg vertico vertico-multiform yaml-mode yasnippet
-            zig-mode))
+            haskell-mode idris-mode inheritenv jinja2-mode julia-mode
+            lua-mode macrostep magit-annex marginalia markdown-mode
+            meow meson-mode neocaml nix-mode ocaml-eglot
+            opam-switch-mode orderless paredit perl-doc proof-general
+            racket-mode rec-mode rust-mode sly sml-mode sql-indent
+            swift-mode tuareg vertico vertico-multiform yaml-mode
+            yasnippet zig-mode))
  '(package-vc-selected-packages
    '((envrc :url "https://github.com/purcell/envrc.git")
      (inheritenv :url "https://github.com/purcell/inheritenv.git")

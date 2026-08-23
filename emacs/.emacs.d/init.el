@@ -709,6 +709,12 @@ suppressed."
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'" . cmake-mode)))
 
+;;; JINJA
+
+(use-package jinja2-mode
+  :ensure t
+  :mode "\\.jinja\\'")
+
 ;;; NINJA
 
 (use-package ninja-mode
