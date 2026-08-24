@@ -168,14 +168,14 @@ the next remote operation reconnects with the new values.  Re-run after
          ;; a variable the login shell did not export must keep its static
          ;; fallback from `trampist-base-env' rather than end up unset, which
          ;; would make syncing worse than not syncing
-         (shadowed (mapcar (lambda (entry) (car (split-string entry "=")))
-                           imported)))
+         (shadowed (mapcar
+                    (lambda (entry) (car (split-string entry "=")))
+                    imported)))
     (connection-local-update-profile-variables
      'trampist-env
      `((tramp-remote-process-environment
         . ,(append (seq-remove
-                    (lambda (entry)
-                      (member (car (split-string entry "=")) shadowed))
+                    (lambda (entry) (member (car (split-string entry "=")) shadowed))
                     trampist-base-env)
                    imported))))
     ;; a never-connected vector is fine here: the cleanup is a no-op
