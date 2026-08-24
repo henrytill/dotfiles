@@ -539,7 +539,18 @@ suppressed."
 
 (use-package consult
   :ensure t
-  :bind (("M-s g" . consult-grep)))
+  :bind (("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s d" . consult-fd)
+         ("M-s r" . consult-ripgrep))
+  :custom
+  ;; The default prunes all dot-directories, hiding most of ~/etc
+  (consult-find-args "find . -not ( -path */.git* -prune )")
+  :config
+  ;; `fd' and `rg' skip hidden files by default
+  (setq consult-ripgrep-args (ensure-list consult-ripgrep-args))
+  (add-to-list 'consult-fd-args "--hidden" t)
+  (add-to-list 'consult-ripgrep-args "--hidden" t))
 
 (use-package embark
   :ensure t
