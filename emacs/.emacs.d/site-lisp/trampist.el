@@ -3,6 +3,7 @@
 ;; Copyright (C) 2026  Henry Till
 
 ;; Author: Henry Till <henrytill@gmail.com>
+;; Package-Requires: ((emacs "29.1"))
 ;; Keywords: comm, processes
 
 ;; This program is free software: you can redistribute it and/or modify
