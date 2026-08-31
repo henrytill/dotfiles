@@ -3,6 +3,7 @@
 ;; Copyright (C) 2026  Henry Till
 
 ;; Author: Henry Till <henrytill@gmail.com>
+;; Version: 0.1.0
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: project, convenience, tramp
 
