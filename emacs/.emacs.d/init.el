@@ -119,6 +119,7 @@ file doesn't exist."
         mouse-yank-at-point t
         require-final-newline t
         ring-bell-function 'ignore
+        rmail-primary-inbox-list (list (expand-file-name "unused-inbox" user-emacs-directory))
         save-interprogram-paste-before-kill t
         save-place-file (concat user-emacs-directory "places")
         scroll-conservatively 1
