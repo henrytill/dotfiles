@@ -1,3 +1,5 @@
+# Set environment variables
+
 if test -n "$(command -v editor)"
 then
     EDITOR="editor"
@@ -10,11 +12,8 @@ fi
 declare -A env_vars=(
     [FZF_DEFAULT_OPTS_FILE]="${HOME}/.config/fzf/fzfrc"
     [LIBVIRT_DEFAULT_URI]="qemu:///system"
-    [_JAVA_AWT_WM_NONREPARENTING]=1
-    [npm_config_prefix]="$HOME/.local/opt/npm"
-    [CHROME_EXECUTABLE]=/usr/bin/chromium
     [LOCALE_ARCHIVE]=/usr/lib/locale/locale-archive
-    [NO_COLOR]=1
+    [npm_config_prefix]="$HOME/.local/opt/npm"
 )
 
 for var in "${!env_vars[@]}"; do
@@ -22,10 +21,14 @@ for var in "${!env_vars[@]}"; do
     export "${var?}"
 done
 
+# Source ~/.bashrc
+
 if test -f "${HOME}/.bashrc"
 then
     . "${HOME}/.bashrc"
 fi
+
+# Update PATH
 
 paths=(
     "${HOME}/bin"
