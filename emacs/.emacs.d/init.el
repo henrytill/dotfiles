@@ -1153,7 +1153,8 @@ state at that position."
 
 ;;; PYTHON
 
-(add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+(when (treesit-ready-p 'python)
+  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
 
 (with-eval-after-load 'python
   (defun ht/black-format-buffer-file ()
