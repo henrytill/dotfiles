@@ -993,23 +993,33 @@ state at that position."
 
 ;;; JAVASCRIPT
 
+(defun ht/prettier-buffer-file ()
+  "Format the current JavaScript buffer using prettier."
+  (interactive)
+  (let ((file-name (buffer-file-name))
+        (default-directory (project-root (project-current t))))
+    (shell-command (format "npx prettier --write %s" file-name))))
+
 (add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-mode))
 
 (defvar js-mode-map)
 
 (with-eval-after-load 'js
   (bind-key "M-." nil js-mode-map)
-  (setopt js-indent-level 2)
-  (defun ht/prettier-buffer-file ()
-    "Format the current JavaScript buffer using prettier."
-    (interactive)
-    (let ((file-name (buffer-file-name))
-          (default-directory (project-root (project-current t))))
-      (shell-command (format "npx prettier --write %s" file-name)))))
+  (setopt js-indent-level 2))
 
 (use-package typescript-ts-mode
   :mode (("\\.ts\\'" . typescript-ts-mode)
          ("\\.tsx\\'" . tsx-ts-mode)))
+
+;;; JSON
+
+(autoload 'treesit-ready-p "treesit")
+
+(add-to-list 'auto-mode-alist '("\\.jsonc\\'" . js-json-mode))
+
+(when (treesit-ready-p 'json)
+  (add-to-list 'major-mode-remap-alist '(js-json-mode . json-ts-mode)))
 
 ;;; JULIA
 
@@ -1500,6 +1510,7 @@ as a markdown link."
 
 (defconst ht/after-save-formatters
   '((haskell-mode . ht/fourmolu-buffer-file)
+    (json-ts-mode . ht/prettier-buffer-file)
     (js-mode      . ht/prettier-buffer-file)
     (lua-mode     . ht/stylua-buffer-file)
     (meson-mode   . ht/meson-format-buffer-file)
