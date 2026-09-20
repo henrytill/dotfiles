@@ -683,7 +683,7 @@ suppressed."
 ;;; CLANG-FORMAT
 
 (when (is-windows-p)
-  (when-let ((clang-format-path (or (getenv "CLANG_FORMAT_PATH") (executable-find "clang-format"))))
+  (when-let* ((clang-format-path (or (getenv "CLANG_FORMAT_PATH") (executable-find "clang-format"))))
     (let* ((clang-bin-path (file-name-directory clang-format-path))
            (clang-format-load-path (expand-file-name "../share/clang" clang-bin-path)))
       (push clang-format-load-path load-path))))
@@ -692,7 +692,7 @@ suppressed."
   :if (locate-file "clang-format.el" load-path)
   :commands (clang-format clang-format-region clang-format-buffer)
   :config
-  (when-let ((clang-format-path (getenv "CLANG_FORMAT_PATH")))
+  (when-let* ((clang-format-path (getenv "CLANG_FORMAT_PATH")))
     (setopt clang-format-executable clang-format-path)))
 
 ;;; BISON
@@ -709,7 +709,7 @@ suppressed."
 ;;; CMAKE
 
 (when (is-windows-p)
-  (when-let ((cmake-path (executable-find "cmake")))
+  (when-let* ((cmake-path (executable-find "cmake")))
     (let* ((cmake-bin-path (file-name-directory cmake-path))
            (cmake-load-path (expand-file-name "../share/emacs/site-lisp" cmake-bin-path)))
       (push cmake-load-path load-path))))
@@ -1533,7 +1533,7 @@ as a markdown link."
           mac-option-modifier 'meta))
 
 (when (is-windows-p)
-  (when-let ((home (directory-file-name (getenv "USERPROFILE"))))
+  (when-let* ((home (directory-file-name (getenv "USERPROFILE"))))
     (setq default-directory home)))
 
 (when (and (is-unix-p) (not (display-graphic-p)))
