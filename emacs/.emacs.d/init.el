@@ -426,8 +426,8 @@ suppressed."
   :hook ((eglot-managed-mode . ht/customize-eglot))
   :functions (eglot-inlay-hints-mode)
   :config
-  (setq eglot-workspace-configuration
-        '((haskell (plugin (stan (globalOn . :json-false)))))))
+  (setq eglot-workspace-configuration '((haskell (plugin (stan (globalOn . :json-false)))))
+        eglot-code-action-indications '(eldoc-hint)))
 
 ;;; MAGIT
 
