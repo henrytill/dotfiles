@@ -263,7 +263,9 @@ suppressed."
        (add-hook 'ht/after-enable-theme-hook #'ht/normalize-face-weights)
        (message "ht: unpatched Emacs, normalizing bold face weights in Lisp")))
 
-(load-theme 'modus-vivendi t)
+(set-face-attribute 'default nil :background "black" :foreground "white")
+(setopt frame-background-mode 'dark)
+(mapc 'frame-set-background-mode (frame-list))
 
 (defun ht/remove-decorations ()
   "Remove decorations."
