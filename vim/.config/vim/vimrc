@@ -9,7 +9,7 @@ set shiftwidth=0 " use tabstop
 
 set termguicolors
 syntax on
-colorscheme inl
+colorscheme wildcharm
 
 if has("gui_running")
   set guioptions=
