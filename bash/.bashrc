@@ -28,6 +28,8 @@ shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -n "$(command -v lesspipe)" ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+PS1="\n${debian_chroot:+($debian_chroot)}[\$?] \u@\h \w\\$ "
+
 if test -z "$NO_COLOR"
 then
     case "$TERM" in
@@ -37,8 +39,6 @@ then
     *)
 	;;
     esac
-else
-    PS1="\n${debian_chroot:+($debian_chroot)}[\$?] \u@\h \w\\$ "
 fi
 
 # Set the title
