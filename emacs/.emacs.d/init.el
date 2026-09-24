@@ -427,7 +427,10 @@ suppressed."
   :functions (eglot-inlay-hints-mode)
   :config
   (setq eglot-workspace-configuration '((haskell (plugin (stan (globalOn . :json-false)))))
-        eglot-code-action-indications '(eldoc-hint)))
+        eglot-code-action-indications '(eldoc-hint))
+  (cl-defmethod eglot-register-capability
+    (_server (_method (eql workspace/didChangeConfiguration)) _id &rest _params)
+    "Ignore: eglot sends didChangeConfiguration on connect regardless."))
 
 ;;; MAGIT
 
@@ -463,6 +466,8 @@ suppressed."
   (add-hook 'prog-mode-hook f))
 
 ;;; TREE-SITTER
+
+(autoload 'treesit-ready-p "treesit")
 
 (defvar treesit-language-source-alist)
 
@@ -1003,21 +1008,49 @@ state at that position."
         (default-directory (project-root (project-current t))))
     (shell-command (format "npx prettier --write %s" file-name))))
 
-(add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-mode))
-
 (defvar js-mode-map)
 
 (with-eval-after-load 'js
   (bind-key "M-." nil js-mode-map)
   (setopt js-indent-level 2))
 
-(use-package typescript-ts-mode
-  :mode (("\\.ts\\'" . typescript-ts-mode)
-         ("\\.tsx\\'" . tsx-ts-mode)))
+(add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-mode))
+
+(when (treesit-ready-p 'javascript)
+  (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode)))
+
+(defun ht/typescript-7-tsc ()
+  "Return the local name of a TypeScript 7+ `tsc', or nil.
+Prefer the project's node_modules/.bin/tsc over one in PATH."
+  (when-let* ((default-directory (project-root (project-current t)))
+              (project-tsc (expand-file-name "node_modules/.bin/tsc"))
+              (tsc (if (file-executable-p project-tsc)
+                       (file-local-name project-tsc)
+                     (executable-find "tsc" 'remote))))
+    (with-temp-buffer
+      (when (and (eql 0 (process-file tsc nil t nil "--version"))
+                 (progn (goto-char (point-min))
+                        (re-search-forward "Version \\([0-9]+\\)\\." nil t))
+                 (>= (string-to-number (match-string 1)) 7))
+        tsc))))
+
+(defun ht/eglot-typescript-contact (_interactive)
+  "Use TypeScript 7's built-in LSP server if available.
+Fall back to typescript-language-server otherwise."
+  (if-let* ((tsc (ht/typescript-7-tsc)))
+      (list tsc "--lsp" "--stdio")
+    '("typescript-language-server" "--stdio")))
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(((js-mode :language-id "javascript")
+                  (js-ts-mode :language-id "javascript")
+                  (tsx-ts-mode :language-id "typescriptreact")
+                  (typescript-ts-mode :language-id "typescript")
+                  (typescript-mode :language-id "typescript"))
+                 . ht/eglot-typescript-contact)))
 
 ;;; JSON
-
-(autoload 'treesit-ready-p "treesit")
 
 (add-to-list 'auto-mode-alist '("\\.jsonc\\'" . js-json-mode))
 
