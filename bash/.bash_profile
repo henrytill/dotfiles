@@ -1,3 +1,39 @@
+# Restore Nix
+#
+# The graphical session sources nix-daemon.sh once and exports both its PATH
+# and its __ETC_PROFILE_NIX_SOURCED guard to everything it launches.  A login
+# shell started from inside that session (e.g. the Claude desktop app's
+# terminal, which runs `bash -l`) re-runs /etc/profile, which resets PATH and
+# drops nix.  /etc/profile.d/nix.sh then sources nix-daemon.sh again, but the
+# inherited guard makes it return early, so nix never comes back.  Anything
+# that needs nix then breaks, e.g. direnv's `use flake`.
+#
+# Only runs when nix is missing, so an ordinary tty or ssh login, where
+# /etc/profile sets nix up itself, is unaffected.  Keep this above the
+# sourcing of ~/.bashrc, whose `command -v` checks need nix on PATH.
+
+nix_daemon_sh=/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
+if test -z "$(command -v nix)" && test -r "${nix_daemon_sh}"
+then
+    xdg_data_dirs="${XDG_DATA_DIRS-}"
+
+    unset __ETC_PROFILE_NIX_SOURCED
+    . "${nix_daemon_sh}"
+
+    # nix-daemon.sh appends its share dirs unconditionally; keep the
+    # inherited value if it already has them.
+    case ":${xdg_data_dirs}:" in
+        *:/nix/var/nix/profiles/default/share:*)
+            XDG_DATA_DIRS="${xdg_data_dirs}"
+            ;;
+    esac
+
+    unset xdg_data_dirs
+fi
+
+unset nix_daemon_sh
+
 # Set environment variables
 
 if test -n "$(command -v editor)"
