@@ -24,7 +24,6 @@ tags
 tags.mtime
 .history-inferior-*
 .direnv/
-CLAUDE.md
-/.claude/
+/.claude/settings.local.json
 cscope.*
 .mg-local
