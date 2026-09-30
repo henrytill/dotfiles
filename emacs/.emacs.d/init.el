@@ -1326,6 +1326,17 @@ Fall back to typescript-language-server otherwise."
     (unless (string-suffix-p suffix markdown-regex-bold)
       (setq markdown-regex-bold (concat markdown-regex-bold suffix))))
 
+  ;; That suffix consumes the character after the closing delimiter,
+  ;; which the next bold may need as the character before its opening
+  ;; one, as in "**a** **b**".  Resume the search before it.
+  (defun ht/markdown-match-bold-rewind (match-bold last)
+    "Call MATCH-BOLD with LAST, leaving point after the closing delimiter."
+    (when (funcall match-bold last)
+      (goto-char (match-end 0))
+      t))
+
+  (advice-add 'markdown-match-bold :around #'ht/markdown-match-bold-rewind)
+
   (defun ht/markdown--emphasis-delimiter-p (pos opening)
     "Return non-nil if POS holds a lone, unescaped emphasis delimiter.
 OPENING says whether it must be able to open emphasis, or close it."
