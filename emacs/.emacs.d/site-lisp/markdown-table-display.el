@@ -42,8 +42,11 @@
 
 (defvar markdown-table-display-mode)
 
-(defvar-local markdown-table-display--table-at-point nil
-  "Start of the table containing point, or nil.")
+(defvar-local markdown-table-display--raw nil
+  "Markers (BEG . END) around the table shown as raw text, or nil.")
+
+(defvar-local markdown-table-display--dirty nil
+  "Markers (BEG . END) around changes not yet redrawn, or nil.")
 
 (defvar-local markdown-table-display--timer nil
   "Idle timer that redraws tables after a buffer change.")
@@ -180,59 +183,111 @@ ALIGNMENT is a column format from `markdown-table-colfmt'."
         (push rule lines))
       (string-join (nreverse lines) "\n"))))
 
-(defun markdown-table-display--tables ()
-  "Return a list of (BEG . END) for each table in the buffer."
+(defun markdown-table-display--table-end ()
+  "Return the end of the last row of the table at point."
+  (save-excursion
+    (goto-char (markdown-table-end))
+    (skip-chars-backward "\n")
+    (point)))
+
+(defun markdown-table-display--tables (beg end)
+  "Return a list of (BEG . END) for each table overlapping BEG to END."
   (let (tables)
     (save-excursion
-      (syntax-propertize (point-max))
-      (goto-char (point-min))
-      (while (not (eobp))
+      ;; Code blocks are found by syntax properties.  A table ends at
+      ;; the next blank line, so there is no need to look further.
+      (goto-char end)
+      (syntax-propertize (if (re-search-forward "^[ \t]*$" nil t) (point) (point-max)))
+      (goto-char beg)
+      (forward-line 0)
+      (when (markdown-table-at-point-p)
+        (goto-char (markdown-table-begin)))
+      (while (and (< (point) end)
+                  (re-search-forward markdown-table-line-regexp end t))
+        (forward-line 0)
         (if (not (markdown-table-at-point-p))
             (forward-line 1)
-          (let ((beg (point)))
-            (goto-char (markdown-table-end))
-            (push (cons beg (save-excursion (skip-chars-backward "\n") (point))) tables)))))
+          (push (cons (point) (markdown-table-display--table-end)) tables)
+          (goto-char (markdown-table-end)))))
     (nreverse tables)))
 
-(defun markdown-table-display--remove ()
-  "Remove all table drawings from the buffer."
-  (remove-overlays (point-min) (point-max) 'markdown-table-display t))
+(defun markdown-table-display--undraw (beg end)
+  "Remove the drawings of tables overlapping BEG to END."
+  (dolist (ov (overlays-in beg end))
+    (when (overlay-get ov 'markdown-table-display)
+      (delete-overlay ov))))
+
+(defun markdown-table-display--draw (beg end)
+  "Redraw the tables overlapping BEG to END, except the one containing point."
+  (save-restriction
+    (widen)
+    (markdown-table-display--undraw beg end)
+    (pcase-dolist (`(,tbeg . ,tend) (markdown-table-display--tables beg end))
+      (unless (<= tbeg (point) tend)
+        (font-lock-ensure tbeg tend)
+        (let ((ov (make-overlay tbeg tend nil t nil)))
+          (overlay-put ov 'markdown-table-display t)
+          (overlay-put ov 'evaporate t)
+          (overlay-put ov 'display (markdown-table-display--render tbeg tend)))))))
 
 (defun markdown-table-display-refresh ()
   "Draw every table in the buffer except the one containing point."
   (interactive)
-  (markdown-table-display--remove)
-  (font-lock-ensure)
-  (save-restriction
-    (widen)
-    (pcase-dolist (`(,beg . ,end) (markdown-table-display--tables))
-      (unless (<= beg (point) end)
-        (let ((ov (make-overlay beg end nil t nil)))
-          (overlay-put ov 'markdown-table-display t)
-          (overlay-put ov 'evaporate t)
-          (overlay-put ov 'display (markdown-table-display--render beg end)))))))
+  (markdown-table-display--draw (point-min) (point-max)))
 
 (defun markdown-table-display--post-command ()
-  "Redraw tables when point enters or leaves one."
-  (let ((table (and (markdown-table-at-point-p) (markdown-table-begin))))
-    (unless (eql table markdown-table-display--table-at-point)
-      (setq markdown-table-display--table-at-point table)
-      (markdown-table-display-refresh))))
+  "Show the table at point as raw text, and draw the one point left."
+  (let ((raw markdown-table-display--raw))
+    (unless (and raw (<= (car raw) (point) (cdr raw)))
+      (when raw
+        (setq markdown-table-display--raw nil)
+        (markdown-table-display--draw (car raw) (cdr raw))
+        (set-marker (car raw) nil)
+        (set-marker (cdr raw) nil))
+      (when (markdown-table-at-point-p)
+        (let ((beg (markdown-table-begin))
+              (end (markdown-table-display--table-end)))
+          (markdown-table-display--undraw beg end)
+          (setq markdown-table-display--raw
+                (cons (copy-marker beg) (copy-marker end t))))))))
 
-(defun markdown-table-display--after-change (&rest _)
-  "Schedule a redraw of the tables once Emacs is idle."
-  (when (timerp markdown-table-display--timer)
-    (cancel-timer markdown-table-display--timer))
-  (setq markdown-table-display--timer
-        (run-with-idle-timer 0.5 nil #'markdown-table-display--refresh-buffer
-                             (current-buffer))))
+(defun markdown-table-display--schedule (beg end)
+  "Redraw the tables overlapping BEG to END once Emacs is idle."
+  (let ((dirty markdown-table-display--dirty))
+    (if dirty
+        (progn (set-marker (car dirty) (min beg (car dirty)))
+               (set-marker (cdr dirty) (max end (cdr dirty))))
+      (setq markdown-table-display--dirty (cons (copy-marker beg) (copy-marker end t)))))
+  (unless (timerp markdown-table-display--timer)
+    (setq markdown-table-display--timer
+          (run-with-idle-timer 0.5 nil #'markdown-table-display--redraw-dirty
+                               (current-buffer)))))
 
-(defun markdown-table-display--refresh-buffer (buffer)
-  "Redraw the tables in BUFFER, if it is still live."
+(defun markdown-table-display--redraw-dirty (buffer)
+  "Redraw the tables in BUFFER that changed, if it is still live."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
-      (when markdown-table-display-mode
-        (markdown-table-display-refresh)))))
+      (setq markdown-table-display--timer nil)
+      (when-let* ((dirty markdown-table-display--dirty))
+        (setq markdown-table-display--dirty nil)
+        (when markdown-table-display-mode
+          (markdown-table-display--draw (car dirty) (cdr dirty)))
+        (set-marker (car dirty) nil)
+        (set-marker (cdr dirty) nil)))))
+
+(defun markdown-table-display--after-change (beg end _len)
+  "Schedule a redraw if the change from BEG to END touched a table.
+Changes inside the raw table at point wait until point leaves it."
+  (let ((beg (save-excursion (goto-char beg) (pos-bol)))
+        (end (save-excursion (goto-char end) (pos-eol)))
+        (raw markdown-table-display--raw))
+    (unless (and raw (<= (car raw) beg) (<= end (cdr raw)))
+      (when (or (seq-some (lambda (ov) (overlay-get ov 'markdown-table-display))
+                          (overlays-in beg end))
+                (save-excursion
+                  (goto-char beg)
+                  (re-search-forward markdown-table-line-regexp end t)))
+        (markdown-table-display--schedule beg end)))))
 
 ;;;###autoload
 (define-minor-mode markdown-table-display-mode
@@ -240,14 +295,17 @@ ALIGNMENT is a column format from `markdown-table-colfmt'."
 The buffer text is not changed.  The table under point shows its raw
 text for editing."
   :lighter nil
-  (markdown-table-display--remove)
+  (save-restriction
+    (widen)
+    (markdown-table-display--undraw (point-min) (point-max)))
+  (setq markdown-table-display--raw nil)
   (remove-hook 'post-command-hook #'markdown-table-display--post-command t)
   (remove-hook 'after-change-functions #'markdown-table-display--after-change t)
   (when markdown-table-display-mode
     (add-hook 'post-command-hook #'markdown-table-display--post-command nil t)
     (add-hook 'after-change-functions #'markdown-table-display--after-change nil t)
-    ;; Wait until the buffer is set up and fontified before drawing.
-    (markdown-table-display--after-change)))
+    ;; Wait until the buffer is set up before drawing.
+    (markdown-table-display--schedule (point-min) (point-max))))
 
 (provide 'markdown-table-display)
 ;;; markdown-table-display.el ends here
