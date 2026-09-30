@@ -81,8 +81,12 @@
     (save-excursion
       (goto-char bol)
       (while (re-search-forward "|" eol t)
-        (unless (eq (char-before (1- (point))) ?\\)
-          (push (1- (point)) pipes))))
+        ;; Skip the pipes that `markdown-table-align' doesn't split on.
+        (let ((pipe (1- (point))))
+          (unless (or (eq (char-before pipe) ?\\)
+                      (markdown--face-p pipe '(markdown-inline-code-face))
+                      (markdown--thing-at-wiki-link pipe))
+            (push pipe pipes)))))
     (setq pipes (nreverse pipes))
     ;; A row need not end with a pipe.
     (unless (string-blank-p (buffer-substring-no-properties (1+ (car (last pipes))) eol))
