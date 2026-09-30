@@ -190,8 +190,7 @@ ALIGNMENT is a column format from `markdown-table-colfmt'."
         (if (not (markdown-table-at-point-p))
             (forward-line 1)
           (let ((beg (point)))
-            (while (and (not (eobp)) (markdown-table-at-point-p))
-              (forward-line 1))
+            (goto-char (markdown-table-end))
             (push (cons beg (save-excursion (skip-chars-backward "\n") (point))) tables)))))
     (nreverse tables)))
 
