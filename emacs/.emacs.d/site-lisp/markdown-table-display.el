@@ -87,13 +87,6 @@
     (cl-loop for (a b) on pipes while b
              collect (markdown-table-display--visible-string (1+ a) b))))
 
-(defun markdown-table-display--alignment (cell)
-  "Return the alignment given by delimiter row CELL: left, right or center."
-  (let ((s (string-trim (substring-no-properties cell))))
-    (cond ((and (string-prefix-p ":" s) (string-suffix-p ":" s) (> (length s) 1)) 'center)
-          ((string-suffix-p ":" s) 'right)
-          (t 'left))))
-
 (defun markdown-table-display--column-widths (naturals available)
   "Share AVAILABLE columns among columns with NATURALS widths.
 Columns that need less than an even share keep their natural width,
@@ -129,11 +122,12 @@ and what they leave is shared among the rest."
     (or (nreverse lines) (list ""))))
 
 (defun markdown-table-display--pad (s width alignment)
-  "Pad string S to WIDTH according to ALIGNMENT."
+  "Pad string S to WIDTH according to ALIGNMENT.
+ALIGNMENT is a column format from `markdown-table-colfmt'."
   (let* ((gap (max 0 (- width (string-width s))))
          (left (pcase alignment
-                 ('right gap)
-                 ('center (/ gap 2))
+                 ('r gap)
+                 ('c (/ gap 2))
                  (_ 0))))
     (concat (make-string left ?\s) s (make-string (- gap left) ?\s))))
 
@@ -144,14 +138,14 @@ and what they leave is shared among the rest."
       (goto-char beg)
       (while (< (point) end)
         (if (and (null delimiter) (looking-at-p markdown-table-hline-regexp))
-            (setq delimiter (markdown-table-display--cells))
+            (setq delimiter (markdown-table-colfmt
+                             (buffer-substring-no-properties (pos-bol) (pos-eol))))
           (push (markdown-table-display--cells) rows))
         (forward-line 1)))
     (setq rows (nreverse rows))
     (let* ((ncols (apply #'max (length delimiter) (mapcar #'length rows)))
            (rows (mapcar (lambda (r) (append r (make-list (- ncols (length r)) ""))) rows))
-           (alignments (cl-loop for i below ncols
-                                collect (markdown-table-display--alignment (or (nth i delimiter) ""))))
+           (alignments (cl-loop for i below ncols collect (nth i delimiter)))
            (naturals (cl-loop for i below ncols
                               collect (apply #'max 1 (mapcar (lambda (r) (string-width (nth i r))) rows))))
            ;; Each column costs its width plus " | ".
