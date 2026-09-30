@@ -1309,8 +1309,10 @@ Fall back to typescript-language-server otherwise."
   :ensure t
   :commands markdown-mode
   :hook ((markdown-mode . electric-pair-mode)
+         (markdown-mode . ht/markdown-nested-emphasis)
          (markdown-mode . ht/markdown-prose-display))
-  :functions (ht/markdown-prose-display
+  :functions (ht/markdown-nested-emphasis
+              ht/markdown-prose-display
               ht/fetch-html-title
               ht/string-to-ascii
               ht/insert-markdown-link-from-url)
@@ -1323,6 +1325,75 @@ Fall back to typescript-language-server otherwise."
        (1 '(face markdown-markup-face invisible markdown-markup) prepend)
        (2 '(face markdown-markup-face invisible markdown-markup) prepend)))
     "Treat the brackets and attributes of Pandoc [text]{attrs} spans as markup.")
+
+  ;; markdown-mode ends bold at the first closing delimiter, so in
+  ;; "**a *b***" it takes the first two stars of "***" and strands the
+  ;; last.  Don't let a closing delimiter run straight into another.
+  (setq markdown-regex-bold
+        (concat markdown-regex-bold "\\(?:$\\|[^*_]\\)"))
+
+  (defun ht/markdown--face-p (pos faces)
+    "Return non-nil if the face at POS includes any of FACES."
+    (let ((face (get-text-property pos 'face)))
+      (seq-intersection (if (listp face) face (list face)) faces)))
+
+  (defun ht/markdown--emphasis-delimiter-p (pos opening)
+    "Return non-nil if POS holds a lone, unescaped emphasis delimiter.
+OPENING says whether it must be able to open emphasis, or close it."
+    (let ((char (char-after pos)))
+      (and (memq char '(?* ?_))
+           (not (eq (char-before pos) ?\\))
+           (not (ht/markdown--face-p pos '(markdown-markup-face
+                                           markdown-inline-code-face
+                                           markdown-pre-face
+                                           markdown-url-face)))
+           ;; A neighbouring delimiter only counts if it isn't markup.
+           (not (and (eq (char-before pos) char)
+                     (not (ht/markdown--face-p (1- pos) '(markdown-markup-face)))))
+           (not (and (eq (char-after (1+ pos)) char)
+                     (not (ht/markdown--face-p (1+ pos) '(markdown-markup-face)))))
+           (if opening
+               (and (not (memq (char-after (1+ pos)) '(?\s ?\t ?\n nil)))
+                    (or (eq char ?*) (not (eq (char-syntax (or (char-before pos) ?\s)) ?w))))
+             (and (not (memq (char-before pos) '(?\s ?\t ?\n nil)))
+                  (or (eq char ?*) (not (eq (char-syntax (or (char-after (1+ pos)) ?\s)) ?w))))))))
+
+  (defun ht/markdown-match-nested-emphasis (last)
+    "Match italics nested with bold, which markdown-mode refuses, up to LAST."
+    (let (found)
+      (while (and (not found) (re-search-forward "[*_]" last t))
+        (let ((open (match-beginning 0))
+              close)
+          (when (ht/markdown--emphasis-delimiter-p open t)
+            (save-excursion
+              (while (and (not close)
+                          (re-search-forward (regexp-quote (string (char-after open))) last t)
+                          ;; Emphasis doesn't span paragraphs.
+                          (not (string-match-p "\n[ \t]*\n" (buffer-substring-no-properties
+                                                             open (point)))))
+                (when (ht/markdown--emphasis-delimiter-p (match-beginning 0) nil)
+                  (setq close (match-beginning 0)))))
+            (when (and close
+                       (> close (1+ open))
+                       (seq-some (lambda (pos) (ht/markdown--face-p pos '(markdown-bold-face)))
+                                 (number-sequence (1+ open) (1- close))))
+              (set-match-data (list open (1+ close)
+                                    open (1+ open)
+                                    (1+ open) close
+                                    close (1+ close)))
+              (goto-char (1+ close))
+              (setq found t)))))
+      found))
+
+  (defun ht/markdown-nested-emphasis ()
+    "Fontify italics nested with bold in the current buffer."
+    (font-lock-add-keywords
+     nil
+     '((ht/markdown-match-nested-emphasis
+        (1 '(face markdown-markup-face invisible markdown-markup) prepend)
+        (2 'markdown-italic-face prepend)
+        (3 '(face markdown-markup-face invisible markdown-markup) prepend)))
+     'append))
 
   (defun ht/markdown-prose-display ()
     "Display markdown as centered, soft-wrapped prose without line numbers."
