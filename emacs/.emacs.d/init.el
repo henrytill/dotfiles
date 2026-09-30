@@ -1329,7 +1329,10 @@ Fall back to typescript-language-server otherwise."
   (defun ht/markdown--emphasis-delimiter-p (pos opening)
     "Return non-nil if POS holds a lone, unescaped emphasis delimiter.
 OPENING says whether it must be able to open emphasis, or close it."
-    (let ((char (char-after pos)))
+    (let ((char (char-after pos))
+          ;; The side the emphasized text is on, and the side away from it.
+          (inner (if opening (1+ pos) (1- pos)))
+          (outer (if opening (1- pos) (1+ pos))))
       (and (memq char '(?* ?_))
            (not (eq (char-before pos) ?\\))
            (not (markdown--face-p pos '(markdown-markup-face
@@ -1337,15 +1340,13 @@ OPENING says whether it must be able to open emphasis, or close it."
                                         markdown-pre-face
                                         markdown-url-face)))
            ;; A neighbouring delimiter only counts if it isn't markup.
-           (not (and (eq (char-before pos) char)
-                     (not (markdown--face-p (1- pos) '(markdown-markup-face)))))
-           (not (and (eq (char-after (1+ pos)) char)
-                     (not (markdown--face-p (1+ pos) '(markdown-markup-face)))))
-           (if opening
-               (and (not (memq (char-after (1+ pos)) '(?\s ?\t ?\n nil)))
-                    (or (eq char ?*) (not (eq (char-syntax (or (char-before pos) ?\s)) ?w))))
-             (and (not (memq (char-before pos) '(?\s ?\t ?\n nil)))
-                  (or (eq char ?*) (not (eq (char-syntax (or (char-after (1+ pos)) ?\s)) ?w))))))))
+           (not (seq-some (lambda (p)
+                            (and (eq (char-after p) char)
+                                 (not (markdown--face-p p '(markdown-markup-face)))))
+                          (list (1- pos) (1+ pos))))
+           (not (memq (char-after inner) '(?\s ?\t ?\n nil)))
+           ;; Underscores can't open or close emphasis inside a word.
+           (or (eq char ?*) (not (eq (char-syntax (or (char-after outer) ?\s)) ?w))))))
 
   (defun ht/markdown-match-nested-emphasis (last)
     "Match italics nested with bold, which markdown-mode refuses, up to LAST."
