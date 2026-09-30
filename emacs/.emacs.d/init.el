@@ -1316,6 +1316,8 @@ Fall back to typescript-language-server otherwise."
               ht/fetch-html-title
               ht/string-to-ascii
               ht/insert-markdown-link-from-url)
+  :custom
+  (markdown-hide-markup t)
   :config
   (defconst ht/markdown-pandoc-span-keywords
     `((,(rx (group "[")
@@ -1400,7 +1402,6 @@ OPENING says whether it must be able to open emphasis, or close it."
     (display-line-numbers-mode -1)
     (setq-local visual-fill-column-center-text t)
     (font-lock-add-keywords nil ht/markdown-pandoc-span-keywords 'append)
-    (markdown-toggle-markup-hiding 1)
     (markdown-table-display-mode 1)
     (visual-line-mode 1))
 
