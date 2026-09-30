@@ -1315,10 +1315,21 @@ Fall back to typescript-language-server otherwise."
               ht/string-to-ascii
               ht/insert-markdown-link-from-url)
   :config
+  (defconst ht/markdown-pandoc-span-keywords
+    `((,(rx (group "[")
+            (+ (or (not (any "[]\n"))
+                   (seq "[" (* (not (any "[]\n"))) "]")))
+            (group "]{" (* (not (any "}\n"))) "}"))
+       (1 '(face markdown-markup-face invisible markdown-markup) prepend)
+       (2 '(face markdown-markup-face invisible markdown-markup) prepend)))
+    "Treat the brackets and attributes of Pandoc [text]{attrs} spans as markup.")
+
   (defun ht/markdown-prose-display ()
     "Display markdown as centered, soft-wrapped prose without line numbers."
     (display-line-numbers-mode -1)
     (setq-local visual-fill-column-center-text t)
+    (font-lock-add-keywords nil ht/markdown-pandoc-span-keywords 'append)
+    (markdown-toggle-markup-hiding 1)
     (visual-line-mode 1))
 
   (require 'url)
