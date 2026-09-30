@@ -83,6 +83,7 @@ vim.lsp.config("lua_ls", {
 
 vim.lsp.enable("clangd")
 vim.lsp.enable("gopls")
+vim.lsp.enable("hls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("nim_langserver")
 vim.lsp.enable("ocamllsp")
