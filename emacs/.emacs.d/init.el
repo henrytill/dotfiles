@@ -879,7 +879,8 @@ suppressed."
   ;; We shouldn't need to do this
   (when (fboundp 'haskell-indentation-mode)
     (haskell-indentation-mode 0))
-  (add-hook 'after-save-hook #'ht/run-ghc-tags nil t))
+  (when nil
+    (add-hook 'after-save-hook #'ht/run-ghc-tags nil t)))
 
 (use-package haskell-mode
   :ensure t
