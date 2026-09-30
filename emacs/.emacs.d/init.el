@@ -1365,8 +1365,8 @@ OPENING says whether it must be able to open emphasis, or close it."
                   (setq close (match-beginning 0)))))
             (when (and close
                        (> close (1+ open))
-                       (seq-some (lambda (pos) (markdown--face-p pos '(markdown-bold-face)))
-                                 (number-sequence (1+ open) (1- close))))
+                       (markdown-range-property-any (1+ open) (1- close)
+                                                    'face '(markdown-bold-face)))
               (set-match-data (list open (1+ close)
                                     open (1+ open)
                                     (1+ open) close
