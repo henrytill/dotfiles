@@ -1335,26 +1335,21 @@ Fall back to typescript-language-server otherwise."
     (unless (string-suffix-p suffix markdown-regex-bold)
       (setq markdown-regex-bold (concat markdown-regex-bold suffix))))
 
-  (defun ht/markdown--face-p (pos faces)
-    "Return non-nil if the face at POS includes any of FACES."
-    (let ((face (get-text-property pos 'face)))
-      (seq-intersection (if (listp face) face (list face)) faces)))
-
   (defun ht/markdown--emphasis-delimiter-p (pos opening)
     "Return non-nil if POS holds a lone, unescaped emphasis delimiter.
 OPENING says whether it must be able to open emphasis, or close it."
     (let ((char (char-after pos)))
       (and (memq char '(?* ?_))
            (not (eq (char-before pos) ?\\))
-           (not (ht/markdown--face-p pos '(markdown-markup-face
-                                           markdown-inline-code-face
-                                           markdown-pre-face
-                                           markdown-url-face)))
+           (not (markdown--face-p pos '(markdown-markup-face
+                                        markdown-inline-code-face
+                                        markdown-pre-face
+                                        markdown-url-face)))
            ;; A neighbouring delimiter only counts if it isn't markup.
            (not (and (eq (char-before pos) char)
-                     (not (ht/markdown--face-p (1- pos) '(markdown-markup-face)))))
+                     (not (markdown--face-p (1- pos) '(markdown-markup-face)))))
            (not (and (eq (char-after (1+ pos)) char)
-                     (not (ht/markdown--face-p (1+ pos) '(markdown-markup-face)))))
+                     (not (markdown--face-p (1+ pos) '(markdown-markup-face)))))
            (if opening
                (and (not (memq (char-after (1+ pos)) '(?\s ?\t ?\n nil)))
                     (or (eq char ?*) (not (eq (char-syntax (or (char-before pos) ?\s)) ?w))))
@@ -1378,7 +1373,7 @@ OPENING says whether it must be able to open emphasis, or close it."
                   (setq close (match-beginning 0)))))
             (when (and close
                        (> close (1+ open))
-                       (seq-some (lambda (pos) (ht/markdown--face-p pos '(markdown-bold-face)))
+                       (seq-some (lambda (pos) (markdown--face-p pos '(markdown-bold-face)))
                                  (number-sequence (1+ open) (1- close))))
               (set-match-data (list open (1+ close)
                                     open (1+ open)
