@@ -1330,6 +1330,7 @@ Fall back to typescript-language-server otherwise."
     (setq-local visual-fill-column-center-text t)
     (font-lock-add-keywords nil ht/markdown-pandoc-span-keywords 'append)
     (markdown-toggle-markup-hiding 1)
+    (markdown-table-display-mode 1)
     (visual-line-mode 1))
 
   (require 'url)
@@ -1369,6 +1370,10 @@ as a markdown link."
       (insert (format "[%s](%s)" title url))))
 
   nil)
+
+(use-package markdown-table-display
+  :load-path ht/site-lisp-directory
+  :commands (markdown-table-display-mode))
 
 ;;; MISC
 
