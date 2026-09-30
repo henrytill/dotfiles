@@ -1324,8 +1324,8 @@ Fall back to typescript-language-server otherwise."
             (+ (or (not (any "[]\n"))
                    (seq "[" (* (not (any "[]\n"))) "]")))
             (group "]{" (* (not (any "}\n"))) "}"))
-       (1 '(face markdown-markup-face invisible markdown-markup) prepend)
-       (2 '(face markdown-markup-face invisible markdown-markup) prepend)))
+       (1 markdown-markup-properties prepend)
+       (2 markdown-markup-properties prepend)))
     "Treat the brackets and attributes of Pandoc [text]{attrs} spans as markup.")
 
   ;; markdown-mode ends bold at the first closing delimiter, so in
@@ -1388,9 +1388,9 @@ OPENING says whether it must be able to open emphasis, or close it."
     (font-lock-add-keywords
      nil
      '((ht/markdown-match-nested-emphasis
-        (1 '(face markdown-markup-face invisible markdown-markup) prepend)
+        (1 markdown-markup-properties prepend)
         (2 'markdown-italic-face prepend)
-        (3 '(face markdown-markup-face invisible markdown-markup) prepend)))
+        (3 markdown-markup-properties prepend)))
      'append))
 
   (defun ht/markdown-prose-display ()
