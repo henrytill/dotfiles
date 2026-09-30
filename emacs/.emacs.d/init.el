@@ -1331,8 +1331,9 @@ Fall back to typescript-language-server otherwise."
   ;; markdown-mode ends bold at the first closing delimiter, so in
   ;; "**a *b***" it takes the first two stars of "***" and strands the
   ;; last.  Don't let a closing delimiter run straight into another.
-  (setq markdown-regex-bold
-        (concat markdown-regex-bold "\\(?:$\\|[^*_]\\)"))
+  (let ((suffix "\\(?:$\\|[^*_]\\)"))
+    (unless (string-suffix-p suffix markdown-regex-bold)
+      (setq markdown-regex-bold (concat markdown-regex-bold suffix))))
 
   (defun ht/markdown--face-p (pos faces)
     "Return non-nil if the face at POS includes any of FACES."
