@@ -159,20 +159,20 @@ ALIGNMENT is a column format from `markdown-table-colfmt'."
            (lines nil))
       (cl-loop for row in wrapped
                for n from 0
-               do (when (or (= n 1) (and multiline (> n 1)))
+               do (when (if multiline (> n 0) (= n 1))
                     ;; A rule under the header, and between rows once
                     ;; any cell has wrapped, so rows stay distinguishable.
                     (push rule lines))
                   (dotimes (k (apply #'max (mapcar #'length row)))
                     (push (concat bar
-                                  (mapconcat (lambda (col)
-                                               (concat " "
-                                                       (markdown-table-display--pad
-                                                        (or (nth k (nth col row)) "")
-                                                        (nth col widths)
-                                                        (nth col alignments))
-                                                       " "))
-                                             (number-sequence 0 (1- ncols))
+                                  (mapconcat #'identity
+                                             (cl-mapcar (lambda (cell width alignment)
+                                                          (concat " "
+                                                                  (markdown-table-display--pad
+                                                                   (or (nth k cell) "")
+                                                                   width alignment)
+                                                                  " "))
+                                                        row widths alignments)
                                              bar)
                                   bar)
                           lines)))
