@@ -1078,8 +1078,8 @@ Fall back to typescript-language-server otherwise."
     (let ((file-name (buffer-file-name))
           (default-directory (project-root (project-current t))))
       (shell-command (format "stylua %s" file-name))))
-
-  (setopt lua-indent-level 2))
+  :custom
+  (lua-indent-level 2))
 
 ;;; NIX
 
