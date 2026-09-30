@@ -979,24 +979,6 @@ suppressed."
   :hook ((racket-mode . racket-xp-mode)
          (racket-mode . ht/add-racket-indents)))
 
-;;; COMMON LISP
-
-(when (executable-find "sbcl")
-  (setopt inferior-lisp-program "sbcl"))
-
-(use-package sly
-  :ensure t
-  :commands sly)
-
-(defun sly-common-lisp-indent-function (indent-point state)
-  "Function to indent the arguments of a Lisp function call.
-
-This is suitable for use as the value of the variable
-`lisp-indent-function'.  INDENT-POINT is the point at which the
-indentation function is called, and STATE is the `parse-partial-sexp'
-state at that position."
-  (common-lisp-indent-function indent-point state))
-
 ;;; COQ
 
 (use-package proof-general
