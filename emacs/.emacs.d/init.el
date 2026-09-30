@@ -1309,9 +1309,9 @@ Fall back to typescript-language-server otherwise."
   :ensure t
   :commands markdown-mode
   :hook ((markdown-mode . electric-pair-mode)
-         (markdown-mode . ht/markdown-nested-emphasis)
+         (markdown-mode . ht/markdown-add-font-lock-keywords)
          (markdown-mode . ht/markdown-prose-display))
-  :functions (ht/markdown-nested-emphasis
+  :functions (ht/markdown-add-font-lock-keywords
               ht/markdown-prose-display
               ht/fetch-html-title
               ht/string-to-ascii
@@ -1319,15 +1319,6 @@ Fall back to typescript-language-server otherwise."
   :custom
   (markdown-hide-markup t)
   :config
-  (defconst ht/markdown-pandoc-span-keywords
-    `((,(rx (group "[")
-            (+ (or (not (any "[]\n"))
-                   (seq "[" (* (not (any "[]\n"))) "]")))
-            (group "]{" (* (not (any "}\n"))) "}"))
-       (1 markdown-markup-properties prepend)
-       (2 markdown-markup-properties prepend)))
-    "Treat the brackets and attributes of Pandoc [text]{attrs} spans as markup.")
-
   ;; markdown-mode ends bold at the first closing delimiter, so in
   ;; "**a *b***" it takes the first two stars of "***" and strands the
   ;; last.  Don't let a closing delimiter run straight into another.
@@ -1383,21 +1374,28 @@ OPENING says whether it must be able to open emphasis, or close it."
               (setq found t)))))
       found))
 
-  (defun ht/markdown-nested-emphasis ()
-    "Fontify italics nested with bold in the current buffer."
-    (font-lock-add-keywords
-     nil
-     '((ht/markdown-match-nested-emphasis
-        (1 markdown-markup-properties prepend)
-        (2 'markdown-italic-face prepend)
-        (3 markdown-markup-properties prepend)))
-     'append))
+  (defconst ht/markdown-font-lock-keywords
+    `(;; Pandoc [text]{attrs} spans: the brackets and attributes are markup.
+      (,(rx (group "[")
+            (+ (or (not (any "[]\n"))
+                   (seq "[" (* (not (any "[]\n"))) "]")))
+            (group "]{" (* (not (any "}\n"))) "}"))
+       (1 markdown-markup-properties prepend)
+       (2 markdown-markup-properties prepend))
+      (ht/markdown-match-nested-emphasis
+       (1 markdown-markup-properties prepend)
+       (2 'markdown-italic-face prepend)
+       (3 markdown-markup-properties prepend)))
+    "Font-lock keywords added after markdown-mode's own.")
+
+  (defun ht/markdown-add-font-lock-keywords ()
+    "Add `ht/markdown-font-lock-keywords' to the current buffer."
+    (font-lock-add-keywords nil ht/markdown-font-lock-keywords 'append))
 
   (defun ht/markdown-prose-display ()
     "Display markdown as centered, soft-wrapped prose without line numbers."
     (display-line-numbers-mode -1)
     (setq-local visual-fill-column-center-text t)
-    (font-lock-add-keywords nil ht/markdown-pandoc-span-keywords 'append)
     (markdown-table-display-mode 1)
     (visual-line-mode 1))
 
