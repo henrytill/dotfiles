@@ -567,7 +567,8 @@ suppressed."
 
 (use-package consult
   :ensure t
-  :bind (("M-s g" . consult-grep)
+  :bind (("C-x b" . consult-buffer)
+         ("M-s g" . consult-grep)
          ("M-s G" . consult-git-grep)
          ("M-s d" . consult-fd)
          ("M-s r" . consult-ripgrep))
