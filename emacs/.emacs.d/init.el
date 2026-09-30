@@ -525,6 +525,26 @@ suppressed."
 
 (add-hook 'text-mode-hook 'auto-revert-mode)
 
+;;; VISUAL LINE
+
+(use-package visual-fill-column
+  :ensure t
+  :functions (visual-fill-column-for-vline)
+  :hook ((visual-line-mode . visual-fill-column-for-vline)))
+
+(use-package visual-wrap
+  :hook ((visual-line-mode . visual-wrap-prefix-mode))
+  :config
+  ;; A numeric prefix becomes an :align-to space, which is drawn with
+  ;; the face of the text after it, so e.g. wrapped links underline it.
+  (defun ht/visual-wrap-plain-prefix (prefix)
+    "Make numeric wrap PREFIX plain spaces so it doesn't take the next text's face."
+    (if (numberp prefix)
+        (propertize (make-string prefix ?\s) 'face 'default)
+      prefix))
+
+  (advice-add 'visual-wrap--adjust-prefix :filter-return #'ht/visual-wrap-plain-prefix))
+
 ;;; EMBARK
 
 (use-package vertico
@@ -1304,13 +1324,19 @@ Fall back to typescript-language-server otherwise."
 (use-package markdown-mode
   :ensure t
   :commands markdown-mode
-  :hook ((markdown-mode . display-line-numbers-mode)
-         (markdown-mode . electric-pair-mode)
-         (markdown-mode . ht/truncate-lines))
-  :functions (ht/fetch-html-title
+  :hook ((markdown-mode . electric-pair-mode)
+         (markdown-mode . ht/markdown-prose-display))
+  :functions (ht/markdown-prose-display
+              ht/fetch-html-title
               ht/string-to-ascii
               ht/insert-markdown-link-from-url)
   :config
+  (defun ht/markdown-prose-display ()
+    "Display markdown as centered, soft-wrapped prose without line numbers."
+    (display-line-numbers-mode -1)
+    (setq-local visual-fill-column-center-text t)
+    (visual-line-mode 1))
+
   (require 'url)
 
   (defun ht/fetch-html-title (url)
