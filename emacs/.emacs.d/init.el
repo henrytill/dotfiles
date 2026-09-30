@@ -1356,13 +1356,15 @@ OPENING says whether it must be able to open emphasis, or close it."
               close)
           (when (ht/markdown--emphasis-delimiter-p open t)
             (save-excursion
-              (while (and (not close)
-                          (re-search-forward (regexp-quote (string (char-after open))) last t)
-                          ;; Emphasis doesn't span paragraphs.
-                          (not (string-match-p "\n[ \t]*\n" (buffer-substring-no-properties
-                                                             open (point)))))
-                (when (ht/markdown--emphasis-delimiter-p (match-beginning 0) nil)
-                  (setq close (match-beginning 0)))))
+              ;; Emphasis doesn't span paragraphs.
+              (let ((limit (save-excursion
+                             (if (re-search-forward "\n[ \t]*\n" last t)
+                                 (match-beginning 0)
+                               last))))
+                (while (and (not close)
+                            (re-search-forward (regexp-quote (string (char-after open))) limit t))
+                  (when (ht/markdown--emphasis-delimiter-p (match-beginning 0) nil)
+                    (setq close (match-beginning 0))))))
             (when (and close
                        (> close (1+ open))
                        (markdown-range-property-any (1+ open) (1- close)
