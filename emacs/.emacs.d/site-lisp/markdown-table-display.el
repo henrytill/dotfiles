@@ -276,12 +276,17 @@ Return (BEG . END) extended to cover those tables."
           (markdown-table-display--undraw beg end)
           (jit-lock-refontify beg end))))))
 
-(defun markdown-table-display--after-change (beg end _len)
-  "Have the drawn tables overlapping BEG to END redrawn.
+(defvar jit-lock-start)
+(defvar jit-lock-end)
+
+(defun markdown-table-display--extend-after-change (beg end _len)
+  "Have jit-lock refontify all of each drawn table from BEG to END.
 Redisplay never looks at the text under a drawing, so it wouldn't
-notice that jit-lock had marked only the changed lines."
+notice that jit-lock had marked only the changed lines.
+For `jit-lock-after-change-extend-region-functions'."
   (dolist (ov (markdown-table-display--drawings beg end))
-    (jit-lock-refontify (overlay-start ov) (overlay-end ov))))
+    (setq jit-lock-start (min jit-lock-start (overlay-start ov))
+          jit-lock-end (max jit-lock-end (overlay-end ov)))))
 
 ;;;###autoload
 (define-minor-mode markdown-table-display-mode
@@ -295,10 +300,12 @@ text for editing."
     (markdown-table-display--undraw (point-min) (point-max)))
   (setq markdown-table-display--raw nil)
   (remove-hook 'post-command-hook #'markdown-table-display--post-command t)
-  (remove-hook 'after-change-functions #'markdown-table-display--after-change t)
+  (remove-hook 'jit-lock-after-change-extend-region-functions
+               #'markdown-table-display--extend-after-change t)
   (when markdown-table-display-mode
     (add-hook 'post-command-hook #'markdown-table-display--post-command nil t)
-    (add-hook 'after-change-functions #'markdown-table-display--after-change nil t)
+    (add-hook 'jit-lock-after-change-extend-region-functions
+              #'markdown-table-display--extend-after-change nil t)
     ;; Run after font-lock, so drawings carry its faces, but
     ;; `jit-lock-register' can't append (bug#15155).
     (add-hook 'jit-lock-functions #'markdown-table-display--fontify 'append t)
