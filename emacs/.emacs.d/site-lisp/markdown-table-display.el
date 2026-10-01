@@ -224,11 +224,12 @@ ALIGNMENT is a column format from `markdown-table-colfmt'."
   "Remove the drawings of tables overlapping BEG to END."
   (mapc #'delete-overlay (markdown-table-display--drawings beg end)))
 
-(defun markdown-table-display--raw-p (pos)
-  "Return non-nil if the table starting at POS is shown as raw text."
+(defun markdown-table-display--raw-p (beg end)
+  "Return non-nil if the table from BEG to END is shown as raw text.
+It may have grown past the raw text's markers, by joining another table."
   ;; Not point, which other `jit-lock-functions' may have moved.
   (let ((raw markdown-table-display--raw))
-    (and raw (<= (car raw) pos (cdr raw)))))
+    (and raw (<= beg (cdr raw)) (<= (car raw) end))))
 
 (defvar font-lock-beg)
 (defvar font-lock-end)
@@ -240,7 +241,7 @@ For `font-lock-extend-region-functions'."
   (let ((beg font-lock-beg)
         (end font-lock-end))
     (pcase-dolist (`(,tbeg . ,tend) (markdown-table-display--tables beg end))
-      (unless (markdown-table-display--raw-p tbeg)
+      (unless (markdown-table-display--raw-p tbeg tend)
         (setq font-lock-beg (min font-lock-beg tbeg)
               font-lock-end (max font-lock-end tend))))
     (not (and (= beg font-lock-beg) (= end font-lock-end)))))
@@ -257,7 +258,7 @@ may."
               end (max end (cdar (last tables)))))
       (markdown-table-display--undraw beg end)
       (pcase-dolist (`(,tbeg . ,tend) tables)
-        (unless (markdown-table-display--raw-p tbeg)
+        (unless (markdown-table-display--raw-p tbeg tend)
           (let ((ov (make-overlay tbeg tend nil t nil)))
             (overlay-put ov 'markdown-table-display t)
             (overlay-put ov 'evaporate t)
