@@ -249,16 +249,17 @@ For `font-lock-extend-region-functions'."
 Return (BEG . END) extended to cover those tables."
   (save-restriction
     (widen)
-    (markdown-table-display--undraw beg end)
-    (pcase-dolist (`(,tbeg . ,tend) (markdown-table-display--tables beg end))
-      (markdown-table-display--undraw tbeg tend)
-      (setq beg (min beg tbeg)
-            end (max end tend))
-      (unless (markdown-table-display--raw-p tbeg)
-        (let ((ov (make-overlay tbeg tend nil t nil)))
-          (overlay-put ov 'markdown-table-display t)
-          (overlay-put ov 'evaporate t)
-          (overlay-put ov 'display (markdown-table-display--render tbeg tend)))))
+    (let ((tables (markdown-table-display--tables beg end)))
+      (when tables
+        (setq beg (min beg (caar tables))
+              end (max end (cdar (last tables)))))
+      (markdown-table-display--undraw beg end)
+      (pcase-dolist (`(,tbeg . ,tend) tables)
+        (unless (markdown-table-display--raw-p tbeg)
+          (let ((ov (make-overlay tbeg tend nil t nil)))
+            (overlay-put ov 'markdown-table-display t)
+            (overlay-put ov 'evaporate t)
+            (overlay-put ov 'display (markdown-table-display--render tbeg tend))))))
     (cons beg end)))
 
 (defun markdown-table-display--fontify (beg end)
