@@ -44,8 +44,6 @@
 (require 'seq)
 (require 'subr-x)
 
-(defvar markdown-table-display-mode)
-
 (defvar-local markdown-table-display--raw nil
   "Markers (BEG . END) around the table shown as raw text, or nil.")
 
