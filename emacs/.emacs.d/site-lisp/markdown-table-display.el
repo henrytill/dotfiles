@@ -229,7 +229,7 @@ ALIGNMENT is a column format from `markdown-table-colfmt'."
 It may have grown past the raw text's markers, by joining another table."
   ;; Not point, which other `jit-lock-functions' may have moved.
   (let ((raw markdown-table-display--raw))
-    (and raw (<= beg (cdr raw)) (<= (car raw) end))))
+    (and raw (< beg (cdr raw)) (< (car raw) end))))
 
 (defvar font-lock-beg)
 (defvar font-lock-end)
