@@ -306,5 +306,22 @@ text for editing."
     (markdown-table-display--post-command)
     (jit-lock-refontify)))
 
+(defun markdown-table-display--width-changed (_symbol _newval operation where)
+  "Have tables redrawn when the variable giving their width changes.
+WHERE is the buffer whose local value changed, or nil for the default
+value; OPERATION is as for `add-variable-watcher'."
+  ;; A `let' is often only for the duration of a fill command.
+  ;; `kill-local-variable' on `fill-column', a C per-buffer variable,
+  ;; notifies no watchers, so that change goes unnoticed.
+  (when (memq operation '(set makunbound))
+    (dolist (buffer (if where (list where) (buffer-list)))
+      (with-current-buffer buffer
+        (when markdown-table-display-mode
+          ;; The new value is set once this returns, before redisplay.
+          (jit-lock-refontify))))))
+
+(add-variable-watcher 'fill-column #'markdown-table-display--width-changed)
+(add-variable-watcher 'visual-fill-column-width #'markdown-table-display--width-changed)
+
 (provide 'markdown-table-display)
 ;;; markdown-table-display.el ends here
