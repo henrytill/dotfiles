@@ -211,11 +211,14 @@ ALIGNMENT is a column format from `markdown-table-colfmt'."
           (goto-char (markdown-table-end)))))
     (nreverse tables)))
 
+(defun markdown-table-display--drawings (beg end)
+  "Return the overlays drawing tables that overlap BEG to END."
+  (seq-filter (lambda (ov) (overlay-get ov 'markdown-table-display))
+              (overlays-in beg end)))
+
 (defun markdown-table-display--undraw (beg end)
   "Remove the drawings of tables overlapping BEG to END."
-  (dolist (ov (overlays-in beg end))
-    (when (overlay-get ov 'markdown-table-display)
-      (delete-overlay ov))))
+  (mapc #'delete-overlay (markdown-table-display--drawings beg end)))
 
 (defun markdown-table-display--draw (beg end)
   "Redraw the tables overlapping BEG to END, except the raw one.
@@ -277,9 +280,8 @@ Return (BEG . END) extended to cover those tables."
   "Have the drawn tables overlapping BEG to END redrawn.
 Redisplay never looks at the text under a drawing, so it wouldn't
 notice that jit-lock had marked only the changed lines."
-  (dolist (ov (overlays-in beg end))
-    (when (overlay-get ov 'markdown-table-display)
-      (jit-lock-refontify (overlay-start ov) (overlay-end ov)))))
+  (dolist (ov (markdown-table-display--drawings beg end))
+    (jit-lock-refontify (overlay-start ov) (overlay-end ov))))
 
 ;;;###autoload
 (define-minor-mode markdown-table-display-mode
