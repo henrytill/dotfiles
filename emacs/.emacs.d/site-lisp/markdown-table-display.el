@@ -249,13 +249,7 @@ Return (BEG . END) extended to cover those tables."
 
 (defun markdown-table-display--fontify (beg end)
   "Draw the tables overlapping BEG to END, for `jit-lock-functions'."
-  (pcase-let ((`(,beg . ,end) (markdown-table-display--draw beg end)))
-    ;; The drawn tables are fontified to their ends, so don't have
-    ;; redisplay ask again for the parts past this chunk.  What the
-    ;; later `jit-lock-functions' would add can't be seen under a
-    ;; drawing, and a table is refontified when point enters it.
-    (put-text-property beg end 'fontified t)
-    `(jit-lock-bounds ,beg . ,end)))
+  `(jit-lock-bounds ,@(markdown-table-display--draw beg end)))
 
 (defun markdown-table-display-refresh ()
   "Draw every table in the buffer except the raw one."
@@ -281,8 +275,7 @@ Have every table redrawn if the width to draw them at has changed."
               (end (markdown-table-display--table-end)))
           (setq markdown-table-display--raw
                 (cons (copy-marker beg) (copy-marker end t)))
-          (markdown-table-display--undraw beg end)
-          (jit-lock-refontify beg end))))))
+          (markdown-table-display--undraw beg end))))))
 
 (defvar jit-lock-start)
 (defvar jit-lock-end)
