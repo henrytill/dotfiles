@@ -32,6 +32,10 @@
 ;; edited; it is drawn again once point leaves it.  Cell widths are
 ;; measured on the text as displayed, so markup hidden by
 ;; `markdown-hide-markup' doesn't count.
+;;
+;; Tables are drawn from `jit-lock-functions', after font-lock, so
+;; only the tables redisplay reaches are drawn, and anything that has
+;; jit-lock refontify a table, such as `font-lock-flush', redraws it.
 
 ;;; Code:
 
@@ -44,12 +48,6 @@
 
 (defvar-local markdown-table-display--raw nil
   "Markers (BEG . END) around the table shown as raw text, or nil.")
-
-(defvar-local markdown-table-display--dirty nil
-  "Markers (BEG . END) around changes not yet redrawn, or nil.")
-
-(defvar-local markdown-table-display--timer nil
-  "Idle timer that redraws tables after a buffer change.")
 
 (defun markdown-table-display--width ()
   "Return the maximum width of a drawn table."
@@ -222,76 +220,68 @@ ALIGNMENT is a column format from `markdown-table-colfmt'."
       (delete-overlay ov))))
 
 (defun markdown-table-display--draw (beg end)
-  "Redraw the tables overlapping BEG to END, except the one containing point."
+  "Redraw the tables overlapping BEG to END, except the raw one.
+Return (BEG . END) extended to cover those tables."
   (save-restriction
     (widen)
     (markdown-table-display--undraw beg end)
     (pcase-dolist (`(,tbeg . ,tend) (markdown-table-display--tables beg end))
-      (unless (<= tbeg (point) tend)
-        (font-lock-ensure tbeg tend)
+      (markdown-table-display--undraw tbeg tend)
+      (setq beg (min beg tbeg)
+            end (max end tend))
+      ;; Not point, which other `jit-lock-functions' may have moved.
+      (unless (and markdown-table-display--raw
+                   (<= (car markdown-table-display--raw) tbeg
+                       (cdr markdown-table-display--raw)))
+        ;; Not `font-lock-ensure', which calls back into jit-lock.
+        (when (font-lock-specified-p t)
+          (font-lock-set-defaults)
+          (font-lock-fontify-region tbeg tend))
         (let ((ov (make-overlay tbeg tend nil t nil)))
           (overlay-put ov 'markdown-table-display t)
           (overlay-put ov 'evaporate t)
-          (overlay-put ov 'display (markdown-table-display--render tbeg tend)))))))
+          (overlay-put ov 'display (markdown-table-display--render tbeg tend)))))
+    (cons beg end)))
+
+(defun markdown-table-display--fontify (beg end)
+  "Draw the tables overlapping BEG to END, for `jit-lock-functions'."
+  (pcase-let ((`(,beg . ,end) (markdown-table-display--draw beg end)))
+    ;; The drawn tables are fontified to their ends, so don't have
+    ;; redisplay ask again for the parts past this chunk.  What the
+    ;; later `jit-lock-functions' would add can't be seen under a
+    ;; drawing, and a table is refontified when point enters it.
+    (put-text-property beg end 'fontified t)
+    `(jit-lock-bounds ,beg . ,end)))
 
 (defun markdown-table-display-refresh ()
-  "Draw every table in the buffer except the one containing point."
+  "Draw every table in the buffer except the raw one."
   (interactive)
   (markdown-table-display--draw (point-min) (point-max)))
 
 (defun markdown-table-display--post-command ()
-  "Show the table at point as raw text, and draw the one point left."
+  "Show the table at point as raw text, and have the one point left redrawn."
   (let ((raw markdown-table-display--raw))
     (unless (and raw (<= (car raw) (point) (cdr raw)))
       (when raw
         (setq markdown-table-display--raw nil)
-        (markdown-table-display--draw (car raw) (cdr raw))
+        (jit-lock-refontify (car raw) (cdr raw))
         (set-marker (car raw) nil)
         (set-marker (cdr raw) nil))
       (when (markdown-table-at-point-p)
         (let ((beg (markdown-table-begin))
               (end (markdown-table-display--table-end)))
-          (markdown-table-display--undraw beg end)
           (setq markdown-table-display--raw
-                (cons (copy-marker beg) (copy-marker end t))))))))
-
-(defun markdown-table-display--schedule (beg end)
-  "Redraw the tables overlapping BEG to END once Emacs is idle."
-  (let ((dirty markdown-table-display--dirty))
-    (if dirty
-        (progn (set-marker (car dirty) (min beg (car dirty)))
-               (set-marker (cdr dirty) (max end (cdr dirty))))
-      (setq markdown-table-display--dirty (cons (copy-marker beg) (copy-marker end t)))))
-  (unless (timerp markdown-table-display--timer)
-    (setq markdown-table-display--timer
-          (run-with-idle-timer 0.5 nil #'markdown-table-display--redraw-dirty
-                               (current-buffer)))))
-
-(defun markdown-table-display--redraw-dirty (buffer)
-  "Redraw the tables in BUFFER that changed, if it is still live."
-  (when (buffer-live-p buffer)
-    (with-current-buffer buffer
-      (setq markdown-table-display--timer nil)
-      (when-let* ((dirty markdown-table-display--dirty))
-        (setq markdown-table-display--dirty nil)
-        (when markdown-table-display-mode
-          (markdown-table-display--draw (car dirty) (cdr dirty)))
-        (set-marker (car dirty) nil)
-        (set-marker (cdr dirty) nil)))))
+                (cons (copy-marker beg) (copy-marker end t)))
+          (markdown-table-display--undraw beg end)
+          (jit-lock-refontify beg end))))))
 
 (defun markdown-table-display--after-change (beg end _len)
-  "Schedule a redraw if the change from BEG to END touched a table.
-Changes inside the raw table at point wait until point leaves it."
-  (let ((beg (save-excursion (goto-char beg) (pos-bol)))
-        (end (save-excursion (goto-char end) (pos-eol)))
-        (raw markdown-table-display--raw))
-    (unless (and raw (<= (car raw) beg) (<= end (cdr raw)))
-      (when (or (seq-some (lambda (ov) (overlay-get ov 'markdown-table-display))
-                          (overlays-in beg end))
-                (save-excursion
-                  (goto-char beg)
-                  (re-search-forward markdown-table-line-regexp end t)))
-        (markdown-table-display--schedule beg end)))))
+  "Have the drawn tables overlapping BEG to END redrawn.
+Redisplay never looks at the text under a drawing, so it wouldn't
+notice that jit-lock had marked only the changed lines."
+  (dolist (ov (overlays-in beg end))
+    (when (overlay-get ov 'markdown-table-display)
+      (jit-lock-refontify (overlay-start ov) (overlay-end ov)))))
 
 ;;;###autoload
 (define-minor-mode markdown-table-display-mode
@@ -299,6 +289,7 @@ Changes inside the raw table at point wait until point leaves it."
 The buffer text is not changed.  The table under point shows its raw
 text for editing."
   :lighter nil
+  (jit-lock-unregister #'markdown-table-display--fontify)
   (save-restriction
     (widen)
     (markdown-table-display--undraw (point-min) (point-max)))
@@ -308,8 +299,12 @@ text for editing."
   (when markdown-table-display-mode
     (add-hook 'post-command-hook #'markdown-table-display--post-command nil t)
     (add-hook 'after-change-functions #'markdown-table-display--after-change nil t)
-    ;; Wait until the buffer is set up before drawing.
-    (markdown-table-display--schedule (point-min) (point-max))))
+    ;; Run after font-lock, so drawings carry its faces, but
+    ;; `jit-lock-register' can't append (bug#15155).
+    (add-hook 'jit-lock-functions #'markdown-table-display--fontify 'append t)
+    (jit-lock-register #'markdown-table-display--fontify)
+    (markdown-table-display--post-command)
+    (jit-lock-refontify)))
 
 (provide 'markdown-table-display)
 ;;; markdown-table-display.el ends here
