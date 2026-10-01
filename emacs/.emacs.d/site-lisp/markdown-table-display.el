@@ -223,6 +223,27 @@ ALIGNMENT is a column format from `markdown-table-colfmt'."
   "Remove the drawings of tables overlapping BEG to END."
   (mapc #'delete-overlay (markdown-table-display--drawings beg end)))
 
+(defun markdown-table-display--raw-p (pos)
+  "Return non-nil if the table starting at POS is shown as raw text."
+  ;; Not point, which other `jit-lock-functions' may have moved.
+  (let ((raw markdown-table-display--raw))
+    (and raw (<= (car raw) pos (cdr raw)))))
+
+(defvar font-lock-beg)
+(defvar font-lock-end)
+
+(defun markdown-table-display--extend-font-lock-region ()
+  "Extend the region font-lock fontifies over whole tables to be drawn.
+They are drawn after font-lock, from text it must have fontified.
+For `font-lock-extend-region-functions'."
+  (let ((beg font-lock-beg)
+        (end font-lock-end))
+    (pcase-dolist (`(,tbeg . ,tend) (markdown-table-display--tables beg end))
+      (unless (markdown-table-display--raw-p tbeg)
+        (setq font-lock-beg (min font-lock-beg tbeg)
+              font-lock-end (max font-lock-end tend))))
+    (not (and (= beg font-lock-beg) (= end font-lock-end)))))
+
 (defun markdown-table-display--draw (beg end)
   "Redraw the tables overlapping BEG to END, except the raw one.
 Return (BEG . END) extended to cover those tables."
@@ -233,14 +254,7 @@ Return (BEG . END) extended to cover those tables."
       (markdown-table-display--undraw tbeg tend)
       (setq beg (min beg tbeg)
             end (max end tend))
-      ;; Not point, which other `jit-lock-functions' may have moved.
-      (unless (and markdown-table-display--raw
-                   (<= (car markdown-table-display--raw) tbeg
-                       (cdr markdown-table-display--raw)))
-        ;; Not `font-lock-ensure', which calls back into jit-lock.
-        (when (font-lock-specified-p t)
-          (font-lock-set-defaults)
-          (font-lock-fontify-region tbeg tend))
+      (unless (markdown-table-display--raw-p tbeg)
         (let ((ov (make-overlay tbeg tend nil t nil)))
           (overlay-put ov 'markdown-table-display t)
           (overlay-put ov 'evaporate t)
@@ -301,10 +315,14 @@ text for editing."
     (markdown-table-display--undraw (point-min) (point-max)))
   (setq markdown-table-display--raw nil)
   (remove-hook 'post-command-hook #'markdown-table-display--post-command t)
+  (remove-hook 'font-lock-extend-region-functions
+               #'markdown-table-display--extend-font-lock-region t)
   (remove-hook 'jit-lock-after-change-extend-region-functions
                #'markdown-table-display--extend-after-change t)
   (when markdown-table-display-mode
     (add-hook 'post-command-hook #'markdown-table-display--post-command nil t)
+    (add-hook 'font-lock-extend-region-functions
+              #'markdown-table-display--extend-font-lock-region nil t)
     (add-hook 'jit-lock-after-change-extend-region-functions
               #'markdown-table-display--extend-after-change nil t)
     ;; Run after font-lock, so drawings carry its faces, but
