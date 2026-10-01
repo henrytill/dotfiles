@@ -47,6 +47,9 @@
 (defvar-local markdown-table-display--raw nil
   "Markers (BEG . END) around the table shown as raw text, or nil.")
 
+(defvar-local markdown-table-display--drawn-width nil
+  "The `markdown-table-display--width' tables were last drawn at.")
+
 (defun markdown-table-display--width ()
   "Return the maximum width of a drawn table."
   ;; One column less, since a line that exactly fills the text area
@@ -260,7 +263,12 @@ Return (BEG . END) extended to cover those tables."
   (markdown-table-display--draw (point-min) (point-max)))
 
 (defun markdown-table-display--post-command ()
-  "Show the table at point as raw text, and have the one point left redrawn."
+  "Show the table at point as raw text, and have the one point left redrawn.
+Have every table redrawn if the width to draw them at has changed."
+  (let ((width (markdown-table-display--width)))
+    (unless (eql width markdown-table-display--drawn-width)
+      (setq markdown-table-display--drawn-width width)
+      (jit-lock-refontify)))
   (let ((raw markdown-table-display--raw))
     (unless (and raw (<= (car raw) (point) (cdr raw)))
       (when raw
@@ -310,25 +318,9 @@ text for editing."
     ;; `jit-lock-register' can't append (bug#15155).
     (add-hook 'jit-lock-functions #'markdown-table-display--fontify 'append t)
     (jit-lock-register #'markdown-table-display--fontify)
+    (setq markdown-table-display--drawn-width (markdown-table-display--width))
     (markdown-table-display--post-command)
     (jit-lock-refontify)))
-
-(defun markdown-table-display--width-changed (_symbol _newval operation where)
-  "Have tables redrawn when the variable giving their width changes.
-WHERE is the buffer whose local value changed, or nil for the default
-value; OPERATION is as for `add-variable-watcher'."
-  ;; A `let' is often only for the duration of a fill command.
-  ;; `kill-local-variable' on `fill-column', a C per-buffer variable,
-  ;; notifies no watchers, so that change goes unnoticed.
-  (when (memq operation '(set makunbound))
-    (dolist (buffer (if where (list where) (buffer-list)))
-      (with-current-buffer buffer
-        (when markdown-table-display-mode
-          ;; The new value is set once this returns, before redisplay.
-          (jit-lock-refontify))))))
-
-(add-variable-watcher 'fill-column #'markdown-table-display--width-changed)
-(add-variable-watcher 'visual-fill-column-width #'markdown-table-display--width-changed)
 
 (provide 'markdown-table-display)
 ;;; markdown-table-display.el ends here
