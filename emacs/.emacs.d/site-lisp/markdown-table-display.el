@@ -278,7 +278,8 @@ Have every table redrawn if the width to draw them at has changed."
       (setq markdown-table-display--drawn-width width)
       (jit-lock-refontify)))
   (let ((raw markdown-table-display--raw))
-    (unless (and raw (<= (car raw) (point) (cdr raw)))
+    ;; Markers collapsed by deleting the raw table hold no table.
+    (unless (and raw (< (car raw) (cdr raw)) (<= (car raw) (point) (cdr raw)))
       (when raw
         (setq markdown-table-display--raw nil)
         (jit-lock-refontify (car raw) (cdr raw))
