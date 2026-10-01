@@ -202,7 +202,8 @@ ALIGNMENT is a column format from `markdown-table-colfmt'."
       (goto-char end)
       (syntax-propertize (if (re-search-forward "^[ \t]*$" nil t) (point) (point-max)))
       (goto-char beg)
-      (forward-line 0)
+      ;; A table doesn't include the newline ending its last row.
+      (forward-line (if (eolp) 1 0))
       (when (markdown-table-at-point-p)
         (goto-char (markdown-table-begin)))
       (while (and (< (point) end)
