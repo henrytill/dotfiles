@@ -244,9 +244,10 @@ For `font-lock-extend-region-functions'."
               font-lock-end (max font-lock-end tend))))
     (not (and (= beg font-lock-beg) (= end font-lock-end)))))
 
-(defun markdown-table-display--draw (beg end)
+(defun markdown-table-display--fontify (beg end)
   "Redraw the tables overlapping BEG to END, except the raw one.
-Return (BEG . END) extended to cover those tables."
+Return BEG to END extended over those tables, as `jit-lock-functions'
+may."
   (save-restriction
     (widen)
     (let ((tables (markdown-table-display--tables beg end)))
@@ -260,16 +261,12 @@ Return (BEG . END) extended to cover those tables."
             (overlay-put ov 'markdown-table-display t)
             (overlay-put ov 'evaporate t)
             (overlay-put ov 'display (markdown-table-display--render tbeg tend))))))
-    (cons beg end)))
-
-(defun markdown-table-display--fontify (beg end)
-  "Draw the tables overlapping BEG to END, for `jit-lock-functions'."
-  `(jit-lock-bounds ,@(markdown-table-display--draw beg end)))
+    `(jit-lock-bounds ,beg . ,end)))
 
 (defun markdown-table-display-refresh ()
-  "Draw every table in the buffer except the raw one."
+  "Have every table in the buffer redrawn except the raw one."
   (interactive)
-  (markdown-table-display--draw (point-min) (point-max)))
+  (jit-lock-refontify))
 
 (defun markdown-table-display--post-command ()
   "Show the table at point as raw text, and have the one point left redrawn.
