@@ -17,8 +17,8 @@
             meow meson-mode neocaml nix-mode ocaml-eglot
             opam-switch-mode orderless paredit perl-doc proof-general
             racket-mode rec-mode rust-mode sly sml-mode sql-indent
-            swift-mode tuareg vertico vertico-multiform yaml-mode
-            yasnippet zig-mode))
+            swift-mode tuareg vertico vertico-multiform
+            visual-fill-column yaml-mode yasnippet zig-mode))
  '(package-vc-selected-packages
    '((envrc :url "https://github.com/purcell/envrc.git")
      (inheritenv :url "https://github.com/purcell/inheritenv.git")
