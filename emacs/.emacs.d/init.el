@@ -1471,7 +1471,8 @@ as a markdown link."
   :commands yaml-mode
   :hook ((yaml-mode . display-line-numbers-mode)
          (yaml-mode . electric-pair-mode)
-         (yaml-mode . ht/truncate-lines)))
+         (yaml-mode . ht/truncate-lines)
+         (yaml-mode . yas-minor-mode)))
 
 ;;; SH-MODE
 
